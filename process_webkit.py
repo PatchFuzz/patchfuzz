@@ -44,6 +44,7 @@ def parse_webkit_commit(commitLines):
                 commit['message'] = nextLine.strip()
                 component = re.compile('\\[(.*)\\]').match(nextLine.strip())
                 if component: commit['component'] = component.group(1)
+                if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
             elif bool(re.search('bugs.webkit.org',nextLine)):
                 commit['urlofbug'] = nextLine.strip()
                 commit['ctype'] = "bug"
@@ -51,7 +52,7 @@ def parse_webkit_commit(commitLines):
         
         elif bool(re.match('[MADCRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
             commit['changedfiles'] += nextLine[2:]
-            if (bool(re.compile('js/src/test').match(nextLine[2:])) or bool(re.compile('js/src/jit-test').match(nextLine[2:]))) and commit['ctype'] == "bug":
+            if bool(re.compile('JSTests/stress').match(nextLine[2:])) and commit['ctype'] == "bug":
                 commit['poc'].append(nextLine[2:])
             else:
                 pass
@@ -64,7 +65,7 @@ def parse_webkit_commit(commitLines):
 
 if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())
-    parse_v8_commit(sys.stdin.readlines())
+    parse_webkit_commit(sys.stdin.readlines())
     export_csv(commits,"webkit")
     #print(commits)
     # print('Author'.ljust(15) + '  ' + 'Email'.ljust(20) +'  ' + 'Hash'.ljust(8) + '  ' + 'Message'.ljust(20))

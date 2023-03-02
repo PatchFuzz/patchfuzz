@@ -6,7 +6,7 @@ from utils import export_csv
 commits = []
 
 
-def parse_v8_commit(commitLines):
+def parse_je_commit(commitLines):
     # dict to store commit data
     commit = {}
     # iterate lines and save
@@ -42,21 +42,20 @@ def parse_v8_commit(commitLines):
             # (4 empty spaces)
             if commit.get('message') is None:
                 commit['message'] = nextLine.strip()
-                
-                component = re.compile('\\[(.*)\\]').match(nextLine.strip())
-                if component: commit['component'] = component.group(1)
                 if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
 
-            elif bool(re.match('bug', nextLine.strip(), re.IGNORECASE)):
+            elif bool(re.match('fix', nextLine.strip(), re.IGNORECASE)):
                 commit['ctype'] = "bug"
-            elif (bool(re.search('chromium-review.googlesource.com',nextLine)) or bool(re.search('codereview.chromium.org',nextLine))) and commit['ctype']=="bug":
-                commit['urlofbug'] = nextLine.strip()
+                component = re.compile('Fix.+(#\d+)').match(nextLine.strip())
+                if component: commit['component'] = component.group(1)
+
 
         
         elif bool(re.match('[MADCRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
             commit['changedfiles'] += nextLine[2:]
-            if bool(re.compile('test/mjsunit').match(nextLine[2:])) and commit['ctype'] == "bug":
+            if bool(re.compile('tests/\S*[.]js').match(nextLine[2:])):
                 commit['poc'].append(nextLine[2:])
+                commit['ctype'] = "bug"
             else:
                 pass
 
@@ -68,8 +67,8 @@ def parse_v8_commit(commitLines):
 
 if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())
-    parse_v8_commit(sys.stdin.readlines())
-    export_csv(commits,"v8")
+    parse_je_commit(sys.stdin.readlines())
+    export_csv(commits,"je")
     #print(commits)
     # print('Author'.ljust(15) + '  ' + 'Email'.ljust(20) +'  ' + 'Hash'.ljust(8) + '  ' + 'Message'.ljust(20))
     # print("=================================================================================")

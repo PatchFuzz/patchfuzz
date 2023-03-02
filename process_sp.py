@@ -26,6 +26,7 @@ def parse_v8_commit(commitLines):
             commit['poc'] = []
             commit['changedfiles'] = ""
             commit['component'] = ""
+            commit['message'] = ""
         elif bool(re.match('merge:', nextLine, re.IGNORECASE)):
             # Merge: xxxx xxxx
             pass
@@ -40,22 +41,17 @@ def parse_v8_commit(commitLines):
             commit['date'] = t.group(1)
         elif bool(re.match('    ', nextLine, re.IGNORECASE)):
             # (4 empty spaces)
-            if commit.get('message') is None:
-                commit['message'] = nextLine.strip()
-                
-                component = re.compile('\\[(.*)\\]').match(nextLine.strip())
-                if component: commit['component'] = component.group(1)
-                if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
-
-            elif bool(re.match('bug', nextLine.strip(), re.IGNORECASE)):
+            if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)):
                 commit['ctype'] = "bug"
-            elif (bool(re.search('chromium-review.googlesource.com',nextLine)) or bool(re.search('codereview.chromium.org',nextLine))) and commit['ctype']=="bug":
+                # component = re.compile('\\[(.*)\\]').match(nextLine.strip())
+                # if component: commit['component'] = component.group(1)
+            elif bool(re.search('phabricator.services.mozilla.com',nextLine)):
                 commit['urlofbug'] = nextLine.strip()
 
         
         elif bool(re.match('[MADCRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
             commit['changedfiles'] += nextLine[2:]
-            if bool(re.compile('test/mjsunit').match(nextLine[2:])) and commit['ctype'] == "bug":
+            if bool(re.compile('js/src/jit-test').match(nextLine[2:])) and commit['ctype'] == "bug":
                 commit['poc'].append(nextLine[2:])
             else:
                 pass
@@ -69,7 +65,7 @@ def parse_v8_commit(commitLines):
 if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())
     parse_v8_commit(sys.stdin.readlines())
-    export_csv(commits,"v8")
+    export_csv(commits,"sp")
     #print(commits)
     # print('Author'.ljust(15) + '  ' + 'Email'.ljust(20) +'  ' + 'Hash'.ljust(8) + '  ' + 'Message'.ljust(20))
     # print("=================================================================================")

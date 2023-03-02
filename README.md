@@ -13,4 +13,4 @@ git log --date=short --name-status -60000 | python ..\pocgetter\process_v8.py
 
 ## Spidermonkey
 cd gecko-dev/js
-git log --date=short --name-status . | python ..\pocgetter\process_spidermonkey.py
+git log --date=short --name-status --before=2023-3-1 --after=2019-1-1 . | python ..\..\pocgetter\process_sp.py
