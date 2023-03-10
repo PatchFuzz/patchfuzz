@@ -1,0 +1,4 @@
+;
+
+assertThrowsInstanceOf(() => syntaxParse(">"), SyntaxError);
+

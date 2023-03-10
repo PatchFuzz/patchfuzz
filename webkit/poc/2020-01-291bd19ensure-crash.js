@@ -1,0 +1,5 @@
+
+
+print();
+
+throw new Error();

@@ -1,0 +1,28 @@
+
+
+
+
+
+
+
+
+
+
+print(`(module (func (param v128)))`,
+                     /(v128 not enabled)|(bad type)/);
+
+print(`(module (func (result v128)))`,
+                     /(v128 not enabled)|(bad type)/);
+
+print(`(module (func (local v128)))`,
+                     /(v128 not enabled)|(bad type)|(SIMD support is not enabled)/);
+
+print(`(module (global (import "m" "g") v128))`,
+                     /expected global type/);
+
+print(`(module (global (import "m" "g") (mut v128)))`,
+                     /expected global type/);
+
+print(`(module (global i32 (v128.const i32x4 0 0 0 0)))`,
+                     /(v128 not enabled)|(unrecognized opcode)/);
+

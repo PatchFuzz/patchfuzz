@@ -1,0 +1,5 @@
+
+
+
+
+print("const [(x)] = []", SyntaxError);
