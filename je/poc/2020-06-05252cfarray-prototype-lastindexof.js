@@ -1,76 +1,76 @@
-// Copyright JS Foundation and other contributors, http://js.foundation
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
-// This test will not pass on FLOAT32 due to precision issues
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var obj = {};
 var array = ["foo", 19, "bar", obj, "foo", 29, "baz"];
 
 var index = array.lastIndexOf("foo");
-assert(index === 4);
-assert(array[index] === "foo");
+print(index === 4);
+print(array[index] === "foo");
 
-assert(array.lastIndexOf("foo", 3) === 0);
-assert(array.lastIndexOf("foo", -8) === -1);
+print(array.lastIndexOf("foo", 3) === 0);
+print(array.lastIndexOf("foo", -8) === -1);
 
 var index = array.lastIndexOf("baz");
-assert(index === 6);
-assert(array[index] === "baz");
+print(index === 6);
+print(array[index] === "baz");
 
-assert(array.lastIndexOf("baz", -2) === -1);
+print(array.lastIndexOf("baz", -2) === -1);
 
 var index = array.lastIndexOf(obj);
-assert(index === 3);
-assert(array[index] === obj);
+print(index === 3);
+print(array[index] === obj);
 
-assert(array.lastIndexOf("foo", NaN) === 0);
-assert(array.lastIndexOf("foo", Infinity) === 4);
-assert(array.lastIndexOf("foo", -Infinity) === -1);
+print(array.lastIndexOf("foo", NaN) === 0);
+print(array.lastIndexOf("foo", Infinity) === 4);
+print(array.lastIndexOf("foo", -Infinity) === -1);
 
 var arr = [];
 arr[4294967294] = "foo";
-assert(arr.lastIndexOf("foo", -1) === 4294967294)
+print(arr.lastIndexOf("foo", -1) === 4294967294)
 
 var arr = [1,2];
-assert(arr.lastIndexOf(2, undefined) === -1);
-assert(arr.lastIndexOf(2) === 1);
+print(arr.lastIndexOf(2, undefined) === -1);
+print(arr.lastIndexOf(2) === 1);
 
-// Checking behavior when unable to get length
+
 var obj = { lastIndexOf : Array.prototype.lastIndexOf}
 Object.defineProperty(obj, 'length', { 'get' : function () { throw new ReferenceError ("foo"); } });
 
 try {
   obj.lastIndexOf("bar");
-  assert(false);
+  print(false);
 } catch (e) {
-  assert(e.message === "foo");
-  assert(e instanceof ReferenceError);
+  print(e.message === "foo");
+  print(e instanceof ReferenceError);
 }
 
-// Checking behavior when unable to get element
+
 var obj = { lastIndexOf : Array.prototype.lastIndexOf, length : 1}
 Object.defineProperty(obj, '0', { 'get' : function () { throw new ReferenceError ("foo"); } });
 
 try {
   obj.lastIndexOf("bar");
-  assert(false);
+  print(false);
 } catch (e) {
-  assert(e.message === "foo");
-  assert(e instanceof ReferenceError);
+  print(e.message === "foo");
+  print(e instanceof ReferenceError);
 }
 
-// Remove the buffer
+
 var array = [1, 2, 3, 4, 5];
 var value = array.lastIndexOf(4, {
     valueOf: function() {
@@ -78,9 +78,9 @@ var value = array.lastIndexOf(4, {
     }
 })
 
-assert(value === -1);
+print(value === -1);
 
-// Extend the buffer
+
 var array = [1, 2, 3];
 var value = array.lastIndexOf(1, {
     valueOf: function() {
@@ -88,9 +88,9 @@ var value = array.lastIndexOf(1, {
     }
 })
 
-assert(value === 0);
+print(value === 0);
 
-// Reduce the buffer
+
 var array = [1, 2, 3, 4, 5, 6, 7];
 var value = array.indexOf(5, {
     valueOf: function() {
@@ -98,4 +98,4 @@ var value = array.indexOf(5, {
     }
 })
 
-assert(value === -1);
+print(value === -1);

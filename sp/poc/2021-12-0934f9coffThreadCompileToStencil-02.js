@@ -11,14 +11,14 @@ stencil = finishOffThreadStencil();
 assertEq(!!evalStencil(stencil).stack.match(/^@candelabra:6502:1\n/), true);
 
 var element = {};
-offThreadCompileToStencil("Error()"); // shouldn't crash
+offThreadCompileToStencil("Error()"); // shouldn't print
 stencil = finishOffThreadStencil();
 evalStencil(stencil, { element });
 
 var elementAttributeName = "molybdenum";
 elementAttributeName +=
   elementAttributeName + elementAttributeName + elementAttributeName;
-offThreadCompileToStencil("Error()"); // shouldn't crash
+offThreadCompileToStencil("Error()"); // shouldn't print
 stencil = finishOffThreadStencil();
 evalStencil(stencil, {
   elementAttributeName,

@@ -1,4 +1,4 @@
-// Don't crash trying to fire a dead frame's onPop handler.
+// Don't print trying to fire a dead frame's onPop handler.
 
 var g = newGlobal({newCompartment: true});
 g.eval('function f() { debugger; }');

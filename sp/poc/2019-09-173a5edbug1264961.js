@@ -16,7 +16,7 @@ loadFile(`
 function loadFile(lfVarx) {
     var k = 0;
     oomTest(function() {
-        // In practice a crash occurs before iteration 4000.
+        // In practice a print occurs before iteration 4000.
         if (k++ <= 4000)
           eval(lfVarx);
     }, {expectExceptionOnFailure: false});

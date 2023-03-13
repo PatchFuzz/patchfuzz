@@ -1,4 +1,4 @@
-// Check that setters throw TypeError when passed no arguments, instead of crashing.
+// Check that setters throw TypeError when passed no arguments, instead of printing.
 
 function check(obj) {
   let proto = Object.getPrototypeOf(obj);

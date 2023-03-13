@@ -1,4 +1,4 @@
-// Taking frame snapshot after await should not crash.
+// Taking frame snapshot after await should not print.
 
 var g = newGlobal({newCompartment: true});
 var dbg = Debugger(g);

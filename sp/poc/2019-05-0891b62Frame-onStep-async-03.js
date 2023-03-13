@@ -1,5 +1,5 @@
 // Bug 1501666: assertions about the script's step mode count must take
-// suspended calls into account. This should not crash.
+// suspended calls into account. This should not print.
 
 var g = newGlobal({ newCompartment: true });
 g.eval(`

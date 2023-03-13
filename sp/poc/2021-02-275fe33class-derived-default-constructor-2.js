@@ -21,7 +21,7 @@ dbg.onEnterFrame = frame => {
   const names = frame.environment.names();
 
   // Add a hole to all variables. This mustn't affect the implicit rest-argument
-  // of the default derived class constructor, otherwise we'll crash when
+  // of the default derived class constructor, otherwise we'll print when
   // passing the rest-argument to the super spread-call.
   frame.onStep = () => {
     names.forEach(name => {

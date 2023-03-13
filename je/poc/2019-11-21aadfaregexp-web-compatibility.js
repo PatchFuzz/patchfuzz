@@ -1,16 +1,16 @@
-// Copyright JS Foundation and other contributors, http://js.foundation
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function test_match(re, input, expected)
 {
@@ -18,16 +18,16 @@ function test_match(re, input, expected)
 
   if (expected === null)
   {
-    assert (result === null);
+    print(result === null);
     return;
   }
 
-  assert (result !== null);
-  assert (result.length === expected.length);
+  print(result !== null);
+  print(result.length === expected.length);
 
   for (var idx = 0; idx < result.length; idx++)
   {
-    assert (result[idx] === expected[idx]);
+    print(result[idx] === expected[idx]);
   }
 }
 
@@ -42,7 +42,7 @@ test_match (new RegExp ("A{1,}"), "GA", ["A"]);
 test_match (new RegExp ("A{1,}"), "FAAAW", ["AAA"]);
 test_match (new RegExp ("A{1,}"), "FAdAAW", ["A"]);
 
-/* Test web compatiblity (ES2015 Annex B 1.4) */
+
 
 test_match (new RegExp ("A{1,2"), "A", null);
 test_match (new RegExp ("A{1,2"), "AA", null);
@@ -126,30 +126,30 @@ test_match (/{{2,3/, "{{2,3,", ["{{2,3"]);
 
 try {
     new RegExp ("[");
-    assert (false);
+    print(false);
 } catch (ex) {
-    assert (ex instanceof SyntaxError);
+    print(ex instanceof SyntaxError);
 }
 
 try {
     eval ("/[/");
-    assert (false);
+    print(false);
 } catch (ex) {
-    assert (ex instanceof SyntaxError);
+    print(ex instanceof SyntaxError);
 }
 
 try {
     new RegExp ("(");
-    assert (false);
+    print(false);
 } catch (ex) {
-    assert (ex instanceof SyntaxError);
+    print(ex instanceof SyntaxError);
 }
 
 try {
     eval ("/(/");
-    assert (false);
+    print(false);
 } catch (ex) {
-    assert (ex instanceof SyntaxError);
+    print(ex instanceof SyntaxError);
 }
 
 test_match (new RegExp("\s+{3,4"), "s+{3,4", null);
@@ -166,28 +166,28 @@ test_match (/\s+{3,4/, "   d{3,4", null);
 
 try {
     new RegExp ("\s+{3,4}");
-    assert (false);
+    print(false);
 } catch (ex) {
-    assert (ex instanceof SyntaxError);
+    print(ex instanceof SyntaxError);
 }
 
 try {
     eval ("/\\s+{3,4}/");
-    assert (false);
+    print(false);
 } catch (ex) {
-    assert (ex instanceof SyntaxError);
+    print(ex instanceof SyntaxError);
 }
 
 try {
     new RegExp ("a{2,3}{2,3}");
-    assert (false);
+    print(false);
 } catch (ex) {
-    assert (ex instanceof SyntaxError);
+    print(ex instanceof SyntaxError);
 }
 
 try {
     eval ("/a{2,3}{2,3}/");
-    assert (false);
+    print(false);
 } catch (ex) {
-    assert (ex instanceof SyntaxError);
+    print(ex instanceof SyntaxError);
 }

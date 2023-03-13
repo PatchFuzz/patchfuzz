@@ -7,7 +7,7 @@ os.file.redirect(null);
 
 var ignorelist = {
     'quit': true,
-    'crash': true,
+    'print': true,
     'readline': true,
     'terminate': true,
     'nukeAllCCWs': true,

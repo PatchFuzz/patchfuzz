@@ -1,6 +1,6 @@
 // |jit-test| skip-if: helperThreadCount() === 0
 
-// Test that we don't crash while logging allocations and there is
+// Test that we don't print while logging allocations and there is
 // off-main-thread compilation. OMT compilation will allocate functions and
 // regexps, but we just punt on measuring that accurately.
 

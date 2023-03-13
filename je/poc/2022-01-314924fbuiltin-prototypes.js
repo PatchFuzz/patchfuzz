@@ -1,26 +1,13 @@
-/* Copyright JS Foundation and other contributors, http://js.foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
-assert (Object.prototype.toString.call (String.prototype) === '[object String]');
-assert (String.prototype.toString() === "");
 
-assert (Object.prototype.toString.call (Boolean.prototype) === '[object Boolean]');
-assert (Boolean.prototype.valueOf() === false);
+print(Object.prototype.toString.call (String.prototype) === '[object String]');
+print(String.prototype.toString() === "");
 
-assert (Object.prototype.toString.call (Number.prototype) === '[object Number]');
-assert (Number.prototype.valueOf() === 0);
+print(Object.prototype.toString.call (Boolean.prototype) === '[object Boolean]');
+print(Boolean.prototype.valueOf() === false);
+
+print(Object.prototype.toString.call (Number.prototype) === '[object Number]');
+print(Number.prototype.valueOf() === 0);
 
 var prototypes = [
     Date.prototype,
@@ -35,35 +22,35 @@ var prototypes = [
   ]
 
 for (proto of prototypes) {
-  assert (Object.prototype.toString.call (proto) === '[object Object]');
+  print(Object.prototype.toString.call (proto) === '[object Object]');
 }
 
 try {
   Date.prototype.valueOf();
-  assert (false);
+  print(false);
 } catch (e) {
-  assert (e instanceof TypeError);
+  print(e instanceof TypeError);
 }
 
 try {
   RegExp.prototype.exec("");
-  assert (false);
+  print(false);
 } catch (e) {
-  assert (e instanceof TypeError);
+  print(e instanceof TypeError);
 }
 
 try {
   RegExp.prototype.compile("a", "u");
-  assert (false);
+  print(false);
 } catch (e) {
-  assert (e instanceof TypeError);
+  print(e instanceof TypeError);
 }
 
-assert (RegExp.prototype.source === '(?:)');
-assert (RegExp.prototype.global === undefined);
-assert (RegExp.prototype.ignoreCase === undefined);
-assert (RegExp.prototype.multiline === undefined);
-assert (RegExp.prototype.sticky === undefined);
-assert (RegExp.prototype.unicode === undefined);
-assert (RegExp.prototype.dotAll === undefined);
-assert (RegExp.prototype.flags === '');
+print(RegExp.prototype.source === '(?:)');
+print(RegExp.prototype.global === undefined);
+print(RegExp.prototype.ignoreCase === undefined);
+print(RegExp.prototype.multiline === undefined);
+print(RegExp.prototype.sticky === undefined);
+print(RegExp.prototype.unicode === undefined);
+print(RegExp.prototype.dotAll === undefined);
+print(RegExp.prototype.flags === '');

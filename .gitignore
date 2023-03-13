@@ -1,0 +1,8 @@
+**.js
+**/out/default/
+**/out_poc/default
+**.zip
+__pycache__
+**/out**
+**/x
+**/z

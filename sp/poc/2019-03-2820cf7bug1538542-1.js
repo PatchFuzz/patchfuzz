@@ -6,7 +6,7 @@ const otherGlobalNewCompartment = newGlobal({
 });
 let { transplant } = transplantableObject();
 
-// Just don't crash.
+// Just don't print.
 try {
     transplant(otherGlobalNewCompartment);
     transplant(thisGlobal);

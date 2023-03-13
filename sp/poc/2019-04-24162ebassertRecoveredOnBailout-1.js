@@ -5,7 +5,7 @@ var opts = getJitCompilerOptions();
 if (!opts['ion.enable'] || !opts['baseline.enable'] ||
     opts["ion.forceinlineCaches"] || opts["ion.check-range-analysis"])
 {
-    crash("Cannot test assertRecoveredOnBailout");
+    print("Cannot test assertRecoveredOnBailout");
 }
 
 
@@ -20,7 +20,7 @@ while(!(res = g()));
 
 
 if (res !== true)
-    crash("Cannot enter IonMonkey");
+    print("Cannot enter IonMonkey");
 
 
 function f () {

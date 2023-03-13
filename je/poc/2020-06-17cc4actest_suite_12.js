@@ -1,76 +1,76 @@
-// Copyright JS Foundation and other contributors, http://js.foundation
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 (function tc_12_02__007() {
   var a = 'undefined';
 
-  assert(a === 'undefined');
+  print(a === 'undefined');
 })();
 
 (function tc_12_02__019() {
   var
           a = 2
 
-  assert(a === 2);
+  print(a === 2);
 })();
 
 (function tc_12_02__022() {
   var a = 1;
   var b = a;
 
-  assert(a === b);
+  print(a === b);
 })();
 
 (function tc_12_02__003() {
   var a = null;
-  assert(a === null);
+  print(a === null);
 })();
 
 (function tc_12_02__001() {
   var a;
-  assert(a === undefined);
+  print(a === undefined);
 })();
 
 (function tc_12_02__006() {
   var a = 'undefined';
 
-  assert(a === "undefined");
+  print(a === "undefined");
 })();
 
 (function tc_12_02__014() {
   var
 
           $a = 2;
-  assert($a === 2);
+  print($a === 2);
 })();
 
 (function tc_12_02__010() {
   var a, b = 3.14, c;
 
-  assert(a === undefined && b === 3.14 && c === undefined)
+  print(a === undefined && b === 3.14 && c === undefined)
 })();
 
 (function tc_12_02__004() {
   var a = undefined;
 
-  assert(a === undefined);
+  print(a === undefined);
 })();
 
 (function tc_12_02__005() {
   var a = "undefined";
 
-  assert(a === "undefined");
+  print(a === "undefined");
 })();
 
 (function tc_12_02__009() {
@@ -80,79 +80,79 @@
 
   b = a + c;
 
-  assert(b === 5);
+  print(b === 5);
 })();
 
 (function tc_12_02__011() {
   var a, b, c;
 
-  assert(a === undefined && b === undefined && c === undefined);
+  print(a === undefined && b === undefined && c === undefined);
 })();
 
 (function tc_12_02__002() {
   var a = 12345;
-  assert(a === 12345);
+  print(a === 12345);
 })();
 
 (function tc_12_02__020() {
   var a = RegExp();
 
-  assert(a instanceof RegExp);
+  print(a instanceof RegExp);
 })();
 
 (function tc_12_02__015() {
   var a = 12 + "abc";
 
-  assert(a === "12abc");
+  print(a === "12abc");
 })();
 
 (function tc_12_02__018() {
   var a = [];
 
-  assert(a instanceof Array && a.length === 0);
+  print(a instanceof Array && a.length === 0);
 })();
 
 (function tc_12_02__016() {
   var a = {};
   var b = typeof (a);
 
-  assert(b === "object" && b === typeof (Object()) && b === typeof ({}));
+  print(b === "object" && b === typeof (Object()) && b === typeof ({}));
 })();
 
 (function tc_12_02__008() {
   var a = false, b = true;
 
-  assert(a === false && b === true);
+  print(a === false && b === true);
 })();
 
 (function tc_12_02__013() {
   var
           _a$1 = 2;
 
-  assert(_a$1 === 2);
+  print(_a$1 === 2);
 })();
 
 (function tc_12_02__012() {
   var
           _a1 = 2;
 
-  assert(_a1 === 2);
+  print(_a1 === 2);
 })();
 
 (function tc_12_02__021() {
   var a = new Date();
 
-  assert(a instanceof Date);
+  print(a instanceof Date);
 })();
 
 (function tc_12_02_01__002() {
   var arguments = 2;
-  assert(arguments === 2 && typeof (arguments) === "number");
+  print(arguments === 2 && typeof (arguments) === "number");
 })();
 
 (function tc_12_02_01__001() {
   var eval = 1;
-  assert(eval === 1 && typeof (eval) === "number");
+  print(eval === 1 && typeof (eval) === "number");
 })();
 
 (function tc_12_12__006() {
@@ -163,7 +163,7 @@
     break lablemark;
   }
 
-  assert(x !== 6);
+  print(x !== 6);
 })();
 
 (function tc_12_12__010() {
@@ -178,7 +178,7 @@
     }
   }
 
-  assert(x == 100)
+  print(x == 100)
 })();
 
 (function tc_12_12__007() {
@@ -193,7 +193,7 @@
     }
   }
 
-  assert(x == 100)
+  print(x == 100)
 })();
 
 (function tc_12_12__003() {
@@ -204,7 +204,7 @@
     case 1:
       break switchMark;
     case 2:
-      assert(false);
+      print(false);
   }
 })();
 
@@ -220,7 +220,7 @@
     }
   }
 
-  assert(x == 1)
+  print(x == 1)
 })();
 
 (function tc_12_12__008() {
@@ -235,14 +235,14 @@
     }
   }
 
-  assert(x == 10)
+  print(x == 10)
 })();
 
 (function tc_12_12__005() {
   whileMark:
           for (i = 0; i < 10; ++i) {
     continue whileMark;
-    assert(false);
+    print(false);
   }
 })();
 
@@ -260,7 +260,7 @@
           while (i < 10) {
     ++i;
     continue whileMark;
-    assert(false);
+    print(false);
   }
 })();
 
@@ -279,7 +279,7 @@
   var a="ab;c"
   ;
   ;
-  assert (a === 'ab;c');
+  print(a === 'ab;c');
 })();
 
 (function tc_12_03__001() {
@@ -308,7 +308,7 @@
     if (true) {
       return 1;
     }
-    assert(false);
+    print(false);
   }
 
   test();
@@ -328,7 +328,7 @@
   else
     c = 7;
 
-  assert(c === undefined);
+  print(c === undefined);
 })();
 
 (function tc_12_05__008() {
@@ -343,7 +343,7 @@
     else
       c = 7;
 
-  assert(c === 5);
+  print(c === 5);
 
 })();
 
@@ -351,7 +351,7 @@
   function test()
   {
     if (false)
-      assert(false);
+      print(false);
     else {
       return 1;
     }
@@ -362,14 +362,14 @@
 
 (function tc_12_05__006() {
   var a = 'w\0', b = 'w\0';
-  assert(a === b);
+  print(a === b);
 })();
 
 (function tc_12_05__002() {
   function test()
   {
     if (false) {
-      assert(false);
+      print(false);
     }
   }
 
@@ -393,7 +393,7 @@
       return 1;
     }
     else
-      assert(false);
+      print(false);
   }
 
   test();
@@ -405,7 +405,7 @@
   for (var i = 0; i < 10; i++, sum *= i)
     ;
 
-  assert(sum === 3628800);
+  print(sum === 3628800);
 })();
 
 (function tc_12_06_03__010() {
@@ -421,7 +421,7 @@
     i++;
   }
 
-  assert(i == 10);
+  print(i == 10);
 })();
 
 (function tc_12_06_03__005() {
@@ -439,7 +439,7 @@
   for (i = 1; i < 20; )
     i *= 2;
 
-  assert(i === 32);
+  print(i === 32);
 })();
 
 (function tc_12_06_03__011() {
@@ -458,7 +458,7 @@
 
   var r = test();
 
-  assert(r === 1 && i === 4);
+  print(r === 1 && i === 4);
 })();
 
 (function tc_12_06_03__009() {
@@ -469,7 +469,7 @@
     init = 33;
   }
 
-  assert(init == 11);
+  print(init == 11);
 })();
 
 (function tc_12_06_03__001() {
@@ -478,7 +478,7 @@
   for (var i = 0; i < 10; i++)
     cnt++;
 
-  assert(cnt === 11 && i === 10);
+  print(cnt === 11 && i === 10);
 })();
 
 (function tc_12_06_03__006() {
@@ -491,7 +491,7 @@
     }
   }
 
-  assert(sum === 825);
+  print(sum === 825);
 })();
 
 (function tc_12_06_03__007() {
@@ -501,7 +501,7 @@
     sum += i + j + k;
   }
 
-  assert(sum == 867);
+  print(sum == 867);
 })();
 
 (function tc_12_06_03__003() {
@@ -521,7 +521,7 @@
   for (; cond < 10.333; cond += 1.121)
     cnt++;
 
-  assert(cnt == 8);
+  print(cnt == 8);
 })();
 
 (function tc_12_06_04__007() {
@@ -541,7 +541,7 @@
 
   var r = test();
 
-  assert(((o.a === 5 && o.b === 6 && o.c === 3) ||
+  print(((o.a === 5 && o.b === 6 && o.c === 3) ||
           (o.c === 3 && o.d === 8 && o.e === 9)) && r === 1);
 })();
 
@@ -557,7 +557,7 @@
     o[p] += 4;
   }
 
-  assert(o.a === 5 && o.b === 6 && o.c === 7);
+  print(o.a === 5 && o.b === 6 && o.c === 7);
 })();
 
 (function tc_12_06_04__002() {
@@ -570,7 +570,7 @@
     a[p] += 1;
   }
 
-  assert(a[0] === 2 && a[1] === 3 && a[2] === 4 && a[3] === 5 &&
+  print(a[0] === 2 && a[1] === 3 && a[2] === 4 && a[3] === 5 &&
           a[4] === 6 && a[5] === 7 && a[6] === 8 && a['eight'] === 9);
 })();
 
@@ -590,7 +590,7 @@
     d[p] += "A";
   }
 
-  assert(d.basep === "baseA" && d.derivedp === "derivedA");
+  print(d.basep === "baseA" && d.derivedp === "derivedA");
 })();
 
 (function tc_12_06_04__004() {
@@ -598,7 +598,7 @@
 
   for (var p in a)
   {
-    assert(false);
+    print(false);
   }
 })();
 
@@ -610,7 +610,7 @@
     o[p] += 4;
   }
 
-  assert(o.a === 5 && o.b === 6 && o.c === 7);
+  print(o.a === 5 && o.b === 6 && o.c === 7);
 })();
 
 (function tc_12_06_04__003() {
@@ -618,7 +618,7 @@
 
   for (var p in a)
   {
-    assert(false);
+    print(false);
   }
 })();
 
@@ -651,7 +651,7 @@
 
   var r = test();
 
-  assert(cnt === 8 && r === 1);
+  print(cnt === 8 && r === 1);
 })();
 
 (function tc_12_06_01__009() {
@@ -664,7 +664,7 @@
           (cnt < 10
                   );
 
-  assert(cnt === 10);
+  print(cnt === 10);
 })();
 
 (function tc_12_06_01__006() {
@@ -675,7 +675,7 @@
   }
   while (false);
 
-  assert(cnt === 2);
+  print(cnt === 2);
 })();
 
 (function tc_12_06_01__001() {
@@ -684,7 +684,7 @@
     cnt++;
   while (cnt < 10);
 
-  assert(cnt === 10);
+  print(cnt === 10);
 })();
 
 (function tc_12_06_01__007() {
@@ -695,7 +695,7 @@
   }
   while (!"string");
 
-  assert(cnt === 2);
+  print(cnt === 2);
 })();
 
 (function tc_12_06_01__003() {
@@ -718,7 +718,7 @@
     x = 1;
   }
   while (x === 3 / 9);
-  assert (x === 1);
+  print(x === 1);
 })();
 
 (function tc_12_06_01__008() {
@@ -729,7 +729,7 @@
   }
   while (!(cnt & 0x8000));
 
-  assert(cnt == 32768);
+  print(cnt == 32768);
 })();
 
 (function tc_12_06_01__004() {
@@ -748,7 +748,7 @@
   while ("")
     cnt /= 2;
 
-  assert(cnt === 33);
+  print(cnt === 33);
 })();
 
 (function tc_12_06_02__005() {
@@ -760,7 +760,7 @@
     val += " of while";
   }
 
-  assert(val === "test");
+  print(val === "test");
 })();
 
 (function tc_12_06_02__008() {
@@ -779,7 +779,7 @@
 
   r = test();
 
-  assert(cnt === 3 && r === 1);
+  print(cnt === 3 && r === 1);
 })();
 
 (function tc_12_06_02__002() {
@@ -807,7 +807,7 @@
   while (cnt)
     cnt--;
 
-  assert(cnt === 0);
+  print(cnt === 0);
 })();
 
 (function tc_12_06_02__007() {
@@ -823,7 +823,7 @@
     cnt++;
   }
 
-  assert(cnt === 24);
+  print(cnt === 24);
 })();
 
 (function tc_12_06_02__006() {
@@ -835,13 +835,13 @@
     cnt++;
   }
 
-  assert(cnt === 24);
+  print(cnt === 24);
 })();
 
 (function tc_12_09__002() {
   var r = test()
 
-  assert(r === 1);
+  print(r === 1);
 
   function test()
   {
@@ -852,7 +852,7 @@
 (function tc_12_09__001() {
   var r = test()
 
-  assert(typeof r == 'object' && r.prop1 === "property1" && r.prop2 === 2 && r.prop3 === false);
+  print(typeof r == 'object' && r.prop1 === "property1" && r.prop2 === 2 && r.prop3 === false);
 
   function test()
   {
@@ -869,7 +869,7 @@
 (function tc_12_09__005() {
   var r = test()
 
-  assert(r === 100);
+  print(r === 100);
 
   function test()
   {
@@ -885,7 +885,7 @@
 (function tc_12_09__006() {
   var r = test()
 
-  assert(typeof r == 'function');
+  print(typeof r == 'function');
 
   function test()
   {
@@ -901,7 +901,7 @@
 (function tc_12_09__004() {
   var r = test()
 
-  assert(r == undefined);
+  print(r == undefined);
 
   function test()
   {
@@ -914,7 +914,7 @@
 (function tc_12_09__003() {
   var r = test()
 
-  assert(r === 33);
+  print(r === 33);
 
   function test()
   {
@@ -962,7 +962,7 @@
 
   }
 
-  assert(cnt === 1);
+  print(cnt === 1);
 })();
 
 (function tc_12_08__014() {
@@ -986,7 +986,7 @@
   }
   while (i++ < 10);
 
-  assert(sum === 32);
+  print(sum === 32);
 })();
 
 (function tc_12_08__009() {
@@ -1003,7 +1003,7 @@
     sum += i;
   }
 
-  assert(sum === 10);
+  print(sum === 10);
 })();
 
 (function tc_12_08__010() {
@@ -1024,7 +1024,7 @@
     sum += 1;
   }
 
-  assert(sum === 9);
+  print(sum === 9);
 })();
 
 (function tc_12_08__011() {
@@ -1040,7 +1040,7 @@
     numOnes++;
   } while (mask);
 
-  assert(numOnes === 4);
+  print(numOnes === 4);
 })();
 
 (function tc_12_08__002() {
@@ -1074,7 +1074,7 @@
     }
   }
 
-  assert(sum === 140);
+  print(sum === 140);
 })();
 
 (function tc_12_08__007() {
@@ -1090,7 +1090,7 @@
     numOnes++;
   }
 
-  assert(numOnes === 4);
+  print(numOnes === 4);
 })();
 
 (function tc_12_08__004() {
@@ -1106,7 +1106,7 @@
         sum += 1;
       }
 
-    assert(sum === 100);
+    print(sum === 100);
   }
 
   main ();
@@ -1134,7 +1134,7 @@
     }
   }
 
-  assert(sum === 199);
+  print(sum === 199);
 })();
 
 (function tc_12_08__012() {
@@ -1157,7 +1157,7 @@
   }
   while (i-- > 0);
 
-  assert(cnt === 0);
+  print(cnt === 0);
 })();
 
 (function tc_12_08__001() {
@@ -1192,7 +1192,7 @@
 
   }
 
-  assert(sum === 160);
+  print(sum === 160);
 })();
 
 (function tc_12_08__018() {
@@ -1226,7 +1226,7 @@
 
   }
 
-  assert(sum === 120)
+  print(sum === 120)
 })();
 
 (function tc_12_08__013() {
@@ -1244,7 +1244,7 @@
   }
   while (++i < 10);
 
-  assert(sum === 10);
+  print(sum === 10);
 })();
 
 (function tc_12_08__005() {
@@ -1261,7 +1261,7 @@
     sum += i;
   }
 
-  assert(sum === 10);
+  print(sum === 10);
 })();
 
 (function tc_12_08__015() {
@@ -1276,7 +1276,7 @@
     sum += o[p];
   }
 
-  assert(sum === 3);
+  print(sum === 3);
 })();
 
 (function tc_12_08__017() {
@@ -1290,7 +1290,7 @@
     o[p] += 4;
   }
 
-  assert(o.a + o.b + o.c === 10);
+  print(o.a + o.b + o.c === 10);
 })();
 
 (function tc_12_08__003() {
@@ -1305,7 +1305,7 @@
     sum += i;
   }
 
-  assert(sum === 10);
+  print(sum === 10);
 })();
 
 (function tc_12_08__006() {
@@ -1324,14 +1324,14 @@
     sum += 1;
   }
 
-  assert(sum === 31);
+  print(sum === 31);
 })();
 
 (function tc_12_10__003() {
   var o = {prop: "property"};
 
   with (o) {
-    assert(prop == "property");
+    print(prop == "property");
   }
 })();
 
@@ -1341,7 +1341,7 @@
     var x = "abc";
   }
 
-  assert(x === "abc");
+  print(x === "abc");
 })();
 
 (function tc_12_10__004() {
@@ -1360,14 +1360,14 @@
 
   var r = test();
 
-  assert(r === 1 && x === 396);
+  print(r === 1 && x === 396);
 })();
 
 (function tc_12_10__002() {
   var o = {prop: "property"};
 
   with (o) {
-    assert(prop == "property");
+    print(prop == "property");
   }
 })();
 
@@ -1381,7 +1381,7 @@
     x = cos(PI);
   }
 
-  assert(x == -1);
+  print(x == -1);
 })();
 
 (function tc_12_10__001() {
@@ -1391,11 +1391,11 @@
     x = cos(PI);
   }
 
-  assert(x == -1);
+  print(x == -1);
 })();
 
 (function tc_12_10__006() {
-  assert(test("hello") == "hello" && typeof test({}) == "object" && test({arg: "hello"}) == "hello")
+  print(test("hello") == "hello" && typeof test({}) == "object" && test({arg: "hello"}) == "hello")
 
   function test(arg) {
     with (arg) {
@@ -1427,17 +1427,17 @@
       break;
   }
 
-  assert (matchesCount === 1);
+  print(matchesCount === 1);
 })();
 
 (function tc_12_11__001() {
   switch (1) {
     case 0:
-      assert(false);
+      print(false);
     case 1:
       break;
     default:
-      assert(false);
+      print(false);
   }
 })();
 
@@ -1451,7 +1451,7 @@
     case 5 * fact(4):
       break;
     default:
-      assert(false);
+      print(false);
   }
 })();
 
@@ -1469,28 +1469,28 @@
       ++counter;
   }
 
-  assert (counter == 4);
+  print(counter == 4);
 })();
 
 (function tc_12_11__003() {
   switch (1) {
     case true:
-      assert(false);
+      print(false);
     case false:
-      assert(false);
+      print(false);
     default:
-      assert(true);
+      print(true);
   }
 })();
 
 (function tc_12_11__007() {
   switch ("key") {
     case "another key":
-      assert(false);
+      print(false);
     default:
       break;
     case "another key2":
-      assert(false);
+      print(false);
   }
 })();
 
@@ -1501,7 +1501,7 @@
     } catch (e) {
       throw e;
     }
-    assert(false);
+    print(false);
   } catch (e) {
   }
 })();
@@ -1518,7 +1518,7 @@
       return false;
   }
 
-  assert (test ());
+  print(test ());
 })();
 
 (function tc_12_14__004() {
@@ -1535,7 +1535,7 @@
     return false;
   }
 
-  assert (test ());
+  print(test ());
 })();
 
 (function tc_12_14__006() {
@@ -1550,7 +1550,7 @@
     return false;
   }
 
-  assert (test ());
+  print(test ());
 })();
 
 (function tc_12_14__005() {
@@ -1566,7 +1566,7 @@
       return false;
   }
 
-  assert (test ());
+  print(test ());
 })();
 
 (function tc_12_14__002() {
@@ -1581,7 +1581,7 @@
     return true;
   }
 
-  assert (test ());
+  print(test ());
 })();
 
 (function tc_12_01__005() {
@@ -1597,7 +1597,7 @@
     a = 'null';
   }
 
-  assert(a === 'null');
+  print(a === 'null');
 })();
 
 (function tc_12_01__004() {
@@ -1607,7 +1607,7 @@
     a = 'null';
   }
 
-  assert(a === 'null');
+  print(a === 'null');
 })();
 
 (function tc_12_01__002() {
@@ -1619,7 +1619,7 @@
     return false;
   }
 
-  assert (test ());
+  print(test ());
 })();
 
 (function tc_12_01__003() {
@@ -1644,7 +1644,7 @@
     return false;
   }
 
-  assert (test ());
+  print(test ());
 })();
 
 (function tc_12_13__003() {
@@ -1671,7 +1671,7 @@
     return false;
   }
 
-  assert (test ());
+  print(test ());
 })();
 
 (function tc_12_13__002() {
@@ -1687,7 +1687,7 @@
     return false;
   }
 
-  assert (test ());
+  print(test ());
 })();
 
 (function tc_12_07__001() {
@@ -1702,7 +1702,7 @@
     sum += i;
   }
 
-  assert(sum === 40);
+  print(sum === 40);
 })();
 
 (function tc_12_07__009() {
@@ -1719,7 +1719,7 @@
     sum += i;
   }
 
-  assert(sum === 40);
+  print(sum === 40);
 })();
 
 (function tc_12_07__006() {
@@ -1738,7 +1738,7 @@
     sum += 1;
   }
 
-  assert(sum === 155);
+  print(sum === 155);
 })();
 
 (function tc_12_07__002() {
@@ -1752,7 +1752,7 @@
       sum += 1;
     }
 
-  assert(sum === 100);
+  print(sum === 100);
 })();
 
 (function tc_12_07__015() {
@@ -1767,7 +1767,7 @@
     sum += o[p];
   }
 
-  assert(sum == 12)
+  print(sum == 12)
 })();
 
 (function tc_12_07__008() {
@@ -1789,7 +1789,7 @@
 
   }
 
-  assert(cnt === 50);
+  print(cnt === 50);
 })();
 
 (function tc_12_07__004() {
@@ -1803,7 +1803,7 @@
     o[p] += 4;
   }
 
-  assert(o.a === 5 && o.b === 2 && o.c === 7);
+  print(o.a === 5 && o.b === 2 && o.c === 7);
 })();
 
 (function tc_12_07__012() {
@@ -1826,7 +1826,7 @@
   }
   while (i-- > 0);
 
-  assert(cnt === 60);
+  print(cnt === 60);
 })();
 
 (function tc_12_07__003() {
@@ -1853,7 +1853,7 @@
 
   }
 
-  assert(sum === 160);
+  print(sum === 160);
 })();
 
 (function tc_12_07__016() {
@@ -1878,7 +1878,7 @@
     }
   }
 
-  assert(sum === 110);
+  print(sum === 110);
 })();
 
 (function tc_12_07__013() {
@@ -1896,7 +1896,7 @@
   }
   while (++i < 10);
 
-  assert(sum === 40);
+  print(sum === 40);
 })();
 
 (function tc_12_07__010() {
@@ -1917,7 +1917,7 @@
     sum += 1;
   }
 
-  assert(sum === 150);
+  print(sum === 150);
 })();
 
 (function tc_12_07__007() {
@@ -1934,7 +1934,7 @@
     numZeroes++;
   }
 
-  assert(numZeroes === 5);
+  print(numZeroes === 5);
 })();
 
 (function tc_12_07__011() {
@@ -1951,7 +1951,7 @@
     numZeroes++;
   } while (mask);
 
-  assert(numZeroes === 5);
+  print(numZeroes === 5);
 })();
 
 (function tc_12_07__005() {
@@ -1968,7 +1968,7 @@
     sum += i;
   }
 
-  assert(sum === 40);
+  print(sum === 40);
 })();
 
 (function tc_12_07__014() {
@@ -1992,5 +1992,5 @@
   }
   while (i++ < 10);
 
-  assert(sum === 182);
+  print(sum === 182);
 })();

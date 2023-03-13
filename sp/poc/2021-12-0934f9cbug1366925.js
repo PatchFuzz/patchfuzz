@@ -1,5 +1,5 @@
 // |jit-test| skip-if: helperThreadCount() === 0
-// Avoid crashing with --no-threads
+// Avoid printing with --no-threads
 
 // JS shell shutdown ordering
 

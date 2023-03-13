@@ -1,16 +1,16 @@
-// Copyright JS Foundation and other contributors, http://js.foundation
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var obj = {};
 Object.defineProperties(obj, {
@@ -36,25 +36,25 @@ Object.defineProperties(obj, {
   }
 });
 
-assert (obj.foo === true);
-assert (obj.bar === "baz");
-assert (obj.Hello === "world");
-assert (obj.inner_object.a === 1);
-assert (obj.inner_object.b.value === "foo");
+print(obj.foo === true);
+print(obj.bar === "baz");
+print(obj.Hello === "world");
+print(obj.inner_object.a === 1);
+print(obj.inner_object.b.value === "foo");
 
-// These cases should throw TypeError
+
 try {
   Object.defineProperties(obj, undefined);
-  assert (false);
+  print(false);
 } catch (e) {
-  assert (e instanceof TypeError);
+  print(e instanceof TypeError);
 }
 
 try {
   Object.defineProperties(obj, null);
-  assert (false);
+  print(false);
 } catch (e) {
-  assert (e instanceof TypeError);
+  print(e instanceof TypeError);
 }
 
 try {
@@ -64,20 +64,20 @@ try {
       writable: true
     }
   });
-  assert (false);
+  print(false);
 } catch (e) {
-  assert (e instanceof TypeError);
+  print(e instanceof TypeError);
 }
 
-// Check for internal assert, see issue #131.
+
 try {
   Object.defineProperties([], undefined);
-  assert (false);
+  print(false);
 } catch (e) {
-  assert (e instanceof TypeError);
+  print(e instanceof TypeError);
 }
 
-// If one of the properties is wrong than it shouldn't update the object.
+
 var obj2 = {
   a: 5
 };
@@ -96,16 +96,16 @@ try {
       writable: false
     }
   });
-  assert (false);
+  print(false);
 } catch (e) {
-  assert (e instanceof TypeError);
-  assert (obj2.foo === undefined);
-  assert (obj2.set === undefined);
-  assert (obj2.Hello === undefined);
-  assert (obj2.a === 5);
+  print(e instanceof TypeError);
+  print(obj2.foo === undefined);
+  print(obj2.set === undefined);
+  print(obj2.Hello === undefined);
+  print(obj2.a === 5);
 }
 
-// Define accessors
+
 var obj = {};
 Object.defineProperties(obj, {
   "foo": {
@@ -118,11 +118,11 @@ Object.defineProperties(obj, {
   }
 });
 
-assert (obj.bar === 42);
+print(obj.bar === 42);
 obj.bar = "baz";
-assert (obj.foo === "baz");
+print(obj.foo === "baz");
 
-// Define get method which throws error
+
 var obj = {};
 var props = {
   prop1: {
@@ -145,13 +145,13 @@ var props = {
 
 try {
   Object.defineProperties(obj, props);
-  assert (false);
+  print(false);
 } catch (e) {
-  assert (e instanceof TypeError);
-  assert (e.message === "foo");
+  print(e instanceof TypeError);
+  print(e.message === "foo");
 }
 
-// Define get method which deletes a property
+
 var obj = {};
 Object.defineProperties(obj, {
   "foo": {
@@ -170,9 +170,9 @@ Object.defineProperties(obj, {
   }
 });
 
-assert (obj.a === "b");
-assert (obj.bar === 42);
-assert (obj.a === undefined);
+print(obj.a === "b");
+print(obj.bar === 42);
+print(obj.a === undefined);
 
 var obj = {};
 var props = {
@@ -197,16 +197,16 @@ var props = {
 
 Object.defineProperties(obj, props);
 var bar_desc = Object.getOwnPropertyDescriptor(obj, 'bar');
-assert(bar_desc.value === 2);
-assert(bar_desc.writable === true);
-assert(obj.prop2 === undefined);
+print(bar_desc.value === 2);
+print(bar_desc.writable === true);
+print(obj.prop2 === undefined);
 
 var prop1_desc = Object.getOwnPropertyDescriptor(obj, 'prop1');
 var prop3_desc = Object.getOwnPropertyDescriptor(obj, 'prop3');
-assert(prop1_desc.value === 1);
-assert(prop1_desc.writable === true);
-assert(prop3_desc.value === 4);
-assert(prop3_desc.writable === true);
+print(prop1_desc.value === 1);
+print(prop1_desc.writable === true);
+print(prop3_desc.value === 4);
+print(prop3_desc.writable === true);
 
 var object = {};
 var symbol = Symbol("symbol");
@@ -222,8 +222,8 @@ Object.defineProperties(object, {
   }
 });
 
-assert (object.foo === true);
-assert (object[symbol] === "a symbol");
+print(object.foo === true);
+print(object[symbol] === "a symbol");
 
 try {
   Object.defineProperties(undefined, {
@@ -232,12 +232,12 @@ try {
       writable: true
     }
   });
-  assert (false);
+  print(false);
 } catch (e) {
-  assert (e instanceof TypeError);
+  print(e instanceof TypeError);
 }
 
-// If one of the properties is wrong than it shouldn't update the object.
+
 var obj2 = {
   a: 5
 };
@@ -252,15 +252,15 @@ try {
       set: 3
     }
   });
-  assert (false);
+  print(false);
 } catch (e) {
-  assert (e instanceof TypeError);
-  assert (obj2.foo === undefined);
-  assert (obj2[symbol] === undefined);
-  assert (obj2.a === 5);
+  print(e instanceof TypeError);
+  print(obj2.foo === undefined);
+  print(obj2[symbol] === undefined);
+  print(obj2.a === 5);
 }
 
-// Define accessors
+
 var object = {};
 Object.defineProperties(object, {
   "foo": {
@@ -273,11 +273,11 @@ Object.defineProperties(object, {
   }
 });
 
-assert (object[symbol] === 42);
+print(object[symbol] === 42);
 object[symbol] = "baz";
-assert (object[symbol] === "baz");
+print(object[symbol] === "baz");
 
-// Define get method which throws error
+
 var object = {};
 var props = {
   [symbol]: {
@@ -292,12 +292,12 @@ var props = {
 
 try {
   Object.defineProperties(object, props);
-  assert (false);
+  print(false);
 } catch (e) {
-  assert (e instanceof TypeError);
-  assert (e.message === "foo");
+  print(e instanceof TypeError);
+  print(e.message === "foo");
 }
-// Define get method which deletes a property
+
 var object = {};
 Object.defineProperties(object, {
   "foo": {
@@ -316,9 +316,9 @@ Object.defineProperties(object, {
   }
 });
 
-assert (object[symbol] === "a symbol");
-assert (object.bar === 42);
-assert (object[symbol] === undefined);
+print(object[symbol] === "a symbol");
+print(object.bar === 42);
+print(object[symbol] === undefined);
 
 var object = {};
 var props = {
@@ -339,7 +339,7 @@ var props = {
 
 Object.defineProperties(object, props);
 var bar_desc = Object.getOwnPropertyDescriptor(object, 'bar');
-assert(bar_desc.value === 2);
-assert(bar_desc.writable === true);
-assert(object.prop1 === undefined);
-assert(object[symbol] === undefined);
+print(bar_desc.value === 2);
+print(bar_desc.writable === true);
+print(object.prop1 === undefined);
+print(object[symbol] === undefined);

@@ -1,209 +1,209 @@
-// Copyright JS Foundation and other contributors, http://js.foundation
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var e;
 
-/* Error */
+
 e = new Error ();
-assert (e.name === "Error");
-assert (e.message === "");
-assert (e.toString() === "Error");
+print(e.name === "Error");
+print(e.message === "");
+print(e.toString() === "Error");
 
 e = new Error("some message");
-assert (e.name === "Error");
-assert (e.message === "some message");
-assert (e.toString() === "Error: some message");
+print(e.name === "Error");
+print(e.message === "some message");
+print(e.toString() === "Error: some message");
 
 e.name = "";
-assert (e.toString() === "some message");
+print(e.toString() === "some message");
 e.message = "";
-assert (e.toString() === "");
+print(e.toString() === "");
 
-assert (Error.prototype.toString !== Object.prototype.toString);
-assert (Error.prototype.constructor === Error);
-assert (Error.prototype.name === "Error");
-assert (Error.prototype.message === "");
-assert (Error.prototype.toString() === "Error");
+print(Error.prototype.toString !== Object.prototype.toString);
+print(Error.prototype.constructor === Error);
+print(Error.prototype.name === "Error");
+print(Error.prototype.message === "");
+print(Error.prototype.toString() === "Error");
 
-/* TypeError */
+
 e = new TypeError ();
-assert (e.name === "TypeError");
-assert (e.message === "");
-assert (e.toString() === "TypeError");
+print(e.name === "TypeError");
+print(e.message === "");
+print(e.toString() === "TypeError");
 
 e = new TypeError("some message");
-assert (e.name === "TypeError");
-assert (e.message === "some message");
-assert (e.toString() === "TypeError: some message");
+print(e.name === "TypeError");
+print(e.message === "some message");
+print(e.toString() === "TypeError: some message");
 
 e.name = "";
-assert (e.toString() === "some message");
+print(e.toString() === "some message");
 e.message = "";
-assert (e.toString() === "");
+print(e.toString() === "");
 
-assert (TypeError.prototype.toString === Error.prototype.toString);
-assert (TypeError.prototype.constructor === TypeError);
-assert (TypeError.prototype.name === "TypeError");
-assert (TypeError.prototype.message === "");
-assert (TypeError.prototype.toString() === "TypeError");
+print(TypeError.prototype.toString === Error.prototype.toString);
+print(TypeError.prototype.constructor === TypeError);
+print(TypeError.prototype.name === "TypeError");
+print(TypeError.prototype.message === "");
+print(TypeError.prototype.toString() === "TypeError");
 
 try
 {
   null[1] = 'abcd';
 
-  assert (false);
+  print(false);
 }
 catch (e)
 {
-  assert(e instanceof TypeError);
-  assert(e instanceof Error);
-  assert(e instanceof Object);
+  print(e instanceof TypeError);
+  print(e instanceof Error);
+  print(e instanceof Object);
 
-  assert(!(e instanceof Function));
+  print(!(e instanceof Function));
 }
 
 
-/* ReferenceError */
+
 e = new ReferenceError ();
-assert (e.name === "ReferenceError");
-assert (e.message === "");
-assert (e.toString() === "ReferenceError");
+print(e.name === "ReferenceError");
+print(e.message === "");
+print(e.toString() === "ReferenceError");
 
 e = new ReferenceError("some message");
-assert (e.name === "ReferenceError");
-assert (e.message === "some message");
-assert (e.toString() === "ReferenceError: some message");
+print(e.name === "ReferenceError");
+print(e.message === "some message");
+print(e.toString() === "ReferenceError: some message");
 
 e.name = "";
-assert (e.toString() === "some message");
+print(e.toString() === "some message");
 e.message = "";
-assert (e.toString() === "");
+print(e.toString() === "");
 
-assert (ReferenceError.prototype.toString === Error.prototype.toString);
-assert (ReferenceError.prototype.constructor === ReferenceError);
-assert (ReferenceError.prototype.name === "ReferenceError");
-assert (ReferenceError.prototype.message === "");
-assert (ReferenceError.prototype.toString() === "ReferenceError");
+print(ReferenceError.prototype.toString === Error.prototype.toString);
+print(ReferenceError.prototype.constructor === ReferenceError);
+print(ReferenceError.prototype.name === "ReferenceError");
+print(ReferenceError.prototype.message === "");
+print(ReferenceError.prototype.toString() === "ReferenceError");
 
 try
 {
   var a = non_existing_variable;
 
-  assert (false);
+  print(false);
 }
 catch (e)
 {
-  assert(e instanceof ReferenceError);
-  assert(e instanceof Error);
-  assert(e instanceof Object);
+  print(e instanceof ReferenceError);
+  print(e instanceof Error);
+  print(e instanceof Object);
 
-  assert(!(e instanceof Function));
+  print(!(e instanceof Function));
 }
 
-/* EvalError */
+
 e = new EvalError ();
-assert (e.name === "EvalError");
-assert (e.message === "");
-assert (e.toString() === "EvalError");
+print(e.name === "EvalError");
+print(e.message === "");
+print(e.toString() === "EvalError");
 
 e = new EvalError("some message");
-assert (e.name === "EvalError");
-assert (e.message === "some message");
-assert (e.toString() === "EvalError: some message");
+print(e.name === "EvalError");
+print(e.message === "some message");
+print(e.toString() === "EvalError: some message");
 
 e.name = "";
-assert (e.toString() === "some message");
+print(e.toString() === "some message");
 e.message = "";
-assert (e.toString() === "");
+print(e.toString() === "");
 
-assert (EvalError.prototype.toString === Error.prototype.toString);
-assert (EvalError.prototype.constructor === EvalError);
-assert (EvalError.prototype.name === "EvalError");
-assert (EvalError.prototype.message === "");
-assert (EvalError.prototype.toString() === "EvalError");
+print(EvalError.prototype.toString === Error.prototype.toString);
+print(EvalError.prototype.constructor === EvalError);
+print(EvalError.prototype.name === "EvalError");
+print(EvalError.prototype.message === "");
+print(EvalError.prototype.toString() === "EvalError");
 
-/* RangeError */
+
 e = new RangeError ();
-assert (e.name === "RangeError");
-assert (e.message === "");
-assert (e.toString() === "RangeError");
+print(e.name === "RangeError");
+print(e.message === "");
+print(e.toString() === "RangeError");
 
 e = new RangeError("some message");
-assert (e.name === "RangeError");
-assert (e.message === "some message");
-assert (e.toString() === "RangeError: some message");
+print(e.name === "RangeError");
+print(e.message === "some message");
+print(e.toString() === "RangeError: some message");
 
 e.name = "";
-assert (e.toString() === "some message");
+print(e.toString() === "some message");
 e.message = "";
-assert (e.toString() === "");
+print(e.toString() === "");
 
-assert (RangeError.prototype.toString === Error.prototype.toString);
-assert (RangeError.prototype.constructor === RangeError);
-assert (RangeError.prototype.name === "RangeError");
-assert (RangeError.prototype.message === "");
-assert (RangeError.prototype.toString() === "RangeError");
+print(RangeError.prototype.toString === Error.prototype.toString);
+print(RangeError.prototype.constructor === RangeError);
+print(RangeError.prototype.name === "RangeError");
+print(RangeError.prototype.message === "");
+print(RangeError.prototype.toString() === "RangeError");
 
-/* SyntaxError */
+
 e = new SyntaxError ();
-assert (e.name === "SyntaxError");
-assert (e.message === "");
-assert (e.toString() === "SyntaxError");
+print(e.name === "SyntaxError");
+print(e.message === "");
+print(e.toString() === "SyntaxError");
 
 e = new SyntaxError("some message");
-assert (e.name === "SyntaxError");
-assert (e.message === "some message");
-assert (e.toString() === "SyntaxError: some message");
+print(e.name === "SyntaxError");
+print(e.message === "some message");
+print(e.toString() === "SyntaxError: some message");
 
 e.name = "";
-assert (e.toString() === "some message");
+print(e.toString() === "some message");
 e.message = "";
-assert (e.toString() === "");
+print(e.toString() === "");
 
-assert (SyntaxError.prototype.toString === Error.prototype.toString);
-assert (SyntaxError.prototype.constructor === SyntaxError);
-assert (SyntaxError.prototype.name === "SyntaxError");
-assert (SyntaxError.prototype.message === "");
-assert (SyntaxError.prototype.toString() === "SyntaxError");
+print(SyntaxError.prototype.toString === Error.prototype.toString);
+print(SyntaxError.prototype.constructor === SyntaxError);
+print(SyntaxError.prototype.name === "SyntaxError");
+print(SyntaxError.prototype.message === "");
+print(SyntaxError.prototype.toString() === "SyntaxError");
 
-/* URIError */
+
 e = new URIError ();
-assert (e.name === "URIError");
-assert (e.message === "");
-assert (e.toString() === "URIError");
+print(e.name === "URIError");
+print(e.message === "");
+print(e.toString() === "URIError");
 
 e = new URIError("some message");
-assert (e.name === "URIError");
-assert (e.message === "some message");
-assert (e.toString() === "URIError: some message");
+print(e.name === "URIError");
+print(e.message === "some message");
+print(e.toString() === "URIError: some message");
 
 e.name = "";
-assert (e.toString() === "some message");
+print(e.toString() === "some message");
 e.message = "";
-assert (e.toString() === "");
+print(e.toString() === "");
 
-assert (URIError.prototype.toString === Error.prototype.toString);
-assert (URIError.prototype.constructor === URIError);
-assert (URIError.prototype.name === "URIError");
-assert (URIError.prototype.message === "");
-assert (URIError.prototype.toString() === "URIError");
+print(URIError.prototype.toString === Error.prototype.toString);
+print(URIError.prototype.constructor === URIError);
+print(URIError.prototype.name === "URIError");
+print(URIError.prototype.message === "");
+print(URIError.prototype.toString() === "URIError");
 
-/* Prototype of NativeErrors should be Error */
-assert(Object.getPrototypeOf(EvalError) === Error);
-assert(Object.getPrototypeOf(RangeError) === Error);
-assert(Object.getPrototypeOf(ReferenceError) === Error);
-assert(Object.getPrototypeOf(SyntaxError) === Error);
-assert(Object.getPrototypeOf(TypeError) === Error);
-assert(Object.getPrototypeOf(URIError) === Error);
-assert(Object.getPrototypeOf(AggregateError) === Error);
+
+print(Object.getPrototypeOf(EvalError) === Error);
+print(Object.getPrototypeOf(RangeError) === Error);
+print(Object.getPrototypeOf(ReferenceError) === Error);
+print(Object.getPrototypeOf(SyntaxError) === Error);
+print(Object.getPrototypeOf(TypeError) === Error);
+print(Object.getPrototypeOf(URIError) === Error);
+print(Object.getPrototypeOf(AggregateError) === Error);

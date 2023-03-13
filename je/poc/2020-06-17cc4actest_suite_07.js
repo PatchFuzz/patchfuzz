@@ -1,16 +1,16 @@
-// Copyright JS Foundation and other contributors, http://js.foundation
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 (function tc_07_09__002() {
   function test()
@@ -23,9 +23,9 @@
 
   var v = test();
 
-  assert(v !== 3);
+  print(v !== 3);
 
-  assert(typeof v === "undefined")
+  print(typeof v === "undefined")
 })();
 
 (function tc_07_09__008() {
@@ -37,7 +37,7 @@
     return c;
   }
 
-  assert(test() == 15);
+  print(test() == 15);
 })();
 
 (function tc_07_09__004() {
@@ -58,7 +58,7 @@
   a = b + c
           (d + e).print()
 
-  assert(a === 6);
+  print(a === 6);
 })();
 
 (function tc_07_09__005() {
@@ -67,7 +67,7 @@
   a = b
   --c
 
-  assert(a === 4 && c === 4);
+  print(a === 4 && c === 4);
 })();
 
 (function tc_07_09__007() {
@@ -87,7 +87,7 @@
     }
   }
 
-  assert(cnt == 60);
+  print(cnt == 60);
 })();
 
 (function tc_07_09__009() {
@@ -95,15 +95,15 @@
     var a, b = 3, c = 30;
     a = b + c}
 
-  assert (a == 33);
+  print(a == 33);
 })();
 
 (function tc_07_09__010() {
-  assert (glob === undefined);
+  print(glob === undefined);
 
   var glob = 34
 
-  assert (glob === 34);
+  print(glob === 34);
 })();
 
 (function tc_07_09__003() {
@@ -112,7 +112,7 @@
   a = b
   ++c
 
-  assert(a === 4 && c === 6);
+  print(a === 4 && c === 6);
 })();
 
 (function tc_07_09__001() {
@@ -137,7 +137,7 @@
     }
   }
 
-  assert(cnt == 90);
+  print(cnt == 90);
 })();
 
 (function tc_07_06_01__001() {

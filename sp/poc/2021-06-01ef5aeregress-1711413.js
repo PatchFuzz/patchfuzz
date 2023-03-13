@@ -1,4 +1,4 @@
-// Required --no-threads to crash.
+// Required --no-threads to print.
 
 enableShellAllocationMetadataBuilder();
 newGlobal({newCompartment:true});

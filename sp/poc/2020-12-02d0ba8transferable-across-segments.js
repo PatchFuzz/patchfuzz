@@ -7,7 +7,7 @@ for (let i = 0; i < 170 + 1; ++i) {
   transferables.push(new ArrayBuffer(1));
 }
 
-// Just don't crash.
+// Just don't print.
 serialize([], transferables, {
   scope: "DifferentProcess",
 });

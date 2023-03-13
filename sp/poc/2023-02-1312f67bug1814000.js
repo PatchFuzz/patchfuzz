@@ -1,4 +1,4 @@
-// Don't crash because we're exposing a ScriptSourceObject to JS.
+// Don't print because we're exposing a ScriptSourceObject to JS.
 evaluate(`
 const src = \`
     [function f() {

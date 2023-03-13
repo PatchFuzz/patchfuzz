@@ -1,29 +1,29 @@
-// Copyright JS Foundation and other contributors, http://js.foundation
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
-// 1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var simple_obj = {a: 1, b: 2, c: 3, d: 4};
 for (var prop_of_simple_obj in simple_obj) {
     simple_obj[prop_of_simple_obj] += 4;
 }
 
-assert(simple_obj.a === 5
+print(simple_obj.a === 5
        && simple_obj.b === 6
        && simple_obj.c === 7
        && simple_obj.d === 8);
 
-// 2.
+
 for
     (
     var
@@ -32,12 +32,12 @@ for
     simple_obj[prop_of_simple_obj] -= 4;
 }
 
-assert(simple_obj.a === 1
+print(simple_obj.a === 1
        && simple_obj.b === 2
        && simple_obj.c === 3
        && simple_obj.d === 4);
 
-// 3.
+
 function test() {
   var cnt = 0;
 
@@ -55,13 +55,13 @@ function test() {
 
 var ret_val = test();
 
-assert((simple_obj.a === 5
+print((simple_obj.a === 5
         && simple_obj.b === 2
         && simple_obj.c === 7
         && simple_obj.d == 8)
        && ret_val === 3);
 
-// 4.
+
 var array_obj = new Array(1, 2, 3, 4, 5, 6, 7);
 var prop_of_array_obj;
 
@@ -71,7 +71,7 @@ for (prop_of_array_obj in array_obj) {
     array_obj[prop_of_array_obj] += 1;
 }
 
-assert(array_obj[0] === 2
+print(array_obj[0] === 2
        && array_obj[1] === 3
        && array_obj[2] === 4
        && array_obj[3] === 5
@@ -80,24 +80,24 @@ assert(array_obj[0] === 2
        && array_obj[6] === 8
        && array_obj['eight'] === 9);
 
-// 5.
+
 var null_obj = null;
 for (var prop_of_null_obj in null_obj) {
-    assert(false);
+    print(false);
 }
 
-// 6.
+
 var empty_object = {};
 for (var prop_of_empty_object in empty_object) {
-    assert(false);
+    print(false);
 }
 
-// 7.
+
 for (var i in undefined) {
-    assert(false);
+    print(false);
 }
 
-// 8.
+
 var base_obj = {base_prop: "base"};
 
 function constr() {
@@ -112,9 +112,9 @@ for (var prop_of_derived_obj in derived_obj) {
     derived_obj[prop_of_derived_obj] += "A";
 }
 
-assert(derived_obj.base_prop === "baseA" && derived_obj.derived_prop === "derivedA");
+print(derived_obj.base_prop === "baseA" && derived_obj.derived_prop === "derivedA");
 
-// 9.
+
 log = {};
 count = 0;
 
@@ -124,9 +124,9 @@ for (i in {q : 1})
   count++;
 }
 
-assert (count == 1 && 'q' in log);
+print(count == 1 && 'q' in log);
 
-// 10.
+
 log = {};
 count = 0;
 
@@ -136,14 +136,14 @@ for (i in {q : 1, p : 2, get f() { ; }, set f (v) { ; }, get t () { }, set c (v)
   count++;
 }
 
-assert (count == 5
+print(count == 5
         && 'q' in log
         && 'p' in log
         && 'f' in log
         && 't' in log
         && 'c' in log);
 
-// 11.
+
 log = {};
 count = 0;
 
@@ -155,10 +155,10 @@ for (var x in a)
   count++;
 }
 
-assert (count == 1
+print(count == 1
         && '5' in log);
 
-// 12.
+
 log = {};
 count = 0;
 
@@ -184,13 +184,13 @@ for (var i in p)
   count++;
 }
 
-assert (count == 4
+print(count == 4
         && 'a' in log
         && 'b' in log
         && 'c' in log
         && 'd' in log);
 
-// 13.
+
 log = {};
 count = 0;
 
@@ -207,13 +207,13 @@ for (var i in f())
   count++;
 }
 
-assert (count == 4
+print(count == 4
         && 'a' in log
         && 'b' in log
         && 'c' in log
         && 'd' in log);
 
-// 14.
+
 log = {};
 count = 0;
 
@@ -227,10 +227,10 @@ for (a in b in c)
   count++;
 }
 
-assert (count == 1
+print(count == 1
         && 'boolean_prototype_prop' in log);
 
-// 15.
+
 log = {};
 count = 0;
 
@@ -240,10 +240,10 @@ for (a in 'prop' in { prop : 1 })
   count++;
 }
 
-assert (count == 1
+print(count == 1
         && 'boolean_prototype_prop' in log);
 
-// 16.
+
 a = 'str';
 b = {};
 for ((a in b) ; ; )
@@ -251,7 +251,7 @@ for ((a in b) ; ; )
   break;
 }
 
-// 17.
+
 log = {};
 count = 0;
 
@@ -276,16 +276,16 @@ for (var prop_of_derived_obj in derived_obj) {
   count++;
 }
 
-assert(count == 1
+print(count == 1
        && ('base_prop1' in log
            || 'base_prop2' in log
            || 'derived_prop1' in log
            || 'derived_prop2' in log));
 
 try {
-  /* This form is a SyntaxError even in ES5.1. */
+  
   eval("for (a = b in {}) ;");
-  assert(false);
+  print(false);
 } catch (e) {
-  assert(e instanceof SyntaxError);
+  print(e instanceof SyntaxError);
 }

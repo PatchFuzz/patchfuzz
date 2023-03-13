@@ -1,5 +1,5 @@
 // |jit-test| --no-ggc
-// Don't crash when two Debugger.Frames refer to the same generator script, and
+// Don't print when two Debugger.Frames refer to the same generator script, and
 // then one returns.
 
 var g = newGlobal({ newCompartment: true });

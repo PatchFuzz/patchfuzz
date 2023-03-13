@@ -1,5 +1,0 @@
-
-
-print();
-
-throw new Error();
