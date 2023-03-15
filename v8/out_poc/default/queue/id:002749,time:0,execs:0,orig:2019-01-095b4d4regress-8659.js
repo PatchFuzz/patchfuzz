@@ -1,5 +1,0 @@
-
-
-
-
-print("const [(x)] = []", SyntaxError);

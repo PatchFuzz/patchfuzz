@@ -1,4 +1,0 @@
-
-
-
-print(typeof WebAssembly, "undefined");

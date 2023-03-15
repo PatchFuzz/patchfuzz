@@ -1,9 +1,0 @@
-
-
-
-
-
-
-
-
-new WasmModuleBuilder().instantiate();

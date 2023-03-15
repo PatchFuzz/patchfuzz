@@ -1,6 +1,0 @@
-
-
-evaluate("", {
-    fileName: null
-});
-getLcovInfo();

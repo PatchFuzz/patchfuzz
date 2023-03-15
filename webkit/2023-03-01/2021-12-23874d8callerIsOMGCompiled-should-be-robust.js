@@ -1,2 +1,0 @@
-setUnhandledRejectionCallback(callerIsBBQOrOMGCompiled);
-Promise.reject();
