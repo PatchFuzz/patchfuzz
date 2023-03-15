@@ -1,0 +1,30 @@
+
+
+;
+
+var g = newGlobal({newCompartment: true});
+var dbg = Debugger(g);
+var gdbg = dbg.addDebuggee(g);
+
+const rv = [];
+
+dbg.onEnterFrame = f => {
+  rv.push("EnterFrame");
+};
+
+dbg.onNativeCall = f => {
+  rv.push(f.displayName);
+};
+
+gdbg.executeInGlobal(`
+  var x = [1,3,2];
+  x.sort((a, b) => {print(a)});
+`);
+
+printArray(rv, [
+  "EnterFrame", "sort",
+  "ArraySortCompare/<",
+  "EnterFrame", "print",
+  "ArraySortCompare/<",
+  "EnterFrame", "print",
+]);
