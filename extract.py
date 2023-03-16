@@ -1,5 +1,5 @@
 import pandas as pd
-import re,shutil,os
+import re,shutil,os,sys
 import datetime
 from utils import mkdir
 
@@ -16,6 +16,48 @@ csvpath_ch = r"D:\workspace\ch-2023-03-02.csv"
 #pf=pd.read_csv(csvpath,usecols=['hash','poc','date'],nrows=4000,squeeze=True)
 
 #print(data)
+def extrac_jsc_test(csv_path,base_path,out_path):
+    if not os.path.exists(base_path) : sys.exit("Bad target_root !")
+    testpath = os.path.join(out_path,"test",date)
+    mkdir(testpath)
+    pf=pd.read_csv(csv_path,usecols=['hash','poc','date'],squeeze=True)
+    data=pf.dropna().values.tolist()
+    num=0
+    first=""
+    last=""
+    temp=0
+    for f in data:
+        poc = re.compile('([\w/-]+.js)').findall(f[2])
+        if len(poc)>0:
+            for i in poc:
+                fn = re.compile('[\w-]+(?=.js)').search(i)
+                # print(fn)
+                # print(i)
+                if fn:
+                    fnn = f[0]+f[1][0:7]+fn.group(0)+'.js'
+                    try:
+                        shutil.copy(os.path.join(base_path,i),os.path.join(testpath,fnn))
+                    except FileNotFoundError:
+                        print(fn.group(0))
+                        # print("------------------------------------------------------------")
+                        # print("Not Found!".center(60,' '))
+                        # print(i.center(60, ' '))
+                        # print(("commit:%s"%(f[1])).center(60,' '))
+                        # print("------------------------------------------------------------")
+
+                    else:
+                        num+=1
+                        temp=f[2]
+                        last= f[0]
+                        if(num==1): first = f[0]
+                        #print(fnn)
+    print("The date of first poc:",first) 
+    print("The date of last poc:",last)   
+    print("Number of poc: ",num)
+    
+    return testpath
+
+
 def extrac_webkit_poc():
     basepath = r"D:\workspace\WebKit"
     outpath =r"D:\workspace\newpoc" + '\\webkit' +  + '\\' + date

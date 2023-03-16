@@ -62,11 +62,11 @@ def listfiles(path, dest, file_types):
                 updatefile(listpath, dest)
 
 
-def remove_comment(path, dest, file_types):
+def remove_something(path, dest, file_types):
     listfiles(path, dest, file_types)
 
 
 if __name__ == '__main__':
     src = "/data/badpoc/v8"
     dest = "/data/badpoc/classify/jsc/vm_new/"
-    remove_comment(src, dest, file_type_list)
+    remove_something(src, dest, file_type_list)
