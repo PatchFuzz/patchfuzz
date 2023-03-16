@@ -3,10 +3,11 @@ import sys,re
 from utils import export_csv
 
 # array to store dict of commit data
-commits = []
+
 
 
 def parse_je_commit(commitLines):
+    commits = []
     # dict to store commit data
     commit = {}
     # iterate lines and save
@@ -64,11 +65,12 @@ def parse_je_commit(commitLines):
         else:
             print ('ERROR: Unexpected Line: ' + nextLine)
     commits.append(commit)
+    return commits
 
 if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())
-    parse_je_commit(sys.stdin.readlines())
-    export_csv(commits,"je")
+    data=parse_je_commit(sys.stdin.readlines())
+    export_csv(data,"je")
     #print(commits)
     # print('Author'.ljust(15) + '  ' + 'Email'.ljust(20) +'  ' + 'Hash'.ljust(8) + '  ' + 'Message'.ljust(20))
     # print("=================================================================================")

@@ -1,10 +1,22 @@
 import argparse
 import pandas as pd
 import sys,os,datetime
-from .process_jsc import parse_jsc_commit
-from .utils import mkdir
-from .extract import extrac_jsc_test
-from jsc.save_jsc import remove_something
+
+from process_jsc import parse_jsc_commit
+from process_v8 import parse_v8_commit
+from process_ch import parse_ch_commit
+from process_sp import parse_sp_commit
+from process_je import parse_je_commit
+from utils import mkdir
+from extract import extract_jsc_test,extract_v8_test,extract_ch_test,extract_sp_test,extract_je_test
+from jsc.save_jsc import save_jsc
+from v8.save_v8 import save_v8
+from ch.save_ch import save_ch
+from sp.save_sp import save_sp
+from je.save_je import save_je
+
+
+
 def export_csv(export,target,dir_path):
     date = datetime.date.today().strftime('%Y-%m-%d')
     #将字典列表转换为DataFrame
@@ -37,6 +49,8 @@ def main():
     target_root = args.target_root
     file_type_list = ["js"]
     if not os.path.exists(target_root) : sys.exit("Bad target_root !")
+
+    # Start 
     match target:
         case "jsc":
             dir_path = os.path.join(out_path, "jsc")
@@ -45,18 +59,61 @@ def main():
             mkdir(poc_path)
             commits = parse_jsc_commit(sys.stdin.readlines())
             csv_path = export_csv(commits,"jsc",dir_path)
-            test_path = extrac_jsc_test(csv_path,target_root,dir_path)
-            remove_something(test_path,poc_path,file_type_list)
-            return "Bad request"
+            test_path = extract_jsc_test(csv_path,target_root,dir_path)
+            save_jsc(test_path,poc_path,file_type_list)
+
+            sys.exit("Finished!")
+
         case "v8":
-            return "Unauthorized"
+            dir_path = os.path.join(out_path, "v8")
+            poc_path = os.path.join(dir_path,"poc")
+            mkdir(dir_path)
+            mkdir(poc_path)
+            commits = parse_v8_commit(sys.stdin.readlines())
+            csv_path = export_csv(commits,"v8",dir_path)
+            test_path = extract_v8_test(csv_path,target_root,dir_path)
+            save_v8(test_path,poc_path,file_type_list)
+
+            sys.exit("Finished!")
+
         case "ch":
-            return "Forbidden"
+            dir_path = os.path.join(out_path, "ch")
+            poc_path = os.path.join(dir_path,"poc")
+            mkdir(dir_path)
+            mkdir(poc_path)
+            commits = parse_jsc_commit(sys.stdin.readlines())
+            csv_path = export_csv(commits,"ch",dir_path)
+            test_path = extract_ch_test(csv_path,target_root,dir_path)
+            save_ch(test_path,poc_path,file_type_list)
+
+            sys.exit("Finished!")
+
         case "sp":
-            return "Not found"
+            dir_path = os.path.join(out_path, "sp")
+            poc_path = os.path.join(dir_path,"poc")
+            mkdir(dir_path)
+            mkdir(poc_path)
+            commits = parse_jsc_commit(sys.stdin.readlines())
+            csv_path = export_csv(commits,"sp",dir_path)
+            test_path = extract_sp_test(csv_path,target_root,dir_path)
+            save_sp(test_path,poc_path,file_type_list)
+
+            sys.exit("Finished!")
+
         case "je":
-            return "I'm a teapot"
+            dir_path = os.path.join(out_path, "je")
+            poc_path = os.path.join(dir_path,"poc")
+            mkdir(dir_path)
+            mkdir(poc_path)
+            commits = parse_jsc_commit(sys.stdin.readlines())
+            csv_path = export_csv(commits,"je",dir_path)
+            test_path = extract_je_test(csv_path,target_root,dir_path)
+            save_je(test_path,poc_path,file_type_list)
+
+            sys.exit("Finished!")
+
         case _:
             return sys.exit("bad target")
+
 if __name__ == '__main__':
     main()

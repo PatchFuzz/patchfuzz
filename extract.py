@@ -16,7 +16,7 @@ csvpath_ch = r"D:\workspace\ch-2023-03-02.csv"
 #pf=pd.read_csv(csvpath,usecols=['hash','poc','date'],nrows=4000,squeeze=True)
 
 #print(data)
-def extrac_jsc_test(csv_path,base_path,out_path):
+def extract_jsc_test(csv_path,base_path,out_path):
     if not os.path.exists(base_path) : sys.exit("Bad target_root !")
     testpath = os.path.join(out_path,"test",date)
     mkdir(testpath)
@@ -37,8 +37,178 @@ def extrac_jsc_test(csv_path,base_path,out_path):
                     fnn = f[0]+f[1][0:7]+fn.group(0)+'.js'
                     try:
                         shutil.copy(os.path.join(base_path,i),os.path.join(testpath,fnn))
-                    except FileNotFoundError:
-                        print(fn.group(0))
+                    except FileNotFoundError as e:
+                        pass
+                        #print(e)
+                        # print("------------------------------------------------------------")
+                        # print("Not Found!".center(60,' '))
+                        # print(i.center(60, ' '))
+                        # print(("commit:%s"%(f[1])).center(60,' '))
+                        # print("------------------------------------------------------------")
+
+                    else:
+                        num+=1
+                        temp=f[2]
+                        last= f[0]
+                        if(num==1): first = f[0]
+                        #print(fnn)
+    print("The date of first poc:",first) 
+    print("The date of last poc:",last)   
+    print("Number of poc: ",num)
+    
+    return testpath
+
+def extract_v8_test(csv_path,base_path,out_path):
+    if not os.path.exists(base_path) : sys.exit("Bad target_root !")
+    testpath = os.path.join(out_path,"test",date)
+    mkdir(testpath)
+    pf=pd.read_csv(csv_path,usecols=['hash','poc','date'],squeeze=True)
+    data=pf.dropna().values.tolist()
+    num=0
+    first=""
+    last=""
+    temp=0
+    for f in data:
+        poc = re.compile('([\w/-]+.js)').findall(f[2])
+        if len(poc)>0:
+            for i in poc:
+                fn = re.compile('[\w-]+(?=.js)').search(i)
+                # print(fn)
+                # print(i)
+                if fn:
+                    if bool(re.match('regress', fn.group(0), re.IGNORECASE)):
+                        fnn = f[0] + f[1][0:5] + fn.group(0) + '.js'
+
+                        try:
+                            shutil.copy(os.path.join(base_path,i),os.path.join(testpath,fnn))
+                        except FileNotFoundError as e:
+                            pass
+                            #print(e)
+                            # print("------------------------------------------------------------")
+                            # print("Not Found!".center(60,' '))
+                            # print(i.center(60, ' '))
+                            # print(("commit:%s"%(f[1])).center(60,' '))
+                            # print("------------------------------------------------------------")
+
+                        else:
+                            num+=1
+                            temp=f[2]
+                            last= f[0]
+                            if(num==1): first = f[0]
+                        #print(fnn)
+                    else:
+                        pass
+    print("The date of first poc:",first) 
+    print("The date of last poc:",last)   
+    print("Number of poc: ",num)
+    
+    return testpath
+def extract_ch_test(csv_path,base_path,out_path):
+    if not os.path.exists(base_path) : sys.exit("Bad target_root !")
+    testpath = os.path.join(out_path,"test",date)
+    mkdir(testpath)
+    pf=pd.read_csv(csv_path,usecols=['hash','poc','date'],squeeze=True)
+    data=pf.dropna().values.tolist()
+    num=0
+    first=""
+    last=""
+    temp=0
+    for f in data:
+        poc = re.compile('([\w/-]+.js)').findall(f[2])
+        if len(poc)>0:
+            for i in poc:
+                fn = re.compile('[\w-]+(?=.js)').search(i)
+                # print(fn)
+                # print(i)
+                if fn:
+                    fnn = f[0]+f[1][0:7]+fn.group(0)+'.js'
+                    try:
+                        shutil.copy(os.path.join(base_path,i),os.path.join(testpath,fnn))
+                    except FileNotFoundError as e:
+                        pass
+                        #print(e)
+                        # print("------------------------------------------------------------")
+                        # print("Not Found!".center(60,' '))
+                        # print(i.center(60, ' '))
+                        # print(("commit:%s"%(f[1])).center(60,' '))
+                        # print("------------------------------------------------------------")
+
+                    else:
+                        num+=1
+                        temp=f[2]
+                        last= f[0]
+                        if(num==1): first = f[0]
+                        #print(fnn)
+    print("The date of first poc:",first) 
+    print("The date of last poc:",last)   
+    print("Number of poc: ",num)
+    
+    return testpath
+def extract_sp_test(csv_path,base_path,out_path):
+    if not os.path.exists(base_path) : sys.exit("Bad target_root !")
+    testpath = os.path.join(out_path,"test",date)
+    mkdir(testpath)
+    pf=pd.read_csv(csv_path,usecols=['hash','poc','date'],squeeze=True)
+    data=pf.dropna().values.tolist()
+    num=0
+    first=""
+    last=""
+    temp=0
+    for f in data:
+        poc = re.compile('([\w/-]+.js)').findall(f[2])
+        if len(poc)>0:
+            for i in poc:
+                fn = re.compile('[\w-]+(?=.js)').search(i)
+                # print(fn)
+                # print(i)
+                if fn:
+                    fnn = f[0]+f[1][0:7]+fn.group(0)+'.js'
+                    try:
+                        shutil.copy(os.path.join(base_path,i),os.path.join(testpath,fnn))
+                    except FileNotFoundError as e:
+                        pass
+                        #print(e)
+                        # print("------------------------------------------------------------")
+                        # print("Not Found!".center(60,' '))
+                        # print(i.center(60, ' '))
+                        # print(("commit:%s"%(f[1])).center(60,' '))
+                        # print("------------------------------------------------------------")
+
+                    else:
+                        num+=1
+                        temp=f[2]
+                        last= f[0]
+                        if(num==1): first = f[0]
+                        #print(fnn)
+    print("The date of first poc:",first) 
+    print("The date of last poc:",last)   
+    print("Number of poc: ",num)
+    
+    return testpath
+def extract_je_test(csv_path,base_path,out_path):
+    if not os.path.exists(base_path) : sys.exit("Bad target_root !")
+    testpath = os.path.join(out_path,"test",date)
+    mkdir(testpath)
+    pf=pd.read_csv(csv_path,usecols=['hash','poc','date'],squeeze=True)
+    data=pf.dropna().values.tolist()
+    num=0
+    first=""
+    last=""
+    temp=0
+    for f in data:
+        poc = re.compile('([\w/-]+.js)').findall(f[2])
+        if len(poc)>0:
+            for i in poc:
+                fn = re.compile('[\w-]+(?=.js)').search(i)
+                # print(fn)
+                # print(i)
+                if fn:
+                    fnn = f[0]+f[1][0:7]+fn.group(0)+'.js'
+                    try:
+                        shutil.copy(os.path.join(base_path,i),os.path.join(testpath,fnn))
+                    except FileNotFoundError as e:
+                        pass
+                        #print(e)
                         # print("------------------------------------------------------------")
                         # print("Not Found!".center(60,' '))
                         # print(i.center(60, ' '))
@@ -58,7 +228,23 @@ def extrac_jsc_test(csv_path,base_path,out_path):
     return testpath
 
 
-def extrac_webkit_poc():
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# codes below are used for local test
+def extract_webkit_poc():
     basepath = r"D:\workspace\WebKit"
     outpath =r"D:\workspace\newpoc" + '\\webkit' +  + '\\' + date
     mkdir(outpath)
@@ -96,7 +282,7 @@ def extrac_webkit_poc():
     print("The date of first poc:",first) 
     print("The date of last poc:",last)   
     print("Number of poc: ",num)
-def extrac_v8_poc():
+def extract_v8_poc():
     basepath = r"D:\workspace\v8"
     outpath =r"D:\workspace\newpoc" + '\\v8\\' + date
     mkdir(outpath)
@@ -139,7 +325,7 @@ def extrac_v8_poc():
     print("The date of last poc:",last)   
     print("Number of poc: ",num)
 
-def extrac_sp_poc():
+def extract_sp_poc():
     basepath = r"D:\workspace\gecko-dev"
     outpath =r"D:\workspace\newpoc" + '\\sp\\' + date
     mkdir(outpath)
@@ -180,7 +366,7 @@ def extrac_sp_poc():
     print("The date of last poc:",last)   
     print("Number of poc: ",num)
 
-def extrac_ch_poc():
+def extract_ch_poc():
     basepath = r"D:\workspace\ChakraCore"
     outpath =r"D:\workspace\newpoc" + '\\ch\\' + date
     mkdir(outpath)
@@ -219,7 +405,7 @@ def extrac_ch_poc():
     print("The date of last poc:",last)   
     print("Number of poc: ",num)
 
-def extrac_je_poc():
+def extract_je_poc():
     basepath = r"D:\workspace\jerryscript"
     outpath =r"D:\workspace\newpoc" + '\\je\\' + date
     mkdir(outpath)
@@ -259,8 +445,8 @@ def extrac_je_poc():
     print("Number of poc: ",num)
 
 if __name__ == '__main__':
-    extrac_webkit_poc()
-    extrac_v8_poc()
-    extrac_ch_poc()
-    extrac_sp_poc()
-    extrac_je_poc()
+    extract_webkit_poc()
+    extract_v8_poc()
+    extract_ch_poc()
+    extract_sp_poc()
+    extract_je_poc()

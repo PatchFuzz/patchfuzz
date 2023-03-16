@@ -7,7 +7,7 @@ C_Rule = "(?<!:)\\/\\/.*|\\/\\*(\\s|.)*?\\*\\/"
 file_type_list = ["js"]
 
 
-def updatefile(path, dest):
+def updatefile(path, dest,filename):
     print(path)
     string = ""
     fw = open(path, "r")
@@ -38,10 +38,11 @@ def updatefile(path, dest):
 
 
     
-    #    string = re.sub("test\\(", "print(", string)
-    # fw = open(dest + str(uuid.uuid1()) + ".js", "w");
-    fw = open(path, "w")
+    # string = re.sub("test\\(", "print(", string)
+    # fw = open(path, "w")
+    fw = open(os.path.join(dest,filename), "w")
     fw.write(string)
+    fw.close()
 
 
 def listfiles(path, dest, file_types):
@@ -57,14 +58,14 @@ def listfiles(path, dest, file_types):
             # print prefx
             if prefx in file_types:
                 print(listpath)
-                updatefile(listpath, dest)
+                updatefile(listpath, dest,file)
 
 
-def remove_something(path, dest, file_types):
+def save_sp(path, dest, file_types):
     listfiles(path, dest, file_types)
 
 
 if __name__ == '__main__':
     src = "/data/patchFuzz/sp/poc"
     dest = "/data/badpoc/classify/jsc/vm_new/"
-    remove_something(src, dest, file_type_list)
+    save_sp(src, dest, file_type_list)

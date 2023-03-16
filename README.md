@@ -3,9 +3,7 @@ A script for extracting the latest security-related samples from  Webkit stress 
 # Usage
 ## JavascriptCore
 cd WebKit<br>
-git log --date=short  | python ..\pocgetter\process_webkit.py<br>
-cd Webkit<br>
-python extract.py
+git log --date=short --name-status --before=2023-3-16 --after=2023-1-1 . | python  D:\workspace\patchFuzz\main.py  D:\workspace\patchFuzz\zxw jsc D:\workspace\Webkit <br>
 
 ## V8
 cd v8<br>

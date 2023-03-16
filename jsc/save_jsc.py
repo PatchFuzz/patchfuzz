@@ -32,9 +32,9 @@ def updatefile(path, dest,filename):
 
 
     
-    #    string = re.sub("test\\(", "print(", string)
-    fw = open(os.path.join(dest,filename), "w");
-    #fw = open(path, "w")
+    # string = re.sub("test\\(", "print(", string)
+    # fw = open(path, "w")
+    fw = open(os.path.join(dest,filename), "w")
     fw.write(string)
     fw.close()
 
@@ -53,12 +53,12 @@ def listfiles(path, dest, file_types):
                 updatefile(listpath, dest,file)
 
 
-def remove_something(path, dest, file_types):
+def save_jsc(path, dest, file_types):
     listfiles(path, dest, file_types)
 
 
 if __name__ == '__main__':
     src = "/data/newpoc/webkit/bad"
     dest = "/data/badpoc/classify/jsc/vm_new/"
-    remove_something(src,file_type_list)
+    save_jsc(src,file_type_list)
 
