@@ -8,7 +8,7 @@ file_type_list = ["js"]
 
 
 def updatefile(path, dest,filename):
-    print(path)
+    #print(path)
     string = ""
     fw = open(path, "r")
     try:
@@ -57,7 +57,7 @@ def updatefile(path, dest,filename):
 def listfiles(path, dest, file_types):
     for file in os.listdir(path):
         listpath =os.path.join(path, file)
-        print(listpath)
+        #print(listpath)
         if os.path.isdir(listpath):
             listfiles(listpath, dest, file_types)
         elif os.path.isfile(listpath):
@@ -66,7 +66,7 @@ def listfiles(path, dest, file_types):
             prefx = splitlist[m - 1]
             # print prefx
             if prefx in file_types:
-                print(listpath)
+                #print(listpath)
                 updatefile(listpath, dest,file)
 
 

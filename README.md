@@ -1,5 +1,5 @@
 # PocGetter
-A script for extracting the latest security-related samples from  Webkit stress test set
+A script for extracting the latest security-related samples from  Webkit/V8/ChakraCore/SpiderMonkey/JerryScript stress test set
 # Usage
 ## JavascriptCore
 cd WebKit<br>
