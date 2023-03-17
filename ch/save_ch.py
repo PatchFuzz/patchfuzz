@@ -2,13 +2,15 @@ import glob
 import os
 import re
 import uuid
+from func_timeout import func_set_timeout, FunctionTimedOut
+
 
 C_Rule = "(?<!:)\\/\\/.*|\\/\\*(\\s|.)*?\\*\\/"
 file_type_list = ["js"]
 
-
+@func_set_timeout(2)
 def updatefile(path, dest,filename):
-    #print(path)
+    print(path)
     string = ""
     fw = open(path, "r")
     try:
@@ -16,9 +18,8 @@ def updatefile(path, dest,filename):
     except UnicodeDecodeError:
         print("UnicodeDecodeError")
     fw.close()
-    print("zxw")
+    
     string = re.sub(C_Rule, "", string)
-    print("zxw")
     string = re.sub("this.WScript.LoadScriptFile", "print",string)
     string = re.sub("this.WScript", "print",string)
     string = re.sub("WScript ", "print",string)
@@ -67,7 +68,12 @@ def listfiles(path, dest, file_types):
             # print prefx
             if prefx in file_types:
                 #print(listpath)
-                updatefile(listpath, dest,file)
+                try:
+                    updatefile(listpath, dest,file)
+                except FunctionTimedOut as e:
+                    print('timeout:', file)
+
+                
 
 
 def save_ch(path, dest, file_types):

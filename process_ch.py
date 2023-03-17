@@ -46,7 +46,7 @@ def parse_ch_commit(commitLines):
                 if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
 
 
-            elif bool(re.match('fix', nextLine.strip(), re.IGNORECASE)):
+            elif bool(re.search('fix', nextLine.strip(), re.IGNORECASE)):
                 commit['ctype'] = "bug"
                 component = re.compile('Fix (#\d+)').match(nextLine.strip())
                 if component: commit['component'] = component.group(1)
