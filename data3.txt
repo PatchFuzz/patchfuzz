@@ -11,8 +11,8 @@ assert.sameValue(Math.log(-0.000000000000001), NaN, "-0.000000000000001");
 assert.sameValue(Math.log(-1), NaN, "-1");
 assert.sameValue(Math.log(-Infinity), NaN, "-Infinity");
 
-
----------------------------------------------------------// Copyright (C) 2022 Igalia, S.L. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2022 Igalia, S.L. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -40,8 +40,8 @@ TemporalHelpers.assertPlainDateTime(
   "optional parts (no time part)"
 );
 
-
----------------------------------------------------------// Copyright (C) 2018 Bloomberg LP. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2018 Bloomberg LP. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -56,8 +56,8 @@ var dtm = Temporal.PlainDateTime.from("2000-01-01T12:00");
 assert.sameValue(zone.getOffsetNanosecondsFor(inst), 1172000000000);
 assert.sameValue(`${ zone.getInstantFor(dtm) }`, "2000-01-01T11:40:28Z");
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dstr-binding-for-await/obj-ptrn-prop-id.case
 // - src/dstr-binding-for-await/default/for-await-of-async-gen-var.template
 /*---
@@ -117,8 +117,8 @@ fn().next()
   .then($DONE, $DONE);
 
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dstr-binding-for-await/obj-ptrn-id-init-fn-name-cover.case
 // - src/dstr-binding-for-await/default/for-await-of-async-func-var.template
 /*---
@@ -182,8 +182,8 @@ fn()
   .then($DONE, $DONE);
 
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -208,8 +208,8 @@ if (__instance.substring(Math.PI, -10) !== "[ob") {
 //
 //////////////////////////////////////////////////////////////////////////////
 
-
----------------------------------------------------------// Copyright (C) 2016 the V8 project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2016 the V8 project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 /*---
 esid: sec-arraybuffer-length
@@ -244,8 +244,8 @@ assert.sameValue(view.getUint8(6), 0, 'index 6');
 assert.sameValue(view.getUint8(7), 0, 'index 7');
 assert.sameValue(view.getUint8(8), 0, 'index 8');
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/identifier-names/this-escaped.case
 // - src/identifier-names/default/member-expr.template
 /*---
@@ -268,8 +268,8 @@ obj.th\u0069s = 42;
 
 assert.sameValue(obj['this'], 42, 'property exists');
 
-
----------------------------------------------------------// Copyright (C) 2021 André Bargull. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2021 André Bargull. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -326,8 +326,8 @@ for (let collation of collations) {
 assert(!collations.includes("standard"), "Mustn't include the 'standard' collation type.");
 assert(!collations.includes("search"), "Mustn't include the 'search' collation type.");
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/class-elements/private-static-generator-method-name.case
 // - src/class-elements/default/cls-decl.template
 /*---
@@ -388,8 +388,8 @@ class C {
 
 assert.sameValue(C.getPrivateMethod().name, "#method");
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dstr-binding/obj-ptrn-empty.case
 // - src/dstr-binding/default/cls-decl-async-gen-meth-static.template
 /*---
@@ -456,8 +456,8 @@ C.method(obj).next().then(() => {
     assert.sameValue(callCount, 1, 'invoked exactly once');    
 }).then($DONE, $DONE);
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/statementList/block-with-labels.case
 // - src/statementList/default/eval-class-declaration.template
 /*---
@@ -496,8 +496,8 @@ var result = eval('class C {}{x: 42};');
 
 assert.sameValue(result, 42, 'it does not evaluate to an Object with the property x');
 
-
----------------------------------------------------------// Copyright (C) 2016 the V8 project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2016 the V8 project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 /*---
 esid: sec-for-in-and-for-of-statements-runtime-semantics-labelledevaluation
@@ -543,8 +543,8 @@ assert.sameValue(probeExpr(), 2, 'reference from AssignmentExpression');
 assert.sameValue(probeBody(), 2, 'reference from statement body');
 assert.sameValue(x, 2, 'reference following statement');
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -556,8 +556,8 @@ description: >
 
 assert.sameValue([1, 2, 3, 4].lastIndexOf(2, -4), -1, '[1, 2, 3, 4].lastIndexOf(2, -4)');
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -586,8 +586,8 @@ assert.throws(TypeError, function() {
 });
 assert(accessed, 'accessed !== true');
 
-
----------------------------------------------------------// Copyright (C) 2016 the V8 project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2016 the V8 project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 /*---
 esid: sec-%typedarray%.prototype.join
@@ -624,8 +624,8 @@ testWithTypedArrayConstructors(function(TA) {
   });
 });
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -659,8 +659,8 @@ assert.sameValue(
   '(new Number(Number.NEGATIVE_INFINITY)).toString(34) must return "-Infinity"'
 );
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -675,8 +675,8 @@ if ((NUMBER = Number, "MAX_VALUE") in NUMBER !== true) {
   throw new Test262Error('#1: (NUMBER = Number, "MAX_VALUE") in NUMBER !== true');
 }
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -698,8 +698,8 @@ assert.throws(TypeError, function() {
 });
 assert.sameValue(stepFiveOccurs, false, 'stepFiveOccurs');
 
-
----------------------------------------------------------// Copyright (C) 2016 the V8 project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2016 the V8 project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 /*---
 esid: sec-generator-function-definitions-runtime-semantics-evaluation
@@ -743,8 +743,8 @@ assert.sameValue(result.value, undefined, 'iteration value');
 assert.sameValue(result.done, true, 'iteration status');
 assert.sameValue(caught, thrown, 'error value');
 
-
----------------------------------------------------------// Copyright (C) 2015 André Bargull. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2015 André Bargull. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -784,8 +784,8 @@ assert.throws(TypeError, function() {
   base[prop] <<= expr();
 });
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -843,8 +843,8 @@ if (errorCount > 0) {
   throw new Test262Error('Total error: ' + errorCount + ' bad Unicode character in ' + count + ' ');
 }
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -877,8 +877,8 @@ Array.prototype.forEach.call(child, callbackfn);
 
 assert.sameValue(accessed, false, 'accessed');
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -895,8 +895,8 @@ assert.sameValue(
 
 assert.sameValue(Date.prototype.getHours.length, 0, 'The value of Date.prototype.getHours.length is expected to be 0');
 
-
----------------------------------------------------------// Copyright 2021 the V8 project authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2021 the V8 project authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -930,8 +930,8 @@ class C {
   }
 }
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -960,8 +960,8 @@ for (var i = 0; i < 100; i++)
   }
 }
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dstr-binding/ary-ptrn-elision.case
 // - src/dstr-binding/default/cls-decl-private-gen-meth-static-dflt.template
 /*---
@@ -1065,8 +1065,8 @@ class C {
 C.method().next();
 assert.sameValue(callCount, 1, 'method invoked exactly once');
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -1078,8 +1078,8 @@ description: >
 
         Function('var arguments;');
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/computed-property-names/computed-property-name-from-numeric-literal.case
 // - src/computed-property-names/evaluation/class-expression.template
 /*---
@@ -1144,8 +1144,8 @@ assert.sameValue(
   2
 );
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dstr-binding/obj-ptrn-rest-val-obj.case
 // - src/dstr-binding/default/cls-decl-private-gen-meth-dflt.template
 /*---
@@ -1237,8 +1237,8 @@ class C {
 new C().method().next();
 assert.sameValue(callCount, 1, 'method invoked exactly once');
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -1307,8 +1307,8 @@ verifyEnumerable(obj, "foo1");
 
 verifyNotConfigurable(obj, "foo1");
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -1329,8 +1329,8 @@ Object.defineProperties(arr, {
 
 assert.sameValue(arr.length, 0, 'arr.length');
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/function-forms/forbidden-ext-indirect-access-prop-caller.case
 // - src/function-forms/forbidden-extensions/bullet-two/cls-decl-async-meth-static.template
 /*---
@@ -1395,8 +1395,8 @@ C.method()
     assert.sameValue(callCount, 1, 'function body evaluated');
   }, $DONE).then($DONE, $DONE);
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/identifier-names/class-escaped.case
 // - src/identifier-names/default/arrow-fn-assignment-identifier.template
 /*---
@@ -1437,8 +1437,8 @@ $DONOTEVALUATE();
 
 var x = ({ cl\u0061ss }) => {};
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/class-elements/private-async-method-name.case
 // - src/class-elements/default/cls-decl.template
 /*---
@@ -1498,8 +1498,8 @@ class C {
 let c = new C();
 assert.sameValue(c.getPrivateMethod().name, "#method");
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dstr-binding/ary-ptrn-elem-ary-elem-iter.case
 // - src/dstr-binding/default/cls-decl-async-gen-meth-static-dflt.template
 /*---
@@ -1569,8 +1569,8 @@ C.method().next().then(() => {
     assert.sameValue(callCount, 1, 'invoked exactly once');    
 }).then($DONE, $DONE);
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dstr-binding/obj-ptrn-id-init-unresolvable.case
 // - src/dstr-binding/error/cls-decl-gen-meth.template
 /*---
@@ -1657,8 +1657,8 @@ assert.throws(ReferenceError, function() {
   c.method({});
 });
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -1670,8 +1670,8 @@ var str = "initialValue is present";
 
 assert.sameValue([].reduceRight(function() {}, str), str, '[].reduceRight(function () { }, str)');
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dstr-binding/ary-name-iter-val.case
 // - src/dstr-binding/default/async-gen-func-named-expr.template
 /*---
@@ -1724,8 +1724,8 @@ f([1, 2, 3]).next().then(() => {
     assert.sameValue(callCount, 1, 'invoked exactly once');
 }).then($DONE, $DONE);
 
-
----------------------------------------------------------// Copyright (C) 2016 the V8 project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2016 the V8 project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 /*---
 esid: sec-%typedarray%.prototype.filter
@@ -1765,8 +1765,8 @@ testWithTypedArrayConstructors(function(TA) {
   assert.sameValue(before, true, "all callbackfn called before");
 });
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -1781,8 +1781,8 @@ function testcase() {
  }
 testcase();
 
-
----------------------------------------------------------// Copyright (C) 2021 the V8 project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2021 the V8 project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 /*---
 esid: sec-temporal.calendar.prototype.datefromfields
@@ -1838,8 +1838,8 @@ assert.throws(TypeError, () => cal.dateFromFields({
   month: 12
 }), 'cal.dateFromFields({year: 2021, month: 12}) throws a TypeError exception');
 
-
----------------------------------------------------------// Copyright (C) 2015 the V8 project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2015 the V8 project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 /*---
 es6id: 21.1.3.6
@@ -1875,8 +1875,8 @@ assert.sameValue(
   'str.endsWith("!", 1) === false'
 );
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dstr-binding/ary-ptrn-elem-id-init-exhausted.case
 // - src/dstr-binding/default/cls-decl-async-gen-meth.template
 /*---
@@ -1944,8 +1944,8 @@ new C().method([]).next().then(() => {
     assert.sameValue(callCount, 1, 'invoked exactly once');    
 }).then($DONE, $DONE);
 
-
----------------------------------------------------------// Copyright (C) 2016 the V8 project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2016 the V8 project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 /*---
 description: Abrupt completion from module evaluation is reported
@@ -1965,8 +1965,8 @@ flags: [module]
 
 throw new Test262Error();
 
-
----------------------------------------------------------// Copyright (C) 2015 the V8 project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2015 the V8 project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 /*---
 es6id: 21.1.2.4
@@ -1988,8 +1988,8 @@ var result = String.raw({
 
 assert.sameValue(result, '');
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/assignment-target-type/yieldexpression-1.case
 // - src/assignment-target-type/invalid/parenthesized.template
 /*---
@@ -2013,8 +2013,8 @@ $DONOTEVALUATE();
 
 (yield * x) = 1;
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -2046,8 +2046,8 @@ assert.sameValue(desc1.writable, true, 'desc1.writable');
 assert.sameValue(obj.prop, 2010, 'obj.prop');
 assert.sameValue(desc2.writable, false, 'desc2.writable');
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -2072,8 +2072,8 @@ desc.get = "overwriteGetProperty";
 
 assert.sameValue(desc.get, "overwriteGetProperty", 'desc.get');
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dstr-assignment-for-await/obj-prop-elem-init-fn-name-fn.case
 // - src/dstr-assignment-for-await/default/async-gen-decl.template
 /*---
@@ -2131,8 +2131,8 @@ promise
   .then(() => assert.sameValue(iterCount, 1, 'iteration occurred as expected'), $DONE)
   .then($DONE, $DONE);
 
-
----------------------------------------------------------// Copyright (C) 2018 Mathias Bynens. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2018 Mathias Bynens. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -4214,8 +4214,8 @@ const reduced = array.reduce((acc, element) => {
 }, '');
 assert.sameValue(reduced, 'DGBEFHACIJK');
 
-
----------------------------------------------------------// Copyright (C) 2018 Leo Balter.  All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2018 Leo Balter.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -4285,8 +4285,8 @@ assert.sameValue(
     'Expected matching code points, but received: ' + errors.join(',')
 );
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dynamic-import/nested-imports.case
 // - src/dynamic-import/syntax/valid/nested-block-labeled.template
 /*---
@@ -4314,8 +4314,8 @@ label: {
   import(import(import('./empty_FIXTURE.js')));
 };
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -4361,8 +4361,8 @@ try {
   assert(obj.hasOwnProperty("prop"));
 }
 
-
----------------------------------------------------------// Copyright 2019 Google, Inc.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2019 Google, Inc.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 /*---
 esid: prod-OptionalExpression
@@ -4413,8 +4413,8 @@ assert.sameValue(13, obj?.b.val);
 // OptionalChain: OptionalChain Arguments
 assert.sameValue(20, obj?.c(10));
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -4431,8 +4431,8 @@ assert.sameValue(desc.writable, true, 'desc.writable');
 assert.sameValue(desc.enumerable, false, 'desc.enumerable');
 assert.sameValue(desc.configurable, true, 'desc.configurable');
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -4453,8 +4453,8 @@ for (var x in Date.prototype.toTimeString) {
 
 // TODO: Convert to verifyProperty() format.
 
-
----------------------------------------------------------// Copyright (C) 2021 the V8 project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2021 the V8 project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 /*---
 esid: sec-sharedarraybuffer.prototype.grow
@@ -4502,8 +4502,8 @@ assert.sameValue(result, undefined, 'normal completion value');
 // by the host-defined abstract operation, so they are not asserted in this
 // test.
 
-
----------------------------------------------------------// Copyright (C) 2015 the V8 project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2015 the V8 project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 /*---
 esid: sec-get-map.prototype.size
@@ -4534,8 +4534,8 @@ assert.sameValue(
   'The value of `map.size` is `0`, after executing `map.clear()`'
 );
 
-
----------------------------------------------------------// Copyright (C) 2016 The V8 Project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2016 The V8 Project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -4574,8 +4574,8 @@ assert.sameValue((39).toPrecision(undefined), "39");
 assert.sameValue(Number.prototype.toPrecision(), "0");
 assert.sameValue((42).toPrecision(), "42");
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -4597,8 +4597,8 @@ var newFunc = Function.prototype.bind.call(func, obj);
 
 assert(newFunc(1), 'newFunc(1) !== true');
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -4691,8 +4691,8 @@ assert(
   'isEqual(Date(null), (new Date()).toString()) must return true'
 );
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -4728,8 +4728,8 @@ if (String.prototype.lastIndexOf.length !== __obj) {
 //
 //////////////////////////////////////////////////////////////////////////////
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -4762,8 +4762,8 @@ catch (e) {
   }
 }
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dstr-binding/obj-ptrn-prop-id.case
 // - src/dstr-binding/default/cls-decl-meth.template
 /*---
@@ -4843,8 +4843,8 @@ class C {
 new C().method({ x: 23 });
 assert.sameValue(callCount, 1, 'method invoked exactly once');
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/annex-b-fns/eval-global-existing-fn-update.case
 // - src/annex-b-fns/eval-global/indirect-if-stmt-else-decl.template
 /*---
@@ -4885,8 +4885,8 @@ info: |
   }'
 );
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -4925,8 +4925,8 @@ if ("1" >> "x" !== 1) {
   throw new Test262Error('#6: "1" >> "x" === 1. Actual: ' + ("1" >> "x"));
 }
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -4945,8 +4945,8 @@ try {
 
 // TODO: Convert to assert.throws() format.
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -5007,8 +5007,8 @@ if (isNaN(1 / "x") !== true) {
   throw new Test262Error('#10: 1 / "x" === Not-a-Number. Actual: ' + (1 / "x"));
 }
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -5025,8 +5025,8 @@ assert.sameValue(desc.writable, true, 'desc.writable');
 assert.sameValue(desc.enumerable, false, 'desc.enumerable');
 assert.sameValue(desc.configurable, true, 'desc.configurable');
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/direct-eval-code/declare-arguments.case
 // - src/direct-eval-code/default/gen-func-decl/a-preceding-parameter-is-named-arguments.template
 /*---
@@ -5046,8 +5046,8 @@ assert.throws(SyntaxError, f);
 
 assert.sameValue("arguments" in this, false, "No global 'arguments' binding");
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -5072,8 +5072,8 @@ obj.property = "overrideData";
 assert(obj.hasOwnProperty("property"), 'obj.hasOwnProperty("property") !== true');
 assert.sameValue(data, "overrideData", 'data');
 
-
----------------------------------------------------------// Copyright (C) 2016 the V8 project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2016 the V8 project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 /*---
 description: Resolving with a non-thenable object value from a rejected promise
@@ -5131,8 +5131,8 @@ p2.then(function(value) {
   $DONE('The promise should not be rejected.');
 });
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -5163,8 +5163,8 @@ if (x!==1 || y!==2 || a!=="AB" || b!=="SAM") {
 //
 //////////////////////////////////////////////////////////////////////////////
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -5181,8 +5181,8 @@ assert.sameValue(desc.writable, true, 'desc.writable');
 assert.sameValue(desc.enumerable, false, 'desc.enumerable');
 assert.sameValue(desc.configurable, true, 'desc.configurable');
 
-
----------------------------------------------------------// Copyright (C) 2020 André Bargull. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2020 André Bargull. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -5255,8 +5255,8 @@ for (let [alias, name] of Object.entries(testData)) {
   assert.sameValue(result[0], canonical);
 }
 
-
----------------------------------------------------------// Copyright (C) 2015 the V8 project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2015 the V8 project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -5280,8 +5280,8 @@ $DONOTEVALUATE();
 
 0o;
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -5295,8 +5295,8 @@ assert.throws(SyntaxError, function() {
   var regExpObj = new RegExp('\\');
 });
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -5315,8 +5315,8 @@ for (var x in Date.prototype) {
 
 // TODO: Convert to verifyProperty() format.
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -5339,8 +5339,8 @@ assert.sameValue(
 
 // TODO: Convert to verifyProperty() format.
 
-
----------------------------------------------------------// Copyright (C) 2016 the V8 project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2016 the V8 project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 /*---
 esid: sec-array-exotic-objects-defineownproperty-p-desc
@@ -5362,8 +5362,8 @@ assert.throws(RangeError, function() {
   array.length = 4294967296;
 }, 'array.length = 4294967296 throws a RangeError exception');
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -5388,8 +5388,8 @@ for (var prop in obj) {
 
 assert.sameValue(accessed, false, 'accessed');
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dstr-binding/ary-ptrn-elem-id-iter-complete.case
 // - src/dstr-binding/default/cls-decl-private-meth-dflt.template
 /*---
@@ -5479,8 +5479,8 @@ class C {
 new C().method();
 assert.sameValue(callCount, 1, 'method invoked exactly once');
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/top-level-await/await-expr-this.case
 // - src/top-level-await/syntax/if-block.template
 /*---
@@ -5531,8 +5531,8 @@ if (true) {
   await this;
 }
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -5546,8 +5546,8 @@ var b = Object.isFrozen(Date.prototype);
 
 assert.sameValue(b, false, 'b');
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dstr-binding-for-await/ary-ptrn-elem-id-init-fn-name-gen.case
 // - src/dstr-binding-for-await/default/for-await-of-async-gen-const-async.template
 /*---
@@ -5617,8 +5617,8 @@ fn().next()
   .then(() => assert.sameValue(iterCount, 1, 'iteration occurred as expected'), $DONE)
   .then($DONE, $DONE);
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/class-elements/grammar-static-private-gen-meth-constructor.case
 // - src/class-elements/syntax/invalid/cls-decl-elements-invalid-syntax.template
 /*---
@@ -5644,8 +5644,8 @@ class C {
   static * #constructor() {}
 }
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -5671,8 +5671,8 @@ assert.sameValue(
 assert.sameValue(__split.length, 1, 'The value of __split.length is 1');
 assert.sameValue(__split[0], "", 'The value of __split[0] is ""');
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dstr-binding/ary-ptrn-elem-ary-empty-init.case
 // - src/dstr-binding/default/cls-decl-gen-meth-dflt.template
 /*---
@@ -5761,8 +5761,8 @@ class C {
 new C().method().next();
 assert.sameValue(callCount, 1, 'method invoked exactly once');
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/async-generators/yield-star-getiter-async-returns-number-throw.case
 // - src/async-generators/default/async-class-decl-private-method.template
 /*---
@@ -5870,8 +5870,8 @@ assert(
   "#gen does not appear as an own property on C instance"
 );
 
-
----------------------------------------------------------// Copyright (C) 2015 the V8 project authors. All rights reserved.
+---------------------------------------------------------
+// Copyright (C) 2015 the V8 project authors. All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 /*---
 esid: sec-map.prototype.forEach
@@ -5907,8 +5907,8 @@ assert.sameValue(_this[0], undefined);
 assert.sameValue(_this[1], undefined);
 assert.sameValue(_this[2], undefined);
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/function-forms/dflt-params-ref-self.case
 // - src/function-forms/error/func-decl.template
 /*---
@@ -5971,8 +5971,8 @@ assert.throws(ReferenceError, function() {
 });
 assert.sameValue(callCount, 0, 'function body not evaluated');
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dstr-binding/ary-ptrn-elem-id-init-throws.case
 // - src/dstr-binding/error/cls-decl-async-gen-meth.template
 /*---
@@ -6036,8 +6036,8 @@ assert.throws(Test262Error, function() {
   method([undefined]);
 });
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -6072,8 +6072,8 @@ arr.reduce(callbackfn);
 assert(testResult, 'testResult !== true');
 assert(accessed, 'accessed !== true');
 
-
----------------------------------------------------------// Copyright 2020 Rick Waldron.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2020 Rick Waldron.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -6089,8 +6089,8 @@ assert.sameValue(1..toString(14), "1");
 assert.sameValue(NaN.toString(14), "NaN");
 assert.sameValue(Infinity.toString(14), "Infinity");
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -6112,8 +6112,8 @@ catch (e) {
   }
 }
 
-
----------------------------------------------------------// Copyright 2009 the Sputnik authors.  All rights reserved.
+---------------------------------------------------------
+// Copyright 2009 the Sputnik authors.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -6136,8 +6136,8 @@ if ("abc".charAt(-0.0) !== "a") {
   throw new Test262Error('#2: "abc".charAt(-0.0) === "a". Actual: ' + ("abc".charAt(-0.0)));
 }
 
-
----------------------------------------------------------// Copyright (c) 2012 Ecma International.  All rights reserved.
+---------------------------------------------------------
+// Copyright (c) 2012 Ecma International.  All rights reserved.
 // This code is governed by the BSD license found in the LICENSE file.
 
 /*---
@@ -6156,8 +6156,8 @@ Object.defineProperty(o, "foo", {
 
 assert(o.hasOwnProperty("foo"), 'o.hasOwnProperty("foo") !== true');
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/dynamic-import/no-rest-param.case
 // - src/dynamic-import/syntax/invalid/nested-async-function-await.template
 /*---
@@ -6201,8 +6201,8 @@ async function f() {
   await import(...['']);
 }
 
-
----------------------------------------------------------// This file was procedurally generated from the following sources:
+---------------------------------------------------------
+// This file was procedurally generated from the following sources:
 // - src/class-elements/eval-err-contains-arguments.case
 // - src/class-elements/initializer-direct-eval-arguments/cls-decl-fields-eval-arrow-body.template
 /*---
@@ -6238,6 +6238,5 @@ assert.throws(SyntaxError, function() {
 });
 
 assert.sameValue(executed, false);
-
 
 ---------------------------------------------------------

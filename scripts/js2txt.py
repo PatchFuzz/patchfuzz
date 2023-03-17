@@ -16,7 +16,7 @@ def js2txt(path, dest,filename):
     except UnicodeDecodeError:
         print("UnicodeDecodeError")
     fw.close()
-    string = string + "\n" + "---------------------------------------------------------"
+    string = string + "\n" + "---------------------------------------------------------" +"\n"
     fw = open(dest, "a")
     fw.write(string)
     fw.close()
@@ -43,6 +43,5 @@ def main(path, dest, file_types):
 
 
 if __name__ == '__main__':
-    src = "/data/patchFuzz/sp/poc"
-    dest = r"D:\workspace\patchFuzz\data3.txt"
-    main(src, dest, file_type_list)
+    main("/data/js-vuln-db/rand100","/data/patchFuzz/data4.txt", file_type_list)
+    main("/data/Test262/rand100","/data/patchFuzz/data3.txt", file_type_list)
