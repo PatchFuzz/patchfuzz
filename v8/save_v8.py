@@ -1,12 +1,32 @@
-import glob
 import os
 import re
-import uuid
+import signal
+
+
+class TimeOutException(Exception):
+    pass
+def setTimeout(num):
+    def wrape(func):
+        def handle(signum, frame):
+            raise TimeOutException("运行超时！")
+        def toDo(*args, **kwargs):
+            try:
+                signal.signal(signal.SIGALRM, handle)
+                signal.alarm(num)#开启闹钟信号
+                rs = func(*args, **kwargs)
+                signal.alarm(0)#关闭闹钟信号
+                return rs
+            except TimeOutException:
+                print("out of time:",args[2])
+            
+        return toDo
+    return wrape
+
 
 C_Rule = "(?<!:)\\/\\/.*|\\/\\*(\\s|.)*?\\*\\/"
 file_type_list = ["js"]
 
-
+@setTimeout(1)
 def updatefile(path, dest,filename):
     #print(path)
     string = ""

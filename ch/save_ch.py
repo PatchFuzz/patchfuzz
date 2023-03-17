@@ -1,16 +1,34 @@
-import glob
 import os
 import re
-import uuid
-from func_timeout import func_set_timeout, FunctionTimedOut
+import signal
+
+
+class TimeOutException(Exception):
+    pass
+def setTimeout(num):
+    def wrape(func):
+        def handle(signum, frame):
+            raise TimeOutException("运行超时！")
+        def toDo(*args, **kwargs):
+            try:
+                signal.signal(signal.SIGALRM, handle)
+                signal.alarm(num)#开启闹钟信号
+                rs = func(*args, **kwargs)
+                signal.alarm(0)#关闭闹钟信号
+                return rs
+            except TimeOutException:
+                print("out of time:",args[2])
+            
+        return toDo
+    return wrape
 
 
 C_Rule = "(?<!:)\\/\\/.*|\\/\\*(\\s|.)*?\\*\\/"
 file_type_list = ["js"]
 
-@func_set_timeout(2)
+@setTimeout(1)
 def updatefile(path, dest,filename):
-    print(path)
+    #print(path)
     string = ""
     fw = open(path, "r")
     try:
@@ -18,7 +36,6 @@ def updatefile(path, dest,filename):
     except UnicodeDecodeError:
         print("UnicodeDecodeError")
     fw.close()
-    
     string = re.sub(C_Rule, "", string)
     string = re.sub("this.WScript.LoadScriptFile", "print",string)
     string = re.sub("this.WScript", "print",string)
@@ -68,12 +85,7 @@ def listfiles(path, dest, file_types):
             # print prefx
             if prefx in file_types:
                 #print(listpath)
-                try:
-                    updatefile(listpath, dest,file)
-                except FunctionTimedOut as e:
-                    print('timeout:', file)
-
-                
+                updatefile(listpath, dest,file)
 
 
 def save_ch(path, dest, file_types):
@@ -82,5 +94,5 @@ def save_ch(path, dest, file_types):
 
 if __name__ == '__main__':
     src = "/data/badpoc/ch"
-    dest = "/data/badpoc/classify/jsc/vm_new/"
+    dest = "/data/badpoc/ch_0"
     save_ch(src, dest, file_type_list)
