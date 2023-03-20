@@ -22,7 +22,14 @@ def setTimeout(num):
         return toDo
     return wrape
 
-
+def mkdir(path):
+ 
+	folder = os.path.exists(path)
+ 
+	if not folder:                  
+		os.makedirs(path)            
+	else:
+		return
 C_Rule = "(?<!:)\\/\\/.*|\\/\\*(\\s|.)*?\\*\\/"
 file_type_list = ["js"]
 
@@ -36,24 +43,17 @@ def updatefile(path, dest,filename):
     except UnicodeDecodeError:
         print("UnicodeDecodeError")
     fw.close()
-   
+    if "instantiate(" in string \
+            or "wasmEvalText(" in string\
+            or "wasmTextToBinary(" in string:
+        fw = open(os.path.join(dest,"wasm",filename), "w")
+        fw.write(string)
+        fw.close()
+        return    
     string = re.sub(C_Rule, "", string)
-    string = re.sub("assertEq", "print",string)
-    string = re.sub("assertErrorMessage", "print",string)
-    string = re.sub("wasmEvalText", "print",string)
-    string = re.sub("wasmFailValidateText", "print",string)
-    string = re.sub("wasmAssert", "print",string)
-    string = re.sub("wasmTextToBinary", "print",string)
-    string = re.sub("wasmFullPass", "print",string)
-    string = re.sub("assertFunc", "print",string)
-    string = re.sub("assertSegmentFitError", "print",string)
-    string = re.sub("assertDeepEq", "print",string)
-    string = re.sub("assertNoWarning", "print",string)
-    string = re.sub("assertDerefenceNull", "print",string)
-    string = re.sub("assertAsmTypeFail", "print",string)
-    string = re.sub("assertOffsetColumns", "print",string)
-    string = re.sub("wasmValidateText", "print",string)
-    string = re.sub("crash", "print",string)
+    string = re.sub("assert\w*\\(", "print(",string) 
+    string = re.sub("crash\\(", "print(",string)
+    string = re.sub("appendToActual\\(", "print(",string)    
     string = re.sub("load\\(.*\\)","",string)
 
 
@@ -82,10 +82,11 @@ def listfiles(path, dest, file_types):
 
 
 def save_sp(path, dest, file_types):
+    mkdir(os.path.join(dest, "wasm"))
     listfiles(path, dest, file_types)
 
 
 if __name__ == '__main__':
-    src = "/data/patchFuzz/sp/poc"
-    dest = "/data/badpoc/classify/jsc/vm_new/"
+    src = "/data/table2/testsuite/sp"
+    dest = "/data/table2/testsuite/sp_new"
     save_sp(src, dest, file_type_list)

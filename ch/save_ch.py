@@ -22,7 +22,14 @@ def setTimeout(num):
         return toDo
     return wrape
 
-
+def mkdir(path):
+ 
+	folder = os.path.exists(path)
+ 
+	if not folder:                  
+		os.makedirs(path)            
+	else:
+		return
 C_Rule = "(?<!:)\\/\\/.*|\\/\\*(\\s|.)*?\\*\\/"
 file_type_list = ["js"]
 
@@ -40,25 +47,8 @@ def updatefile(path, dest,filename):
     string = re.sub("this.WScript.LoadScriptFile", "print",string)
     string = re.sub("this.WScript", "print",string)
     string = re.sub("WScript ", "print",string)
-    string = re.sub("WScript.Platform.OS", "\"zxw\"",string)
-    string = re.sub("WScript.Platform.INTL_LIBRARY", "\"zxw\"",string)
-
-    string = re.sub("WScript.Platform.LINK_TYPE", "\"zxw\"",string)
-    string = re.sub("WScript.Platform.ICU_VERSION", "\"zxw\"",string)
-    string = re.sub("WScript.LoadScriptFile\\(", "print(",string)
-    string = re.sub("WScript.LoadModule\\(", "print(",string)
-    string = re.sub("WScript.Arguments\\[0\\]", "\"zxw\"",string)
-    string = re.sub("\\(WScript.Arguments", "\(\"zxw\"",string)
-    string = re.sub("WScript.Echo", "print",string)
-    string = re.sub("WScript.Attach\\(", "Run(",string)
-    string = re.sub("WScript.Detach\\(", "Run(",string)
-    string = re.sub("WScript.LoadScript\\(", "print(",string)
-    string = re.sub("WScript.LoadScript\\)", "print)",string)
-    string = re.sub("WScript.Flag\\(", "print(",string)
-    string = re.sub("WScript.RegisterModuleSource\\(", "print(",string)
-    string = re.sub("WScript.SetTimeout\\(", "Run(",string)
-    string = re.sub("WScript.Platform", "\"zxw\"",string)
-    string = re.sub("WScript.monotonicNow", "print",string)
+    string = re.sub("WScript[.]\w+[.]\w+", "\"zxw\"",string)
+    string = re.sub("WScript[.]?\w* ?\\(", "print(",string)
     string = re.sub("console.log\\(", "print(",string)
     string = re.sub("assert[.]?\w* ?\\(", "print(",string)
     string = re.sub("testRunner.runTests.*;", "for (var i = 0; i < tests.length; i ++) {tests[i].body()}",string)
@@ -89,10 +79,11 @@ def listfiles(path, dest, file_types):
 
 
 def save_ch(path, dest, file_types):
+    mkdir(os.path.join(dest, "wasm"))
     listfiles(path, dest, file_types)
 
 
 if __name__ == '__main__':
-    src = "/data/badpoc/ch"
-    dest = "/data/badpoc/ch_0"
+    src = "/data/table2/testsuite/ch"
+    dest = "/data/table2/testsuite/ch_new"
     save_ch(src, dest, file_type_list)

@@ -22,7 +22,14 @@ def setTimeout(num):
         return toDo
     return wrape
 
-
+def mkdir(path):
+ 
+	folder = os.path.exists(path)
+ 
+	if not folder:                  
+		os.makedirs(path)            
+	else:
+		return
 C_Rule = "(?<!:)\\/\\/.*|\\/\\*(\\s|.)*?\\*\\/"
 file_type_list = ["js"]
 
@@ -36,26 +43,16 @@ def updatefile(path, dest,filename):
     except UnicodeDecodeError:
         print("UnicodeDecodeError")
     fw.close()
-   
+    if "export " in string :
+        return
+    if "WasmModuleBuilder(" in string :
+        fw = open(os.path.join(dest,"wasm",filename), "w")
+        fw.write(string)
+        fw.close()
+        return 
+
     string = re.sub(C_Rule, "", string)
-    string = re.sub("assertEquals", "print",string)
-    string = re.sub("assertThrows", "print",string)
-    string = re.sub("assertTrue", "print",string)
-    string = re.sub("assertTraps", "print",string)
-    string = re.sub("assertUnreachable", "print",string)
-    string = re.sub("assertOptimized", "print",string)
-    string = re.sub("assertFalse", "print",string)
-    string = re.sub("assertUnoptimized", "print",string)
-    string = re.sub("assertInstanceof", "print",string)
-    string = re.sub("assertSame", "print",string)
-    string = re.sub("assertNotSame", "print",string)
-    string = re.sub("assertNotEquals", "print",string)
-    string = re.sub("assertMatches", "print",string)
-    string = re.sub("assertArrayEquals", "print",string)
-    string = re.sub("assertPromiseResult", "print",string)
-    string = re.sub("assertDoesNotThrow", "print",string)
-    string = re.sub("assertPromiseResult", "print",string)
-    string = re.sub("externalizeString", "print",string)
+    string = re.sub("assert\w*\\(", "print(",string)    
     string = re.sub("d8[.]file[.]execute\\(.*\\);","",string)
 
 
@@ -84,10 +81,11 @@ def listfiles(path, dest, file_types):
 
 
 def save_v8(path, dest, file_types):
+    mkdir(os.path.join(dest, "wasm"))
     listfiles(path, dest, file_types)
 
 
 if __name__ == '__main__':
-    src = "/data/badpoc/v8"
-    dest = "/data/badpoc/classify/jsc/vm_new/"
+    src = "/data/table2/testsuite/v8"
+    dest = "/data/table2/testsuite/v8_new"
     save_v8(src, dest, file_type_list)
