@@ -1,0 +1,4 @@
+I'll give you the full code instead of snippets.I don't want my code to have syntax errors.So if my code has errors, please remind me.
+Do you know JavaScriptCore?
+I am testing JavaScriptCore. The way I test it is to make JavaScriptCore execute the JavaScript code I give it.
+I'll give you the complete JavaScript code with the full context.If my code has syntax errors, please reminds me.

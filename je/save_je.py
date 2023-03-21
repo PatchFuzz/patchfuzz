@@ -1,12 +1,39 @@
-import glob
 import os
 import re
-import uuid
+import signal
 
+
+class TimeOutException(Exception):
+    pass
+def setTimeout(num):
+    def wrape(func):
+        def handle(signum, frame):
+            raise TimeOutException("运行超时！")
+        def toDo(*args, **kwargs):
+            try:
+                signal.signal(signal.SIGALRM, handle)
+                signal.alarm(num)#开启闹钟信号
+                rs = func(*args, **kwargs)
+                signal.alarm(0)#关闭闹钟信号
+                return rs
+            except TimeOutException:
+                print("out of time:",args[2])
+            
+        return toDo
+    return wrape
+
+def mkdir(path):
+ 
+	folder = os.path.exists(path)
+ 
+	if not folder:                  
+		os.makedirs(path)            
+	else:
+		return
 C_Rule = "(?<!:)\\/\\/.*|\\/\\*(\\s|.)*?\\*\\/"
 file_type_list = ["js"]
 
-
+@setTimeout(1)
 def updatefile(path, dest,filename):
     #print(path)
     string = ""
@@ -16,15 +43,15 @@ def updatefile(path, dest,filename):
     except UnicodeDecodeError:
         print("UnicodeDecodeError")
     fw.close()
-    if "export" in string \
-            or "Unexpected end" in string :
-            os.remove(path)
+    if "export " in string \
+            or "export{" in string :
             return
 
    
     string = re.sub(C_Rule, "", string)
     string = re.sub("assert\\(", "print(",string)
     string = re.sub("assert ", "print",string)
+    string = re.sub("asserts", "print",string)
 
 
     
@@ -52,10 +79,11 @@ def listfiles(path, dest, file_types):
 
 
 def save_je(path, dest, file_types):
+    mkdir(os.path.join(dest, "wasm"))
     listfiles(path, dest, file_types)
 
 
 if __name__ == '__main__':
-    src = "/data/newpoc/je/poc"
-    dest = "/data/badpoc/classify/jsc/vm_new/"
+    src = "/data/table2/testsuite/je"
+    dest = "/data/table2/testsuite/je_new"
     save_je(src, dest, file_type_list)
