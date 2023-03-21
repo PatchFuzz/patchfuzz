@@ -51,9 +51,9 @@ def parse_jsc_commit(commitLines):
                 commit['ctype'] = "bug"
 
         
-        elif bool(re.match('[MAD]\t', nextLine, re.IGNORECASE)):
+        elif bool(re.match('[MAD]\t', nextLine, re.IGNORECASE)) and commit['ctype'] == "bug":
             commit['changedfiles'].append(nextLine[2:])
-            if bool(re.compile('JSTests/stress').match(nextLine[2:])) and commit['ctype'] == "bug":
+            if bool(re.compile('JSTests/stress').match(nextLine[2:])):
                 commit['poc'].append(nextLine[2:])
             else:
                 pass
@@ -67,6 +67,7 @@ def parse_jsc_commit(commitLines):
     return commits
 
 def cal_chfile(commits,base_path,out_dir):
+    hashtable={}
     for commit in commits:
         chfile = commit["changedfiles"]
         for file in chfile:
@@ -77,6 +78,11 @@ def cal_chfile(commits,base_path,out_dir):
                 except Exception as e:
                     #print(e)
                     pass
+                else:
+                    if hashtable.get(file) is None:
+                        hashtable[file]=0
+                    hashtable[file]=hashtable[file] + 1
+
                     
 
 
