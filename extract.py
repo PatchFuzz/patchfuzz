@@ -37,7 +37,7 @@ def extract_jsc_test(csv_path,base_path,out_path):
                     fnn = f[0]+f[1][0:7]+fn.group(0)+'.js'
                     try:
                         shutil.copy(os.path.join(base_path,i),os.path.join(testpath,fnn))
-                    except FileNotFoundError as e:
+                    except Exception as e:
                         pass
                         #print(e)
                         # print("------------------------------------------------------------")
@@ -81,7 +81,7 @@ def extract_v8_test(csv_path,base_path,out_path):
 
                         try:
                             shutil.copy(os.path.join(base_path,i),os.path.join(testpath,fnn))
-                        except FileNotFoundError as e:
+                        except Exception as e:
                             pass
                             #print(e)
                             # print("------------------------------------------------------------")
@@ -165,7 +165,7 @@ def extract_sp_test(csv_path,base_path,out_path):
                     fnn = f[0]+f[1][0:7]+fn.group(0)+'.js'
                     try:
                         shutil.copy(os.path.join(base_path,i),os.path.join(testpath,fnn))
-                    except FileNotFoundError as e:
+                    except Exception as e:
                         pass
                         #print(e)
                         # print("------------------------------------------------------------")
@@ -206,7 +206,7 @@ def extract_je_test(csv_path,base_path,out_path):
                     fnn = f[0]+f[1][0:7]+fn.group(0)+'.js'
                     try:
                         shutil.copy(os.path.join(base_path,i),os.path.join(testpath,fnn))
-                    except FileNotFoundError as e:
+                    except Exception as e:
                         pass
                         #print(e)
                         # print("------------------------------------------------------------")

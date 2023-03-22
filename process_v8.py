@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys,re
+import sys,re,shutil,os
 from utils import export_csv
 
 # array to store dict of commit data
@@ -25,7 +25,7 @@ def parse_v8_commit(commitLines):
             commit['urlofbug'] = ""
             commit['ctype'] = "other"
             commit['poc'] = []
-            commit['changedfiles'] = ""
+            commit['changedfiles'] = []
             commit['component'] = ""
         elif bool(re.match('merge:', nextLine, re.IGNORECASE)):
             # Merge: xxxx xxxx
@@ -54,26 +54,45 @@ def parse_v8_commit(commitLines):
                 commit['urlofbug'] = nextLine.strip()
 
         
-        elif bool(re.match('[MADCRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
-            commit['changedfiles'] += nextLine[2:]
-            if bool(re.compile('test/mjsunit').match(nextLine[2:])) and commit['ctype'] == "bug":
+        elif bool(re.match('[MAD]\t', nextLine, re.IGNORECASE)) and commit['ctype'] == "bug":
+            commit['changedfiles'].append(nextLine[2:])
+            if bool(re.compile('test/mjsunit').match(nextLine[2:])):
                 commit['poc'].append(nextLine[2:])
             else:
                 pass
-
-
+        elif bool(re.match('[MADCRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
+            pass            
 
         else:
             print ('ERROR: Unexpected Line: ' + nextLine)
     commits.append(commit)
     return commits
 
+def cal_chfile(commits,base_path,out_dir):
+    hashtable={}
+    for commit in commits:
+        chfile = commit["changedfiles"]
+        for file in chfile:
+            #print(file)
+            if re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file) or re.compile('[\w-]+(?=[.]cc\s)').search(file):
+                try:
+                    shutil.copy(os.path.join(base_path,file[:-1]),out_dir)
+                except Exception as e:
+                    #print(e)
+                    pass
+                else:
+                    if hashtable.get(file) is None:
+                        hashtable[file]=0
+                    hashtable[file]=hashtable[file] + 1
+    return hashtable
+
 if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())
     data=parse_v8_commit(sys.stdin.readlines())
-    export_csv(data,"v8")
+    table=cal_chfile(data,'/home/ubuntu/v8/v8','/home/data/chfile/v8')
+    file = open('/home/data/chfile/v8.txt', 'w') 
+    for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
+        file.write(str(k)[:-1]+','+str(v)+'\n')
+    file.close()
+    #export_csv(data,"v8")
     #print(commits)
-    # print('Author'.ljust(15) + '  ' + 'Email'.ljust(20) +'  ' + 'Hash'.ljust(8) + '  ' + 'Message'.ljust(20))
-    # print("=================================================================================")
-    # for commit in commits:
-    #     print(commit['author'].ljust(15) + '  ' + commit['email'][:20].ljust(20) + '  ' +  commit['hash'][:7].ljust(8) + '  ' + commit['message'])

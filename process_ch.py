@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys,re
+import sys,re,shutil,os
 from utils import export_csv
 
 # array to store dict of commit data
@@ -25,7 +25,7 @@ def parse_ch_commit(commitLines):
             commit['urlofbug'] = ""
             commit['ctype'] = "other"
             commit['poc'] = []
-            commit['changedfiles'] = ""
+            commit['changedfiles'] = []
             commit['component'] = ""
         elif bool(re.match('merge:', nextLine, re.IGNORECASE)):
             # Merge: xxxx xxxx
@@ -53,25 +53,47 @@ def parse_ch_commit(commitLines):
 
 
         
-        elif bool(re.match('[MADCRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
-            commit['changedfiles'] += nextLine[2:]
+        elif bool(re.match('[MAD]\t', nextLine, re.IGNORECASE)):
             if bool(re.compile('test/\S*[.]js').match(nextLine[2:])):
                 commit['poc'].append(nextLine[2:])
                 commit['ctype'] = "bug"
-            else:
-                pass
+            if commit['ctype'] == "bug":
+                commit['changedfiles'].append(nextLine[2:])
 
-
+        elif bool(re.match('[MADCRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
+            pass
 
         else:
             print ('ERROR: Unexpected Line: ' + nextLine)
     commits.append(commit)
     return commits
 
+def cal_chfile(commits,base_path,out_dir):
+    hashtable={}
+    for commit in commits:
+        chfile = commit["changedfiles"]
+        for file in chfile:
+            #print(file)
+            if re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file):
+                try:
+                    shutil.copy(os.path.join(base_path,file[:-1]),out_dir)
+                except Exception as e:
+                    #print(e)
+                    pass
+                else:
+                    if hashtable.get(file) is None:
+                        hashtable[file]=0
+                    hashtable[file]=hashtable[file] + 1
+    return hashtable
+
 if __name__ == '__main__':
-    #parse_webkit_commit(sys.stdin.readlines())
-    data=parse_ch_commit(sys.stdin.readlines())
-    export_csv(data,"ch")
+    data = parse_ch_commit(sys.stdin.readlines())
+    table = cal_chfile(data,'/data/ChakraCore','/data/chfile/ch')
+    file = open('/data/chfile/ch.txt', 'w') 
+    for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
+        file.write(str(k)[:-1]+','+str(v)+'\n')
+    file.close()
+    #export_csv(data,"ch")
     #print(commits)
     # print('Author'.ljust(15) + '  ' + 'Email'.ljust(20) +'  ' + 'Hash'.ljust(8) + '  ' + 'Message'.ljust(20))
     # print("=================================================================================")

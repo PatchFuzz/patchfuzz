@@ -27,6 +27,7 @@ def parse_jsc_commit(commitLines):
             commit['poc'] = []
             commit['changedfiles'] = []
             commit['component'] = ""
+            commit['message'] = ""
         elif bool(re.match('merge:', nextLine, re.IGNORECASE)):
             # Merge: xxxx xxxx
             pass
@@ -41,11 +42,8 @@ def parse_jsc_commit(commitLines):
             commit['date'] = t.group(1)
         elif bool(re.match('    ', nextLine, re.IGNORECASE)):
             # (4 empty spaces)
-            if commit.get('message') is None:
-                commit['message'] = nextLine.strip()
-                component = re.compile('\\[(.*)\\]').match(nextLine.strip())
-                if component: commit['component'] = component.group(1)
-                if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
+            commit['message'] = commit['message'] + nextLine
+            if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
             elif bool(re.search('bugs.webkit.org',nextLine)):
                 commit['urlofbug'] = nextLine.strip()
                 commit['ctype'] = "bug"
@@ -58,7 +56,7 @@ def parse_jsc_commit(commitLines):
             else:
                 pass
 
-        elif bool(re.match('[CRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
+        elif bool(re.match('[MADCRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
             pass
         
         else:
@@ -82,6 +80,7 @@ def cal_chfile(commits,base_path,out_dir):
                     if hashtable.get(file) is None:
                         hashtable[file]=0
                     hashtable[file]=hashtable[file] + 1
+    return hashtable
 
                     
 
@@ -90,7 +89,11 @@ def cal_chfile(commits,base_path,out_dir):
 if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())
     data = parse_jsc_commit(sys.stdin.readlines())
-    cal_chfile(data,'D:\workspace\WebKit','D:\workspace\chfile')
+    table = cal_chfile(data,'/data/WebKit','/data/chfile/jsc')
+    file = open('/data/chfile/jsc.txt', 'w') 
+    for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
+        file.write(str(k)[:-1]+','+str(v)+'\n')
+    file.close()
     #export_csv(data,"webkit")
     #print(commits)
     # print('Author'.ljust(15) + '  ' + 'Email'.ljust(20) +'  ' + 'Hash'.ljust(8) + '  ' + 'Message'.ljust(20))

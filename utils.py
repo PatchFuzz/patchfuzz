@@ -19,7 +19,7 @@ def export_csv(export,target):
     #将字典列表转换为DataFrame
     pf = pd.DataFrame(list(export))
     #指定字段顺序
-    order = ['date','hash','author','email','message','urlofbug','ctype','component','poc','changedfiles']
+    order = ['date','hash','message','ctype','poc','changedfiles']
     pf = pf[order]
     file_path = r"D:\workspace" + "\\" + target + "-" + date + ".csv"
     #替换空单元格
