@@ -49,16 +49,14 @@ def updatefile(path, dest,filename):
 
    
     string = re.sub(C_Rule, "", string)
-    string = re.sub("assert\\(", "print(",string)
-    string = re.sub("assert ", "print",string)
-    string = re.sub("asserts", "print",string)
+    string = re.sub("asserts?[.]?\w* ?\\(", "print(",string)
 
 
     
     # string = re.sub("test\\(", "print(", string)
     # fw = open(path, "w")
     fw = open(os.path.join(dest,filename), "w")
-    fw.write(string)
+    fw.write(string.lstrip())
     fw.close()
 
 

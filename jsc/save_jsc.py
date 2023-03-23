@@ -1,6 +1,6 @@
 import os
 import re
-import signal
+import signal,argparse
 
 
 class TimeOutException(Exception):
@@ -52,21 +52,23 @@ def updatefile(path, dest,filename):
             or "wasmCode" in string\
             or "wasmEntry" in string:
         fw = open(os.path.join(dest,"wasm",filename), "w")
-        fw.write(string)
+        fw.write(string.lstrip())
         fw.close()
         return       
     string = re.sub(C_Rule, "", string)
     string = re.sub("\\$vm[.]\w+", "print",string)
     string = re.sub("abort\\(", "print(",string)    
-   
-    string = re.sub("load\\(.*\\)","",string)
+    string = re.sub("assert[.]?\w* ?\\(", "print(",string)
+    string = re.sub("generateBinaryTests\\(", "print(",string)
+           
+    string = re.sub("load\\(.*\\);?","",string)
 
 
     
     # string = re.sub("test\\(", "print(", string)
     # fw = open(path, "w")
     fw = open(os.path.join(dest,filename), "w")
-    fw.write(string)
+    fw.write(string.lstrip())
     fw.close()
 
 def listfiles(path, dest, file_types):
@@ -90,7 +92,14 @@ def save_jsc(path, dest, file_types):
 
 
 if __name__ == '__main__':
-    src = "/data/table2/testsuite/jsc"
-    dest = "/data/table2/testsuite/jsc_new"
-    save_jsc(src,dest,file_type_list)
+    # parser = argparse.ArgumentParser()
+    # parser.description='findbadpoc'
+    # parser.add_argument("src", help="Path to seeds.", type=str)
+    # parser.add_argument("out", help="Path to store bad seeds", type=str)
+    # args = parser.parse_args()
+    # src_path = args.src
+    # out_path = args.out
+    src_path = "/data/table2/testsuite/jsc"
+    out_path= "/data/table2/testsuite/jsc_new"
+    save_jsc(src_path,out_path,file_type_list)
 

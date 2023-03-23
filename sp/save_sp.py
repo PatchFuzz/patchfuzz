@@ -1,6 +1,6 @@
 import os
 import re
-import signal
+import signal,argparse
 
 
 class TimeOutException(Exception):
@@ -51,7 +51,7 @@ def updatefile(path, dest,filename):
         fw.close()
         return    
     string = re.sub(C_Rule, "", string)
-    string = re.sub("assert\w*\\(", "print(",string) 
+    string = re.sub("assert[.]?\w* ?\\(", "print(",string)
     string = re.sub("crash\\(", "print(",string)
     string = re.sub("appendToActual\\(", "print(",string)    
     string = re.sub("load\\(.*\\)","",string)
@@ -61,7 +61,7 @@ def updatefile(path, dest,filename):
     # string = re.sub("test\\(", "print(", string)
     # fw = open(path, "w")
     fw = open(os.path.join(dest,filename), "w")
-    fw.write(string)
+    fw.write(string.lstrip())
     fw.close()
 
 
@@ -87,6 +87,13 @@ def save_sp(path, dest, file_types):
 
 
 if __name__ == '__main__':
-    src = "/data/table2/testsuite/sp"
-    dest = "/data/table2/testsuite/sp_new"
-    save_sp(src, dest, file_type_list)
+    # parser = argparse.ArgumentParser()
+    # parser.description='findbadpoc'
+    # parser.add_argument("src", help="Path to seeds.", type=str)
+    # parser.add_argument("out", help="Path to store bad seeds", type=str)
+    # args = parser.parse_args()
+    # src_path = args.src
+    # out_path = args.out
+    src_path = "/data/table2/testsuite/sp"
+    out_path = "/data/table2/testsuite/sp_new"
+    save_sp(src_path, out_path, file_type_list)

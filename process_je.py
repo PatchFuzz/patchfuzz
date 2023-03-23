@@ -72,7 +72,8 @@ def cal_chfile(commits,base_path,out_dir):
         chfile = commit["changedfiles"]
         for file in chfile:
             #print(file)
-            if re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file):
+            if (re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file))\
+                and bool(re.match('jerry',file)):
                 try:
                     shutil.copy(os.path.join(base_path,file[:-1]),out_dir)
                 except Exception as e:
@@ -88,10 +89,13 @@ if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())
     data=parse_je_commit(sys.stdin.readlines())
     table=cal_chfile(data,'/data/jerryscript','/data/chfile/je')
-    file = open('/data/chfile/je.txt', 'w') 
+    file1 = open('/data/chfile/je_allowlist.txt', 'w')
+    file2 = open('/data/chfile/je.txt', 'w') 
     for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
-        file.write(str(k)[:-1]+','+str(v)+'\n')
-    file.close()    
+        file1.write(str(k)[:-1]+'\n')
+        file2.write(str(k)[:-1]+','+str(v)+'\n')        
+    file1.close()
+    file2.close()  
     #export_csv(data,"je")
     #print(commits)
     # print('Author'.ljust(15) + '  ' + 'Email'.ljust(20) +'  ' + 'Hash'.ljust(8) + '  ' + 'Message'.ljust(20))

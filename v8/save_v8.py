@@ -1,6 +1,6 @@
 import os
 import re
-import signal
+import signal,argparse
 
 
 class TimeOutException(Exception):
@@ -47,20 +47,20 @@ def updatefile(path, dest,filename):
         return
     if "WasmModuleBuilder(" in string :
         fw = open(os.path.join(dest,"wasm",filename), "w")
-        fw.write(string)
+        fw.write(string.lstrip())
         fw.close()
         return 
 
     string = re.sub(C_Rule, "", string)
-    string = re.sub("assert\w*\\(", "print(",string)    
-    string = re.sub("d8[.]file[.]execute\\(.*\\);","",string)
+    string = re.sub("assert[.]?\w* ?\\(", "print(",string) 
+    string = re.sub("d8[.]file[.]execute\\(.*\\);?","",string)
 
 
     
     # string = re.sub("test\\(", "print(", string)
     # fw = open(path, "w")
     fw = open(os.path.join(dest,filename), "w")
-    fw.write(string)
+    fw.write(string.lstrip())
     fw.close()
 
 
@@ -86,6 +86,13 @@ def save_v8(path, dest, file_types):
 
 
 if __name__ == '__main__':
-    src = "/data/table2/testsuite/v8"
-    dest = "/data/table2/testsuite/v8_new"
-    save_v8(src, dest, file_type_list)
+    # parser = argparse.ArgumentParser()
+    # parser.description='findbadpoc'
+    # parser.add_argument("src", help="Path to seeds.", type=str)
+    # parser.add_argument("out", help="Path to store bad seeds", type=str)
+    # args = parser.parse_args()
+    # src_path = args.src
+    # out_path = args.out
+    src_path = "/data/table2/testsuite/v8"
+    out_path = "/data/table2/testsuite/v8_new"
+    save_v8(src_path, out_path, file_type_list)

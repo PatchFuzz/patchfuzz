@@ -49,12 +49,12 @@ def parse_jsc_commit(commitLines):
                 commit['ctype'] = "bug"
 
         
-        elif bool(re.match('[MAD]\t', nextLine, re.IGNORECASE)) and commit['ctype'] == "bug":
-            commit['changedfiles'].append(nextLine[2:])
+        elif bool(re.match('[MAD]\t', nextLine, re.IGNORECASE)) :
             if bool(re.compile('JSTests/stress').match(nextLine[2:])):
+                commit['ctype'] = "bug"
                 commit['poc'].append(nextLine[2:])
-            else:
-                pass
+            if commit['ctype'] == "bug":
+                commit['changedfiles'].append(nextLine[2:])
 
         elif bool(re.match('[MADCRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
             pass
@@ -69,8 +69,9 @@ def cal_chfile(commits,base_path,out_dir):
     for commit in commits:
         chfile = commit["changedfiles"]
         for file in chfile:
-            #print(file)
-            if re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file):
+            
+            if (re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file) \
+                or re.compile('[\w-]+(?=[.]cc\s)').search(file)) and bool(re.match('Source/JavaScriptCore',file)):
                 try:
                     shutil.copy(os.path.join(base_path,file[:-1]),out_dir)
                 except Exception as e:
@@ -90,10 +91,13 @@ if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())
     data = parse_jsc_commit(sys.stdin.readlines())
     table = cal_chfile(data,'/data/WebKit','/data/chfile/jsc')
-    file = open('/data/chfile/jsc.txt', 'w') 
+    file1 = open('/data/chfile/jsc_allowlist.txt', 'w')
+    file2 = open('/data/chfile/jsc.txt', 'w') 
     for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
-        file.write(str(k)[:-1]+','+str(v)+'\n')
-    file.close()
+        file1.write(str(k)[:-1]+'\n')
+        file2.write(str(k)[:-1]+','+str(v)+'\n')        
+    file1.close()
+    file2.close()
     #export_csv(data,"webkit")
     #print(commits)
     # print('Author'.ljust(15) + '  ' + 'Email'.ljust(20) +'  ' + 'Hash'.ljust(8) + '  ' + 'Message'.ljust(20))

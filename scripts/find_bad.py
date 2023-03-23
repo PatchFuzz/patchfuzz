@@ -26,13 +26,13 @@ def main():
     shell = args.shell
     crash_path = out_path + "/crash"
     mkdir(out_path)
-    mkdir(crash)
+    mkdir(crash_path)
     for file in os.listdir(src_path):
         js =os.path.join(src_path, file)
         try:
-            if shell[-2:] == "d8": p = subprocess.run([shell,js,"--expose-gc","--allow-natives-syntax"], stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=5)
+            if shell[-2:] == "d8": p = subprocess.run([shell,js,"--expose-gc","--allow-natives-syntax"], stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=1)
             else:
-                p = subprocess.run([shell,js], stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=5)
+                p = subprocess.run([shell,js], stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=1)
 
             if(p.returncode != 0): 
                 outjs = os.path.join(out_path, file)
@@ -45,7 +45,7 @@ def main():
                 if "Assertion failure:" in str(p.stderr)\
                     or "Abort" in  str(p.stderr)\
                     or "Overflowed stack" in str(p.stderr)\
-                    or "Segment fault" in str(p.stderr)\
+                    or "Segmentation fault" in str(p.stderr)\
                     or "core dumped" in str(p.stderr):
                     crash = os.path.join(crash_path, file)
                     shutil.copy(outjs,crash)

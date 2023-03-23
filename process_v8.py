@@ -54,12 +54,12 @@ def parse_v8_commit(commitLines):
                 commit['urlofbug'] = nextLine.strip()
 
         
-        elif bool(re.match('[MAD]\t', nextLine, re.IGNORECASE)) and commit['ctype'] == "bug":
-            commit['changedfiles'].append(nextLine[2:])
+        elif bool(re.match('[MAD]\t', nextLine, re.IGNORECASE)):
             if bool(re.compile('test/mjsunit').match(nextLine[2:])):
+                commit['ctype'] = "bug"
                 commit['poc'].append(nextLine[2:])
-            else:
-                pass
+            if commit['ctype'] == "bug":
+                commit['changedfiles'].append(nextLine[2:])
         elif bool(re.match('[MADCRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
             pass            
 
@@ -74,7 +74,8 @@ def cal_chfile(commits,base_path,out_dir):
         chfile = commit["changedfiles"]
         for file in chfile:
             #print(file)
-            if re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file) or re.compile('[\w-]+(?=[.]cc\s)').search(file):
+            if re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file) \
+                or re.compile('[\w-]+(?=[.]cc\s)').search(file):
                 try:
                     shutil.copy(os.path.join(base_path,file[:-1]),out_dir)
                 except Exception as e:
@@ -90,9 +91,12 @@ if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())
     data=parse_v8_commit(sys.stdin.readlines())
     table=cal_chfile(data,'/home/ubuntu/v8/v8','/home/data/chfile/v8')
-    file = open('/home/data/chfile/v8.txt', 'w') 
+    file1 = open('/home/data/chfile/v8_allowlist.txt', 'w')
+    file2 = open('/home/data/chfile/v8.txt', 'w') 
     for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
-        file.write(str(k)[:-1]+','+str(v)+'\n')
-    file.close()
+        file1.write(str(k)[:-1]+'\n')
+        file2.write(str(k)[:-1]+','+str(v)+'\n')        
+    file1.close()
+    file2.close()
     #export_csv(data,"v8")
     #print(commits)

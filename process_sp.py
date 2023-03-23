@@ -50,12 +50,12 @@ def parse_sp_commit(commitLines):
                 commit['urlofbug'] = nextLine.strip()
 
         
-        elif bool(re.match('[MAD]\t', nextLine, re.IGNORECASE)) and commit['ctype'] == "bug":
-            commit['changedfiles'].append(nextLine[2:])
+        elif bool(re.match('[MAD]\t', nextLine, re.IGNORECASE)):
             if bool(re.compile('js/src/jit-test').match(nextLine[2:])):
+                commit['ctype'] = "bug"
                 commit['poc'].append(nextLine[2:])
-            else:
-                pass
+            if commit['ctype'] == "bug":
+                commit['changedfiles'].append(nextLine[2:])
 
         elif bool(re.match('[MADwanCRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
             pass
@@ -71,7 +71,8 @@ def cal_chfile(commits,base_path,out_dir):
         chfile = commit["changedfiles"]
         for file in chfile:
             #print(file)
-            if re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file):
+            if (re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file)\
+                or  re.compile('[\w-]+(?=[.]cc\s)').search(file)) and bool(re.match('js/src',file)):
                 try:
                     shutil.copy(os.path.join(base_path,file[:-1]),out_dir)
                 except Exception as e:
@@ -87,11 +88,13 @@ if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())
     data=parse_sp_commit(sys.stdin.readlines())
     table = cal_chfile(data,'/data/spidermonkey','/data/chfile/sp')
-    file = open('/data/chfile/sp.txt', 'w')
-     
+    file1 = open('/data/chfile/sp_allowlist.txt', 'w')
+    file2 = open('/data/chfile/sp.txt', 'w') 
     for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
-        file.write(str(k)[:-1]+','+str(v)+'\n')
-    file.close()
+        file1.write(str(k)[:-1]+'\n')
+        file2.write(str(k)[:-1]+','+str(v)+'\n')        
+    file1.close()
+    file2.close()
     #export_csv(data,"sp")
     #print(commits)
     # print('Author'.ljust(15) + '  ' + 'Email'.ljust(20) +'  ' + 'Hash'.ljust(8) + '  ' + 'Message'.ljust(20))
