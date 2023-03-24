@@ -90,9 +90,9 @@ def cal_chfile(commits,base_path,out_dir):
 if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())
     data=parse_v8_commit(sys.stdin.readlines())
-    table=cal_chfile(data,'/home/ubuntu/v8/v8','/home/data/chfile/v8')
-    file1 = open('/home/data/chfile/v8_allowlist.txt', 'w')
-    file2 = open('/home/data/chfile/v8.txt', 'w') 
+    table=cal_chfile(data,'/home/ubuntu/v8/v8','/home/data/patchFuzz/whitelist/v8')
+    file1 = open('/home/data/patchFuzz/whitelist/v8_allowlist.txt', 'w')
+    file2 = open('/home/data/patchFuzz/whitelist/v8.txt', 'w') 
     for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
         file1.write(str(k)[:-1]+'\n')
         file2.write(str(k)[:-1]+','+str(v)+'\n')        

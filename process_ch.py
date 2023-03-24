@@ -89,9 +89,9 @@ def cal_chfile(commits,base_path,out_dir):
 
 if __name__ == '__main__':
     data = parse_ch_commit(sys.stdin.readlines())
-    table = cal_chfile(data,'/data/ChakraCore','/data/chfile/ch')
-    file1 = open('/data/chfile/ch_allowlist.txt', 'w')
-    file2 = open('/data/chfile/ch.txt', 'w') 
+    table = cal_chfile(data,'/data/ChakraCore','/data/patchFuzz/whitelist/ch')
+    file1 = open('/data/patchFuzz/whitelist/ch_allowlist.txt', 'w')
+    file2 = open('/data/patchFuzz/whitelist/ch.txt', 'w') 
     for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
         file1.write(str(k)[:-1]+'\n')
         file2.write(str(k)[:-1]+','+str(v)+'\n')        

@@ -88,9 +88,9 @@ def cal_chfile(commits,base_path,out_dir):
 if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())
     data=parse_je_commit(sys.stdin.readlines())
-    table=cal_chfile(data,'/data/jerryscript','/data/chfile/je')
-    file1 = open('/data/chfile/je_allowlist.txt', 'w')
-    file2 = open('/data/chfile/je.txt', 'w') 
+    table=cal_chfile(data,'/data/jerryscript','/data/patchFuzz/whitelist/je')
+    file1 = open('/data/patchFuzz/whitelist/je_allowlist.txt', 'w')
+    file2 = open('/data/patchFuzz/whitelist/je.txt', 'w') 
     for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
         file1.write(str(k)[:-1]+'\n')
         file2.write(str(k)[:-1]+','+str(v)+'\n')        
