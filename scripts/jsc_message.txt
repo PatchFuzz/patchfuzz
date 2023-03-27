@@ -1,0 +1,3906 @@
+commit 473a7c6db4b17c2f54759f0fa2dcd6f63ea874d1
+Author: Alexey Proskuryakov <ap@apple.com>
+Date:   Fri Jan 8 23:53:12 2010 +0000
+
+            Reviewed by Eric Seidel.
+    
+            https://bugs.webkit.org/show_bug.cgi?id=33279
+            fast/websockets/websocket-event-target.html causes any test after it to fail
+    
+            * fast/websockets/script-tests/websocket-event-target.js: The test uses an HTTP server
+            URL to create a WebSocket, so an error may be logged to console when detected (this is
+            timing dependent).
+    
+            * platform/mac/Skipped: Removed the test from Skipped list.
+    
+    
+    
+    Canonical link: https://commits.webkit.org/44431@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@53019 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/fast/websockets/script-tests/websocket-event-target.js
+M	LayoutTests/platform/mac/Skipped
+
+commit d0501773e20880cfd22b7a66868ec335b7671b12
+Author: Devin Rousso <drousso@apple.com>
+Date:   Fri Aug 21 01:37:40 2015 +0000
+
+    Web Inspector: Visual editor adds extra spaces to styles with no properties
+    https://bugs.webkit.org/show_bug.cgi?id=148242
+    
+    Reviewed by Timothy Hatcher.
+    
+    * UserInterface/Models/CSSStyleDeclaration.js:
+    (WebInspector.CSSStyleDeclaration.prototype.set text):
+    Now trims the text and, if the resulting string has no length or the style is inline,
+    replaces the text to be set with the trimmed text.
+    
+    * UserInterface/Views/VisualStylePropertyCombiner.js:
+    (WebInspector.VisualStylePropertyCombiner.prototype.modifyPropertyText):
+    Removed unnecessary trim.
+    
+    
+    Canonical link: https://commits.webkit.org/166381@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@188730 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebInspectorUI/ChangeLog
+M	Source/WebInspectorUI/UserInterface/Models/CSSStyleDeclaration.js
+M	Source/WebInspectorUI/UserInterface/Views/VisualStylePropertyCombiner.js
+
+commit 5078620d6c67b081d66c7e02a0505211909ad1c0
+Author: Zhenyao Mo <zmo@google.com>
+Date:   Tue Jun 21 02:23:19 2011 +0000
+
+    2011-06-20  Zhenyao Mo  <zmo@google.com>
+    
+            Reviewed by Kenneth Russell.
+    
+            Update ANGLE to r696.
+            https://bugs.webkit.org/show_bug.cgi?id=56396
+    
+            * platform/graphics/ANGLEWebKitBridge.cpp:
+            (WebCore::ANGLEWebKitBridge::validateShaderSource): Specify backend.
+    2011-06-20  Zhenyao Mo  <zmo@google.com>
+    
+            Reviewed by Kenneth Russell.
+    
+            Update ANGLE to r696
+            https://bugs.webkit.org/show_bug.cgi?id=56396
+    
+            * ANGLE.xcodeproj/project.pbxproj:
+            * include/EGL/eglext.h:
+            * include/GLSLANG/ShaderLang.h:
+            * src/build_angle.xcodeproj/project.pbxproj:
+            * src/common/debug.cpp:
+            (gl::output):
+            (gl::trace):
+            (gl::perfActive):
+            (gl::ScopedPerfEventHelper::ScopedPerfEventHelper):
+            (gl::ScopedPerfEventHelper::~ScopedPerfEventHelper):
+            * src/common/debug.h:
+            * src/common/version.h: Added.
+            * src/compiler/CodeGenGLSL.cpp:
+            (ConstructCompiler):
+            * src/compiler/CodeGenHLSL.cpp:
+            (ConstructCompiler):
+            * src/compiler/Compiler.cpp:
+            (TCompiler::compile):
+            (TCompiler::mapLongVariableNames):
+            (TCompiler::getMappedNameMaxLength):
+            (TCompiler::getExtensionBehavior):
+            * src/compiler/ConstantUnion.h:
+            (ConstantUnion::operator==):
+            (ConstantUnion::operator>):
+            (ConstantUnion::operator<):
+            * src/compiler/ExtensionBehavior.h:
+            (getBehaviorString):
+            * src/compiler/ForLoopUnroll.cpp: Added.
+            (ForLoopUnroll::FillLoopIndexInfo):
+            (ForLoopUnroll::Step):
+            (ForLoopUnroll::SatisfiesLoopCondition):
+            (ForLoopUnroll::NeedsToReplaceSymbolWithValue):
+            (ForLoopUnroll::GetLoopIndexValue):
+            (ForLoopUnroll::Push):
+            (ForLoopUnroll::Pop):
+            (ForLoopUnroll::getLoopIncrement):
+            (ForLoopUnroll::evaluateIntConstant):
+            * src/compiler/ForLoopUnroll.h: Added.
+            (ForLoopUnroll::ForLoopUnroll):
+            * src/compiler/Initialize.cpp:
+            (BuiltInFunctionsVertex):
+            * src/compiler/MapLongVariableNames.cpp: Added.
+            (MapLongVariableNames::MapLongVariableNames):
+            (MapLongVariableNames::visitSymbol):
+            (MapLongVariableNames::visitConstantUnion):
+            (MapLongVariableNames::visitBinary):
+            (MapLongVariableNames::visitUnary):
+            (MapLongVariableNames::visitSelection):
+            (MapLongVariableNames::visitAggregate):
+            (MapLongVariableNames::visitLoop):
+            (MapLongVariableNames::visitBranch):
+            (MapLongVariableNames::mapVaryingLongName):
+            * src/compiler/MapLongVariableNames.h: Added.
+            * src/compiler/OutputESSL.cpp: Added.
+            (TOutputESSL::TOutputESSL):
+            (TOutputESSL::writeVariablePrecision):
+            * src/compiler/OutputESSL.h: Added.
+            * src/compiler/OutputGLSL.cpp:
+            (TOutputGLSL::TOutputGLSL):
+            (TOutputGLSL::writeVariablePrecision):
+            * src/compiler/OutputGLSL.h:
+            * src/compiler/OutputGLSLBase.cpp: Added.
+            (TOutputGLSLBase::TOutputGLSLBase):
+            (TOutputGLSLBase::writeTriplet):
+            (TOutputGLSLBase::writeVariableType):
+            (TOutputGLSLBase::writeFunctionParameters):
+            (TOutputGLSLBase::writeConstantUnion):
+            (TOutputGLSLBase::visitSymbol):
+            (TOutputGLSLBase::visitConstantUnion):
+            (TOutputGLSLBase::visitBinary):
+            (TOutputGLSLBase::visitUnary):
+            (TOutputGLSLBase::visitSelection):
+            (TOutputGLSLBase::visitAggregate):
+            (TOutputGLSLBase::visitLoop):
+            (TOutputGLSLBase::visitBranch):
+            (TOutputGLSLBase::visitCodeBlock):
+            * src/compiler/OutputGLSLBase.h: Added.
+            (TOutputGLSLBase::objSink):
+            * src/compiler/OutputHLSL.cpp:
+            (sh::OutputHLSL::OutputHLSL):
+            (sh::OutputHLSL::header):
+            (sh::OutputHLSL::visitUnary):
+            (sh::OutputHLSL::visitAggregate):
+            (sh::OutputHLSL::visitSelection):
+            (sh::OutputHLSL::visitLoop):
+            (sh::OutputHLSL::visitBranch):
+            (sh::OutputHLSL::handleExcessiveLoop):
+            (sh::OutputHLSL::outputLineDirective):
+            * src/compiler/OutputHLSL.h:
+            * src/compiler/ParseHelper.cpp:
+            (TParseContext::precisionErrorCheck):
+            (TParseContext::constructorErrorCheck):
+            (TParseContext::nonInitErrorCheck):
+            * src/compiler/ParseHelper.h:
+            (TParseContext::TParseContext):
+            * src/compiler/ShHandle.h:
+            * src/compiler/ShaderLang.cpp:
+            (getVariableInfo):
+            (ShConstructCompiler):
+            (ShGetInfo):
+            (ShGetActiveAttrib):
+            (ShGetActiveUniform):
+            * src/compiler/TranslatorESSL.cpp: Added.
+            (TranslatorESSL::TranslatorESSL):
+            (TranslatorESSL::translate):
+            (TranslatorESSL::writeExtensionBehavior):
+            * src/compiler/TranslatorESSL.h: Added.
+            * src/compiler/ValidateLimitations.cpp:
+            (ValidateLimitations::visitBinary):
+            (ValidateLimitations::visitLoop):
+            * src/compiler/ValidateLimitations.h:
+            * src/compiler/VariableInfo.cpp:
+            (getVariableInfo):
+            (getBuiltInVariableInfo):
+            (getUserDefinedVariableInfo):
+            (CollectAttribsUniforms::visitAggregate):
+            * src/compiler/VariableInfo.h:
+            * src/compiler/VersionGLSL.cpp:
+            (TVersionGLSL::visitSymbol):
+            (TVersionGLSL::visitConstantUnion):
+            (TVersionGLSL::visitBinary):
+            (TVersionGLSL::visitUnary):
+            (TVersionGLSL::visitSelection):
+            (TVersionGLSL::visitAggregate):
+            (TVersionGLSL::visitLoop):
+            (TVersionGLSL::visitBranch):
+            * src/compiler/VersionGLSL.h:
+            * src/compiler/glslang.y:
+            * src/compiler/glslang_tab.cpp:
+            * src/compiler/glslang_tab.h:
+            * src/compiler/intermediate.h:
+            (TIntermLoop::TIntermLoop):
+            (TIntermLoop::setUnrollFlag):
+            (TIntermLoop::getUnrollFlag):
+            (TIntermSymbol::TIntermSymbol):
+            (TIntermSymbol::setId):
+            (TIntermSymbol::setSymbol):
+            (TIntermSymbol::getOriginalSymbol):
+            (TIntermAggregate::TIntermAggregate):
+            (TIntermAggregate::setEndLine):
+            (TIntermAggregate::getEndLine):
+            * src/compiler/preprocessor/atom.c:
+            (AddString):
+            * src/compiler/preprocessor/compile.h:
+            * src/compiler/preprocessor/cpp.c:
+            (CPPelse):
+            (eval):
+            (CPPif):
+            (CPPifdef):
+            (readCPPline):
+            (ChkCorrectElseNesting):
+            * src/compiler/preprocessor/cppstruct.c:
+            (ResetPreprocessor):
+            * src/compiler/preprocessor/scanner.c:
+            (byte_scan):
+            (yylex_CPP):
+            * src/compiler/preprocessor/scanner.h:
+            * src/libEGL/Config.cpp:
+            (egl::Config::Config):
+            (egl::Config::set):
+            (egl::ConfigSet::add):
+            (egl::ConfigSet::getConfigs):
+            * src/libEGL/Config.h:
+            * src/libEGL/Display.cpp:
+            (egl::Display::Display):
+            (egl::Display::initialize):
+            (egl::Display::terminate):
+            (egl::Display::getConfigAttrib):
+            (egl::Display::createDevice):
+            (egl::Display::createWindowSurface):
+            (egl::Display::createOffscreenSurface):
+            (egl::Display::createContext):
+            (egl::Display::destroyContext):
+            (egl::Display::isInitialized):
+            (egl::Display::getAdapterIdentifier):
+            (egl::Display::isDeviceLost):
+            (egl::Display::getBufferPool):
+            (egl::Display::initExtensionString):
+            (egl::Display::getExtensionString):
+            (egl::Display::getVertexTextureSupport):
+            (egl::Display::getNonPower2TextureSupport):
+            * src/libEGL/Display.h:
+            (egl::Display::isD3d9ExDevice):
+            * src/libEGL/Surface.cpp:
+            (egl::Surface::Surface):
+            (egl::Surface::initialize):
+            (egl::Surface::release):
+            (egl::Surface::resetSwapChain):
+            (egl::SurfaceWindowProc):
+            (egl::Surface::subclassWindow):
+            (egl::Surface::unsubclassWindow):
+            (egl::Surface::swap):
+            (egl::Surface::getRenderTarget):
+            (egl::Surface::getOffscreenTexture):
+            (egl::Surface::getTextureFormat):
+            (egl::Surface::getTextureTarget):
+            (egl::Surface::setBoundTexture):
+            (egl::Surface::getBoundTexture):
+            (egl::Surface::getFormat):
+            * src/libEGL/Surface.h:
+            (egl::Surface::getShareHandle):
+            * src/libEGL/libEGL.cpp:
+            (validateDisplay):
+            (validateConfig):
+            (validateContext):
+            (validateSurface):
+            * src/libEGL/libEGL.rc: Added.
+            * src/libEGL/libEGL.vcproj:
+            * src/libEGL/main.cpp:
+            (DllMain):
+            * src/libEGL/main.h:
+            * src/libEGL/resource.h: Added.
+            * src/libGLESv2/Blit.cpp:
+            (gl::Blit::initGeometry):
+            (gl::Blit::copy):
+            * src/libGLESv2/Blit.h:
+            * src/libGLESv2/Buffer.cpp:
+            (gl::Buffer::Buffer):
+            (gl::Buffer::~Buffer):
+            (gl::Buffer::bufferData):
+            (gl::Buffer::bufferSubData):
+            (gl::Buffer::getStaticVertexBuffer):
+            (gl::Buffer::getStaticIndexBuffer):
+            (gl::Buffer::invalidateStaticData):
+            (gl::Buffer::promoteStaticUsage):
+            * src/libGLESv2/Buffer.h:
+            * src/libGLESv2/Context.cpp:
+            (gl::Context::Context):
+            (gl::Context::~Context):
+            (gl::Context::makeCurrent):
+            (gl::Context::markAllStateDirty):
+            (gl::Context::setActiveSampler):
+            (gl::Context::createFramebuffer):
+            (gl::Context::createFence):
+            (gl::Context::deleteFramebuffer):
+            (gl::Context::deleteFence):
+            (gl::Context::bindTexture2D):
+            (gl::Context::bindTextureCubeMap):
+            (gl::Context::getTexture2D):
+            (gl::Context::getTextureCubeMap):
+            (gl::Context::getSamplerTexture):
+            (gl::Context::getIntegerv):
+            (gl::Context::applyRenderTarget):
+            (gl::Context::applyState):
+            (gl::Context::applyVertexBuffer):
+            (gl::Context::applyShaders):
+            (gl::Context::applyTextures):
+            (gl::Context::readPixels):
+            (gl::Context::clear):
+            (gl::Context::drawArrays):
+            (gl::Context::drawElements):
+            (gl::Context::finish):
+            (gl::Context::flush):
+            (gl::Context::drawClosingLine):
+            (gl::Context::getMaximumVertexTextureImageUnits):
+            (gl::Context::getMaximumCombinedTextureImageUnits):
+            (gl::Context::supportsNonPower2Texture):
+            (gl::Context::detachTexture):
+            (gl::Context::getIncompleteTexture):
+            (gl::Context::initExtensionString):
+            (gl::Context::blitFramebuffer):
+            (gl::VertexDeclarationCache::VertexDeclarationCache):
+            (gl::VertexDeclarationCache::~VertexDeclarationCache):
+            (gl::VertexDeclarationCache::applyDeclaration):
+            * src/libGLESv2/Context.h:
+            * src/libGLESv2/Framebuffer.cpp:
+            (gl::Framebuffer::lookupRenderbuffer):
+            (gl::Framebuffer::completeness):
+            * src/libGLESv2/Framebuffer.h:
+            * src/libGLESv2/HandleAllocator.cpp: Added.
+            (gl::HandleAllocator::HandleAllocator):
+            (gl::HandleAllocator::~HandleAllocator):
+            (gl::HandleAllocator::setBaseHandle):
+            (gl::HandleAllocator::allocate):
+            (gl::HandleAllocator::release):
+            * src/libGLESv2/HandleAllocator.h: Added.
+            * src/libGLESv2/IndexDataManager.cpp: Added.
+            (gl::IndexDataManager::IndexDataManager):
+            (gl::IndexDataManager::~IndexDataManager):
+            (gl::convertIndices):
+            (gl::computeRange):
+            (gl::IndexDataManager::prepareIndexData):
+            (gl::IndexDataManager::indexSize):
+            (gl::IndexDataManager::typeSize):
+            (gl::IndexBuffer::IndexBuffer):
+            (gl::IndexBuffer::~IndexBuffer):
+            (gl::IndexBuffer::getBuffer):
+            (gl::IndexBuffer::unmap):
+            (gl::StreamingIndexBuffer::StreamingIndexBuffer):
+            (gl::StreamingIndexBuffer::~StreamingIndexBuffer):
+            (gl::StreamingIndexBuffer::map):
+            (gl::StreamingIndexBuffer::reserveSpace):
+            (gl::StaticIndexBuffer::StaticIndexBuffer):
+            (gl::StaticIndexBuffer::~StaticIndexBuffer):
+            (gl::StaticIndexBuffer::map):
+            (gl::StaticIndexBuffer::reserveSpace):
+            (gl::StaticIndexBuffer::lookupType):
+            (gl::StaticIndexBuffer::lookupRange):
+            (gl::StaticIndexBuffer::addRange):
+            * src/libGLESv2/IndexDataManager.h: Added.
+            (gl::IndexBuffer::size):
+            * src/libGLESv2/Program.cpp:
+            (gl::Program::getSemanticIndex):
+            (gl::Program::getSamplerMapping):
+            (gl::Program::getSamplerTextureType):
+            (gl::Program::compileToBinary):
+            (gl::Program::packVaryings):
+            (gl::Program::linkVaryings):
+            (gl::Program::link):
+            (gl::Program::linkUniforms):
+            (gl::Program::defineUniform):
+            (gl::Program::applyUniform1iv):
+            (gl::Program::appendToInfoLogSanitized):
+            (gl::Program::unlink):
+            (gl::Program::getActiveUniformMaxLength):
+            (gl::Program::validate):
+            (gl::Program::validateSamplers):
+            * src/libGLESv2/Program.h:
+            * src/libGLESv2/Renderbuffer.cpp:
+            (gl::Renderbuffer::getWidth):
+            (gl::Renderbuffer::getHeight):
+            (gl::Renderbuffer::getInternalFormat):
+            (gl::Renderbuffer::getRedSize):
+            (gl::Renderbuffer::getGreenSize):
+            (gl::Renderbuffer::getBlueSize):
+            (gl::Renderbuffer::getAlphaSize):
+            (gl::Renderbuffer::getDepthSize):
+            (gl::Renderbuffer::getStencilSize):
+            (gl::Renderbuffer::getSamples):
+            (gl::RenderbufferStorage::RenderbufferStorage):
+            (gl::RenderbufferStorage::getWidth):
+            (gl::RenderbufferStorage::getHeight):
+            (gl::RenderbufferStorage::getInternalFormat):
+            (gl::RenderbufferStorage::getRedSize):
+            (gl::RenderbufferStorage::getGreenSize):
+            (gl::RenderbufferStorage::getBlueSize):
+            (gl::RenderbufferStorage::getAlphaSize):
+            (gl::RenderbufferStorage::getDepthSize):
+            (gl::RenderbufferStorage::getStencilSize):
+            (gl::RenderbufferStorage::getD3DFormat):
+            (gl::Colorbuffer::Colorbuffer):
+            (gl::Colorbuffer::getWidth):
+            (gl::Colorbuffer::getHeight):
+            (gl::Colorbuffer::getInternalFormat):
+            (gl::Colorbuffer::getType):
+            (gl::Colorbuffer::getD3DFormat):
+            (gl::Colorbuffer::isColorbuffer):
+            (gl::Colorbuffer::getRenderTarget):
+            (gl::DepthStencilbuffer::DepthStencilbuffer):
+            (gl::Depthbuffer::Depthbuffer):
+            (gl::Stencilbuffer::Stencilbuffer):
+            * src/libGLESv2/Renderbuffer.h:
+            * src/libGLESv2/ResourceManager.cpp:
+            (gl::ResourceManager::createBuffer):
+            (gl::ResourceManager::createShader):
+            (gl::ResourceManager::createProgram):
+            (gl::ResourceManager::createTexture):
+            (gl::ResourceManager::createRenderbuffer):
+            (gl::ResourceManager::deleteBuffer):
+            (gl::ResourceManager::deleteShader):
+            (gl::ResourceManager::deleteProgram):
+            (gl::ResourceManager::deleteTexture):
+            (gl::ResourceManager::deleteRenderbuffer):
+            (gl::ResourceManager::checkTextureAllocation):
+            * src/libGLESv2/ResourceManager.h:
+            * src/libGLESv2/Shader.cpp:
+            (gl::Shader::Shader):
+            (gl::Shader::compileToHLSL):
+            * src/libGLESv2/Shader.h:
+            * src/libGLESv2/Texture.cpp:
+            (gl::Texture::Image::Image):
+            (gl::Texture::Image::~Image):
+            (gl::Texture::Image::isRenderable):
+            (gl::Texture::Image::getD3DFormat):
+            (gl::Texture::Texture):
+            (gl::Texture::setMinFilter):
+            (gl::Texture::setMagFilter):
+            (gl::Texture::setWrapS):
+            (gl::Texture::setWrapT):
+            (gl::Texture::loadImageData):
+            (gl::Texture::loadAlphaImageData):
+            (gl::Texture::loadAlphaFloatImageData):
+            (gl::Texture::loadAlphaHalfFloatImageData):
+            (gl::Texture::loadLuminanceImageData):
+            (gl::Texture::loadLuminanceFloatImageData):
+            (gl::Texture::loadLuminanceHalfFloatImageData):
+            (gl::Texture::loadLuminanceAlphaImageData):
+            (gl::Texture::loadLuminanceAlphaFloatImageData):
+            (gl::Texture::loadLuminanceAlphaHalfFloatImageData):
+            (gl::Texture::loadRGBUByteImageData):
+            (gl::Texture::loadRGB565ImageData):
+            (gl::Texture::loadRGBFloatImageData):
+            (gl::Texture::loadRGBHalfFloatImageData):
+            (gl::Texture::loadRGBAUByteImageDataSSE2):
+            (gl::Texture::loadRGBAUByteImageData):
+            (gl::Texture::loadRGBA4444ImageData):
+            (gl::Texture::loadRGBA5551ImageData):
+            (gl::Texture::loadRGBAFloatImageData):
+            (gl::Texture::loadRGBAHalfFloatImageData):
+            (gl::Texture::loadBGRAImageData):
+            (gl::Texture::loadCompressedImageData):
+            (gl::Texture::createSurface):
+            (gl::Texture::setImage):
+            (gl::Texture::setCompressedImage):
+            (gl::Texture::subImage):
+            (gl::Texture::subImageCompressed):
+            (gl::Texture::copyToImage):
+            (gl::Texture::getTexture):
+            (gl::Texture::isDirtyParameter):
+            (gl::Texture::isDirtyImage):
+            (gl::Texture::resetDirty):
+            (gl::Texture::getSerial):
+            (gl::Texture::creationLevels):
+            (gl::Texture::levelCount):
+            (gl::Texture::issueSerial):
+            (gl::Texture2D::Texture2D):
+            (gl::Texture2D::~Texture2D):
+            (gl::Texture2D::getWidth):
+            (gl::Texture2D::getHeight):
+            (gl::Texture2D::getInternalFormat):
+            (gl::Texture2D::getType):
+            (gl::Texture2D::getD3DFormat):
+            (gl::Texture2D::redefineTexture):
+            (gl::Texture2D::setImage):
+            (gl::Texture2D::bindTexImage):
+            (gl::Texture2D::releaseTexImage):
+            (gl::Texture2D::setCompressedImage):
+            (gl::Texture2D::commitRect):
+            (gl::Texture2D::copyImage):
+            (gl::Texture2D::copySubImage):
+            (gl::Texture2D::isComplete):
+            (gl::Texture2D::isCompressed):
+            (gl::Texture2D::getBaseTexture):
+            (gl::Texture2D::createTexture):
+            (gl::Texture2D::updateTexture):
+            (gl::Texture2D::convertToRenderTarget):
+            (gl::Texture2D::generateMipmaps):
+            (gl::Texture2D::getRenderbuffer):
+            (gl::Texture2D::getRenderTarget):
+            (gl::TextureCubeMap::getWidth):
+            (gl::TextureCubeMap::getHeight):
+            (gl::TextureCubeMap::getInternalFormat):
+            (gl::TextureCubeMap::getType):
+            (gl::TextureCubeMap::getD3DFormat):
+            (gl::TextureCubeMap::setImagePosX):
+            (gl::TextureCubeMap::setImageNegX):
+            (gl::TextureCubeMap::setImagePosY):
+            (gl::TextureCubeMap::setImageNegY):
+            (gl::TextureCubeMap::setImagePosZ):
+            (gl::TextureCubeMap::setImageNegZ):
+            (gl::TextureCubeMap::setCompressedImage):
+            (gl::TextureCubeMap::commitRect):
+            (gl::TextureCubeMap::isComplete):
+            (gl::TextureCubeMap::isCompressed):
+            (gl::TextureCubeMap::getBaseTexture):
+            (gl::TextureCubeMap::createTexture):
+            (gl::TextureCubeMap::updateTexture):
+            (gl::TextureCubeMap::convertToRenderTarget):
+            (gl::TextureCubeMap::setImage):
+            (gl::TextureCubeMap::redefineTexture):
+            (gl::TextureCubeMap::copyImage):
+            (gl::TextureCubeMap::getCubeMapSurface):
+            (gl::TextureCubeMap::copySubImage):
+            (gl::TextureCubeMap::generateMipmaps):
+            (gl::TextureCubeMap::getRenderbuffer):
+            (gl::TextureCubeMap::getRenderTarget):
+            * src/libGLESv2/Texture.h:
+            * src/libGLESv2/VertexDataManager.cpp: Added.
+            (gl::VertexDataManager::VertexDataManager):
+            (gl::VertexDataManager::~VertexDataManager):
+            (gl::VertexDataManager::writeAttributeData):
+            (gl::VertexDataManager::prepareVertexData):
+            (gl::VertexDataManager::spaceRequired):
+            (gl::VertexDataManager::checkVertexCaps):
+            (gl::VertexDataManager::typeIndex):
+            (gl::VertexBuffer::VertexBuffer):
+            (gl::VertexBuffer::~VertexBuffer):
+            (gl::VertexBuffer::unmap):
+            (gl::VertexBuffer::getBuffer):
+            (gl::ConstantVertexBuffer::ConstantVertexBuffer):
+            (gl::ConstantVertexBuffer::~ConstantVertexBuffer):
+            (gl::ArrayVertexBuffer::ArrayVertexBuffer):
+            (gl::ArrayVertexBuffer::~ArrayVertexBuffer):
+            (gl::ArrayVertexBuffer::addRequiredSpace):
+            (gl::ArrayVertexBuffer::addRequiredSpaceFor):
+            (gl::StreamingVertexBuffer::StreamingVertexBuffer):
+            (gl::StreamingVertexBuffer::~StreamingVertexBuffer):
+            (gl::StreamingVertexBuffer::map):
+            (gl::StreamingVertexBuffer::reserveRequiredSpace):
+            (gl::StaticVertexBuffer::StaticVertexBuffer):
+            (gl::StaticVertexBuffer::~StaticVertexBuffer):
+            (gl::StaticVertexBuffer::map):
+            (gl::StaticVertexBuffer::reserveRequiredSpace):
+            (gl::StaticVertexBuffer::lookupAttribute):
+            (gl::VertexDataManager::formatConverter):
+            * src/libGLESv2/VertexDataManager.h: Added.
+            (gl::ArrayVertexBuffer::size):
+            (gl::VertexDataManager::dirtyCurrentValue):
+            * src/libGLESv2/libGLESv2.cpp:
+            (validImageSize):
+            (Extension::glBindTexImage):
+            * src/libGLESv2/libGLESv2.def:
+            * src/libGLESv2/libGLESv2.rc: Added.
+            * src/libGLESv2/libGLESv2.vcproj:
+            * src/libGLESv2/main.cpp:
+            (error):
+            * src/libGLESv2/mathutil.h:
+            (gl::clamp):
+            (gl::clamp01):
+            (gl::transformPixelRect):
+            (gl::transformPixelYOffset):
+            (gl::adjustWinding):
+            (gl::supportsSSE2):
+            * src/libGLESv2/resource.h: Added.
+            * src/libGLESv2/utilities.cpp:
+            (gl::ComputeCompressedPitch):
+            (es2dx::ConvertCubeFace):
+            (es2dx::ConvertPrimitiveType):
+            (es2dx::ConvertRenderbufferFormat):
+            (es2dx::GetMultisampleTypeFromSamples):
+            (dx2es::GetStencilSize):
+            (dx2es::GetAlphaSize):
+            (dx2es::GetRedSize):
+            (dx2es::GetGreenSize):
+            (dx2es::GetBlueSize):
+            (dx2es::GetDepthSize):
+            (getTempPath):
+            (writeFile):
+            * src/libGLESv2/utilities.h:
+            * src/libGLESv2/vertexconversion.h: Added.
+            (gl::Identity::convert):
+            (gl::Cast::convert):
+            (gl::Normalize::convert):
+            (gl::FixedToFloat::convert):
+            (gl::SimpleDefaultValues::zero):
+            (gl::SimpleDefaultValues::one):
+            (gl::NormalizedDefaultValues::zero):
+            (gl::NormalizedDefaultValues::one):
+            (gl::VertexDataConverter::convertArray):
+            (gl::VertexDataConverter::pointerAddBytes):
+            (gl::VertexDataConverter::copyComponent):
+    2011-06-20  Zhenyao Mo  <zmo@google.com>
+    
+            Reviewed by Kenneth Russell.
+    
+            Update ANGLE to r696
+            https://bugs.webkit.org/show_bug.cgi?id=56396
+    
+            * fast/canvas/webgl/glsl-conformance.html: Fix a bug in the test (otherwise after the roll this test will fail).
+            * platform/chromium/test_expectations.txt: Once this test is fixed, it should pass in chromium.
+    
+    
+    Canonical link: https://commits.webkit.org/78645@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@89330 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/fast/canvas/webgl/glsl-conformance.html
+M	LayoutTests/platform/chromium/test_expectations.txt
+M	Source/ThirdParty/ANGLE/ANGLE.xcodeproj/project.pbxproj
+M	Source/ThirdParty/ANGLE/ChangeLog
+M	Source/ThirdParty/ANGLE/include/EGL/eglext.h
+M	Source/ThirdParty/ANGLE/include/GLSLANG/ShaderLang.h
+M	Source/ThirdParty/ANGLE/src/build_angle.xcodeproj/project.pbxproj
+M	Source/ThirdParty/ANGLE/src/common/debug.cpp
+M	Source/ThirdParty/ANGLE/src/common/debug.h
+A	Source/ThirdParty/ANGLE/src/common/version.h
+M	Source/ThirdParty/ANGLE/src/compiler/CodeGenGLSL.cpp
+M	Source/ThirdParty/ANGLE/src/compiler/CodeGenHLSL.cpp
+M	Source/ThirdParty/ANGLE/src/compiler/Compiler.cpp
+M	Source/ThirdParty/ANGLE/src/compiler/ConstantUnion.h
+M	Source/ThirdParty/ANGLE/src/compiler/ExtensionBehavior.h
+A	Source/ThirdParty/ANGLE/src/compiler/ForLoopUnroll.cpp
+A	Source/ThirdParty/ANGLE/src/compiler/ForLoopUnroll.h
+M	Source/ThirdParty/ANGLE/src/compiler/Initialize.cpp
+A	Source/ThirdParty/ANGLE/src/compiler/MapLongVariableNames.cpp
+A	Source/ThirdParty/ANGLE/src/compiler/MapLongVariableNames.h
+A	Source/ThirdParty/ANGLE/src/compiler/OutputESSL.cpp
+A	Source/ThirdParty/ANGLE/src/compiler/OutputESSL.h
+M	Source/ThirdParty/ANGLE/src/compiler/OutputGLSL.cpp
+M	Source/ThirdParty/ANGLE/src/compiler/OutputGLSL.h
+A	Source/ThirdParty/ANGLE/src/compiler/OutputGLSLBase.cpp
+A	Source/ThirdParty/ANGLE/src/compiler/OutputGLSLBase.h
+M	Source/ThirdParty/ANGLE/src/compiler/OutputHLSL.cpp
+M	Source/ThirdParty/ANGLE/src/compiler/OutputHLSL.h
+M	Source/ThirdParty/ANGLE/src/compiler/ParseHelper.cpp
+M	Source/ThirdParty/ANGLE/src/compiler/ParseHelper.h
+M	Source/ThirdParty/ANGLE/src/compiler/ShHandle.h
+M	Source/ThirdParty/ANGLE/src/compiler/ShaderLang.cpp
+A	Source/ThirdParty/ANGLE/src/compiler/TranslatorESSL.cpp
+A	Source/ThirdParty/ANGLE/src/compiler/TranslatorESSL.h
+M	Source/ThirdParty/ANGLE/src/compiler/ValidateLimitations.cpp
+M	Source/ThirdParty/ANGLE/src/compiler/ValidateLimitations.h
+M	Source/ThirdParty/ANGLE/src/compiler/VariableInfo.cpp
+M	Source/ThirdParty/ANGLE/src/compiler/VariableInfo.h
+M	Source/ThirdParty/ANGLE/src/compiler/VersionGLSL.cpp
+M	Source/ThirdParty/ANGLE/src/compiler/VersionGLSL.h
+M	Source/ThirdParty/ANGLE/src/compiler/glslang.y
+M	Source/ThirdParty/ANGLE/src/compiler/glslang_tab.cpp
+M	Source/ThirdParty/ANGLE/src/compiler/glslang_tab.h
+M	Source/ThirdParty/ANGLE/src/compiler/intermediate.h
+M	Source/ThirdParty/ANGLE/src/compiler/preprocessor/atom.c
+M	Source/ThirdParty/ANGLE/src/compiler/preprocessor/compile.h
+M	Source/ThirdParty/ANGLE/src/compiler/preprocessor/cpp.c
+M	Source/ThirdParty/ANGLE/src/compiler/preprocessor/cppstruct.c
+M	Source/ThirdParty/ANGLE/src/compiler/preprocessor/scanner.c
+M	Source/ThirdParty/ANGLE/src/compiler/preprocessor/scanner.h
+M	Source/ThirdParty/ANGLE/src/libEGL/Config.cpp
+M	Source/ThirdParty/ANGLE/src/libEGL/Config.h
+M	Source/ThirdParty/ANGLE/src/libEGL/Display.cpp
+M	Source/ThirdParty/ANGLE/src/libEGL/Display.h
+M	Source/ThirdParty/ANGLE/src/libEGL/Surface.cpp
+M	Source/ThirdParty/ANGLE/src/libEGL/Surface.h
+M	Source/ThirdParty/ANGLE/src/libEGL/libEGL.cpp
+A	Source/ThirdParty/ANGLE/src/libEGL/libEGL.rc
+M	Source/ThirdParty/ANGLE/src/libEGL/libEGL.vcproj
+M	Source/ThirdParty/ANGLE/src/libEGL/main.cpp
+M	Source/ThirdParty/ANGLE/src/libEGL/main.h
+A	Source/ThirdParty/ANGLE/src/libEGL/resource.h
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Blit.cpp
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Blit.h
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Buffer.cpp
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Buffer.h
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Context.cpp
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Context.h
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Framebuffer.cpp
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Framebuffer.h
+A	Source/ThirdParty/ANGLE/src/libGLESv2/HandleAllocator.cpp
+A	Source/ThirdParty/ANGLE/src/libGLESv2/HandleAllocator.h
+A	Source/ThirdParty/ANGLE/src/libGLESv2/IndexDataManager.cpp
+A	Source/ThirdParty/ANGLE/src/libGLESv2/IndexDataManager.h
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Program.cpp
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Program.h
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Renderbuffer.cpp
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Renderbuffer.h
+M	Source/ThirdParty/ANGLE/src/libGLESv2/ResourceManager.cpp
+M	Source/ThirdParty/ANGLE/src/libGLESv2/ResourceManager.h
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Shader.cpp
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Shader.h
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Texture.cpp
+M	Source/ThirdParty/ANGLE/src/libGLESv2/Texture.h
+A	Source/ThirdParty/ANGLE/src/libGLESv2/VertexDataManager.cpp
+A	Source/ThirdParty/ANGLE/src/libGLESv2/VertexDataManager.h
+M	Source/ThirdParty/ANGLE/src/libGLESv2/libGLESv2.cpp
+M	Source/ThirdParty/ANGLE/src/libGLESv2/libGLESv2.def
+A	Source/ThirdParty/ANGLE/src/libGLESv2/libGLESv2.rc
+M	Source/ThirdParty/ANGLE/src/libGLESv2/libGLESv2.vcproj
+M	Source/ThirdParty/ANGLE/src/libGLESv2/main.cpp
+M	Source/ThirdParty/ANGLE/src/libGLESv2/mathutil.h
+A	Source/ThirdParty/ANGLE/src/libGLESv2/resource.h
+M	Source/ThirdParty/ANGLE/src/libGLESv2/utilities.cpp
+M	Source/ThirdParty/ANGLE/src/libGLESv2/utilities.h
+A	Source/ThirdParty/ANGLE/src/libGLESv2/vertexconversion.h
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/platform/graphics/ANGLEWebKitBridge.cpp
+
+commit 07fbab8bcb6a171fc2d93001afa034a064a45b43
+Author: Tony Chang <tony@chromium.org>
+Date:   Wed Oct 12 22:07:07 2011 +0000
+
+    [chromium] remove old build dirs on chromium-win
+    https://bugs.webkit.org/show_bug.cgi?id=69961
+    
+    Reviewed by Adam Barth.
+    
+    * Scripts/webkitpy/layout_tests/port/chromium_win.py: Output is now
+      always in build and never in chrome or webkit.
+    
+    
+    Canonical link: https://commits.webkit.org/86038@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@97307 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Tools/ChangeLog
+M	Tools/Scripts/webkitpy/layout_tests/port/chromium_win.py
+
+commit a7b8badb3d2bd6989257f7774a97c19e6002fb53
+Author: Shinichiro Hamaji <hamaji@chromium.org>
+Date:   Thu Aug 12 12:36:52 2010 +0000
+
+    2010-08-12  Sheriff Bot  <webkit.review.bot@gmail.com>
+    
+            Unreviewed, rolling out r65181.
+            http://trac.webkit.org/changeset/65181
+            https://bugs.webkit.org/show_bug.cgi?id=43909
+    
+            It broke 35 layout tests fail on chromium-win (Requested by
+            hamaji on #webkit).
+    
+            * public/WebFrameClient.h:
+            * src/FrameLoaderClientImpl.cpp:
+            (WebKit::FrameLoaderClientImpl::detachedFromParent3):
+    
+    Canonical link: https://commits.webkit.org/56038@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@65238 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebKit/chromium/ChangeLog
+M	WebKit/chromium/public/WebFrameClient.h
+M	WebKit/chromium/src/FrameLoaderClientImpl.cpp
+
+commit e495abce95de0b7f8c06571678a46d60249c1079
+Author: Mikhail Naganov <mnaganov@chromium.org>
+Date:   Tue May 10 16:22:40 2011 +0000
+
+    2011-05-10  Mikhail Naganov  <mnaganov@chromium.org>
+    
+            Reviewed by Yury Semikhatsky.
+    
+            Web Inspector: [Chromium] Drop obsolete test code for the Profiles panel.
+            https://bugs.webkit.org/show_bug.cgi?id=60471
+    
+            * src/js/Tests.js:
+    
+    Canonical link: https://commits.webkit.org/75823@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@86159 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebKit/chromium/ChangeLog
+M	Source/WebKit/chromium/src/js/Tests.js
+
+commit 19ab857e236edc56d5a6f7c58079a8fca9edfa8e
+Author: Brent Fulgham <bfulgham@apple.com>
+Date:   Tue Jun 5 18:14:00 2018 +0000
+
+    Revise DEFAULT_EXPERIMENTAL_FEATURES_ENABLED to work properly on Apple builds
+    https://bugs.webkit.org/show_bug.cgi?id=186286
+    <rdar://problem/40782992>
+    
+    Reviewed by Dan Bernstein.
+    
+    Use the WK_RELOCATABLE_FRAMEWORKS flag (which is always defined for non-production builds)
+    to define ENABLE(EXPERIMENTAL_FEATURES) so that we do not need to manually
+    change this flag when preparing for a production release.
+    
+    Source/JavaScriptCore:
+    
+    * Configurations/FeatureDefines.xcconfig: Use WK_RELOCATABLE_FRAMEWORKS to determine
+    whether experimental features should be enabled, and use it to properly define the
+    feature flag.
+    
+    Source/WebCore:
+    
+    * Configurations/FeatureDefines.xcconfig: Use WK_RELOCATABLE_FRAMEWORKS to determine
+    whether experimental features should be enabled, and use it to properly define the
+    feature flag.
+    
+    Source/WebCore/PAL:
+    
+    * Configurations/FeatureDefines.xcconfig: Use WK_RELOCATABLE_FRAMEWORKS to determine
+    whether experimental features should be enabled, and use it to properly define the
+    feature flag.
+    
+    Source/WebKit:
+    
+    * Configurations/FeatureDefines.xcconfig: Use WK_RELOCATABLE_FRAMEWORKS to determine whether
+    experimental features should be enabled, and use it to properly define the feature flag.
+    * Shared/WebPreferencesDefaultValues.h:
+    
+    Source/WebKitLegacy/mac:
+    
+    * Configurations/FeatureDefines.xcconfig: Use WK_RELOCATABLE_FRAMEWORKS to determine
+    whether experimental features should be enabled, and use it to properly define the
+    feature flag.
+    
+    Tools:
+    
+    * TestWebKitAPI/Configurations/FeatureDefines.xcconfig: Use WK_RELOCATABLE_FRAMEWORKS to
+    determine whether experimental features should be enabled, and use it to properly define
+    the feature flag.
+    
+    Canonical link: https://commits.webkit.org/201696@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@232515 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/JavaScriptCore/ChangeLog
+M	Source/JavaScriptCore/Configurations/FeatureDefines.xcconfig
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/Configurations/FeatureDefines.xcconfig
+M	Source/WebCore/PAL/ChangeLog
+M	Source/WebCore/PAL/Configurations/FeatureDefines.xcconfig
+M	Source/WebKit/ChangeLog
+M	Source/WebKit/Configurations/FeatureDefines.xcconfig
+M	Source/WebKit/Shared/WebPreferencesDefaultValues.h
+M	Source/WebKitLegacy/mac/ChangeLog
+M	Source/WebKitLegacy/mac/Configurations/FeatureDefines.xcconfig
+M	Tools/ChangeLog
+M	Tools/TestWebKitAPI/Configurations/FeatureDefines.xcconfig
+
+commit 50eff1b49a9ac385dce99d6286aa938d5b42b41b
+Author: Matt Baker <mattbaker01@gmail.com>
+Date:   Tue Feb 7 20:09:28 2017 +0000
+
+    Web Inspector: DOMTreeOutline becomes collapsed after switching back to Elements tab
+    https://bugs.webkit.org/show_bug.cgi?id=167924
+    
+    Reviewed by Brian Burg.
+    
+    * UserInterface/Views/DOMTreeOutline.js:
+    (WebInspector.DOMTreeOutline.prototype.update):
+    Drive-by fix: move variable initialization below the early return.
+    
+    * UserInterface/Views/ElementsTabContentView.js:
+    (WebInspector.ElementsTabContentView.prototype.shown): Deleted.
+    Calling this._showDOMTreeContentView isn't necessary. The base class
+    implementation will call `shown` on the content view.
+    
+    
+    Canonical link: https://commits.webkit.org/184978@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@211829 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebInspectorUI/ChangeLog
+M	Source/WebInspectorUI/UserInterface/Views/DOMTreeOutline.js
+M	Source/WebInspectorUI/UserInterface/Views/ElementsTabContentView.js
+
+commit 8c9ac438ef742df504289e891e894a394af6d9ff
+Author: Kelly Norton <knorton@google.com>
+Date:   Thu Dec 1 22:16:10 2011 +0000
+
+    More void functions eager to return values in RenderObject & WebFrameImpl
+    https://bugs.webkit.org/show_bug.cgi?id=73571
+    
+    Reviewed by Adam Barth.
+    
+    Source/WebCore:
+    
+    * rendering/RenderObject.h:
+    (WebCore::RenderObject::computeAbsoluteRepaintRect):
+    
+    Source/WebKit/chromium:
+    
+    * src/WebFrameImpl.cpp:
+    (WebKit::ChromePrintContext::computePageRects):
+    
+    
+    Canonical link: https://commits.webkit.org/90177@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@101706 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/rendering/RenderObject.h
+M	Source/WebKit/chromium/ChangeLog
+M	Source/WebKit/chromium/src/WebFrameImpl.cpp
+
+commit 45b95075881d3798da9d2818abaebb398344748e
+Author: Matt Rajca <mrajca@apple.com>
+Date:   Tue Jun 30 18:10:55 2015 +0000
+
+    Media Session: implement algorithm for updating a media element's session (6.1)
+    https://bugs.webkit.org/show_bug.cgi?id=146460
+    
+    Reviewed by Darin Adler.
+    
+    In addition to storing a pointer to the new media session, we now:
+    
+    - pause the media element if it is 'active' in the current media session
+    - remove the media element from the current media session
+    - release the current media session if there are no more active media elements
+    - set the default media session if the new media session is null
+    - update the 'kind' attribute to match the kind of the new media session
+    
+    * Modules/mediasession/MediaSession.cpp:
+    (WebCore::MediaSession::isMediaElementActive):
+    (WebCore::MediaSession::hasActiveMediaElements):
+    * Modules/mediasession/MediaSession.h:
+    * html/HTMLMediaElement.cpp:
+    (WebCore::HTMLMediaElement::setSession):
+    (WebCore::HTMLMediaElement::setSessionInternal):
+    * html/HTMLMediaElement.h:
+    
+    Canonical link: https://commits.webkit.org/164551@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@186123 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/Modules/mediasession/MediaSession.cpp
+M	Source/WebCore/Modules/mediasession/MediaSession.h
+M	Source/WebCore/html/HTMLMediaElement.cpp
+M	Source/WebCore/html/HTMLMediaElement.h
+
+commit 204e0baf9c58ce4492595fd1a86cc469717724fd
+Author: Rob Buis <rwlbuis@webkit.org>
+Date:   Fri Feb 10 15:41:22 2012 +0000
+
+    [BlackBerry] Upstream graphics helper classes in WebKitSupport
+    https://bugs.webkit.org/show_bug.cgi?id=78278
+    
+    Reviewed by Antonio Gomes.
+    
+    Initial upstream, no new tests.
+    
+    * blackberry/WebKitSupport/SurfacePool.cpp: Added.
+    * blackberry/WebKitSupport/SurfacePool.h: Added.
+    * blackberry/WebKitSupport/TileIndex.h: Added.
+    * blackberry/WebKitSupport/TileIndexHash.h: Added.
+    
+    Canonical link: https://commits.webkit.org/95273@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@107401 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebKit/ChangeLog
+A	Source/WebKit/blackberry/WebKitSupport/SurfacePool.cpp
+A	Source/WebKit/blackberry/WebKitSupport/SurfacePool.h
+A	Source/WebKit/blackberry/WebKitSupport/TileIndex.h
+A	Source/WebKit/blackberry/WebKitSupport/TileIndexHash.h
+
+commit a6ba50287012f4860d74d0ac41f2ce2661afdc94
+Author: Aakash Jain <aakash_jain@apple.com>
+Date:   Wed Apr 3 20:27:12 2019 +0000
+
+    [ews-app] Status bubble should not display certain infrastructure status messages
+    https://bugs.webkit.org/show_bug.cgi?id=196550
+    
+    Reviewed by Lucas Forschler.
+    
+    Do not display the steps which are un-needed for end-user. This information is still avaiable
+    if the user click on the bubble and look at the Buildbot build.
+    * BuildSlaveSupport/ews-app/ews/views/statusbubble.py:
+    (StatusBubble._steps_messages):
+    (StatusBubble._should_display_step): Method to decide whether to display the step or not.
+    
+    
+    Canonical link: https://commits.webkit.org/210819@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@243823 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Tools/BuildSlaveSupport/ews-app/ews/views/statusbubble.py
+M	Tools/ChangeLog
+
+commit af4ef3fb5a6e3eb8fcdf5500fc18461eab33dbd9
+Author: Joseph Pecoraro <joepeck@webkit.org>
+Date:   Sun Jul 15 21:26:51 2012 +0000
+
+    Windowless WebView not firing JavaScript load event if there is a media element
+    https://bugs.webkit.org/show_bug.cgi?id=91331
+    
+    Reviewed by Eric Carlson.
+    
+    Source/WebCore:
+    
+    In prepareForLoad we start deferring the load event. If we fall into this
+    clause where the page can not start loading media we bail, potentially
+    indefinitely waiting until we can start loading media. Since we can not
+    be certain this will ever happen, we should stop deferring the page's
+    load event.
+    
+    Test: WebKit1.WindowlessWebViewWithMedia TestWebKitAPI test. The only
+    way this path was reachable right now is on the mac port.
+    
+    * html/HTMLMediaElement.cpp:
+    (WebCore::HTMLMediaElement::loadInternal):
+    
+    Tools:
+    
+    Test a windowless WebView loading a page with a media element. The load
+    event should happen on the next spin of the run loop, but we spin check
+    the page, with a timeout of 250ms.
+    
+    * TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj:
+    * TestWebKitAPI/Tests/mac/WindowlessWebViewWithMedia.html: Added.
+    * TestWebKitAPI/Tests/mac/WindowlessWebViewWithMedia.mm: Added.
+    (-[WindowlessWebViewWithMediaFrameLoadDelegate webView:didFinishLoadForFrame:]):
+    (TestWebKitAPI::spinLoop): Spin check with timeout. Runs a block each spin to early bail.
+    (TestWebKitAPI::TEST):
+    
+    Canonical link: https://commits.webkit.org/109155@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@122683 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/html/HTMLMediaElement.cpp
+M	Tools/ChangeLog
+M	Tools/TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj
+A	Tools/TestWebKitAPI/Tests/mac/WindowlessWebViewWithMedia.html
+A	Tools/TestWebKitAPI/Tests/mac/WindowlessWebViewWithMedia.mm
+
+commit 1146b8b1a526618c0be1879fffc981ac3613d9ea
+Author: Michael Saboff <msaboff@apple.com>
+Date:   Tue Jan 29 01:42:07 2013 +0000
+
+    Make integer-modulo.js a try JS-Regress test
+    https://bugs.webkit.org/show_bug.cgi?id=108130
+    
+    Reviewed by Filip Pizlo.
+    
+    Eliminated the LayoutTest calls.  Sum the values and throw an expection if it doesn't
+    match up.
+    
+    * fast/js/regress/script-tests/integer-modulo.js:
+    
+    
+    Canonical link: https://commits.webkit.org/126339@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@141031 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/fast/js/regress/script-tests/integer-modulo.js
+
+commit 71672e5bf882d443ed99b17766c8144a98912cb9
+Author: Saam Barati <sbarati@apple.com>
+Date:   Fri Aug 5 06:46:55 2016 +0000
+
+    Restore CodeBlock jettison code to jettison when a CodeBlock has been alive for a long time
+    https://bugs.webkit.org/show_bug.cgi?id=151241
+    
+    Reviewed by Benjamin Poulain.
+    
+    Source/JavaScriptCore:
+    
+    This patch rolls back in the jettisoning policy from https://bugs.webkit.org/show_bug.cgi?id=149727.
+    We can now jettison a CodeBlock when it has been alive for a long time
+    and is only pointed to by its owner executable. I haven't been able to get this
+    patch to crash on anything it used to crash on, so I suspect we've fixed the bugs that
+    were causing this before. I've also added some stress options for this feature that
+    will cause us to either eagerly old-age jettison or to old-age jettison whenever it's legal.
+    These options helped me find a bug where we would ask an Executable to create a CodeBlock,
+    and then the Executable would do some other allocations, causing a GC, immediately causing
+    the CodeBlock to jettison. There is a small chance that this was the bug we were seeing before,
+    however, it's unlikely given that the previous timing metrics require at least 5 second between
+    compiling to jettisoning.
+    
+    This patch also enables the stress options for various modes
+    of JSC stress tests.
+    
+    * bytecode/CodeBlock.cpp:
+    (JSC::CodeBlock::shouldJettisonDueToWeakReference):
+    (JSC::timeToLive):
+    (JSC::CodeBlock::shouldJettisonDueToOldAge):
+    * interpreter/CallFrame.h:
+    (JSC::ExecState::callee):
+    (JSC::ExecState::unsafeCallee):
+    (JSC::ExecState::codeBlock):
+    (JSC::ExecState::addressOfCodeBlock):
+    (JSC::ExecState::unsafeCodeBlock):
+    (JSC::ExecState::scope):
+    * interpreter/Interpreter.cpp:
+    (JSC::Interpreter::execute):
+    (JSC::Interpreter::executeCall):
+    (JSC::Interpreter::executeConstruct):
+    (JSC::Interpreter::prepareForRepeatCall):
+    * jit/JITOperations.cpp:
+    * llint/LLIntSlowPaths.cpp:
+    (JSC::LLInt::setUpCall):
+    * runtime/Executable.cpp:
+    (JSC::ScriptExecutable::installCode):
+    (JSC::setupJIT):
+    (JSC::ScriptExecutable::prepareForExecutionImpl):
+    * runtime/Executable.h:
+    (JSC::ScriptExecutable::prepareForExecution):
+    * runtime/Options.h:
+    
+    Tools:
+    
+    * Scripts/run-jsc-stress-tests:
+    
+    
+    
+    Canonical link: https://commits.webkit.org/178702@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@204162 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/JavaScriptCore/ChangeLog
+M	Source/JavaScriptCore/bytecode/CodeBlock.cpp
+M	Source/JavaScriptCore/interpreter/CallFrame.h
+M	Source/JavaScriptCore/interpreter/Interpreter.cpp
+M	Source/JavaScriptCore/jit/JITOperations.cpp
+M	Source/JavaScriptCore/llint/LLIntSlowPaths.cpp
+M	Source/JavaScriptCore/runtime/Executable.cpp
+M	Source/JavaScriptCore/runtime/Executable.h
+M	Source/JavaScriptCore/runtime/Options.h
+M	Tools/ChangeLog
+M	Tools/Scripts/run-jsc-stress-tests
+
+commit 282daa6398118e18ef5ebb32674f3cd0c6f83104
+Author: Sanjoy Pal <sanjoy.pal@samsung.com>
+Date:   Thu Jun 27 06:02:51 2013 +0000
+
+    Avoid redundant checks for Compositing reasons in RenderLayerCompositor
+    https://bugs.webkit.org/show_bug.cgi?id=118114
+    
+    Patch by Sanjoy Pal <sanjoy.pal@samsung.com> on 2013-06-26
+    Reviewed by Anders Carlsson.
+    
+    A RenderObject can be any one of the Video, Canvas, Plugin or Iframe.
+    Hence removing the redundant checks.
+    
+    No new tests as no functionality change.
+    
+    * rendering/RenderLayerCompositor.cpp:
+    (WebCore::RenderLayerCompositor::reasonsForCompositing):
+    
+    Canonical link: https://commits.webkit.org/136157@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@152078 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/rendering/RenderLayerCompositor.cpp
+
+commit 03de3c215137b92a4991ec23027feaac61754620
+Author: Noam Rosenthal <noam@webkit.org>
+Date:   Sun Mar 18 19:28:16 2012 +0000
+
+    [Qt] The background is visible for tiles inside the contents area which are not ready
+    https://bugs.webkit.org/show_bug.cgi?id=81349
+    
+    Reviewed by Simon Hausmann.
+    
+    Split PageProxyNode to BackgroundSGNode and ContentsSGNode.
+    BackgroundSGNode paints a solid background, either white or transparent
+    (depending on drawsTransparentBackground flag).
+    
+    * UIProcess/API/qt/qquickwebpage.cpp:
+    (ContentsSGNode):
+    (ContentsSGNode::ContentsSGNode):
+    (ContentsSGNode::changedStates):
+    (ContentsSGNode::~ContentsSGNode):
+    (BackgroundSGNode):
+    (BackgroundSGNode::BackgroundSGNode):
+    (BackgroundSGNode::contentsNode):
+    (QQuickWebPage::updatePaintNode):
+    
+    
+    Canonical link: https://commits.webkit.org/98680@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@111136 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebKit2/ChangeLog
+M	Source/WebKit2/UIProcess/API/qt/qquickwebpage.cpp
+
+commit 8f90402c8904388b500e9133691b352fe406f707
+Author: Andy Estes <aestes@apple.com>
+Date:   Sun Apr 14 16:08:23 2019 +0000
+
+    [Cocoa] WKCustomProtocolLoader should store a WeakPtr to its LegacyCustomProtocolManagerProxy
+    https://bugs.webkit.org/show_bug.cgi?id=196893
+    <rdar://problem/48318983>
+    
+    Reviewed by Anders Carlsson.
+    
+    In addition to manually invalidating each WKCustomProtocolLoader's _customProtocolManagerProxy
+    pointer when the LegacyCustomProtocolManagerClient is invalidated, use a WeakPtr in case the
+    LegacyCustomProtocolManagerProxy is ever destroyed without first invalidating the client.
+    Also add null pointer checks to NSURLConnectionDelegate methods, which might be called after
+    the LegacyCustomProtocolManagerProxy has been destroyed.
+    
+    * UIProcess/Cocoa/LegacyCustomProtocolManagerClient.mm:
+    (-[WKCustomProtocolLoader initWithLegacyCustomProtocolManagerProxy:customProtocolID:request:]):
+    (-[WKCustomProtocolLoader cancel]):
+    (-[WKCustomProtocolLoader connection:didFailWithError:]):
+    (-[WKCustomProtocolLoader connection:didReceiveResponse:]):
+    (-[WKCustomProtocolLoader connection:didReceiveData:]):
+    (-[WKCustomProtocolLoader connection:willSendRequest:redirectResponse:]):
+    (-[WKCustomProtocolLoader connectionDidFinishLoading:]):
+    (WebKit::LegacyCustomProtocolManagerClient::startLoading):
+    (WebKit::LegacyCustomProtocolManagerClient::invalidate):
+    (-[WKCustomProtocolLoader customProtocolManagerProxyDestroyed]): Deleted.
+    * UIProcess/Network/CustomProtocols/LegacyCustomProtocolManagerProxy.h:
+    
+    
+    Canonical link: https://commits.webkit.org/211154@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@244246 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebKit/ChangeLog
+M	Source/WebKit/UIProcess/Cocoa/LegacyCustomProtocolManagerClient.mm
+M	Source/WebKit/UIProcess/Network/CustomProtocols/LegacyCustomProtocolManagerProxy.h
+
+commit aa853af262b328d44d02278c02875f61c2222f3f
+Author: Kimmo Kinnunen <kkinnunen@apple.com>
+Date:   Sun Feb 27 07:27:45 2022 +0000
+
+    RemoteCaptureSampleManager, UserMediaSampleCaptureManagerProxy create the RemoteVideoFrame in incorrectly
+    https://bugs.webkit.org/show_bug.cgi?id=237134
+    
+    Patch by Kimmo Kinnunen <kkinnunen@apple.com> on 2022-02-26
+    Reviewed by Youenn Fablet.
+    
+    UserMediaSampleCaptureManagerProxy should not call RemoteVideoFrameObjectHeap::createVideoFrame,
+    the function should be removed. Instead, UserMediaSampleCaptureManagerProxy should construct a
+    write reference to insert the media sample -> remote proxy mapping. Then
+    the result of the insert, a new reference, should be sent as part of the
+    RemoteVideoFrameProxy::Properties to the WP. This way the sent reference is
+    constructed as expected. Previously the reference was correct but matched just
+    by selecting the constants currently used (0).
+    
+    * UIProcess/Cocoa/UserMediaCaptureManagerProxy.cpp:
+    * WebProcess/GPU/webrtc/LibWebRTCCodecs.h:
+    * WebProcess/cocoa/RemoteCaptureSampleManager.cpp:
+    (WebKit::RemoteCaptureSampleManager::videoSampleAvailable):
+    (WebKit::RemoteCaptureSampleManager::videoSampleAvailableCV):
+    * WebProcess/cocoa/RemoteCaptureSampleManager.h:
+    * WebProcess/cocoa/RemoteCaptureSampleManager.messages.in:
+    
+    
+    Canonical link: https://commits.webkit.org/247833@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@290555 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebKit/ChangeLog
+M	Source/WebKit/GPUProcess/media/RemoteVideoFrameObjectHeap.cpp
+M	Source/WebKit/GPUProcess/media/RemoteVideoFrameObjectHeap.h
+M	Source/WebKit/UIProcess/Cocoa/UserMediaCaptureManagerProxy.cpp
+M	Source/WebKit/WebProcess/GPU/webrtc/LibWebRTCCodecs.h
+M	Source/WebKit/WebProcess/cocoa/RemoteCaptureSampleManager.cpp
+M	Source/WebKit/WebProcess/cocoa/RemoteCaptureSampleManager.h
+M	Source/WebKit/WebProcess/cocoa/RemoteCaptureSampleManager.messages.in
+
+commit a108d263aa9a64fcc7a9ba632892ab81f6ef619e
+Author: Benjamin Poulain <benjamin@webkit.org>
+Date:   Fri Apr 19 21:13:47 2013 +0000
+
+    Remove the declaration of MemoryObjectInfo from StringImpl
+    https://bugs.webkit.org/show_bug.cgi?id=114788
+    
+    Reviewed by Andreas Kling.
+    
+    * wtf/text/StringImpl.h: The declaration is an other left over from chromium.
+    
+    
+    Canonical link: https://commits.webkit.org/133284@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@148771 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WTF/ChangeLog
+M	Source/WTF/wtf/text/StringImpl.h
+
+commit 88b2ee9320cf90accec66b2e78da0b97b2fd9415
+Author: Dirk Pranke <dpranke@chromium.org>
+Date:   Fri Oct 19 00:21:15 2012 +0000
+
+    [chromium] garden-o-matic should ignore the 10.8 Tests bot
+    https://bugs.webkit.org/show_bug.cgi?id=99765
+    
+    Reviewed by Adam Barth.
+    
+    It's really more of an FYI bot at this point and can be safely
+    ignored like the Content Shell bots.
+    
+    * BuildSlaveSupport/build.webkit.org-config/public_html/TestFailures/scripts/config.js:
+    (.):
+    
+    Canonical link: https://commits.webkit.org/117763@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@131827 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Tools/BuildSlaveSupport/build.webkit.org-config/public_html/TestFailures/scripts/config.js
+M	Tools/ChangeLog
+
+commit 50033684a7df9b608877ccaa5052c3c7093479cf
+Author: Said Abou-Hallawa <said@apple.com>
+Date:   Wed Jan 12 07:49:25 2022 +0000
+
+    [GPU Process] Make SVG resources create remote ImageBuffers for their drawing
+    https://bugs.webkit.org/show_bug.cgi?id=235073
+    rdar://87402419
+    
+    Reviewed by Darin Adler.
+    
+    Source/WebCore:
+    
+    Pass a hostWindow when calling SVGRenderingContext::createImageBuffer().
+    
+    * rendering/svg/RenderSVGResourceClipper.cpp:
+    (WebCore::RenderSVGResourceClipper::applyClippingToContext):
+    * rendering/svg/RenderSVGResourceGradient.cpp:
+    (WebCore::createMaskAndSwapContextForTextGradient):
+    (WebCore::clipToTextMask):
+    (WebCore::RenderSVGResourceGradient::applyResource):
+    (WebCore::RenderSVGResourceGradient::postApplyResource):
+    * rendering/svg/RenderSVGResourceMasker.cpp:
+    (WebCore::RenderSVGResourceMasker::applyResource):
+    * rendering/svg/RenderSVGResourcePattern.cpp:
+    (WebCore::RenderSVGResourcePattern::createTileImage const):
+    * rendering/svg/SVGRenderingContext.cpp:
+    (WebCore::SVGRenderingContext::createImageBuffer):
+    * rendering/svg/SVGRenderingContext.h:
+    * svg/SVGFEImageElement.cpp:
+    (WebCore::SVGFEImageElement::imageBufferForEffect const):
+    
+    Source/WebKit:
+    
+    * GPUProcess/graphics/QualifiedResourceHeap.h:
+    (WebKit::QualifiedResourceHeap::get const):
+    Do not assert here if the entry of the HashMap does not hold a variant
+    of the required type. We already return nullptr without assertion if there
+    is no entry for the required renderingResourceIdentifier. We should let
+    the caller decides what to do in the case of error.
+    
+    LayoutTests:
+    
+    * gpu-process/TestExpectations:
+    
+    
+    
+    Canonical link: https://commits.webkit.org/245944@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@287911 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/gpu-process/TestExpectations
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/rendering/svg/RenderSVGResourceClipper.cpp
+M	Source/WebCore/rendering/svg/RenderSVGResourceGradient.cpp
+M	Source/WebCore/rendering/svg/RenderSVGResourceMasker.cpp
+M	Source/WebCore/rendering/svg/RenderSVGResourcePattern.cpp
+M	Source/WebCore/rendering/svg/SVGRenderingContext.cpp
+M	Source/WebCore/rendering/svg/SVGRenderingContext.h
+M	Source/WebCore/svg/SVGFEImageElement.cpp
+M	Source/WebKit/ChangeLog
+M	Source/WebKit/GPUProcess/graphics/QualifiedResourceHeap.h
+
+commit ba3a201f4e4aff8cfa206c624bd696473ace6cf2
+Author: Ellie Epskamp-Hunt <eepskamphunt@apple.com>
+Date:   Wed Nov 2 16:35:50 2022 -0700
+
+    Support modules for web extension service workers.
+    https://bugs.webkit.org/show_bug.cgi?id=247325
+    rdar://100429656
+    
+    Reviewed by Timothy Hatcher.
+    
+    Revise SPI to load a service worker to include a parameter that indicates if the service worker
+    uses modules or not.
+    
+    Parse the "module" type from the extension's manifest and use that to load the service worker
+    correctly, or to create the generated background HTML file with the correct <script> elements.
+    
+    * Source/WebKit/UIProcess/API/Cocoa/WKWebView.mm:
+    (-[WKWebView _loadServiceWorker:usingModules:completionHandler:]):
+    (-[WKWebView _loadServiceWorker:completionHandler:]): Deleted.
+    * Source/WebKit/UIProcess/API/Cocoa/WKWebViewPrivate.h:
+    * Source/WebKit/UIProcess/API/Cocoa/_WKWebExtension.h:
+    * Source/WebKit/UIProcess/API/Cocoa/_WKWebExtension.mm:
+    (-[_WKWebExtension backgroundContentUsesModules]):
+    * Source/WebKit/UIProcess/Extensions/Cocoa/WebExtensionCocoa.mm:
+    (WebKit::WebExtension::backgroundContentUsesModules):
+    (WebKit::WebExtension::generatedBackgroundContent):
+    (WebKit::WebExtension::populateBackgroundPropertiesIfNeeded):
+    * Source/WebKit/UIProcess/Extensions/Cocoa/WebExtensionContextCocoa.mm:
+    (WebKit::WebExtensionContext::loadBackgroundWebView):
+    * Source/WebKit/UIProcess/Extensions/WebExtension.h:
+    * Source/WebKit/UIProcess/WebPageProxy.cpp:
+    (WebKit::WebPageProxy::loadServiceWorker):
+    * Source/WebKit/UIProcess/WebPageProxy.h:
+    * Tools/TestWebKitAPI/Tests/WebKitCocoa/ServiceWorkerBasic.mm:
+    * Tools/TestWebKitAPI/Tests/WebKitCocoa/WKWebExtension.mm:
+    (TestWebKitAPI::TEST):
+    * Tools/TestWebKitAPI/Tests/WebKitCocoa/WKWebExtensionController.mm:
+    (TestWebKitAPI::TEST):
+    
+    Canonical link: https://commits.webkit.org/256257@main
+
+M	Source/WebKit/UIProcess/API/Cocoa/WKWebView.mm
+M	Source/WebKit/UIProcess/API/Cocoa/WKWebViewPrivate.h
+M	Source/WebKit/UIProcess/API/Cocoa/_WKWebExtension.mm
+M	Source/WebKit/UIProcess/API/Cocoa/_WKWebExtensionPrivate.h
+M	Source/WebKit/UIProcess/Extensions/Cocoa/WebExtensionCocoa.mm
+M	Source/WebKit/UIProcess/Extensions/Cocoa/WebExtensionContextCocoa.mm
+M	Source/WebKit/UIProcess/Extensions/WebExtension.h
+M	Source/WebKit/UIProcess/WebPageProxy.cpp
+M	Source/WebKit/UIProcess/WebPageProxy.h
+M	Tools/TestWebKitAPI/Tests/WebKitCocoa/ServiceWorkerBasic.mm
+M	Tools/TestWebKitAPI/Tests/WebKitCocoa/WKWebExtension.mm
+M	Tools/TestWebKitAPI/Tests/WebKitCocoa/WKWebExtensionController.mm
+
+commit c38d97d2dfb63a2d25cd8736c17df7530f8c81a4
+Author: Tony Chang <tony@chromium.org>
+Date:   Wed Jun 9 07:22:39 2010 +0000
+
+    2010-06-08  Tony Chang  <tony@chromium.org>
+    
+            Reviewed by David Levin.
+    
+            [chromium] compile linux chromium in WebKit/out instead of WebKit/WebKit/chromium/out
+            https://bugs.webkit.org/show_bug.cgi?id=40285
+    
+            Take 2 at landing this patch, this time rolling DEPS just a bit
+            further to pick up some chromium fixes.
+    
+            * DEPS
+            * gyp_webkit:
+    2010-06-08  Tony Chang  <tony@chromium.org>
+    
+            Reviewed by David Levin.
+    
+            [chromium] compile linux chromium in WebKit/out instead of WebKit/WebKit/chromium/out
+            https://bugs.webkit.org/show_bug.cgi?id=40285
+    
+            * Scripts/webkitdirs.pm:
+            * Scripts/webkitpy/layout_tests/port/chromium_linux.py:
+    
+    Canonical link: https://commits.webkit.org/51899@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@60884 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebKit/chromium/ChangeLog
+M	WebKit/chromium/DEPS
+M	WebKit/chromium/gyp_webkit
+M	WebKitTools/ChangeLog
+M	WebKitTools/Scripts/webkitdirs.pm
+M	WebKitTools/Scripts/webkitpy/layout_tests/port/chromium_linux.py
+
+commit b6649a9d8738c3f8eec8222a19822cf4f9da6947
+Author: Ryosuke Niwa <rniwa@webkit.org>
+Date:   Fri Apr 22 00:33:21 2011 +0000
+
+    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
+    
+            Reviewed by Sam Weinig.
+    
+            Add Frame* to the argument lists of canCopyCut and canPaste
+            https://bugs.webkit.org/show_bug.cgi?id=59153
+    
+            * src/EditorClientImpl.cpp:
+            (WebKit::EditorClientImpl::canCopyCut):
+            (WebKit::EditorClientImpl::canPaste):
+            * src/EditorClientImpl.h:
+    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
+    
+            Reviewed by Sam Weinig.
+    
+            Add Frame* to the argument lists of canCopyCut and canPaste
+            https://bugs.webkit.org/show_bug.cgi?id=59153
+    
+            * WebCoreSupport/EditorClientQt.cpp:
+            (WebCore::EditorClientQt::canCopyCut):
+            (WebCore::EditorClientQt::canPaste):
+            * WebCoreSupport/EditorClientQt.h:
+    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
+    
+            Reviewed by Sam Weinig.
+    
+            Add Frame* to the argument lists of canCopyCut and canPaste
+            https://bugs.webkit.org/show_bug.cgi?id=59153
+    
+            * WebCoreSupport/EditorClientGtk.cpp:
+            (WebKit::EditorClient::canCopyCut):
+            (WebKit::EditorClient::canPaste):
+            * WebCoreSupport/EditorClientGtk.h:
+    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
+    
+            Reviewed by Sam Weinig.
+    
+            Add Frame* to the argument lists of canCopyCut and canPaste
+            https://bugs.webkit.org/show_bug.cgi?id=59153
+    
+            * WebCoreSupport/WebEditorClient.cpp:
+            (WebEditorClient::canCopyCut):
+            (WebEditorClient::canPaste):
+            * WebCoreSupport/WebEditorClient.h:
+    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
+    
+            Reviewed by Sam Weinig.
+    
+            Add Frame* to the argument lists of canCopyCut and canPaste
+            https://bugs.webkit.org/show_bug.cgi?id=59153
+    
+            * WebKitSupport/EditorClientWx.cpp:
+            (WebCore::EditorClientWx::canCopyCut):
+            (WebCore::EditorClientWx::canPaste):
+            * WebKitSupport/EditorClientWx.h:
+    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
+    
+            Reviewed by Sam Weinig.
+    
+            Add Frame* to the argument lists of canCopyCut and canPaste
+            https://bugs.webkit.org/show_bug.cgi?id=59153
+    
+            * WebCoreSupport/WebEditorClient.h:
+            * WebCoreSupport/WebEditorClient.mm:
+            (WebEditorClient::canCopyCut):
+            (WebEditorClient::canPaste):
+    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
+    
+            Reviewed by Sam Weinig.
+    
+            Add Frame* to the argument lists of canCopyCut and canPaste
+            https://bugs.webkit.org/show_bug.cgi?id=59153
+    
+            * WebCoreSupport/EditorClientHaiku.cpp:
+            (WebCore::EditorClientHaiku::canCopyCut):
+            (WebCore::EditorClientHaiku::canPaste):
+            * WebCoreSupport/EditorClientHaiku.h:
+    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
+    
+            Reviewed by Sam Weinig.
+    
+            Add Frame* to the argument lists of canCopyCut and canPaste
+            https://bugs.webkit.org/show_bug.cgi?id=59153
+    
+            * WebCoreSupport/EditorClientEfl.cpp:
+            (WebCore::EditorClientEfl::canCopyCut):
+            (WebCore::EditorClientEfl::canPaste):
+            * WebCoreSupport/EditorClientEfl.h:
+    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
+    
+            Reviewed by Sam Weinig.
+    
+            Add Frame* to the argument lists of canCopyCut and canPaste
+            https://bugs.webkit.org/show_bug.cgi?id=59153
+    
+            canCopyCut and canPaste now takes Frame* for which supportedCopyCut and supportedPaste are called.
+            This allows editor client to grant copy/cut and paste permissions per origin.
+    
+            * editing/EditorCommand.cpp:
+            (WebCore::supportedCopyCut):
+            (WebCore::supportedPaste):
+            * loader/EmptyClients.h:
+            (WebCore::EmptyEditorClient::canCopyCut):
+            (WebCore::EmptyEditorClient::canPaste):
+            * page/EditorClient.h:
+    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
+    
+            Reviewed by Sam Weinig.
+    
+            Add Frame* to the argument lists of canCopyCut and canPaste
+            https://bugs.webkit.org/show_bug.cgi?id=59153
+    
+            * WebProcess/WebCoreSupport/WebEditorClient.cpp:
+            (WebKit::WebEditorClient::canCopyCut):
+            (WebKit::WebEditorClient::canPaste):
+            * WebProcess/WebCoreSupport/WebEditorClient.h:
+    
+    
+    Canonical link: https://commits.webkit.org/74311@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@84574 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/editing/EditorCommand.cpp
+M	Source/WebCore/loader/EmptyClients.h
+M	Source/WebCore/page/EditorClient.h
+M	Source/WebKit/chromium/ChangeLog
+M	Source/WebKit/chromium/src/EditorClientImpl.cpp
+M	Source/WebKit/chromium/src/EditorClientImpl.h
+M	Source/WebKit/efl/ChangeLog
+M	Source/WebKit/efl/WebCoreSupport/EditorClientEfl.cpp
+M	Source/WebKit/efl/WebCoreSupport/EditorClientEfl.h
+M	Source/WebKit/gtk/ChangeLog
+M	Source/WebKit/gtk/WebCoreSupport/EditorClientGtk.cpp
+M	Source/WebKit/gtk/WebCoreSupport/EditorClientGtk.h
+M	Source/WebKit/haiku/ChangeLog
+M	Source/WebKit/haiku/WebCoreSupport/EditorClientHaiku.cpp
+M	Source/WebKit/haiku/WebCoreSupport/EditorClientHaiku.h
+M	Source/WebKit/mac/ChangeLog
+M	Source/WebKit/mac/WebCoreSupport/WebEditorClient.h
+M	Source/WebKit/mac/WebCoreSupport/WebEditorClient.mm
+M	Source/WebKit/qt/ChangeLog
+M	Source/WebKit/qt/WebCoreSupport/EditorClientQt.cpp
+M	Source/WebKit/qt/WebCoreSupport/EditorClientQt.h
+M	Source/WebKit/win/ChangeLog
+M	Source/WebKit/win/WebCoreSupport/WebEditorClient.cpp
+M	Source/WebKit/win/WebCoreSupport/WebEditorClient.h
+M	Source/WebKit/wx/ChangeLog
+M	Source/WebKit/wx/WebKitSupport/EditorClientWx.cpp
+M	Source/WebKit/wx/WebKitSupport/EditorClientWx.h
+M	Source/WebKit2/ChangeLog
+M	Source/WebKit2/WebProcess/WebCoreSupport/WebEditorClient.cpp
+M	Source/WebKit2/WebProcess/WebCoreSupport/WebEditorClient.h
+
+commit 16d63a05bc591514962d1b8310e0d0315607686c
+Author: Brady Eidson <beidson@apple.com>
+Date:   Fri Sep 25 19:46:51 2015 +0000
+
+    PassRefPtr<> to RefPtr<> conversion in legacy IndexedDB code.
+    https://bugs.webkit.org/show_bug.cgi?id=149558
+    
+    Reviewed by Beth Dakin.
+    
+    No new tests (No behavior change.)
+    
+    This patch does not attempt to completely remove all PassRefPtr usage inside legacy IDB.
+    
+    It just switches over all PassRefPtr usage at the top level IDB interfaces that
+    modern IDB is implementing.
+    
+    The rest of the usage inside the legacy implementation can be dealt with later via `git rm`.
+    
+    * Modules/indexeddb/IDBAny.h:
+    * Modules/indexeddb/IDBCursor.h:
+    * Modules/indexeddb/IDBDatabase.h:
+    * Modules/indexeddb/IDBDatabaseError.h:
+    * Modules/indexeddb/IDBFactory.h:
+    * Modules/indexeddb/IDBIndex.h:
+    * Modules/indexeddb/IDBObjectStore.h:
+    * Modules/indexeddb/IDBRequest.h:
+    * Modules/indexeddb/IDBTransaction.h:
+    * Modules/indexeddb/client/IDBFactoryImpl.cpp:
+    (WebCore::IDBClient::IDBFactory::getDatabaseNames):
+    (WebCore::IDBClient::IDBFactory::open):
+    (WebCore::IDBClient::IDBFactory::deleteDatabase):
+    * Modules/indexeddb/client/IDBFactoryImpl.h:
+    * Modules/indexeddb/client/IDBRequestImpl.cpp:
+    (WebCore::IDBClient::IDBRequest::result):
+    (WebCore::IDBClient::IDBRequest::error):
+    (WebCore::IDBClient::IDBRequest::source):
+    (WebCore::IDBClient::IDBRequest::transaction):
+    * Modules/indexeddb/client/IDBRequestImpl.h:
+    * Modules/indexeddb/legacy/LegacyAny.cpp:
+    (WebCore::LegacyAny::createInvalid):
+    (WebCore::LegacyAny::createNull):
+    (WebCore::LegacyAny::createString):
+    (WebCore::LegacyAny::domStringList):
+    (WebCore::LegacyAny::idbCursor):
+    (WebCore::LegacyAny::idbCursorWithValue):
+    (WebCore::LegacyAny::idbDatabase):
+    (WebCore::LegacyAny::idbFactory):
+    (WebCore::LegacyAny::idbIndex):
+    (WebCore::LegacyAny::idbObjectStore):
+    (WebCore::LegacyAny::idbTransaction):
+    (WebCore::LegacyAny::LegacyAny):
+    * Modules/indexeddb/legacy/LegacyAny.h:
+    (WebCore::LegacyAny::create):
+    * Modules/indexeddb/legacy/LegacyCursor.cpp:
+    (WebCore::LegacyCursor::update):
+    (WebCore::LegacyCursor::deleteFunction):
+    * Modules/indexeddb/legacy/LegacyCursor.h:
+    * Modules/indexeddb/legacy/LegacyDatabase.cpp:
+    (WebCore::LegacyDatabase::objectStoreNames):
+    (WebCore::LegacyDatabase::createObjectStore):
+    (WebCore::LegacyDatabase::transaction):
+    * Modules/indexeddb/legacy/LegacyDatabase.h:
+    * Modules/indexeddb/legacy/LegacyFactory.cpp:
+    (WebCore::LegacyFactory::getDatabaseNames):
+    (WebCore::LegacyFactory::open):
+    (WebCore::LegacyFactory::deleteDatabase):
+    * Modules/indexeddb/legacy/LegacyFactory.h:
+    * Modules/indexeddb/legacy/LegacyIndex.cpp:
+    (WebCore::LegacyIndex::openCursor):
+    (WebCore::LegacyIndex::count):
+    (WebCore::LegacyIndex::openKeyCursor):
+    (WebCore::LegacyIndex::get):
+    (WebCore::LegacyIndex::getKey):
+    * Modules/indexeddb/legacy/LegacyIndex.h:
+    (WebCore::LegacyIndex::legacyObjectStore):
+    * Modules/indexeddb/legacy/LegacyObjectStore.cpp:
+    (WebCore::LegacyObjectStore::indexNames):
+    (WebCore::LegacyObjectStore::get):
+    (WebCore::LegacyObjectStore::add):
+    (WebCore::LegacyObjectStore::put):
+    (WebCore::LegacyObjectStore::deleteFunction):
+    (WebCore::LegacyObjectStore::clear):
+    (WebCore::LegacyObjectStore::createIndex):
+    (WebCore::LegacyObjectStore::index):
+    (WebCore::LegacyObjectStore::openCursor):
+    (WebCore::LegacyObjectStore::count):
+    * Modules/indexeddb/legacy/LegacyObjectStore.h:
+    (WebCore::LegacyObjectStore::keyPathAny):
+    (WebCore::LegacyObjectStore::transaction):
+    (WebCore::LegacyObjectStore::createIndex):
+    (WebCore::LegacyObjectStore::count):
+    * Modules/indexeddb/legacy/LegacyRequest.cpp:
+    (WebCore::LegacyRequest::result):
+    (WebCore::LegacyRequest::error):
+    (WebCore::LegacyRequest::source):
+    (WebCore::LegacyRequest::transaction):
+    (WebCore::LegacyRequest::onSuccess):
+    * Modules/indexeddb/legacy/LegacyRequest.h:
+    * Modules/indexeddb/legacy/LegacyTransaction.cpp:
+    (WebCore::LegacyTransaction::objectStore):
+    * Modules/indexeddb/legacy/LegacyTransaction.h:
+    * inspector/InspectorIndexedDBAgent.cpp:
+    
+    Canonical link: https://commits.webkit.org/167669@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@190250 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/Modules/indexeddb/IDBAny.h
+M	Source/WebCore/Modules/indexeddb/IDBCursor.h
+M	Source/WebCore/Modules/indexeddb/IDBDatabase.h
+M	Source/WebCore/Modules/indexeddb/IDBDatabaseError.h
+M	Source/WebCore/Modules/indexeddb/IDBFactory.h
+M	Source/WebCore/Modules/indexeddb/IDBIndex.h
+M	Source/WebCore/Modules/indexeddb/IDBObjectStore.h
+M	Source/WebCore/Modules/indexeddb/IDBRequest.h
+M	Source/WebCore/Modules/indexeddb/IDBTransaction.h
+M	Source/WebCore/Modules/indexeddb/client/IDBFactoryImpl.cpp
+M	Source/WebCore/Modules/indexeddb/client/IDBFactoryImpl.h
+M	Source/WebCore/Modules/indexeddb/client/IDBRequestImpl.cpp
+M	Source/WebCore/Modules/indexeddb/client/IDBRequestImpl.h
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyAny.cpp
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyAny.h
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyCursor.cpp
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyCursor.h
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyDatabase.cpp
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyDatabase.h
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyFactory.cpp
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyFactory.h
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyIndex.cpp
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyIndex.h
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyObjectStore.cpp
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyObjectStore.h
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyRequest.cpp
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyRequest.h
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyTransaction.cpp
+M	Source/WebCore/Modules/indexeddb/legacy/LegacyTransaction.h
+M	Source/WebCore/inspector/InspectorIndexedDBAgent.cpp
+
+commit 457b88825779fa467e7e2e6ae2fbcafd3f69312b
+Author: Beth Dakin <bdakin@apple.com>
+Date:   Wed Aug 8 23:09:37 2012 +0000
+
+    https://bugs.webkit.org/show_bug.cgi?id=93393
+    Overflow regions sometimes repaint incorrectly after going into or
+    coming out of compositing mode
+    -and corresponding-
+    <rdar://problem/12006463>
+    
+    Reviewed by Simon Fraser.
+    
+    My first patch to fix this bug removed an if (parent()) check that is
+    needed to prevent a table crash seen in
+    fast/table/table-row-compositing-repaint-crash.html
+    The parent() check was actually added originally to prevent this same
+    crash. See http://trac.webkit.org/changeset/110456
+    This patch adds that check back, but really we should delay the
+    computation of repaint rects if layout has not happened yet.
+    * rendering/RenderLayerCompositor.cpp:
+    (WebCore::RenderLayerCompositor::updateBacking):
+    
+    
+    
+    Canonical link: https://commits.webkit.org/111404@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@125104 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/rendering/RenderLayerCompositor.cpp
+
+commit a6695737cc1ee7368bd1ec5328434395ba217e57
+Author: Zalan Bujtas <zalan@apple.com>
+Date:   Sun Dec 15 14:09:40 2019 +0000
+
+    [LFC][IFC] Fix imported/w3c/web-platform-tests/css/css-text/white-space/break-spaces-009.html
+    https://bugs.webkit.org/show_bug.cgi?id=205246
+    <rdar://problem/57944015>
+    
+    Reviewed by Antti Koivisto.
+    
+    Fix the "soft wrap opportunity" case when both the incoming and the previous runs are whitespace.
+    
+    * layout/inlineformatting/InlineLineBreaker.cpp:
+    (WebCore::Layout::LineBreaker::Content::isAtSoftWrapOpportunity):
+    
+    Canonical link: https://commits.webkit.org/218451@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@253535 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/layout/inlineformatting/InlineLineBreaker.cpp
+
+commit d35bc546ce5c4d4fdfaabec1ce5534d2b132165a
+Author: Mike Lawther <mikelawther@chromium.org>
+Date:   Thu Jan 12 03:53:00 2012 +0000
+
+    margin test for CSS3 calc
+    https://bugs.webkit.org/show_bug.cgi?id=76000
+    
+    Reviewed by Daniel Bates.
+    
+    Tests for future implementation of CSS3 calc() (see http://webkit.org/b/16662)
+    
+    These tests are expected to 'fail', and will pass once calc() functionality is landed.
+    For now, they serve to demonstrate that the current code doesn't crash on these tests.
+    
+    * css3/calc/margin-expected.txt: Added.
+    * css3/calc/margin.html: Added.
+    
+    
+    Canonical link: https://commits.webkit.org/92947@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@104783 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+A	LayoutTests/css3/calc/margin-expected.txt
+A	LayoutTests/css3/calc/margin.html
+
+commit cfe85e36c81d7c8adadd65cf37c21f88c88371db
+Author: Youenn Fablet <youenn@apple.com>
+Date:   Tue Sep 27 13:11:13 2016 +0000
+
+    [GTK][EFL] imported/w3c/web-platform-tests/fetch/api/basic/accept-header.html is failing
+    https://bugs.webkit.org/show_bug.cgi?id=162547
+    
+    Patch by Youenn Fablet <youenn@apple.com> on 2016-09-27
+    Reviewed by Michael Catanzaro.
+    
+    Covered by existing tests.
+    
+    * platform/network/soup/SoupNetworkSession.cpp:
+    (WebCore::SoupNetworkSession::createTestingSession): Setting the underlying soupSession.
+    
+    Canonical link: https://commits.webkit.org/180547@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@206431 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/platform/network/soup/SoupNetworkSession.cpp
+
+commit 45f519c341451df1266c0afe12bd602d537161d5
+Author: Youenn Fablet <youenn@apple.com>
+Date:   Thu Jun 14 18:04:34 2018 +0000
+
+    Eliminate static initializers in libwebrtc.dylib
+    https://bugs.webkit.org/show_bug.cgi?id=186570
+    <rdar://problem/41054874>
+    
+    Reviewed by Darin Adler.
+    
+    * Source/webrtc/rtc_base/flags.h:
+    Fix memory corruption error by having the actual flag value be static.
+    
+    
+    Canonical link: https://commits.webkit.org/201951@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@232846 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/ThirdParty/libwebrtc/ChangeLog
+M	Source/ThirdParty/libwebrtc/Source/webrtc/rtc_base/flags.h
+
+commit 07e96e6573bd98ac6f74e64b1a309cea8dfbf342
+Author: James Simonsen <simonjam@chromium.org>
+Date:   Fri Feb 22 22:00:09 2013 +0000
+
+    Preloads should be cleared when JavaScript cancels loading prematurely.
+    https://bugs.webkit.org/show_bug.cgi?id=110388
+    
+    Reviewed by Antti Koivisto.
+    
+    Source/WebCore:
+    
+    If a page preloads a resource, but JavaScript aborts parsing for any reason (for example, a
+    redirect or document.write()), the resource is forever marked a preload and won't be reloaded
+    even if it's explicitly marked no-cache and the page is reloaded.
+    
+    Test: http/tests/cache/preload-cleared-after-parrsing-canceled-by-js.html
+    
+    * dom/Document.cpp:
+    (WebCore::Document::implicitClose):
+    (WebCore::Document::finishedParsing):
+    
+    LayoutTests:
+    
+    * http/tests/cache/preload-cleared-after-parrsing-canceled-by-js-expected.txt: Added.
+    * http/tests/cache/preload-cleared-after-parrsing-canceled-by-js.html: Added.
+    
+    
+    Canonical link: https://commits.webkit.org/128914@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@143789 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+A	LayoutTests/http/tests/cache/preload-cleared-after-parsing-canceled-by-js-expected.txt
+A	LayoutTests/http/tests/cache/preload-cleared-after-parsing-canceled-by-js.html
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/dom/Document.cpp
+
+commit a190a1ede40e3a1596327837a9e57ed92270a758
+Author: Mark Hahnenberg <mhahnenberg@apple.com>
+Date:   Tue May 29 18:38:14 2012 +0000
+
+    CopiedSpace::doneCopying could start another collection
+    https://bugs.webkit.org/show_bug.cgi?id=86538
+    
+    Reviewed by Geoffrey Garen.
+    
+    It's possible that if we don't have anything at the head of to-space
+    after a collection and the BlockAllocator doesn't have any fresh blocks
+    to give us right now we could start another collection while still in
+    the middle of the first collection when we call CopiedSpace::addNewBlock().
+    
+    One way to resolve this would be to have Heap::shouldCollect() check that
+    m_operationInProgress is NoOperation. This would prevent the path in
+    getFreshBlock() that starts the collection if we're already in the middle of one.
+    
+    I could not come up with a test case to reproduce this crash on ToT.
+    
+    * heap/Heap.h:
+    (JSC::Heap::shouldCollect): We shouldn't collect if we're already in the middle
+    of a collection, i.e. the current operation should be NoOperation.
+    
+    
+    Canonical link: https://commits.webkit.org/105550@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@118810 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/JavaScriptCore/ChangeLog
+M	Source/JavaScriptCore/heap/Heap.h
+
+commit bd7c2f3ca74310c98737616f45e0f96467b67a02
+Author: Benjamin Poulain <bpoulain@apple.com>
+Date:   Sat Oct 31 04:02:19 2015 +0000
+
+    [JSC] Add the Air Opcode definitions to the Xcode project file
+    https://bugs.webkit.org/show_bug.cgi?id=150701
+    
+    Patch by Benjamin Poulain <bpoulain@apple.com> on 2015-10-30
+    Reviewed by Geoffrey Garen.
+    
+    * JavaScriptCore.xcodeproj/project.pbxproj:
+    Easier for those who use Xcode :)
+    
+    
+    Canonical link: https://commits.webkit.org/168929@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@191837 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/JavaScriptCore/ChangeLog
+M	Source/JavaScriptCore/JavaScriptCore.xcodeproj/project.pbxproj
+
+commit af11193155c6548d9a290fe7ad3f9db66f32be36
+Author: Kimmo Kinnunen <kkinnunen@apple.com>
+Date:   Tue Mar 1 14:32:12 2022 +0000
+
+    WebGL GPUP OpenGL context is not used even if WebGL via Metal is deselected
+    https://bugs.webkit.org/show_bug.cgi?id=236505
+    
+    Patch by Kimmo Kinnunen <kkinnunen@apple.com> on 2022-03-01
+    Reviewed by Myles C. Maxfield.
+    
+    Source/WebCore:
+    
+    Encode, decode also `useMetal` property.
+    
+    Tests: webgl/webgl-via-metal-flag-off.html
+           webgl/webgl-via-metal-flag-on.html
+    
+    * platform/graphics/GraphicsContextGLAttributes.h:
+    (WebCore::GraphicsContextGLAttributes::encode const):
+    (WebCore::GraphicsContextGLAttributes::decode):
+    
+    Source/WebKit:
+    
+    * Shared/WebCoreArgumentCoders.cpp:
+    * Shared/WebCoreArgumentCoders.h:
+    
+    LayoutTests:
+    
+    * webgl/resources/test-shader-implementation-language.js: Added.
+    (runTest):
+    * webgl/webgl-via-metal-flag-off-expected.txt: Added.
+    * webgl/webgl-via-metal-flag-off.html: Added.
+    * webgl/webgl-via-metal-flag-on-expected.txt: Added.
+    * webgl/webgl-via-metal-flag-on.html: Added.
+    
+    
+    Canonical link: https://commits.webkit.org/247916@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@290643 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/platform/glib/TestExpectations
+M	LayoutTests/platform/wincairo/TestExpectations
+A	LayoutTests/webgl/resources/test-shader-implementation-language.js
+A	LayoutTests/webgl/webgl-via-metal-flag-off-expected.txt
+A	LayoutTests/webgl/webgl-via-metal-flag-off.html
+A	LayoutTests/webgl/webgl-via-metal-flag-on-expected.txt
+A	LayoutTests/webgl/webgl-via-metal-flag-on.html
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/platform/graphics/GraphicsContextGLAttributes.h
+M	Source/WebKit/ChangeLog
+M	Source/WebKit/Shared/WebCoreArgumentCoders.cpp
+M	Source/WebKit/Shared/WebCoreArgumentCoders.h
+
+commit 41cd528c83c6fea8110bc282b19449d8a2daccdc
+Author: Chris Dumez <cdumez@apple.com>
+Date:   Wed Aug 21 22:17:49 2019 +0000
+
+    Crash under StringImpl::endsWith() in RegistrationDatabase::openSQLiteDatabase()
+    https://bugs.webkit.org/show_bug.cgi?id=200991
+    <rdar://problem/54566689>
+    
+    Reviewed by Geoffrey Garen.
+    
+    Make sure we call isolatedCopy() on RegistrationDatabase::m_databaseDirectory before using
+    it from background threads.
+    
+    * workers/service/server/RegistrationDatabase.cpp:
+    (WebCore::RegistrationDatabase::openSQLiteDatabase):
+    (WebCore::RegistrationDatabase::clearAll):
+    * workers/service/server/RegistrationDatabase.h:
+    (WebCore::RegistrationDatabase::databaseDirectory const):
+    
+    
+    Canonical link: https://commits.webkit.org/214713@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@248967 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/workers/service/server/RegistrationDatabase.cpp
+M	Source/WebCore/workers/service/server/RegistrationDatabase.h
+
+commit fc42848b68b3bd38e43274f93fef8698dc3d570a
+Author: Gustavo Noronha Silva <gustavo.noronha@collabora.com>
+Date:   Thu Sep 26 16:36:22 2013 +0000
+
+    [GTK] Tons of warnings caused by using FORTIFY_SOURCE in an unoptimized build
+    https://bugs.webkit.org/show_bug.cgi?id=121836
+    
+    Patch by Gustavo Noronha Silva <gustavo.noronha@collabora.com> on 2013-09-26
+    Reviewed by Martin Robinson.
+    
+    * Source/autotools/SetupCompilerFlags.m4: only consider enabling FORTIFY_SOURCE if optimizations have
+    been enabled, since they are required for FORTIFY_SOURCE to work, and enabling FORTIFY_SOURCE unconditionally
+    generates warnings in newer glibc.
+    
+    Canonical link: https://commits.webkit.org/139967@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@156462 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	ChangeLog
+M	Source/autotools/SetupCompilerFlags.m4
+
+commit 6b3cf7dbc52714a2f467570d6a5c7b9725e1a075
+Author: Tim Horton <timothy_horton@apple.com>
+Date:   Tue Oct 31 23:58:53 2017 +0000
+
+    Clean up some drag and drop feature flags
+    https://bugs.webkit.org/show_bug.cgi?id=179082
+    
+    Reviewed by Simon Fraser.
+    
+    Source/JavaScriptCore:
+    
+    * Configurations/FeatureDefines.xcconfig:
+    
+    Source/WebCore:
+    
+    * Configurations/FeatureDefines.xcconfig:
+    
+    Source/WebCore/PAL:
+    
+    * Configurations/FeatureDefines.xcconfig:
+    
+    Source/WebKit:
+    
+    * Configurations/FeatureDefines.xcconfig:
+    
+    Source/WebKitLegacy/mac:
+    
+    * Configurations/FeatureDefines.xcconfig:
+    
+    Tools:
+    
+    * TestWebKitAPI/Configurations/FeatureDefines.xcconfig:
+    * TestWebKitAPI/ios/UIKitSPI.h:
+    
+    
+    Canonical link: https://commits.webkit.org/195214@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@224263 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/JavaScriptCore/ChangeLog
+M	Source/JavaScriptCore/Configurations/FeatureDefines.xcconfig
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/Configurations/FeatureDefines.xcconfig
+M	Source/WebCore/PAL/ChangeLog
+M	Source/WebCore/PAL/Configurations/FeatureDefines.xcconfig
+M	Source/WebKit/ChangeLog
+M	Source/WebKit/Configurations/FeatureDefines.xcconfig
+M	Source/WebKitLegacy/mac/ChangeLog
+M	Source/WebKitLegacy/mac/Configurations/FeatureDefines.xcconfig
+M	Tools/ChangeLog
+M	Tools/TestWebKitAPI/Configurations/FeatureDefines.xcconfig
+M	Tools/TestWebKitAPI/ios/UIKitSPI.h
+
+commit 818086662412e262543d51e39d2a842acec8d0e8
+Author: Commit Queue <commit-queue@webkit.org>
+Date:   Thu Apr 28 05:19:55 2011 +0000
+
+    2011-04-27  Mark Pilgrim  <pilgrim@chromium.org>
+    
+            Reviewed by Tony Chang.
+    
+            Port Mozilla's IndexedDB tests: creating unique index and updating indexNames
+            https://bugs.webkit.org/show_bug.cgi?id=59631
+    
+            * storage/indexeddb/mozilla/create-index-unique-expected.txt: Added.
+            * storage/indexeddb/mozilla/create-index-unique.html: Added.
+    
+    Canonical link: https://commits.webkit.org/74871@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@85154 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+A	LayoutTests/storage/indexeddb/mozilla/create-index-unique-expected.txt
+A	LayoutTests/storage/indexeddb/mozilla/create-index-unique.html
+
+commit 32f782b6558e706b64f84d53525429a827df94da
+Author: Eric Carlson <eric.carlson@apple.com>
+Date:   Wed Mar 9 03:34:18 2022 +0000
+
+    [Cocoa] metadata cue endTime may not be updated
+    https://bugs.webkit.org/show_bug.cgi?id=237630
+    rdar://88690874
+    
+    Reviewed by Jer Noble.
+    
+    Source/WebCore:
+    
+    Data cues have a start time but not an explicit duration, a data cue ends when
+    the next data cue from the same track starts. This means we don’t know the
+    duration of cue #1 until cue #2 is delivered, so when cue #1 is delivered it is
+    given the end time of the media file’s duration and the actual end time is updated
+    when cue #2 arrives.
+    
+    http://webkit.org/b/229924 refactored text, audio, and video tracks to not depend
+    on HTMLMediaElement. Because InbandDataTextTrack could no longer access the
+    HTMLMediaElement to get its duration, a duration property was added to TextTrackList
+    that InbandDataTextTrack uses to set the duration of temporary cues.
+    TextTrackList.duration is set when it is created and updated when the media player
+    reports a duration change.
+    
+    This means that if the media file’s duration is not known when the text track list
+    is created, and the file's duration never changes, the text track list never has a
+    valid duration and data cues were not added to the temporary list.
+    
+    Fix this by updating TextTrackList.duration when a HTMLMediaElement reaches HAVE_METADATA.
+    
+    Test: http/tests/media/hls/track-in-band-hls-metadata-cue-duration.html
+    
+    * html/HTMLMediaElement.cpp:
+    (WebCore::HTMLMediaElement::durationChanged): Update m_textTracks.duration and post
+    the 'durationchange' event.
+    (WebCore::HTMLMediaElement::setReadyState): Call durationChanged.
+    (WebCore::HTMLMediaElement::mediaPlayerDurationChanged): Ditto.
+    * html/HTMLMediaElement.h:
+    
+    * html/track/InbandDataTextTrack.cpp:
+    (WebCore::InbandDataTextTrack::addDataCue): Add cues to the incomplete cue map
+    even if the track list doesn't have duration.
+    
+    LayoutTests:
+    
+    * http/tests/media/hls/track-in-band-hls-metadata-cue-duration-expected.txt: Added.
+    * http/tests/media/hls/track-in-band-hls-metadata-cue-duration.html: Added.
+    
+    
+    
+    Canonical link: https://commits.webkit.org/248203@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@291029 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+A	LayoutTests/http/tests/media/hls/track-in-band-hls-metadata-cue-duration-expected.txt
+A	LayoutTests/http/tests/media/hls/track-in-band-hls-metadata-cue-duration.html
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/html/HTMLMediaElement.cpp
+M	Source/WebCore/html/HTMLMediaElement.h
+M	Source/WebCore/html/track/InbandDataTextTrack.cpp
+
+commit 138b8cccd1691c5f5e4f660842fc66a1b77be893
+Author: Andras Becsi <abecsi@webkit.org>
+Date:   Fri Apr 9 07:59:04 2010 +0000
+
+    [Qt] User agent style sheets are crippled by moc -E in make-css-file-arrays.pl
+    https://bugs.webkit.org/show_bug.cgi?id=37296
+    
+    Reviewed by Simon Hausmann.
+    Patch by Andras Becsi <abecsi@inf.u-szeged.hu>
+    
+    WebCore:
+    
+    Do not use moc to preprocess user agent style sheets because it removes at-symbols
+    and hexadecimal colours from declarations.
+    Remove unneeded preprocessor usage from make-css-file-arrays.pl since the script
+    processes default css files using regular expressions therefore preprocessing is redundant.
+    
+    * WebCore.pri: remove --preprocessor usage
+    * css/make-css-file-arrays.pl: remove gcc dependency
+    
+    LayoutTests:
+    
+    Update expected files after removal of moc preprocessing of default css sheets.
+    These test results now only differ in metrics from Mac ones.
+    
+    * platform/qt/editing/execCommand/insert-list-xml-expected.txt:
+    * platform/qt/svg/custom/createImageElement2-expected.txt:
+    * platform/qt/svg/custom/use-on-symbol-inside-pattern-expected.txt:
+    
+    
+    
+    Canonical link: https://commits.webkit.org/48608@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@57316 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/platform/qt/editing/execCommand/insert-list-xml-expected.txt
+M	LayoutTests/platform/qt/svg/custom/createImageElement2-expected.txt
+M	LayoutTests/platform/qt/svg/custom/use-on-symbol-inside-pattern-expected.txt
+M	WebCore/ChangeLog
+M	WebCore/WebCore.pri
+M	WebCore/css/make-css-file-arrays.pl
+
+commit d56a057f911b5216b24f7b09c499a546d3d5939c
+Author: Youenn Fablet <youenn@apple.com>
+Date:   Mon Jul 4 18:31:37 2016 +0000
+
+    Shield WebRTC JS built-ins from user scripts
+    https://bugs.webkit.org/show_bug.cgi?id=155964
+    
+    Patch by Youenn Fablet <youenn@apple.com> on 2016-07-04
+    Reviewed by Sam Weinig.
+    
+    Source/WebCore:
+    
+    Making use of Promise.prototype.@then instead of Promise.prototype.then.
+    Covered by updated tests.
+    
+    * Modules/mediastream/RTCPeerConnection.js:
+    (createOffer):
+    (createAnswer):
+    (setLocalDescription):
+    (setRemoteDescription):
+    (addIceCandidate):
+    (getStats):
+    * Modules/mediastream/RTCPeerConnectionInternals.js:
+    (enqueueOperation):
+    
+    LayoutTests:
+    
+    * fast/mediastream/RTCPeerConnection-createOffer.html:
+    * fast/mediastream/RTCPeerConnection-stable.html:
+    
+    Canonical link: https://commits.webkit.org/177541@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@202810 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/fast/mediastream/RTCPeerConnection-createOffer.html
+M	LayoutTests/fast/mediastream/RTCPeerConnection-stable.html
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/Modules/mediastream/RTCPeerConnection.js
+M	Source/WebCore/Modules/mediastream/RTCPeerConnectionInternals.js
+
+commit 51d7e6e7deaddc8ead7bcaf3466366ec42409d3e
+Author: Megan Gardner <megan_gardner@apple.com>
+Date:   Sat Jul 1 02:25:59 2017 +0000
+
+    Add API to get WKActivatedElementInfo
+    https://bugs.webkit.org/show_bug.cgi?id=174001
+    <rdar://problem/29165518>
+    
+    Source/WebKit2:
+    
+    Adding a way to get a WKActivatedElementInfo for a point on a WKWebView.
+    
+    Reviewed by Tim Horton.
+    
+    * UIProcess/API/Cocoa/WKWebView.mm:
+    (-[WKWebView requestActivatedElementAtPosition:completionBlock:]):
+    * UIProcess/API/Cocoa/WKWebViewPrivate.h:
+    * UIProcess/API/Cocoa/_WKActivatedElementInfo.mm:
+    (+[_WKActivatedElementInfo infoWithType:withInteractionInformationAtPosition:]):
+    (-[_WKActivatedElementInfo infoWithType:withInteractionInformationAtPosition:]):
+    * UIProcess/API/Cocoa/_WKActivatedElementInfoInternal.h:
+    
+    Tools:
+    
+    Tests for now SPI to get activatedElementInfo.
+    
+    Reviewed by Tim Horton.
+    
+    * TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj:
+    * TestWebKitAPI/Tests/WebKit2Cocoa/WKRequestActivatedElementInfo.mm: Added.
+    (TestWebKitAPI::TEST):
+    
+    
+    
+    Canonical link: https://commits.webkit.org/190889@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@219034 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebKit2/ChangeLog
+M	Source/WebKit2/UIProcess/API/Cocoa/WKWebView.mm
+M	Source/WebKit2/UIProcess/API/Cocoa/WKWebViewPrivate.h
+M	Source/WebKit2/UIProcess/API/Cocoa/_WKActivatedElementInfo.h
+M	Source/WebKit2/UIProcess/API/Cocoa/_WKActivatedElementInfo.mm
+M	Source/WebKit2/UIProcess/API/Cocoa/_WKActivatedElementInfoInternal.h
+M	Tools/ChangeLog
+M	Tools/TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj
+A	Tools/TestWebKitAPI/Tests/WebKit2Cocoa/WKRequestActivatedElementInfo.mm
+
+commit c51ccd5d70f11696fcff698ad949de06713d3889
+Author: Jon Lee <jonlee@apple.com>
+Date:   Tue Jan 29 03:36:12 2019 +0000
+
+    Update Screen Capture preference
+    https://bugs.webkit.org/show_bug.cgi?id=193947
+    rdar://problem/47620199
+    
+    Reviewed by Youenn Fablet.
+    
+    * Shared/WebPreferences.yaml:
+    
+    
+    Canonical link: https://commits.webkit.org/208433@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@240635 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebKit/ChangeLog
+M	Source/WebKit/Shared/WebPreferences.yaml
+
+commit 1632e9d1a7a83b140d6e3fa0d01231b8971cd5d9
+Author: Jer Noble <jer.noble@apple.com>
+Date:   Mon Nov 10 20:43:50 2014 +0000
+
+    REGRESSION(r174823): Several tests fail due to canplaythrough firing before tracks are available
+    https://bugs.webkit.org/show_bug.cgi?id=137882
+    
+    Reviewed by Eric Carlson.
+    
+    Source/WebCore:
+    
+    For HLS streams with only one video, audio, or text track, there will be no media selection group
+    for that media characteristic. When culling out AVPlayerItemTracks in tracksDidChange(), do not skip
+    tracks for which there is no matching AVMediaSelectionGroup.
+    
+    * platform/graphics/avfoundation/objc/MediaPlayerPrivateAVFoundationObjC.h:
+    * platform/graphics/avfoundation/objc/MediaPlayerPrivateAVFoundationObjC.mm:
+    (WebCore::MediaPlayerPrivateAVFoundationObjC::hasLoadedMediaSelectionGroups): Refactored.
+    (WebCore::MediaPlayerPrivateAVFoundationObjC::safeMediaSelectionGroupForLegibleMedia): Call above.
+    (WebCore::MediaPlayerPrivateAVFoundationObjC::safeMediaSelectionGroupForAudibleMedia): Ditto.
+    (WebCore::MediaPlayerPrivateAVFoundationObjC::safeMediaSelectionGroupForVisualMedia): Ditto.
+    (WebCore::MediaPlayerPrivateAVFoundationObjC::tracksDidChange):
+    
+    LayoutTests:
+    
+    * platform/mac/TestExpectations:
+    * platform/mac/http/tests/media/hls/video-controls-live-stream-expected.txt:
+    
+    Canonical link: https://commits.webkit.org/156406@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@175826 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/platform/mac/TestExpectations
+M	LayoutTests/platform/mac/http/tests/media/hls/video-controls-live-stream-expected.txt
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/platform/graphics/avfoundation/objc/MediaPlayerPrivateAVFoundationObjC.h
+M	Source/WebCore/platform/graphics/avfoundation/objc/MediaPlayerPrivateAVFoundationObjC.mm
+
+commit 8ec5e58a6615754ddf917988f5e9ab44080b4a03
+Author: Eric Seidel <eric@webkit.org>
+Date:   Mon Nov 9 19:26:20 2009 +0000
+
+    2009-11-09  Laszlo Gombos  <laszlo.1.gombos@nokia.com>
+    
+            Reviewed by Jan Alonzo.
+    
+            Make XP_UNIX tests consistent
+            https://bugs.webkit.org/show_bug.cgi?id=31250
+    
+            No new tests as there is no functional change.
+    
+            * plugins/PluginView.cpp:
+            (WebCore::PluginView::setFrameRect): Test if XP_UNIX is defined
+            instead of the value of the macro
+    
+            * plugins/gtk/PluginViewGtk.cpp:
+            (WebCore::PluginView::setNPWindowIfNeeded): Test if the XP_UNIX is
+            defined instead of using the PLATFORM macro to be consistent
+            (WebCore::PluginView::getValue): Ditto.
+    
+    Canonical link: https://commits.webkit.org/42100@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@50670 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebCore/ChangeLog
+M	WebCore/plugins/PluginView.cpp
+M	WebCore/plugins/gtk/PluginViewGtk.cpp
+
+commit 453d4d2a7572ea9607f63fdb2e4644235970879a
+Author: Anders Carlsson <andersca@apple.com>
+Date:   Fri Dec 19 21:48:38 2014 +0000
+
+    Use WebCore::MachSendRights for the compositing render server port
+    https://bugs.webkit.org/show_bug.cgi?id=139834
+    
+    Reviewed by Tim Horton.
+    
+    Source/WebCore:
+    
+    * WebCore.exp.in:
+    
+    Source/WebKit2:
+    
+    * Platform/IPC/HandleMessage.h:
+    (IPC::callMemberFunctionImpl):
+    * Platform/mac/LayerHostingContext.h:
+    * Platform/mac/LayerHostingContext.mm:
+    (WebKit::LayerHostingContext::createForPort):
+    * PluginProcess/PluginControllerProxy.h:
+    * PluginProcess/PluginProcess.cpp:
+    (WebKit::PluginProcess::PluginProcess):
+    (WebKit::PluginProcess::initializePluginProcess):
+    * PluginProcess/PluginProcess.h:
+    (WebKit::PluginProcess::compositingRenderServerPort):
+    * PluginProcess/mac/PluginControllerProxyMac.mm:
+    (WebKit::PluginControllerProxy::compositingRenderServerPort):
+    * PluginProcess/mac/PluginProcessMac.mm:
+    (WebKit::PluginProcess::platformInitializePluginProcess):
+    * Shared/Plugins/PluginProcessCreationParameters.cpp:
+    * Shared/Plugins/PluginProcessCreationParameters.h:
+    * Shared/WebCoreArgumentCoders.h:
+    * Shared/WebProcessCreationParameters.h:
+    * Shared/mac/WebCoreArgumentCodersMac.mm:
+    (IPC::ArgumentCoder<MachSendRight>::encode):
+    * UIProcess/Plugins/mac/PluginProcessProxyMac.mm:
+    (WebKit::PluginProcessProxy::platformInitializePluginProcess):
+    * UIProcess/mac/WebContextMac.mm:
+    (WebKit::WebContext::platformInitializeWebProcess):
+    * WebProcess/Plugins/Netscape/NetscapeBrowserFuncs.cpp:
+    (WebKit::NPN_GetValue):
+    * WebProcess/Plugins/Netscape/NetscapePlugin.h:
+    * WebProcess/Plugins/Netscape/mac/NetscapePluginMac.mm:
+    (WebKit::NetscapePlugin::compositingRenderServerPort):
+    (WebKit::NetscapePlugin::setLayerHostingMode):
+    * WebProcess/Plugins/PluginController.h:
+    * WebProcess/Plugins/PluginView.cpp:
+    (WebKit::PluginView::compositingRenderServerPort):
+    * WebProcess/Plugins/PluginView.h:
+    * WebProcess/WebProcess.cpp:
+    (WebKit::WebProcess::WebProcess):
+    (WebKit::WebProcess::initializeWebProcess):
+    * WebProcess/WebProcess.h:
+    (WebKit::WebProcess::compositingRenderServerPort):
+    * WebProcess/cocoa/WebProcessCocoa.mm:
+    (WebKit::WebProcess::platformInitializeWebProcess):
+    
+    Canonical link: https://commits.webkit.org/157756@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@177593 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/WebCore.exp.in
+M	Source/WebKit2/ChangeLog
+M	Source/WebKit2/Platform/IPC/HandleMessage.h
+M	Source/WebKit2/Platform/mac/LayerHostingContext.h
+M	Source/WebKit2/Platform/mac/LayerHostingContext.mm
+M	Source/WebKit2/PluginProcess/PluginControllerProxy.h
+M	Source/WebKit2/PluginProcess/PluginProcess.cpp
+M	Source/WebKit2/PluginProcess/PluginProcess.h
+M	Source/WebKit2/PluginProcess/mac/PluginControllerProxyMac.mm
+M	Source/WebKit2/PluginProcess/mac/PluginProcessMac.mm
+M	Source/WebKit2/Shared/Plugins/PluginProcessCreationParameters.cpp
+M	Source/WebKit2/Shared/Plugins/PluginProcessCreationParameters.h
+M	Source/WebKit2/Shared/WebCoreArgumentCoders.h
+M	Source/WebKit2/Shared/WebProcessCreationParameters.h
+M	Source/WebKit2/Shared/mac/WebCoreArgumentCodersMac.mm
+M	Source/WebKit2/UIProcess/Plugins/mac/PluginProcessProxyMac.mm
+M	Source/WebKit2/UIProcess/mac/WebContextMac.mm
+M	Source/WebKit2/WebProcess/Plugins/Netscape/NetscapeBrowserFuncs.cpp
+M	Source/WebKit2/WebProcess/Plugins/Netscape/NetscapePlugin.h
+M	Source/WebKit2/WebProcess/Plugins/Netscape/mac/NetscapePluginMac.mm
+M	Source/WebKit2/WebProcess/Plugins/PluginController.h
+M	Source/WebKit2/WebProcess/Plugins/PluginView.cpp
+M	Source/WebKit2/WebProcess/Plugins/PluginView.h
+M	Source/WebKit2/WebProcess/WebProcess.cpp
+M	Source/WebKit2/WebProcess/WebProcess.h
+M	Source/WebKit2/WebProcess/cocoa/WebProcessCocoa.mm
+
+commit 51e1bf21dce51d4066575415daeb8ce32688e6d5
+Author: Chelsea Pugh <cpugh@apple.com>
+Date:   Sat Jul 23 01:19:50 2016 +0000
+
+    [iOS] Clients should be able to decide if they want secure text entry in a form field
+    https://bugs.webkit.org/show_bug.cgi?id=160109
+    rdar://problem/27504958
+    
+    Patch by Chelsea Pugh <cpugh@apple.com> on 2016-07-22
+    Reviewed by Dan Bernstein.
+    
+    * UIProcess/API/Cocoa/_WKFormInputSession.h:
+    * UIProcess/ios/WKContentViewInteraction.mm:
+    (-[WKFormInputSession forceSecureTextEntry]): Getter.
+    (-[WKFormInputSession setForceSecureTextEntry:]): Setter.
+    (-[WKContentView textInputTraits]): If the form input session has specified that secure text
+    entry is desired, we should use secure text entry.
+    
+    Canonical link: https://commits.webkit.org/178261@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@203630 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebKit2/ChangeLog
+M	Source/WebKit2/UIProcess/API/Cocoa/_WKFormInputSession.h
+M	Source/WebKit2/UIProcess/ios/WKContentViewInteraction.mm
+
+commit 4b88377d469e7540ec4b54881336cd33c0f0ba0a
+Author: Robert Jenner <jenner@apple.com>
+Date:   Tue Mar 1 23:07:20 2022 +0000
+
+    [ Win ] 4X imported/mozilla/svg/blend(layout-tests) are constant Image Only Failures
+    https://bugs.webkit.org/show_bug.cgi?id=237344
+    
+    Unreviewed test gardening. Skipping, for Windows instead of adding an expectation.
+    
+    * platform/win/TestExpectations:
+    
+    
+    Canonical link: https://commits.webkit.org/247949@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@290678 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/platform/win/TestExpectations
+
+commit 6935120486a88e1f2bc888447e10c89100dae711
+Author: Justin Schuh <jschuh@chromium.org>
+Date:   Wed Sep 26 02:14:07 2012 +0000
+
+    Mask RenderArena freelist entries.
+    https://bugs.webkit.org/show_bug.cgi?id=97494
+    
+    Patch by Justin Schuh <jschuh@chromium.org> on 2012-09-25
+    Reviewed by Julien Chaffraix.
+    
+    This is a mitigation for freelist spraying. See http://download.crowdstrike.com/papers/hes-exploiting-a-coalmine.pdf.
+    
+    No new tests. This is a hardening measure. Found no measurable performance impact with Dromaeo.
+    
+    * rendering/RenderArena.cpp:
+    (MaskPtr):
+    (WebCore::RenderArena::allocate):
+    (WebCore::RenderArena::free):
+    
+    Canonical link: https://commits.webkit.org/115600@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@129583 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/rendering/RenderArena.cpp
+
+commit 613f469ac5684969ed7a7bb9af950a1e86c0cf1b
+Author: Lauro Moura <lmoura@igalia.com>
+Date:   Sun Aug 14 22:52:30 2022 -0700
+
+    Non-unified build fixes, mid August 2022 edition
+    
+    Unreviewed non-unified build fixes.
+    
+    * Source/WebCore/dom/ElementInternals.cpp: Add header defining
+      Element::shadowRoot()
+    * Source/WebCore/style/ChildChangeInvalidation.cpp: Add header defining
+      RenderObject::style()
+    
+    Canonical link: https://commits.webkit.org/253418@main
+
+M	Source/WebCore/dom/ElementInternals.cpp
+M	Source/WebCore/style/ChildChangeInvalidation.cpp
+
+commit e630ecccb9f222673fc0f78a316ee062954e0c4d
+Author: Emil A Eklund <eae@chromium.org>
+Date:   Tue Feb 12 22:56:29 2013 +0000
+
+    Unreviewed chromium rebaseline for r142638, garden-o-matic screwed up the original rebaseline :(
+    
+    * platform/chromium-mac-lion/fast/dom/Window/webkitConvertPoint-expected.txt: Added.
+    * platform/chromium-mac-snowleopard/fast/dom/Window/webkitConvertPoint-expected.txt: Added.
+    * platform/chromium-win-xp/fast/dom/Window: Added.
+    * platform/chromium-win-xp/fast/dom/Window/webkitConvertPoint-expected.txt: Added.
+    
+    
+    Canonical link: https://commits.webkit.org/127903@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@142674 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+A	LayoutTests/platform/chromium-mac-lion/fast/dom/Window/webkitConvertPoint-expected.txt
+A	LayoutTests/platform/chromium-mac-snowleopard/fast/dom/Window/webkitConvertPoint-expected.txt
+A	LayoutTests/platform/chromium-win-xp/fast/dom/Window/webkitConvertPoint-expected.txt
+
+commit 25bb4faaca03882a58c494b657356d8910e3993b
+Author: Filip Pizlo <fpizlo@apple.com>
+Date:   Tue Apr 21 23:01:04 2020 +0000
+
+    Unreviewed, check in some more files for a blog post.
+    
+    * blog-files/speculation-in-jsc/clobberize-dependence-graph.graffle:
+    * blog-files/speculation-in-jsc/clobberize-dependence-graph.svg:
+    
+    
+    
+    Canonical link: https://commits.webkit.org/223710@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@260472 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Websites/webkit.org/ChangeLog
+M	Websites/webkit.org/blog-files/speculation-in-jsc/clobberize-dependence-graph.graffle
+M	Websites/webkit.org/blog-files/speculation-in-jsc/clobberize-dependence-graph.svg
+
+commit e819a947993fcf4b1a30c9e2469fd18018c60aa4
+Author: Adam Roben <aroben@apple.com>
+Date:   Tue Jan 18 19:15:03 2011 +0000
+
+    Call alternate CFHTTPCookie functions if available
+    
+    Fixes <http://webkit.org/b/52637> <rdar://problem/8878984>.
+    
+    Reviewed by Darin Adler.
+    
+    * platform/network/cf/CookieJarCFNet.cpp: Added soft-linking macros to
+    pull in the alternate CFHTTPCookie functions.
+    
+    (WebCore::cookieDomain):
+    (WebCore::cookieExpirationTime):
+    (WebCore::cookieName):
+    (WebCore::cookiePath):
+    (WebCore::cookieValue):
+    Added these wrappers around the CFHTTPCookie functions. We call the
+    alternate functions if they exist, otherwise fall back to the current
+    functions.
+    
+    (WebCore::filterCookies):
+    (WebCore::getRawCookies):
+    (WebCore::deleteCookie):
+    Changed to use the wrapper functions.
+    
+    Canonical link: https://commits.webkit.org/66279@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@76041 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/platform/network/cf/CookieJarCFNet.cpp
+
+commit d0642f6975488c8af6d6916ca098e232ddd596a1
+Author: Kentaro Hara <haraken@chromium.org>
+Date:   Wed Mar 7 06:33:21 2012 +0000
+
+    Unreviewed, rolling out r110016.
+    http://trac.webkit.org/changeset/110016
+    
+    layout tests crash
+    
+    * bindings/v8/custom/V8NamedNodeMapCustom.cpp:
+    (WebCore::toV8):
+    
+    Canonical link: https://commits.webkit.org/97636@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@110018 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/bindings/v8/custom/V8NamedNodeMapCustom.cpp
+
+commit 766aa92285e8a1f63f3fb88ce71dc692721500fb
+Author: Mark Rowe <mrowe@bdash.net.nz>
+Date:   Thu Oct 11 15:16:58 2007 +0000
+
+    2007-10-11  Mark Rowe  <mrowe@apple.com>
+    
+            Reviewed by Tim Hatcher.
+    
+            Fix for <rdar://problem/5488678>.  Disable debugging symbols in production builds for 10.4
+            PowerPC to prevent a huge STABS section from being generated.
+    
+            * Configurations/Base.xcconfig:
+    
+    
+    Canonical link: https://commits.webkit.org/20358@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@26359 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	JavaScriptCore/ChangeLog
+M	JavaScriptCore/Configurations/Base.xcconfig
+M	JavaScriptGlue/ChangeLog
+M	JavaScriptGlue/Configurations/Base.xcconfig
+M	WebCore/ChangeLog
+M	WebCore/Configurations/Base.xcconfig
+M	WebKit/ChangeLog
+M	WebKit/Configurations/Base.xcconfig
+
+commit 043e7284c14bbaf0769deafe00c34fe3235dd99a
+Author: Darin Adler <darin@apple.com>
+Date:   Fri Dec 16 07:51:12 2005 +0000
+
+            - fix crash caused by my last check-in
+    
+            * khtml/ecma/domparser.cpp: (KJS::DOMParserProtoFunc::callAsFunction):
+            Use RefPtr to ref/deref the tokenizer.
+    
+    
+    Canonical link: https://commits.webkit.org/9710@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@11613 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebCore/ChangeLog-2005-12-19
+M	WebCore/khtml/ecma/domparser.cpp
+
+commit f48a5799a214b4b5929ba51af663b1cd2df30a23
+Author: Nikolas Zimmermann <zimmermann@webkit.org>
+Date:   Sat Jan 24 02:00:43 2009 +0000
+
+    Reviewed by Eric Seidel.
+    
+    Add a base class for WML form control elements: WMLFormControlElement (as it's designed in HTML as well).
+    WMLFormControlElement inherits from WMLElement and FormControlElement (just like the HTMLFormControlElement equivalent).
+    
+    WMLInputElement / WMLOptionElement / WMLOptGroupElement are supposed to inherit from the new WMLFormControlElement class.
+    Now WMLInputElement & WMLOptGroupElement only inherit from WMLElement and FormControlElement, but WMLOptionElement inherits
+    from WMLEventHandlingElement (which in turn inherits from WMLElement) and FormControlElement. In order to introduce a shared
+    base class, WMLEventHandlingElement is no longer allowed to inherit from WMLElement directly. Instead it should turn into
+    another base class, just like FormControlElement.
+    
+    Add a base class for form control elements 'with state': FormControlElementWithState, serving as base class for
+    HTMLFormControlElementWithState and WMLFormControlElementWithState. -> Make Document operate on FormControlElementWithState
+    objects instead of HTMLFormControlElementWithState objects, to support save/restore control state for non HTMLFormControlElements.
+    
+    Rename isGenericFormElement() to isFormControlElement(), and move it to Element.h
+    Add new virtual function isFormControlElementWithState() to Element.h.
+    
+    
+    Canonical link: https://commits.webkit.org/32392@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@40204 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebCore/ChangeLog
+M	WebCore/GNUmakefile.am
+M	WebCore/WebCore.order
+M	WebCore/WebCore.pro
+M	WebCore/WebCore.scons
+M	WebCore/WebCore.vcproj/WebCore.vcproj
+M	WebCore/WebCore.xcodeproj/project.pbxproj
+M	WebCore/WebCoreSources.bkl
+M	WebCore/dom/Document.cpp
+M	WebCore/dom/Document.h
+M	WebCore/dom/Element.h
+M	WebCore/dom/FormControlElement.cpp
+M	WebCore/dom/FormControlElement.h
+A	WebCore/dom/FormControlElementWithState.cpp
+A	WebCore/dom/FormControlElementWithState.h
+M	WebCore/html/HTMLElement.h
+M	WebCore/html/HTMLFormControlElement.cpp
+M	WebCore/html/HTMLFormControlElement.h
+M	WebCore/html/HTMLFormElement.cpp
+M	WebCore/html/HTMLLabelElement.cpp
+M	WebCore/html/HTMLLegendElement.cpp
+M	WebCore/page/Frame.cpp
+M	WebCore/page/mac/FrameMac.mm
+M	WebCore/wml/WMLCardElement.cpp
+M	WebCore/wml/WMLCardElement.h
+M	WebCore/wml/WMLDoElement.cpp
+M	WebCore/wml/WMLElement.h
+M	WebCore/wml/WMLEventHandlingElement.cpp
+M	WebCore/wml/WMLEventHandlingElement.h
+A	WebCore/wml/WMLFormControlElement.cpp
+A	WebCore/wml/WMLFormControlElement.h
+M	WebCore/wml/WMLInputElement.cpp
+M	WebCore/wml/WMLInputElement.h
+M	WebCore/wml/WMLOnEventElement.cpp
+M	WebCore/wml/WMLOptGroupElement.cpp
+M	WebCore/wml/WMLOptGroupElement.h
+M	WebCore/wml/WMLOptionElement.cpp
+M	WebCore/wml/WMLOptionElement.h
+M	WebCore/wml/WMLTemplateElement.cpp
+M	WebCore/wml/WMLTemplateElement.h
+
+commit f121b464c3de1da05773a7b20092bfed7f7f3a1b
+Author: Vsevolod Vlasov <vsevik@chromium.org>
+Date:   Thu Sep 27 09:40:54 2012 +0000
+
+    Unreviewed inspector test unskipped on qt, expectations updated.
+    
+    * http/tests/inspector/console-cross-origin-iframe-logging-expected.txt:
+    * platform/qt/Skipped:
+    
+    Canonical link: https://commits.webkit.org/115755@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@129744 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/http/tests/inspector/console-cross-origin-iframe-logging-expected.txt
+M	LayoutTests/platform/qt/Skipped
+
+commit d5d5a3179c0876502c480552378cc6f4e37e9ff6
+Author: David Kilzer <ddkilzer@webkit.org>
+Date:   Sat Jan 29 00:53:14 2011 +0000
+
+    Added link to bug in ChangeLog.
+    
+    Canonical link: https://commits.webkit.org/67187@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@77030 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Tools/ChangeLog
+
+commit 3252fd0d31fcb6d8303fc48223eeb3e3c37105e6
+Author: Peter Molnar <pmolnar.u-szeged@partner.samsung.com>
+Date:   Tue Feb 25 14:53:42 2014 +0000
+
+    Move myself to the committers list.
+    
+    Unreviewed.
+    
+    * Scripts/webkitpy/common/config/contributors.json:
+    
+    Canonical link: https://commits.webkit.org/147355@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@164647 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Tools/ChangeLog
+M	Tools/Scripts/webkitpy/common/config/contributors.json
+
+commit b31befd311d886ec7f9d9f0ef18bc1713774c7c8
+Author: Vsevolod Vlasov <vsevik@chromium.org>
+Date:   Wed Feb 27 12:49:29 2013 +0000
+
+    Unreviewed chromium test expectations update.
+    
+    * platform/chromium/TestExpectations:
+    
+    Canonical link: https://commits.webkit.org/129260@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@144172 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/platform/chromium/TestExpectations
+
+commit babc913efd5e374396a8aaf224fa8b32d4a96a07
+Author: Adam Roben <aroben@apple.com>
+Date:   Mon Oct 4 12:39:46 2010 +0000
+
+    Land correct post-XP results for fast/text/international/bidi-mirror-he-ar.html
+    
+    Apparently the results I landed earlier weren't quite right.
+    
+    * platform/win/fast/text/international/bidi-mirror-he-ar-expected.txt:
+    
+    Canonical link: https://commits.webkit.org/59619@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@69008 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/platform/win/fast/text/international/bidi-mirror-he-ar-expected.txt
+
+commit 49643a3ccd68aa4df17ef416db6900d646f57407
+Author: Sam Weinig <weinig@apple.com>
+Date:   Sun Jan 12 19:50:00 2014 +0000
+
+    Fix windows.
+    
+    * WebCore.vcxproj/WebCore.vcxproj:
+    
+    
+    
+    Canonical link: https://commits.webkit.org/144818@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@161819 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/WebCore.vcxproj/WebCore.vcxproj
+
+commit 7a8bb619424edba05cc8b994ac18215c2a45ece0
+Author: Mihai Parparita <mihaip@chromium.org>
+Date:   Sat Nov 20 00:05:27 2010 +0000
+
+    2010-11-19  Mihai Parparita  <mihaip@chromium.org>
+    
+            Unreviewed Chromium expectations update.
+    
+            http/tests/loading/bad-server-subframe.html had chromium-win baselines
+            that made it fail consistently on Windows and Linux. It should pass with
+            the regular upstream baselines.
+    
+            * platform/chromium-win/http/tests/loading/bad-server-subframe-expected.txt: Removed.
+            * platform/chromium/test_expectations.txt:
+    
+    Canonical link: https://commits.webkit.org/62909@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@72447 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+D	LayoutTests/platform/chromium-win/http/tests/loading/bad-server-subframe-expected.txt
+M	LayoutTests/platform/chromium/test_expectations.txt
+
+commit 7026db5caa5a2cdf89f7d25b5ea2968e2f2dc9e0
+Author: Tor Arne Vestbø <vestbo@webkit.org>
+Date:   Thu Nov 6 12:14:49 2008 +0000
+
+    2008-11-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
+    
+            Reviewed by Simon Hausmann.
+    
+            Repaint video on UpdateRequest to prevent recursive painting
+    
+            Calling QWidget::render() to update the video generates a paint
+            event that's then picked up by the event filter once more :(
+    
+            We're really only interested in updates from Phonon, which we
+            get through the UpdateRequest for each new frame.
+    
+    Canonical link: https://commits.webkit.org/30382@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@38164 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebCore/ChangeLog
+M	WebCore/platform/graphics/qt/MediaPlayerPrivatePhonon.cpp
+
+commit e3e100b297662463d3a7cb1ad2bd734a9adc566d
+Author: Geoffrey Garen <ggaren@apple.com>
+Date:   Thu Sep 22 20:09:49 2005 +0000
+
+            - Fixed http://bugzilla.opendarwin.org/show_bug.cgi?id=5053
+            Need to restore int/long changes to simple_number.h
+    
+            Reviewed by darin and mjs.
+    
+            * kjs/simple_number.h: changed enums to indenpendent constants to clarify types
+            (KJS::isNegativeZero): changed to static function - no reason to export
+            (KJS::SimpleNumber::rightShiftSignExtended): new function for clarity
+            (KJS::SimpleNumber::make): specified cast as reinterpret_cast
+            (KJS::SimpleNumber::is): changed to use uintptr_t for portability
+            (KJS::SimpleNumber::value): changed to use uintptr_t and rightShiftSignExtended
+            (KJS::SimpleNumber::fits): inverted tests - probably only a performance win for double
+            (KJS::SimpleNumber::integerFits): ditto
+    
+    
+    Canonical link: https://commits.webkit.org/9015@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@10597 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	JavaScriptCore/ChangeLog
+M	JavaScriptCore/kjs/simple_number.h
+
+commit a9dfcc14e41479129631c96cdf1d13a1453c3467
+Author: Chris Blumenberg <cblu@apple.com>
+Date:   Sat Jun 12 01:04:58 2004 +0000
+
+    WebCore:
+    
+            Support for WebKit drag & drop API.
+    
+            Reviewed by trey.
+    
+            * kwq/WebCoreBridge.h:
+            * kwq/WebCoreBridge.mm:
+            (-[WebCoreBridge _positionForPoint:]): new
+            (-[WebCoreBridge moveDragCaretToPoint:]): call _positionForPoint
+            (-[WebCoreBridge editableDOMRangeForPoint:]): new
+    
+    WebKit:
+    
+            Implemented the remainder of the drag & drop API.
+    
+            Reviewed by trey.
+    
+            * Misc.subproj/WebNSPasteboardExtras.h:
+            * Misc.subproj/WebNSPasteboardExtras.m:
+            (-[NSPasteboard _web_declareAndWriteDragImage:URL:title:archive:source:]): new
+            * Misc.subproj/WebNSViewExtras.h:
+            * Misc.subproj/WebNSViewExtras.m:
+            (-[NSView _web_dragImage:rect:event:pasteboard:source:]): simplified, this method now just creates a drag image and starts the drag
+            * WebCoreSupport.subproj/WebBridge.m:
+            (-[WebBridge allowDHTMLDrag:UADrag:]): now calls _delegateDragSourceActionMask on WebHTMLView to interact with the delegate
+            * WebView.subproj/WebDefaultUIDelegate.m:
+            * WebView.subproj/WebHTMLView.m:
+            (-[WebHTMLView _startDraggingImage:at:operation:event:sourceIsDHTML:DHTMLWroteData:]): call new delegate method, cleaned-up a little
+            (-[WebHTMLView draggingUpdatedWithDraggingInfo:actionMask:]): call drag caret methods on WebView instead of WebBridge so WebView can make sure only 1 HTML view has a drag cursor
+            (-[WebHTMLView draggingCancelledWithDraggingInfo:]): ditto
+            (-[WebHTMLView concludeDragForDraggingInfo:actionMask:]): ditto
+            (-[WebHTMLView _delegateDragSourceActionMask]): new, gets drag source action mask from delegate
+            * WebView.subproj/WebHTMLViewInternal.h:
+            * WebView.subproj/WebImageView.h:
+            * WebView.subproj/WebImageView.m:
+            (-[WebImageView mouseDown:]): get the drag source action mask from the delegate
+            (-[WebImageView mouseDragged:]): inform the delegate of the drag
+            * WebView.subproj/WebView.m:
+            (-[WebViewPrivate dealloc]): assert that dragCursorBridge is nil
+            (-[WebView _close]): release dragCursorBridge
+            (-[WebView _bridgeAtPoint:]): new
+            (-[WebView editableDOMRangeForPoint:]): new API
+            (-[WebView moveDragCaretToPoint:]): new API
+            (-[WebView removeDragCaret]): new API
+            (-[WebView _frameViewAtWindowPoint:]): moved so this can be called internally
+            * WebView.subproj/WebViewInternal.h:
+            * WebView.subproj/WebViewPrivate.h:
+    
+    
+    Canonical link: https://commits.webkit.org/6032@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@6820 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebCore/ChangeLog-2005-08-23
+M	WebCore/kwq/WebCoreBridge.h
+M	WebCore/kwq/WebCoreBridge.mm
+M	WebKit/ChangeLog
+M	WebKit/Misc.subproj/WebNSPasteboardExtras.h
+M	WebKit/Misc.subproj/WebNSPasteboardExtras.m
+M	WebKit/Misc.subproj/WebNSViewExtras.h
+M	WebKit/Misc.subproj/WebNSViewExtras.m
+M	WebKit/WebCoreSupport.subproj/WebBridge.m
+M	WebKit/WebView.subproj/WebDefaultUIDelegate.m
+M	WebKit/WebView.subproj/WebHTMLView.m
+M	WebKit/WebView.subproj/WebHTMLViewInternal.h
+M	WebKit/WebView.subproj/WebImageView.h
+M	WebKit/WebView.subproj/WebImageView.m
+M	WebKit/WebView.subproj/WebView.m
+M	WebKit/WebView.subproj/WebViewInternal.h
+M	WebKit/WebView.subproj/WebViewPrivate.h
+
+commit 7361b75b443c1f72abaea11946e496e8af78ce6a
+Author: Geoffrey Garen <ggaren@apple.com>
+Date:   Tue Aug 29 01:13:33 2006 +0000
+
+            Reviewed by Maciej.
+    
+            Added support for experimental CFNetwork-based loader (not turned on yet).
+    
+            While I was there, I did the following platform cleanup:
+            - Windows now uses USE(WININET) instead of PLATFORM(WIN_OS), to match the
+              USE(CFNETWORK) idiom.
+            - Removed some #includes of windows.h in platform-independent headers.
+            - Changed #ifdef __APPLE__ to PLATFORM(MAC)
+            - Fixed some build bustage, including case-sensitive filesystem bustage.
+    
+            * loader/loader.cpp:
+            (WebCore::Loader::receivedAllData):
+            * platform/Cursor.h:
+            * platform/KURL.h:
+            * platform/ResourceLoader.h:
+            * platform/ResourceLoaderClient.h:
+            * platform/ResourceLoaderInternal.h:
+            (WebCore::ResourceLoaderInternal::ResourceLoaderInternal):
+            * platform/cfnet/KURLCFNet.cpp: Added.
+            (WebCore::KURL::createCFURL):
+            * platform/cfnet/ResourceLoaderCFNet.cpp: Added.
+            (WebCore::willSendRequest):
+            (WebCore::didReceiveChallenge):
+            (WebCore::didCancelChallenge):
+            (WebCore::didReceiveResponse):
+            (WebCore::didReceiveData):
+            (WebCore::didFinishLoading):
+            (WebCore::didFail):
+            (WebCore::willCacheResponse):
+            (WebCore::addHeadersFromString):
+            (WebCore::ResourceLoaderInternal::~ResourceLoaderInternal):
+            (WebCore::ResourceLoader::~ResourceLoader):
+            (WebCore::arrayFromFormData):
+            (WebCore::emptyPerform):
+            (WebCore::runLoaderThread):
+            (WebCore::ResourceLoader::start):
+            (WebCore::ResourceLoader::cancel):
+            * platform/win/CursorWin.cpp:
+    
+    
+    
+    Canonical link: https://commits.webkit.org/13481@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@16089 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	JavaScriptCore/JavaScriptCore.xcodeproj/project.pbxproj
+M	JavaScriptCore/wtf/Platform.h
+M	WebCore/ChangeLog
+M	WebCore/bridge/mac/FrameMac.mm
+M	WebCore/loader/loader.cpp
+M	WebCore/platform/Cursor.h
+M	WebCore/platform/KURL.h
+M	WebCore/platform/ResourceLoader.h
+M	WebCore/platform/ResourceLoaderClient.h
+M	WebCore/platform/ResourceLoaderInternal.h
+A	WebCore/platform/cfnet/KURLCFNet.cpp
+A	WebCore/platform/cfnet/ResourceLoaderCFNet.cpp
+M	WebCore/platform/cg/GraphicsContextCG.cpp
+M	WebCore/platform/mac/KURLMac.mm
+M	WebCore/platform/mac/SharedTimerMac.cpp
+M	WebCore/platform/win/CursorWin.cpp
+
+commit 929265614845e60b69ddd20184d4f147f735aac4
+Author: Ilya Tikhonovsky <loislo@chromium.org>
+Date:   Wed Dec 21 08:11:54 2011 +0000
+
+    Unreviewed update test expectations for inspector's tests.
+    
+    * platform/chromium/test_expectations.txt:
+    
+    Canonical link: https://commits.webkit.org/91741@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@103396 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/platform/chromium/test_expectations.txt
+
+commit 4876b08166ef1da8adf4902601238e0bad46e932
+Author: Anders Carlsson <andersca@apple.com>
+Date:   Thu May 22 18:26:10 2008 +0000
+
+    ..:
+    
+    2008-05-21  Anders Carlsson  <andersca@apple.com>
+    
+            Reviewed by Maciej.
+    
+            Add WebIconFetcher files.
+    
+            * WebKit.xcodeproj/project.pbxproj:
+    
+    ../mac:
+    
+    2008-05-21  Anders Carlsson  <andersca@apple.com>
+    
+            Reviewed by Maciej.
+    
+            Add WebIconFetcher.
+    
+            * Misc/WebIconFetcher.h: Added.
+            * Misc/WebIconFetcher.mm: Added.
+            (WebIconFetcherClient::WebIconFetcherClient):
+            (WebIconFetcherClient::finishedFetchingIcon):
+            (WebIconFetcherClient::setFetcher):
+            (-[WebIconFetcher init]):
+            (-[WebIconFetcher dealloc]):
+            (-[WebIconFetcher finalize]):
+            (-[WebIconFetcher cancel]):
+            (-[WebIconFetcher _initWithIconFetcher:client:]):
+            (+[WebIconFetcher _fetchApplicationIconForFrame:target:selector:]):
+            * Misc/WebIconFetcherInternal.h: Added.
+            * WebView/WebFrame.mm:
+            (-[WebFrame fetchApplicationIcon:selector:]):
+            * WebView/WebFramePrivate.h:
+    
+    
+    
+    Canonical link: https://commits.webkit.org/26534@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@34025 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebKit/ChangeLog
+M	WebKit/WebKit.xcodeproj/project.pbxproj
+M	WebKit/mac/ChangeLog
+A	WebKit/mac/Misc/WebIconFetcher.h
+A	WebKit/mac/Misc/WebIconFetcher.mm
+A	WebKit/mac/Misc/WebIconFetcherInternal.h
+M	WebKit/mac/WebView/WebFrame.mm
+M	WebKit/mac/WebView/WebFramePrivate.h
+
+commit ad87d04f393663cc8cdfed28addf826c957c88a9
+Author: Daniel Bates <dbates@webkit.org>
+Date:   Fri Nov 13 01:00:09 2015 +0000
+
+    Add my apple.com email address to contributors.json
+    
+    * Scripts/webkitpy/common/config/contributors.json:
+    
+    Canonical link: https://commits.webkit.org/169417@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@192399 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Tools/ChangeLog
+M	Tools/Scripts/webkitpy/common/config/contributors.json
+
+commit f0b7724cd0a49c478afb0b321d9d8ff3e18128d3
+Author: Brent Fulgham <bfulgham@webkit.org>
+Date:   Fri Mar 25 18:59:07 2011 +0000
+
+    Clean up FontPlatformData structure so that a single implementation
+    is used across all ports.  This first patch works for the Windows
+    build (both CG and WinCairo), and Cocoa.
+    
+    Reviewed by David Hyatt.
+    
+    * WebCore.vcproj/WebCore.vcproj:
+    * platform/graphics/FontPlatformData.cpp: Added.
+    (WebCore::FontPlatformData::FontPlatformData):
+    (WebCore::FontPlatformData::operator=):
+    * platform/graphics/FontPlatformData.h: Added.
+    (WebCore::toCTFontRef):
+    (WebCore::FontPlatformData::FontPlatformData):
+    (WebCore::FontPlatformData::hfont):
+    (WebCore::FontPlatformData::useGDI):
+    (WebCore::FontPlatformData::font):
+    (WebCore::FontPlatformData::cgFont):
+    (WebCore::FontPlatformData::size):
+    (WebCore::FontPlatformData::setSize):
+    (WebCore::FontPlatformData::syntheticBold):
+    (WebCore::FontPlatformData::syntheticOblique):
+    (WebCore::FontPlatformData::isColorBitmapFont):
+    (WebCore::FontPlatformData::orientation):
+    (WebCore::FontPlatformData::textOrientation):
+    (WebCore::FontPlatformData::widthVariant):
+    (WebCore::FontPlatformData::setOrientation):
+    (WebCore::FontPlatformData::scaledFont):
+    (WebCore::FontPlatformData::fontFace):
+    (WebCore::FontPlatformData::hash):
+    (WebCore::FontPlatformData::operator==):
+    (WebCore::FontPlatformData::isHashTableDeletedValue):
+    (WebCore::FontPlatformData::hashTableDeletedFontValue):
+    * platform/graphics/cg/FontPlatformData.h: Removed.
+    * platform/graphics/cocoa/FontPlatformData.h: Removed.
+    * platform/graphics/cocoa/FontPlatformDataCocoa.mm:
+    (WebCore::~FontPlatformData):
+    (WebCore::FontPlatformData::platformDataInit):
+    (WebCore::FontPlatformData::platformDataAssign):
+    * platform/graphics/win/FontPlatformDataCGWin.cpp:
+    (WebCore::FontPlatformData::FontPlatformData):
+    (WebCore::FontPlatformData::~FontPlatformData):
+    (WebCore::FontPlatformData::platformDataInit):
+    (WebCore::FontPlatformData::platformDataAssign):
+    * platform/graphics/win/FontPlatformDataCairoWin.cpp:
+    (WebCore::FontPlatformData::FontPlatformData):
+    (WebCore::FontPlatformData::~FontPlatformData):
+    (WebCore::FontPlatformData::platformDataInit):
+    (WebCore::FontPlatformData::platformDataAssign):
+    * platform/graphics/win/FontPlatformDataWin.cpp:
+    (WebCore::FontPlatformData::FontPlatformData):
+    * platform/graphics/win/cairo/FontPlatformData.h: Removed.
+    
+    
+    
+    Canonical link: https://commits.webkit.org/71784@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@81977 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/WebCore.vcproj/WebCore.vcproj
+M	Source/WebCore/WebCore.xcodeproj/project.pbxproj
+A	Source/WebCore/platform/graphics/FontPlatformData.cpp
+A	Source/WebCore/platform/graphics/FontPlatformData.h
+D	Source/WebCore/platform/graphics/cg/FontPlatformData.h
+D	Source/WebCore/platform/graphics/cocoa/FontPlatformData.h
+M	Source/WebCore/platform/graphics/cocoa/FontPlatformDataCocoa.mm
+M	Source/WebCore/platform/graphics/win/FontPlatformDataCGWin.cpp
+M	Source/WebCore/platform/graphics/win/FontPlatformDataCairoWin.cpp
+M	Source/WebCore/platform/graphics/win/FontPlatformDataWin.cpp
+D	Source/WebCore/platform/graphics/win/cairo/FontPlatformData.h
+
+commit 893d780d3f8ce1315b05642a5b272d819e4e272c
+Author: Ken Kocienda <kocienda@apple.com>
+Date:   Thu Nov 11 15:28:56 2004 +0000
+
+            Reviewed by John
+    
+            Updated some layout test results that changed as a result of my last checking.
+            Added a new test that has been in my tree for a few days.
+    
+            * layout-tests/editing/deleting/delete-3775172-fix-expected.txt:
+            * layout-tests/editing/deleting/delete-3800834-fix-expected.txt:
+            * layout-tests/editing/inserting/insert-3851164-fix-expected.txt: Added.
+            * layout-tests/editing/inserting/insert-3851164-fix.html: Added.
+    
+    
+    Canonical link: https://commits.webkit.org/6975@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@7973 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/editing/deleting/delete-3775172-fix-expected.txt
+M	LayoutTests/editing/deleting/delete-3800834-fix-expected.txt
+A	LayoutTests/editing/inserting/insert-3851164-fix-expected.txt
+A	LayoutTests/editing/inserting/insert-3851164-fix.html
+M	WebCore/ChangeLog-2005-08-23
+
+commit d2dab8f8c9036f75fe0a8247a7e2e0ce949249a7
+Author: Gustavo Noronha Silva <kov@webkit.org>
+Date:   Wed Jun 10 22:47:26 2009 +0000
+
+    2009-06-10  Jan Michael Alonzo  <jmalonzo@webkit.org>
+    
+            Reviewed by Gustavo Noronha.
+    
+            Clear the frame name before we run each tests so we don't get
+            "someFloaString" or "3" in the target frame name.
+    
+            * DumpRenderTree/gtk/DumpRenderTree.cpp:
+            (resetWebViewToConsistentStateBeforeTesting):
+    
+    Canonical link: https://commits.webkit.org/36418@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@44594 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebKitTools/ChangeLog
+M	WebKitTools/DumpRenderTree/gtk/DumpRenderTree.cpp
+
+commit 22a9156e309180ec9a0bf41f0fafccccc725275e
+Author: Adam Barth <abarth@webkit.org>
+Date:   Wed Mar 30 17:35:14 2011 +0000
+
+    Remove empty directories in platform/mac-snowleopard, as requested by
+    Mark Rowe.
+    
+    * platform/mac-snowleopard/css2.1: Removed.
+    * platform/mac-snowleopard/editing: Removed.
+    * platform/mac-snowleopard/editing/deleting: Removed.
+    * platform/mac-snowleopard/editing/inserting: Removed.
+    * platform/mac-snowleopard/editing/pasteboard: Removed.
+    * platform/mac-snowleopard/fast/backgrounds: Removed.
+    * platform/mac-snowleopard/fast/backgrounds/repeat: Removed.
+    * platform/mac-snowleopard/fast/block: Removed.
+    * platform/mac-snowleopard/fast/block/float: Removed.
+    * platform/mac-snowleopard/fast/borders: Removed.
+    * platform/mac-snowleopard/fast/canvas: Removed.
+    * platform/mac-snowleopard/fast/css: Removed.
+    * platform/mac-snowleopard/fast/dom: Removed.
+    * platform/mac-snowleopard/fast/dom/HTMLMeterElement: Removed.
+    * platform/mac-snowleopard/fast/images: Removed.
+    * platform/mac-snowleopard/fast/inline: Removed.
+    * platform/mac-snowleopard/fast/inline-block: Removed.
+    * platform/mac-snowleopard/fast/multicol: Removed.
+    * platform/mac-snowleopard/fast/replaced: Removed.
+    * platform/mac-snowleopard/fast/text/basic: Removed.
+    * platform/mac-snowleopard/media: Removed.
+    * platform/mac-snowleopard/plugins: Removed.
+    * platform/mac-snowleopard/scrollbars: Removed.
+    * platform/mac-snowleopard/svg/W3C-SVG-1.1: Removed.
+    * platform/mac-snowleopard/svg/custom: Removed.
+    * platform/mac-snowleopard/svg/dynamic-updates: Removed.
+    * platform/mac-snowleopard/svg/filters: Removed.
+    * platform/mac-snowleopard/svg/text: Removed.
+    * platform/mac-snowleopard/tables: Removed.
+    * platform/mac-snowleopard/tables/mozilla: Removed.
+    * platform/mac-snowleopard/tables/mozilla/core: Removed.
+    * platform/mac-snowleopard/tables/mozilla_expected_failures: Removed.
+    * platform/mac-snowleopard/tables/mozilla_expected_failures/bugs: Removed.
+    
+    
+    
+    Canonical link: https://commits.webkit.org/72264@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@82466 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+
+commit b6ca63a464359fb4f95e41fece4ab33558c967ce
+Author: Adele Peterson <adele@apple.com>
+Date:   Tue Jul 15 17:06:04 2008 +0000
+
+    2008-07-15  Adele Peterson  <adele@apple.com>
+    
+            Updating results for my fix to <rdar://problem/5784890>.
+    
+            * http/tests/misc/xhtml-expected.txt:
+    
+    
+    
+    Canonical link: https://commits.webkit.org/27615@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@35183 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/http/tests/misc/xhtml-expected.txt
+
+commit 95ebadb56e10510c6e10837a80e6cafd37ffe2f8
+Author: Trey Matteson <trey@usa.net>
+Date:   Thu Jun 24 20:20:44 2004 +0000
+
+            3679986 - screenX and screenY are flipped and relative to the bottom left of the WebView, rather than the screen
+            3699510 - synthesized click events have bogus screen coords
+    
+            Reviewed by Darin.
+    
+            * khtml/khtmlview.cpp:
+            (KHTMLView::dispatchDragEvent):  Generate screen coords for drag events using new func.
+            (KHTMLView::dispatchMouseEvent):   Ditto.
+            * khtml/khtmlview.h:
+            * khtml/xml/dom_nodeimpl.cpp:
+            (NodeImpl::dispatchMouseEvent):  Comment tricky semantics.
+            Calc screen coords in apple-specific way.
+            * kwq/KWQKHTMLView.mm:
+            (KHTMLView::viewportToGlobal):  Passthrough to window widget.
+            * kwq/KWQScrollView.mm:
+            * kwq/KWQWindowWidget.h:
+            * kwq/KWQWindowWidget.mm:
+            (KWQWindowWidget::mapToGlobal):  Call former code factored to new method below.
+            (KWQWindowWidget::viewportToGlobal):  New method to convert "viewport" (which for us
+            really means NSWindow coords) to screen coords.
+    
+    
+    Canonical link: https://commits.webkit.org/6110@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@6922 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebCore/ChangeLog-2005-08-23
+M	WebCore/khtml/khtmlview.cpp
+M	WebCore/khtml/khtmlview.h
+M	WebCore/khtml/xml/dom_nodeimpl.cpp
+M	WebCore/kwq/KWQKHTMLView.mm
+M	WebCore/kwq/KWQScrollView.mm
+M	WebCore/kwq/KWQWindowWidget.h
+M	WebCore/kwq/KWQWindowWidget.mm
+
+commit fa719311070821ddc3fff65695b655d661393af6
+Author: Ross Kirsling <rkirsling@gmail.com>
+Date:   Mon Aug 22 16:23:10 2022 -0700
+
+    Unreviewed test262 gardening following 253623@main (round two).
+    
+    * JSTests/test262/expectations.yaml:
+    Update error messages for 4 more failures.
+    
+    Canonical link: https://commits.webkit.org/253661@main
+
+M	JSTests/test262/expectations.yaml
+
+commit 15bc2f982d52230e603a8ecd3dfe52f1a883eeb3
+Author: beidson <beidson>
+Date:   Sun Aug 27 22:57:38 2006 +0000
+
+            Reviewed by Maciej
+    
+            Plugged a leak in StringImpl::replace()
+    
+            * platform/StringImpl.cpp:
+            (WebCore::StringImpl::replace):
+    
+    
+    
+    Canonical link: https://commits.webkit.org/13461@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@16065 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebCore/ChangeLog
+M	WebCore/platform/StringImpl.cpp
+
+commit 2a5ef916acc3b9011d9bda23f0a323fc3b7d8bb8
+Author: Levi Weintraub <leviw@chromium.org>
+Date:   Tue Jan 15 01:22:59 2013 +0000
+
+    Source/WebCore: Rolling out r139683. It broke a bunch of webkit_unit_tests.
+    
+    Source/WebKit/win: Rolling out r139683. It broke a bunch of webkit_unit_tests.
+    
+    
+    Canonical link: https://commits.webkit.org/125082@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@139694 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+D	LayoutTests/http/tests/cache/cached-main-resource-expected.txt
+D	LayoutTests/http/tests/cache/cached-main-resource.html
+D	LayoutTests/http/tests/cache/resources/cacheable-iframe.php
+M	LayoutTests/http/tests/inspector/resource-har-pages-expected.txt
+M	LayoutTests/http/tests/loading/redirect-methods-expected.txt
+M	LayoutTests/http/tests/misc/favicon-loads-with-images-disabled-expected.txt
+M	LayoutTests/http/tests/misc/link-rel-icon-beforeload-expected.txt
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/WebCore.exp.in
+M	Source/WebCore/dom/Document.cpp
+M	Source/WebCore/dom/Document.h
+M	Source/WebCore/loader/FrameLoader.cpp
+M	Source/WebCore/loader/MainResourceLoader.cpp
+M	Source/WebCore/loader/MainResourceLoader.h
+M	Source/WebCore/loader/cache/CachedRawResource.cpp
+M	Source/WebCore/loader/cache/CachedRawResource.h
+M	Source/WebCore/loader/cache/CachedResource.cpp
+M	Source/WebCore/loader/cache/CachedResource.h
+M	Source/WebCore/loader/cache/CachedResourceLoader.cpp
+M	Source/WebCore/testing/Internals.cpp
+M	Source/WebCore/testing/Internals.h
+M	Source/WebCore/testing/Internals.idl
+M	Source/WebKit/win/ChangeLog
+M	Source/WebKit/win/WebKit.vcproj/WebKitExports.def.in
+M	Source/autotools/symbols.filter
+
+commit 119299cd387324c5ce13b149a884d57772f9fb9c
+Author: Ryosuke Niwa <rniwa@webkit.org>
+Date:   Wed May 11 23:03:21 2016 +0000
+
+    iOS clean build fix after r200700.
+    
+    * bindings/js/JSDOMWindowCustom.cpp:
+    
+    
+    Canonical link: https://commits.webkit.org/175731@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@200713 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/bindings/js/JSDOMWindowCustom.cpp
+
+commit 91ae7295151b3b9b889f5bbcb614af93cb9f4e9b
+Author: Darin Adler <darin@apple.com>
+Date:   Fri Mar 7 21:00:48 2008 +0000
+
+    WebCore:
+    
+            Reviewed by Adam.
+    
+            - eliminated WebCoreFrameBridge runOpenPanel
+    
+            * page/ChromeClient.h: Added runOpenPanel function.
+            * page/mac/ChromeMac.mm:
+            (WebCore::ChromeClient::runOpenPanel): Added.
+            * platform/FileChooser.cpp:
+            (WebCore::FileChooser::FileChooser): Moved this here. It's no longer platform-specific.
+            Also start the refcount at 1.
+            (WebCore::FileChooser::create): Added adoptRef since the refcount no starts at one.
+            (WebCore::FileChooser::~FileChooser): Moved here. No longer platform-specific.
+            * platform/FileChooser.h: Removed m_controller, which was Macintosh-specific.
+            * platform/gtk/FileChooserGtk.cpp: Removed FileChooser constructor and destructor,
+            since they are no longer platform-specific.
+            * platform/qt/FileChooserQt.cpp: Ditto.
+            * platform/win/FileChooserWin.cpp: Ditto.
+            * platform/wx/TemporaryLinkStubs.cpp: Ditto.
+            * platform/mac/FileChooserMac.mm:
+            (WebCore::FileChooser::openFileChooser): Call the chrome client instead of the
+            bridge to run the open panel. Allows us to get rid of the WebCoreOpenPanelController
+            class and m_controller data member and move the cosntrutor/destructor to platform-
+            independent code.
+    
+    WebKit/mac:
+    
+            Reviewed by Adam.
+    
+            - eliminated WebCoreFrameBridge runOpenPanel
+    
+            * WebCoreSupport/WebChromeClient.h: Added runOpenPanel.
+            * WebCoreSupport/WebChromeClient.mm:
+            (WebChromeClient::runOpenPanel): Added.
+            (-[WebOpenPanelResultListener initWithChooser:]): Added. Used to wrap the
+            FileChooser so it can get a result from the UI delegate.
+            (-[WebOpenPanelResultListener dealloc]): Added.
+            (-[WebOpenPanelResultListener finalize]): Added.
+            (-[WebOpenPanelResultListener cancel]): Added.
+            (-[WebOpenPanelResultListener chooseFilename:]): Added.
+    
+    
+    
+    Canonical link: https://commits.webkit.org/24562@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@30875 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebCore/ChangeLog
+M	WebCore/page/ChromeClient.h
+M	WebCore/page/mac/ChromeMac.mm
+M	WebCore/platform/FileChooser.cpp
+M	WebCore/platform/FileChooser.h
+M	WebCore/platform/gtk/FileChooserGtk.cpp
+M	WebCore/platform/mac/FileChooserMac.mm
+M	WebCore/platform/qt/FileChooserQt.cpp
+M	WebCore/platform/win/FileChooserWin.cpp
+M	WebCore/platform/wx/TemporaryLinkStubs.cpp
+M	WebKit/mac/ChangeLog
+M	WebKit/mac/WebCoreSupport/WebChromeClient.h
+M	WebKit/mac/WebCoreSupport/WebChromeClient.mm
+
+commit ae11fbdd9a95cc1565ba2201569b1acef7f873e6
+Author: Alex Christensen <achristensen@apple.com>
+Date:   Mon Oct 24 20:53:28 2016 +0000
+
+    Fix Windows build after r207767 and r207769
+    
+    * css/CSSAllInOne.cpp:
+    * platform/network/curl/ResourceHandleManager.cpp:
+    (WebCore::getProtectionSpace):
+    
+    
+    
+    Canonical link: https://commits.webkit.org/181637@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@207776 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/css/CSSAllInOne.cpp
+M	Source/WebCore/platform/network/curl/ResourceHandleManager.cpp
+
+commit 852f3083a7ce42cca6573aadd5407ad9a7655696
+Author: Tim Horton <timothy_horton@apple.com>
+Date:   Thu Jun 5 21:00:15 2014 +0000
+
+    Fix the !CACHE_SUBIMAGES build
+    
+    * platform/graphics/cg/GraphicsContextCG.cpp:
+    (WebCore::GraphicsContext::drawNativeImage):
+    
+    
+    Canonical link: https://commits.webkit.org/151550@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@169623 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/platform/graphics/cg/GraphicsContextCG.cpp
+
+commit 858ebfa35eba4932b7258b701ed9f8e959115182
+Author: Sam Weinig <weinig@apple.com>
+Date:   Thu Feb 10 01:55:52 2011 +0000
+
+    Overlay scrollbars crash used with a RenderListBox.
+    
+    Reviewed by Beth Dakin.
+    
+    * rendering/RenderListBox.cpp:
+    (WebCore::RenderListBox::layout):
+    (WebCore::RenderListBox::contentsSize):
+    (WebCore::RenderListBox::currentMousePosition):
+    (WebCore::RenderListBox::setHasVerticalScrollbar):
+    * rendering/RenderListBox.h:
+    Implement enough of the ScrollableArea interface to get things generally
+    working.
+    
+    
+    
+    Canonical link: https://commits.webkit.org/68185@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@78167 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/rendering/RenderListBox.cpp
+M	Source/WebCore/rendering/RenderListBox.h
+
+commit 06326ebbd2e142cb861e9c2f069d47c8984d4a10
+Author: Fujii Hironori <Hironori.Fujii@sony.com>
+Date:   Mon May 24 07:19:53 2021 +0000
+
+    [WinCairo] Unreviewed test gardening
+    
+    * platform/wincairo/TestExpectations:
+    
+    Canonical link: https://commits.webkit.org/238071@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@277944 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/platform/wincairo/TestExpectations
+
+commit e16a9b5aa1db331dd91882e0d49c14e5a7e91b71
+Author: Simon Fraser <simon.fraser@apple.com>
+Date:   Sat Jul 16 01:40:57 2011 +0000
+
+    2011-07-15  Simon Fraser  <simon.fraser@apple.com>
+    
+            Fix build error in 32-bit builds.
+    
+            * rendering/svg/RenderSVGPath.cpp:
+            (WebCore::RenderSVGPath::zeroLengthSubpathRect):
+    
+    Canonical link: https://commits.webkit.org/80394@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@91139 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/rendering/svg/RenderSVGPath.cpp
+
+commit f78fa8f63b9f489f60209dd31b583a8abbfe32e7
+Author: David Hyatt <hyatt@apple.com>
+Date:   Wed Oct 26 19:52:21 2005 +0000
+
+    Fix clip test now that overflow change was backed out.
+    
+    
+    Canonical link: https://commits.webkit.org/9293@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@10970 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/fast/clip/008-expected.txt
+
+commit 6ef28b506e02f123b336f71d60816435c310dbd0
+Author: Ryosuke Niwa <rniwa@webkit.org>
+Date:   Thu May 16 03:15:50 2013 +0000
+
+    Windows build fix attempt after r150160.
+    
+    Source/WebKit:
+    
+    * WebKit.vcxproj/WebKitExportGenerator/WebKitExports.def.in:
+    
+    Source/WebKit/win:
+    
+    * WebKit.vcproj/WebKitExports.def.in:
+    
+    
+    Canonical link: https://commits.webkit.org/134600@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@150171 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/WebKit/ChangeLog
+M	Source/WebKit/WebKit.vcxproj/WebKitExportGenerator/WebKitExports.def.in
+M	Source/WebKit/win/ChangeLog
+M	Source/WebKit/win/WebKit.vcproj/WebKitExports.def.in
+
+commit d5df001f6efd8887a04510a3f07fd864e42ede4b
+Author: Kocsen Chung <kocsen_chung@apple.com>
+Date:   Thu May 31 22:02:39 2018 +0000
+
+    Versioning.
+    
+    Canonical link: https://commits.webkit.org/201583@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@232374 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/JavaScriptCore/Configurations/Version.xcconfig
+M	Source/ThirdParty/libwebrtc/Configurations/Version.xcconfig
+M	Source/WebCore/Configurations/Version.xcconfig
+M	Source/WebCore/PAL/Configurations/Version.xcconfig
+M	Source/WebInspectorUI/Configurations/Version.xcconfig
+M	Source/WebKit/Configurations/Version.xcconfig
+M	Source/WebKitLegacy/mac/Configurations/Version.xcconfig
+
+commit 41b699b7e4f76a92ae0f0e18d6fea97ee2340753
+Author: Alp Toker <alp@nuanti.com>
+Date:   Mon Oct 22 15:06:58 2007 +0000
+
+    2007-10-22  Alp Toker  <alp@atoker.com>
+    
+            Reviewed by Nikolas Zimmermann.
+    
+            Implement more GraphicsContextCairo stubs.
+    
+            Remove a hack "to work around no current point bug" that was breaking
+            canvas tests.
+    
+            Fix warnings.
+    
+            * platform/graphics/cairo/CairoPath.h:
+            (WebCore::CairoPath::CairoPath):
+            * platform/graphics/cairo/GraphicsContextCairo.cpp:
+            (WebCore::GraphicsContext::addInnerRoundedRectClip):
+            (WebCore::GraphicsContext::strokeRect):
+            * platform/graphics/cairo/PathCairo.cpp:
+            (WebCore::Path::isEmpty):
+            * platform/graphics/svg/cairo/SVGPaintServerGradientCairo.cpp:
+            (WebCore::SVGPaintServerGradient::setup):
+            * platform/graphics/svg/cairo/SVGPaintServerSolidCairo.cpp:
+            (WebCore::SVGPaintServerSolid::setup):
+    
+    
+    
+    Canonical link: https://commits.webkit.org/20819@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@26886 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebCore/ChangeLog
+M	WebCore/platform/graphics/cairo/CairoPath.h
+M	WebCore/platform/graphics/cairo/GraphicsContextCairo.cpp
+M	WebCore/platform/graphics/cairo/PathCairo.cpp
+M	WebCore/platform/graphics/svg/cairo/SVGPaintServerGradientCairo.cpp
+M	WebCore/platform/graphics/svg/cairo/SVGPaintServerSolidCairo.cpp
+
+commit 975ec3c95466bb6694d4583a0cb37ab4a4b11289
+Author: Dimitri Glazkov <dglazkov@chromium.org>
+Date:   Thu Oct 29 19:43:46 2009 +0000
+
+    2009-10-29  Dimitri Glazkov  <dglazkov@chromium.org>
+    
+            Unreviewed, build fix.
+    
+            [Chromium] Adjust the project files to sync up with
+            http://trac.webkit.org/changeset/50259
+    
+            * WebCore.gypi: Renamed and added files.
+    
+    Canonical link: https://commits.webkit.org/41734@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@50292 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebCore/ChangeLog
+M	WebCore/WebCore.gypi
+
+commit b132e0462019184f75578d7d23b4ca0ec78b7461
+Author: Andreas Kling <akling@apple.com>
+Date:   Mon Jul 8 15:53:54 2013 +0000
+
+    REGRESSION(r125294): A style rule with more than 8192 selectors can cause style corruption.
+    <http://webkit.org/b/118369>
+    <rdar://problem/14291428>
+    
+    Reviewed by Antti Koivisto.
+    
+    Source/WebCore:
+    
+    Add a semi-hard cap of 8192 selectors per CSS rule. Rules with longer selector lists will be split into
+    multiple rules (with 8192 selectors per rule.) The style properties are shared behind the scenes
+    so it's all pretty efficient.
+    
+    This does generate a different CSSOM for gigantic selector lists, I've added a test to document this.
+    Note that setting CSSStyleRule.selectorText with over 8192 selectors will now fail, the splitting into
+    multiple rules only happens when parsing full style sheets.
+    
+    Test: fast/css/rule-selector-overflow.html
+    
+    * css/CSSSelectorList.cpp:
+    (WebCore::CSSSelectorList::selectorCount):
+    
+        Add a helper to count the number of selectors in a list (not the number of raw selector components.)
+    
+    * css/RuleSet.h:
+    * css/CSSStyleRule.cpp:
+    (WebCore::CSSStyleRule::setSelectorText):
+    
+        Add RuleData::maximumSelectorCount constant and cap CSSStyleRule.selectorText to that many selectors.
+    
+    * css/CSSSelectorList.h:
+    (WebCore::CSSSelectorList::adoptSelectorArray):
+    * css/StyleRule.cpp:
+    (WebCore::StyleRule::create):
+    (WebCore::StyleRule::splitIntoMultipleRulesWithMaximumSelectorCount):
+    * css/StyleRule.h:
+    (WebCore::StyleRule::parserAdoptSelectorArray):
+    * css/StyleSheetContents.cpp:
+    (WebCore::StyleSheetContents::parserAppendRule):
+    
+        The meat of this change. Split rules with >8K selectors into multiple rules with 8K selectors in each.
+    
+    * css/StyleRule.h:
+    (WebCore::toStyleRule):
+    
+        Added a toStyleRule() helper for good measure.
+    
+    LayoutTests:
+    
+    Added a test to document the new cap of 8192 selectors per CSS rule.
+    
+    * fast/css/rule-selector-overflow-expected.txt: Added.
+    * fast/css/rule-selector-overflow.html: Added.
+    
+    
+    Canonical link: https://commits.webkit.org/136441@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@152453 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+A	LayoutTests/fast/css/rule-selector-overflow-expected.txt
+A	LayoutTests/fast/css/rule-selector-overflow.html
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/css/CSSSelectorList.cpp
+M	Source/WebCore/css/CSSSelectorList.h
+M	Source/WebCore/css/CSSStyleRule.cpp
+M	Source/WebCore/css/RuleSet.h
+M	Source/WebCore/css/StyleRule.cpp
+M	Source/WebCore/css/StyleRule.h
+M	Source/WebCore/css/StyleSheetContents.cpp
+
+commit 6b6d8703debe7c56a71cb7a6c74f843808cd3343
+Author: Ken Kocienda <kocienda@apple.com>
+Date:   Thu Sep 20 15:05:33 2001 +0000
+
+    Tweak to handle skipping the compilation of javaembed.cpp now that
+    this skipping is no longer handled by MakeSystemChanges.sh
+    
+    
+    Canonical link: https://commits.webkit.org/149@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@152 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebCore/khtml/java/Makefile.in
+M	WebCore/src/kdelibs/khtml/java/Makefile.in
+
+commit b8abda54f7211b211e2d404cb7e10b5055d4e890
+Author: Jian Li <jianli@chromium.org>
+Date:   Fri Sep 10 23:40:28 2010 +0000
+
+    Update mac/Skipped to include the bug numbers for newly added skip entries.
+    
+    * platform/mac/Skipped:
+    
+    Canonical link: https://commits.webkit.org/57985@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@67249 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/platform/mac/Skipped
+
+commit b7f261defba4ca63a1920f08630fd55d6d4d1be9
+Author: Lars Knoll <lars.knoll@gmail.com>
+Date:   Fri Jun 8 12:44:53 2007 +0000
+
+            Reviewed by Zack.
+    
+            Add a QWebObjectPluginConnector class. The class will
+            facility communication between the plugin and WebKit.
+            Currently it's used to make the plugin network capable.
+    
+    
+    
+    Canonical link: https://commits.webkit.org/18340@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@22069 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebKitQt/Api/qwebnetworkinterface.cpp
+M	WebKitQt/Api/qwebnetworkinterface.h
+M	WebKitQt/Api/qwebnetworkinterface_p.h
+M	WebKitQt/Api/qwebobjectplugin.cpp
+M	WebKitQt/Api/qwebobjectplugin.h
+M	WebKitQt/Api/qwebobjectplugin_p.h
+A	WebKitQt/Api/qwebobjectpluginconnector.cpp
+A	WebKitQt/Api/qwebobjectpluginconnector.h
+M	WebKitQt/ChangeLog
+M	WebKitQt/WebCoreSupport/FrameLoaderClientQt.cpp
+
+commit 7af0492d1d6d550edf62ec3da4559dc30da97c7b
+Author: Philippe Normand <philn@igalia.com>
+Date:   Tue Sep 20 12:14:00 2011 +0000
+
+    Unreviewed, GTK baselines for tests added in r95461.
+    
+    * platform/gtk/fast/table/table-cell-before-after-content-around-table-block-expected.txt: Added.
+    * platform/gtk/fast/table/table-cell-before-after-content-around-table-expected.txt: Added.
+    * platform/gtk/fast/table/table-cell-before-after-content-around-table-row-expected.txt: Added.
+    * platform/gtk/fast/table/table-row-before-after-content-around-block-expected.txt: Added.
+    * platform/gtk/fast/table/table-row-before-after-content-around-table-expected.txt: Added.
+    
+    Canonical link: https://commits.webkit.org/84377@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@95530 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+A	LayoutTests/platform/gtk/fast/table/table-cell-before-after-content-around-table-block-expected.txt
+A	LayoutTests/platform/gtk/fast/table/table-cell-before-after-content-around-table-expected.txt
+A	LayoutTests/platform/gtk/fast/table/table-cell-before-after-content-around-table-row-expected.txt
+A	LayoutTests/platform/gtk/fast/table/table-row-before-after-content-around-block-expected.txt
+A	LayoutTests/platform/gtk/fast/table/table-row-before-after-content-around-table-expected.txt
+
+commit 8b78f993ce01252f769506b07e16a68c11e48071
+Author: Žan Doberšek <zdobersek@igalia.com>
+Date:   Mon Aug 20 13:57:52 2012 +0000
+
+    Unreviewed GTK gardening.
+    
+    Fixing the failure expectations for a flaky crasher XFrameOptions test
+    in debug builds. When it doesn't crash it fails due to text diff.
+    
+    * platform/gtk/TestExpectations:
+    
+    
+    Canonical link: https://commits.webkit.org/112273@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@126024 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
+M	LayoutTests/platform/gtk/TestExpectations
+
+commit 04c2836eb059fe7200ad7aa67b1dc772c527f025
+Author: Anders Carlsson <andersca@apple.com>
+Date:   Tue Aug 29 23:13:34 2006 +0000
+
+    Forgot this
+    
+    
+    Canonical link: https://commits.webkit.org/13495@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@16105 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	CMakeLists.txt
+

@@ -6,7 +6,7 @@ sk = input("Your openai key: (Press ENTER to read from file)")
 sysprompt = input("System prompt: (Press ENTER to use default)")
 if sk == "":
     # read sk from file
-    with open("sk.txt", "r") as f:
+    with open("/data/patchFuzz/scripts/sk.txt", "r") as f:
         sk = f.read()
 print("--------------------------------")
 print("Input your message, type 'exit' to exit, type 'clear' to clear the conversation")
@@ -23,7 +23,7 @@ while (1):
     in_message = input(name + ": "+"\n")
     while (1):
         a_message = input()
-        if a_message == "zxw":
+        if a_message == "":
             break
         # 在两次输入中间加入一个换行符
         in_message = in_message + "\n" + a_message

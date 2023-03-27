@@ -1,0 +1,1574 @@
+commit 1572d05a28fab5da73936a6c27d5c02ecd4ede22
+Author: Kevin Smith <Kevin.Smith@microsoft.com>
+Date:   Wed Nov 6 13:03:35 2019 -0800
+
+    Correctly use VarIs in native array methods
+
+M	lib/Runtime/Library/JavascriptArray.cpp
+M	lib/Runtime/Library/JavascriptArray.h
+A	test/Array/bug_gh6320.js
+M	test/Array/rlexe.xml
+
+commit 42ba7b92c5ad3db50af9a362fdda5f1ab776b583
+Merge: edfceaf9c 1f18f53ac
+Author: Doug Ilijev <doilij@microsoft.com>
+Date:   Tue Oct 9 15:50:17 2018 -0700
+
+    [MERGE #5761 @rhuanjl] Improve error messages for syntax errors
+    
+    Merge pull request #5761 from rhuanjl:parsingErrors
+    
+    Picking up on discussion in #5178 and also issue #767
+    
+    This PR:
+    1. Adds support for %s in syntax error messages (though only up to 2 uses of it per message)
+    1. Adds facility for getting a string representation of the token being parsed, and the previous token
+    1. Updates some commonly encountered error messages that currently only say "Syntax error"
+    
+    I'd like to follow up and improve some other error messages but this seemed big enough for one PR.
+    
+    I'm slightly nervous that I may have done something wrong in my implementation of %s support - it works in my tests but I don't 100% understand all the relevant logic.
+    
+    fixes #5178
+
+commit 2ccaecbf1ad859f9679a3315b5c2f5318e83a7f0
+Merge: 764db3088 f6f5e19a6
+Author: Michael Ferris <micfer@microsoft.com>
+Date:   Wed Nov 15 14:04:19 2017 -0800
+
+    [MERGE #4228 @Cellule] WASM: Fix how we call EntryQueryResponse in the WebAssembly streaming api
+    
+    Merge pull request #4228 from Cellule:wasm/streaming_call
+    
+    Fix how we call EntryQueryResponse in the WebAssembly streaming api. Found by OSS-Fuzz.
+    Make WebAssembly off by default in xplat builds
+
+commit 462c35f315c96e978022c1d4848260c2cbdffd08
+Author: Michael Ferris <micfer@microsoft.com>
+Date:   Thu Aug 11 18:21:14 2016 -0700
+
+    Temporarily disable Trunc and Nearest.
+
+M	lib/Backend/JnHelperMethod.cpp
+M	lib/WasmReader/WasmBinaryOpCodes.h
+M	test/wasm/misc.baseline
+M	test/wasm/misc.js
+
+commit a61618b16245390fef2e74dbe856046b4d51d18a
+Merge: 12f84bd5d 02df7fe84
+Author: Jack Horton <jahorto@microsoft.com>
+Date:   Thu Mar 1 09:54:31 2018 -0800
+
+    [MERGE #4754 @jackhorton] OS#16115338 Update _.floor to normalize -0 to 0 [OSS-Fuzz]
+    
+    Merge pull request #4754 from jackhorton:os16115338
+    
+    The intl spec refers to the `floor` function in [DefaultNumberOption](https://tc39.github.io/ecma402/#sec-defaultnumberoption), which we had previously implemented as exactly Math.floor Math.floor is defined to return -0 when given -0 as input. However, DefaultNumberOption actually refers to [the floor mathematical operation](https://tc39.github.io/ecma262/#sec-mathematical-operations), which states that -0 should be normalized to 0, which is the more intuitive behavior.
+    
+    This fixes a FailFast that triggered when we couldn't retrieve the minimumFractionDigits as a TaggedInt.
+
+commit 6479e1b96487772eaaee471555950d1e2b7f6b80
+Merge: 94db98ccf c1e3990bb
+Author: Meghana Gupta <megupta@microsoft.com>
+Date:   Mon Aug 21 14:10:12 2017 -0700
+
+    [1.6>1.7] [MERGE #3536 @meg-gupta] Do not peep closure stack symbols
+    
+    Merge pull request #3536 from meg-gupta:fixclosure
+
+commit 8244de4f809490ecaf967f1927b56300ba5ef4b0
+Merge: 6a3cf8b56 1108bd104
+Author: Oguz Bastemur <ogbastem@microsoft.com>
+Date:   Fri Jun 10 15:36:17 2016 -0700
+
+    [MERGE #1105] test: fix applying DST abbr. normalization to non-string
+    
+    Merge pull request #1105 from obastemur:fix_test
+
+commit 54cd16d4eb8feb93c2b2a7d13e5ca89e84422bad
+Author: Curtis Man <curtism@microsoft.com>
+Date:   Sat Jan 9 13:43:26 2016 -0800
+
+    Improve internal library serialized byte code versioning
+    
+    - Use different byte code versioning scheme value for chakracore from chakra in release build as well.
+    - Separate release flags between chakra/chakracore so that they can go into release mode independently.
+    - Make library byte code always use the release versioning scheme.
+    - Update the no jit version of the Intl byte code.
+    - Change the top level output directory for the no jit version to have the ".NoJIT" suffix so it can be
+    built independently of the with jit verison.
+
+M	Build/Common.Build.Default.props
+M	bin/ChakraCore/ChakraCore.vcxproj
+M	bin/CoreCommon.ver
+M	lib/Runtime/ByteCode/ByteCodeSerializer.cpp
+M	lib/Runtime/ByteCode/byteCodeCacheReleaseFileVersion.h
+M	lib/Runtime/Library/InJavascript/GenByteCode.cmd
+M	lib/Runtime/Library/InJavascript/Intl.js.nojit.bc.32b.h
+M	lib/Runtime/Library/InJavascript/Intl.js.nojit.bc.64b.h
+M	lib/Runtime/Library/InJavascript/intl.js.bc.32b.h
+M	lib/Runtime/Library/InJavascript/intl.js.bc.64b.h
+M	lib/common/CommonDefines.h
+
+commit a125635b294e17e56b559cc7b5d57aea23052193
+Author: Richard <rhuan.l@gmail.com>
+Date:   Fri Apr 10 11:55:56 2020 +0100
+
+    Inherit toString from Error.prototype (#6391)
+
+M	lib/Runtime/Library/JavascriptLibrary.cpp
+A	test/Error/errorPrototypetoString.js
+M	test/Error/rlexe.xml
+
+commit 0482257953ef437bf50895e7bc94fe9cfd0070b9
+Author: Michael Ferris <micfer@microsoft.com>
+Date:   Fri Dec 9 16:14:16 2016 -0800
+
+    update spec test runner
+
+M	test/WasmSpec/convert-test-suite/index.js
+M	test/WasmSpec/spec.js
+
+commit caad64fa4fdacb7ba2c6c9a1d834b31777293e43
+Author: Akrosh Gandhi <akroshg@microsoft.com>
+Date:   Tue Mar 1 10:08:30 2016 -0800
+
+    Symbol.toString returns invalid string.
+    
+    Call to JavascriptSymbol::ToString should throw an error - but we have a check for disabledimplicit call which return nullptr which leads to AV. Fixing that by checking RecordImplicitException. Now we will either throw or return an empty string.
+
+M	lib/Runtime/Library/JavascriptSymbol.cpp
+M	test/Bugs/rlexe.xml
+A	test/Bugs/symbol_tostring.js
+
+commit f3b970d1427618b4a29cc8bd68b4a1859e1d808c
+Author: Michael Ferris <micfer@microsoft.com>
+Date:   Wed Oct 19 19:01:33 2016 -0700
+
+    Bugfix in the stack allocation for asm.js, correctly calculated how many vars are needed to allocate all the memory needed taking alignment into account.
+    Some improvement to the asm.js function entry jit tracing + compile only in test builds
+
+M	lib/Backend/IRBuilderAsmJs.cpp
+M	lib/Backend/IRBuilderAsmJs.h
+M	lib/Backend/JnHelperMethodList.h
+M	lib/Backend/amd64/LowererMDArch.cpp
+M	lib/Backend/i386/LowererMDArch.cpp
+M	lib/Runtime/Language/AsmJsModule.cpp
+M	lib/Runtime/Language/AsmJsTypes.cpp
+M	lib/Runtime/Language/AsmJsTypes.h
+M	lib/Runtime/Language/WAsmjsUtils.cpp
+M	lib/Runtime/Language/WAsmjsUtils.h
+M	lib/WasmReader/WasmByteCodeGenerator.cpp
+
+commit 68263dcaf39e1fae6f31a876ef28deb15906bfd7
+Author: Steve <hez2010@outlook.com>
+Date:   Sat Apr 11 20:03:14 2020 +0800
+
+    Fix exception was thrown if value arg is undefined for DataView.set (#6409)
+    
+    Fixes #5548
+
+M	lib/Runtime/Library/DataView.cpp
+M	test/typedarray/dataview2.js
+
+commit ab6ce9b826a18fe2bfcc65d54161eeeb7e30f287
+Merge: 0098289bb 02c0712f9
+Author: Kunal Pathak <Kunal.Pathak@microsoft.com>
+Date:   Fri Sep 30 09:16:29 2016 -0700
+
+    [MERGE #1661 @kunalspathak] Fix regression in gameboy
+    
+    Merge pull request #1661 from kunalspathak:gameboy
+    
+    Fix regression in gameboy
+    
+    My earlier change to ChangeIfTypeIsEquivalent introduced regression in gameboy benchmark. Earlier if equivalent type cache was full, we evicted existing type from cache to store new type we saw. In https://github.com/Microsoft/ChakraCore/pull/1578 I changed it to say "if i see non-shared type and cache is full, then treat the type as non-equivalent and perform helper path to Ld/St operation". This leads to lot of repeating non-shared types to perform operation using helper path or we bailout. Changed the heuristics to evict non-shared type (if present) if we see non-shared type. This fixes the regression.
+
+commit b8fb743932a116e49219f5d9c3b2213c831cf402
+Author: Xiaoyin Liu <xiaoyinl@users.noreply.github.com>
+Date:   Wed Jan 24 13:36:20 2018 -0800
+
+    Refactor test/Date/parseISO.js (Fixes #4543)
+    
+    This PR splits parseISO.js into two files parseValidISO.js and parseInvalidISO.js.
+    Unfortunately they still have to be tagged exclude_jenkins,exclude_xplat, because of
+    time zone and negative years. But they are no longer slow: parseValidISO.js takes 2.4 s
+    to complete.
+    
+    Fixes #4543
+
+D	test/Date/parseISO.baseline
+D	test/Date/parseISO.js
+A	test/Date/parseInvalidISO.baseline
+A	test/Date/parseInvalidISO.js
+A	test/Date/parseValidISO.baseline
+A	test/Date/parseValidISO.js
+M	test/Date/rlexe.xml
+
+commit e5ef2d118ad948afe51cd369a7117425ee914d23
+Merge: a59f5f784 649f3d2c3
+Author: Oguz Bastemur <ogbastem@microsoft.com>
+Date:   Fri Dec 23 07:41:23 2016 -0800
+
+    [MERGE #2056 @obastemur] xplat: Debugger Support
+    
+    Merge pull request #2056 from obastemur:debug
+    
+    In addition to Debugger support, this PR also brings the required base for compiling code with script profiler.
+    
+    Fixes #2058
+
+commit 342c6ff26c752a25560e46447fa5cc3ac5f9ee6a
+Merge: 94bf8b8d4 eed45f6ae
+Author: Oguz Bastemur <ogbastem@microsoft.com>
+Date:   Thu Jun 22 14:35:58 2017 -0700
+
+    [MERGE #3112 @xiaoyinl] Move GetBinaryLocation to SystemInfo.Common.cpp
+    
+    Merge pull request #3112 from xiaoyinl:GetBinaryLocation
+    
+    This is the first step towards fixing #2297. This patch copies the `GetBinaryLocation` function from `bin/ch/Helpers.cpp`
+    to `lib/Runtime/PlatformAgnostic/Platform/Common/SystemInfo.Common.cpp` (new file) under namespace `PlaatformAgnostic`.
+
+commit 5f5f2fbf2168286a73b989a3258c5d4dc2c94cef
+Author: Atul Katti <akatti@microsoft.com>
+Date:   Fri Jul 7 15:16:33 2017 -0700
+
+    Fixes #2471 Symbol registration map should support null characters in symbol names.
+
+M	lib/Runtime/Base/PropertyRecord.h
+M	lib/Runtime/Base/ThreadContext.cpp
+M	lib/Runtime/Base/ThreadContext.h
+M	lib/Runtime/Debug/TTSnapshot.cpp
+M	lib/Runtime/Debug/TTSnapshotExtractor.cpp
+M	lib/Runtime/Library/JavascriptSymbol.cpp
+M	test/TTExecuteBasic/symbolFor.js
+M	test/TTExecuteBasic/symbolForRecord.baseline
+M	test/TTExecuteBasic/symbolForReplay.baseline
+M	test/es6/ES6Symbol.js
+
+commit 6c6e9eb76b3e9d4b0e7e08f19f70e33f64c0739a
+Author: Oguz Bastemur <ogbastem@microsoft.com>
+Date:   Fri Aug 4 23:08:31 2017 +0200
+
+    Convert internal static initializer (thread safe) to global
+    
+    MSVC uses TLS for internal thread safe static initializers. Use static class constructor. Fixes build break with Full.
+
+M	lib/Runtime/Library/JSON.cpp
+
+commit 95c41a5f0f9c4492673c08537b7d8d65d32c2942
+Author: Wyatt Richter <wyrichte@microsoft.com>
+Date:   Thu Aug 30 15:54:51 2018 -0700
+
+    Fixed incorrect function calls to test functions
+
+M	test/loop/loopinversion.js
+
+commit 6d1fff799ca5d3bb407d2ab6e55247f21466992e
+Merge: d116a85bb baf6fcb7f
+Author: Suwei Chen <suwc@microsoft.com>
+Date:   Mon Jun 26 12:48:57 2017 -0700
+
+    [MERGE #3211 @suwc] Issue3035: Memory leak in Array.splice()
+    
+    Merge pull request #3211 from suwc:build/suwc/Issue3035
+    
+    Memory leak occurs when the entire inline segment is removed
+    from the array's linked list, because the inline segment is
+    not collected like other segments. Fix by clearing the elements
+    of the inline segment when it is replaced.
+
+commit eb089b5349221ee9d07a4a169fe8cd299e03cd63
+Author: Michael Ferris <micfer@microsoft.com>
+Date:   Wed Oct 5 18:25:57 2016 -0700
+
+    Update wasm testsuite files from spec repo
+
+M	test/WasmSpec/baselines/address.baseline
+M	test/WasmSpec/baselines/block.baseline
+M	test/WasmSpec/baselines/br.baseline
+M	test/WasmSpec/baselines/br_if.baseline
+M	test/WasmSpec/baselines/br_table.baseline
+M	test/WasmSpec/baselines/break-drop.baseline
+M	test/WasmSpec/baselines/call.baseline
+D	test/WasmSpec/baselines/call_indirect.baseline
+D	test/WasmSpec/baselines/conversions.baseline
+M	test/WasmSpec/baselines/endianness.baseline
+D	test/WasmSpec/baselines/exports.baseline
+M	test/WasmSpec/baselines/fac.baseline
+D	test/WasmSpec/baselines/float_literals.baseline
+D	test/WasmSpec/baselines/float_memory.baseline
+D	test/WasmSpec/baselines/func.baseline
+D	test/WasmSpec/baselines/func_ptrs.baseline
+D	test/WasmSpec/baselines/functions.baseline
+M	test/WasmSpec/baselines/get_local.baseline
+A	test/WasmSpec/baselines/i32.baseline
+M	test/WasmSpec/baselines/i64.baseline
+A	test/WasmSpec/baselines/import-after-func.fail.baseline
+A	test/WasmSpec/baselines/import-after-global.fail.baseline
+A	test/WasmSpec/baselines/import-after-memory.fail.baseline
+A	test/WasmSpec/baselines/import-after-table.fail.baseline
+D	test/WasmSpec/baselines/imports.baseline
+M	test/WasmSpec/baselines/int_exprs.baseline
+M	test/WasmSpec/baselines/int_literals.baseline
+M	test/WasmSpec/baselines/labels.baseline
+M	test/WasmSpec/baselines/left-to-right.baseline
+M	test/WasmSpec/baselines/loop.baseline
+D	test/WasmSpec/baselines/memory.baseline
+A	test/WasmSpec/baselines/memory_redundancy.baseline
+M	test/WasmSpec/baselines/memory_trap.baseline
+M	test/WasmSpec/baselines/nop.baseline
+M	test/WasmSpec/baselines/return.baseline
+D	test/WasmSpec/baselines/runaway-recursion.baseline
+M	test/WasmSpec/baselines/select.baseline
+M	test/WasmSpec/baselines/set_local.baseline
+A	test/WasmSpec/baselines/stack.baseline
+M	test/WasmSpec/baselines/start.baseline
+M	test/WasmSpec/baselines/store_retval.baseline
+M	test/WasmSpec/baselines/switch.baseline
+A	test/WasmSpec/baselines/tee_local.baseline
+M	test/WasmSpec/baselines/traps.baseline
+D	test/WasmSpec/baselines/unreachable.baseline
+M	test/WasmSpec/convert-test-suite/index.js
+M	test/WasmSpec/rlexe.xml
+M	test/WasmSpec/testsuite-bin/address.0.wasm
+M	test/WasmSpec/testsuite-bin/address.json
+M	test/WasmSpec/testsuite-bin/binary.0.wasm
+M	test/WasmSpec/testsuite-bin/binary.1.wasm
+A	test/WasmSpec/testsuite-bin/binary.2.wasm
+A	test/WasmSpec/testsuite-bin/binary.3.wasm
+M	test/WasmSpec/testsuite-bin/binary.json
+M	test/WasmSpec/testsuite-bin/block.0.wasm
+A	test/WasmSpec/testsuite-bin/block.1.wasm
+M	test/WasmSpec/testsuite-bin/block.json
+M	test/WasmSpec/testsuite-bin/br.0.wasm
+A	test/WasmSpec/testsuite-bin/br.1.wasm
+M	test/WasmSpec/testsuite-bin/br.json
+M	test/WasmSpec/testsuite-bin/br_if.0.wasm
+M	test/WasmSpec/testsuite-bin/br_if.json
+M	test/WasmSpec/testsuite-bin/br_table.0.wasm
+A	test/WasmSpec/testsuite-bin/br_table.1.wasm
+M	test/WasmSpec/testsuite-bin/br_table.json
+M	test/WasmSpec/testsuite-bin/break-drop.0.wasm
+M	test/WasmSpec/testsuite-bin/break-drop.json
+M	test/WasmSpec/testsuite-bin/call.0.wasm
+A	test/WasmSpec/testsuite-bin/call.1.wasm
+M	test/WasmSpec/testsuite-bin/call.json
+D	test/WasmSpec/testsuite-bin/call_indirect.0.wasm
+D	test/WasmSpec/testsuite-bin/call_indirect.json
+M	test/WasmSpec/testsuite-bin/comments.0.wasm
+M	test/WasmSpec/testsuite-bin/comments.1.wasm
+M	test/WasmSpec/testsuite-bin/comments.2.wasm
+M	test/WasmSpec/testsuite-bin/comments.3.wasm
+D	test/WasmSpec/testsuite-bin/conversions.0.wasm
+M	test/WasmSpec/testsuite-bin/endianness.0.wasm
+M	test/WasmSpec/testsuite-bin/endianness.json
+D	test/WasmSpec/testsuite-bin/exports.0.wasm
+D	test/WasmSpec/testsuite-bin/exports.1.wasm
+D	test/WasmSpec/testsuite-bin/exports.2.wasm
+D	test/WasmSpec/testsuite-bin/exports.3.wasm
+D	test/WasmSpec/testsuite-bin/exports.4.wasm
+D	test/WasmSpec/testsuite-bin/exports.5.wasm
+D	test/WasmSpec/testsuite-bin/exports.json
+M	test/WasmSpec/testsuite-bin/fac.0.wasm
+M	test/WasmSpec/testsuite-bin/fac.json
+D	test/WasmSpec/testsuite-bin/float_literals.0.wasm
+D	test/WasmSpec/testsuite-bin/float_literals.json
+D	test/WasmSpec/testsuite-bin/float_memory.0.wasm
+D	test/WasmSpec/testsuite-bin/float_memory.1.wasm
+D	test/WasmSpec/testsuite-bin/float_memory.2.wasm
+D	test/WasmSpec/testsuite-bin/float_memory.3.wasm
+D	test/WasmSpec/testsuite-bin/float_memory.4.wasm
+D	test/WasmSpec/testsuite-bin/float_memory.5.wasm
+D	test/WasmSpec/testsuite-bin/float_memory.json
+M	test/WasmSpec/testsuite-bin/forward.0.wasm
+M	test/WasmSpec/testsuite-bin/forward.json
+D	test/WasmSpec/testsuite-bin/func.0.wasm
+D	test/WasmSpec/testsuite-bin/func.json
+D	test/WasmSpec/testsuite-bin/func_ptrs.0.wasm
+D	test/WasmSpec/testsuite-bin/func_ptrs.1.wasm
+D	test/WasmSpec/testsuite-bin/func_ptrs.2.wasm
+D	test/WasmSpec/testsuite-bin/func_ptrs.json
+D	test/WasmSpec/testsuite-bin/functions.0.wasm
+M	test/WasmSpec/testsuite-bin/get_local.0.wasm
+M	test/WasmSpec/testsuite-bin/get_local.json
+A	test/WasmSpec/testsuite-bin/i32.0.wasm
+R064	test/WasmSpec/testsuite-bin/conversions.json	test/WasmSpec/testsuite-bin/i32.json
+M	test/WasmSpec/testsuite-bin/i64.0.wasm
+M	test/WasmSpec/testsuite-bin/i64.json
+A	test/WasmSpec/testsuite-bin/import-after-func.fail.0.wasm
+A	test/WasmSpec/testsuite-bin/import-after-func.fail.json
+A	test/WasmSpec/testsuite-bin/import-after-global.fail.0.wasm
+A	test/WasmSpec/testsuite-bin/import-after-global.fail.json
+A	test/WasmSpec/testsuite-bin/import-after-memory.fail.0.wasm
+A	test/WasmSpec/testsuite-bin/import-after-memory.fail.json
+A	test/WasmSpec/testsuite-bin/import-after-table.fail.0.wasm
+A	test/WasmSpec/testsuite-bin/import-after-table.fail.json
+D	test/WasmSpec/testsuite-bin/imports.0.wasm
+D	test/WasmSpec/testsuite-bin/imports.json
+M	test/WasmSpec/testsuite-bin/int_exprs.0.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.1.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.10.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.11.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.12.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.13.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.14.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.15.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.2.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.3.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.4.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.5.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.6.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.7.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.8.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.9.wasm
+M	test/WasmSpec/testsuite-bin/int_exprs.json
+M	test/WasmSpec/testsuite-bin/int_literals.0.wasm
+M	test/WasmSpec/testsuite-bin/int_literals.json
+M	test/WasmSpec/testsuite-bin/labels.0.wasm
+M	test/WasmSpec/testsuite-bin/labels.json
+M	test/WasmSpec/testsuite-bin/left-to-right.0.wasm
+M	test/WasmSpec/testsuite-bin/left-to-right.json
+M	test/WasmSpec/testsuite-bin/loop.0.wasm
+A	test/WasmSpec/testsuite-bin/loop.1.wasm
+A	test/WasmSpec/testsuite-bin/loop.2.wasm
+M	test/WasmSpec/testsuite-bin/loop.json
+D	test/WasmSpec/testsuite-bin/memory.0.wasm
+D	test/WasmSpec/testsuite-bin/memory.1.wasm
+D	test/WasmSpec/testsuite-bin/memory.10.wasm
+D	test/WasmSpec/testsuite-bin/memory.11.wasm
+D	test/WasmSpec/testsuite-bin/memory.12.wasm
+D	test/WasmSpec/testsuite-bin/memory.2.wasm
+D	test/WasmSpec/testsuite-bin/memory.3.wasm
+D	test/WasmSpec/testsuite-bin/memory.4.wasm
+D	test/WasmSpec/testsuite-bin/memory.5.wasm
+D	test/WasmSpec/testsuite-bin/memory.6.wasm
+D	test/WasmSpec/testsuite-bin/memory.7.wasm
+D	test/WasmSpec/testsuite-bin/memory.8.wasm
+D	test/WasmSpec/testsuite-bin/memory.9.wasm
+D	test/WasmSpec/testsuite-bin/memory.json
+A	test/WasmSpec/testsuite-bin/memory_redundancy.0.wasm
+A	test/WasmSpec/testsuite-bin/memory_redundancy.json
+M	test/WasmSpec/testsuite-bin/memory_trap.0.wasm
+M	test/WasmSpec/testsuite-bin/memory_trap.json
+M	test/WasmSpec/testsuite-bin/names.0.wasm
+M	test/WasmSpec/testsuite-bin/names.1.wasm
+M	test/WasmSpec/testsuite-bin/names.2.wasm
+M	test/WasmSpec/testsuite-bin/names.3.wasm
+M	test/WasmSpec/testsuite-bin/names.json
+M	test/WasmSpec/testsuite-bin/nop.0.wasm
+M	test/WasmSpec/testsuite-bin/nop.json
+M	test/WasmSpec/testsuite-bin/return.0.wasm
+A	test/WasmSpec/testsuite-bin/return.1.wasm
+A	test/WasmSpec/testsuite-bin/return.2.wasm
+M	test/WasmSpec/testsuite-bin/return.json
+D	test/WasmSpec/testsuite-bin/runaway-recursion.0.wasm
+D	test/WasmSpec/testsuite-bin/runaway-recursion.json
+M	test/WasmSpec/testsuite-bin/select.0.wasm
+M	test/WasmSpec/testsuite-bin/select.json
+M	test/WasmSpec/testsuite-bin/set_local.0.wasm
+M	test/WasmSpec/testsuite-bin/set_local.json
+A	test/WasmSpec/testsuite-bin/stack.0.wasm
+A	test/WasmSpec/testsuite-bin/stack.json
+M	test/WasmSpec/testsuite-bin/start.0.wasm
+M	test/WasmSpec/testsuite-bin/start.1.wasm
+M	test/WasmSpec/testsuite-bin/start.2.wasm
+M	test/WasmSpec/testsuite-bin/start.3.wasm
+M	test/WasmSpec/testsuite-bin/start.json
+D	test/WasmSpec/testsuite-bin/store_retval.0.wasm
+M	test/WasmSpec/testsuite-bin/store_retval.json
+M	test/WasmSpec/testsuite-bin/switch.0.wasm
+M	test/WasmSpec/testsuite-bin/switch.json
+A	test/WasmSpec/testsuite-bin/tee_local.0.wasm
+R054	test/WasmSpec/testsuite-bin/functions.json	test/WasmSpec/testsuite-bin/tee_local.json
+M	test/WasmSpec/testsuite-bin/traps.0.wasm
+M	test/WasmSpec/testsuite-bin/traps.1.wasm
+M	test/WasmSpec/testsuite-bin/traps.2.wasm
+M	test/WasmSpec/testsuite-bin/traps.3.wasm
+M	test/WasmSpec/testsuite-bin/traps.json
+D	test/WasmSpec/testsuite-bin/typecheck.0.wasm
+M	test/WasmSpec/testsuite-bin/typecheck.json
+D	test/WasmSpec/testsuite-bin/unreachable.0.wasm
+D	test/WasmSpec/testsuite-bin/unreachable.json
+A	test/WasmSpec/testsuite/address-offset-range.fail.wast
+M	test/WasmSpec/testsuite/address.wast
+M	test/WasmSpec/testsuite/binary.wast
+M	test/WasmSpec/testsuite/block.wast
+M	test/WasmSpec/testsuite/br.wast
+M	test/WasmSpec/testsuite/br_if.wast
+M	test/WasmSpec/testsuite/br_table.wast
+M	test/WasmSpec/testsuite/break-drop.wast
+M	test/WasmSpec/testsuite/call.wast
+M	test/WasmSpec/testsuite/call_indirect.wast
+M	test/WasmSpec/testsuite/comments.wast
+M	test/WasmSpec/testsuite/conversions.wast
+M	test/WasmSpec/testsuite/endianness.wast
+M	test/WasmSpec/testsuite/exports.wast
+A	test/WasmSpec/testsuite/f32.load32.fail.wast
+A	test/WasmSpec/testsuite/f32.load64.fail.wast
+A	test/WasmSpec/testsuite/f32.store32.fail.wast
+A	test/WasmSpec/testsuite/f32.store64.fail.wast
+M	test/WasmSpec/testsuite/f32.wast
+M	test/WasmSpec/testsuite/f32_cmp.wast
+A	test/WasmSpec/testsuite/f64.load32.fail.wast
+A	test/WasmSpec/testsuite/f64.load64.fail.wast
+A	test/WasmSpec/testsuite/f64.store32.fail.wast
+A	test/WasmSpec/testsuite/f64.store64.fail.wast
+M	test/WasmSpec/testsuite/f64.wast
+M	test/WasmSpec/testsuite/f64_cmp.wast
+M	test/WasmSpec/testsuite/fac.wast
+M	test/WasmSpec/testsuite/float_exprs.wast
+M	test/WasmSpec/testsuite/float_literals.wast
+M	test/WasmSpec/testsuite/float_memory.wast
+M	test/WasmSpec/testsuite/float_misc.wast
+M	test/WasmSpec/testsuite/forward.wast
+M	test/WasmSpec/testsuite/func.wast
+M	test/WasmSpec/testsuite/func_ptrs.wast
+D	test/WasmSpec/testsuite/functions.wast
+M	test/WasmSpec/testsuite/get_local.wast
+A	test/WasmSpec/testsuite/globals.wast
+A	test/WasmSpec/testsuite/i32.load32_s.fail.wast
+A	test/WasmSpec/testsuite/i32.load32_u.fail.wast
+A	test/WasmSpec/testsuite/i32.load64_s.fail.wast
+A	test/WasmSpec/testsuite/i32.load64_u.fail.wast
+A	test/WasmSpec/testsuite/i32.store32.fail.wast
+A	test/WasmSpec/testsuite/i32.store64.fail.wast
+M	test/WasmSpec/testsuite/i32.wast
+A	test/WasmSpec/testsuite/i64.load64_s.fail.wast
+A	test/WasmSpec/testsuite/i64.load64_u.fail.wast
+A	test/WasmSpec/testsuite/i64.store64.fail.wast
+M	test/WasmSpec/testsuite/i64.wast
+D	test/WasmSpec/testsuite/if_label_scope.fail.wast
+A	test/WasmSpec/testsuite/import-after-func.fail.wast
+A	test/WasmSpec/testsuite/import-after-global.fail.wast
+A	test/WasmSpec/testsuite/import-after-memory.fail.wast
+A	test/WasmSpec/testsuite/import-after-table.fail.wast
+M	test/WasmSpec/testsuite/imports.wast
+M	test/WasmSpec/testsuite/int_exprs.wast
+M	test/WasmSpec/testsuite/int_literals.wast
+M	test/WasmSpec/testsuite/labels.wast
+M	test/WasmSpec/testsuite/left-to-right.wast
+A	test/WasmSpec/testsuite/linking.wast
+M	test/WasmSpec/testsuite/loop.wast
+M	test/WasmSpec/testsuite/memory.wast
+M	test/WasmSpec/testsuite/memory_redundancy.wast
+M	test/WasmSpec/testsuite/memory_trap.wast
+M	test/WasmSpec/testsuite/names.wast
+D	test/WasmSpec/testsuite/nan-propagation.wast
+M	test/WasmSpec/testsuite/nop.wast
+M	test/WasmSpec/testsuite/resizing.wast
+M	test/WasmSpec/testsuite/return.wast
+D	test/WasmSpec/testsuite/runaway-recursion.wast
+M	test/WasmSpec/testsuite/select.wast
+M	test/WasmSpec/testsuite/set_local.wast
+A	test/WasmSpec/testsuite/stack.wast
+M	test/WasmSpec/testsuite/start.wast
+M	test/WasmSpec/testsuite/store_retval.wast
+M	test/WasmSpec/testsuite/switch.wast
+A	test/WasmSpec/testsuite/tee_local.wast
+M	test/WasmSpec/testsuite/traps.wast
+M	test/WasmSpec/testsuite/typecheck.wast
+M	test/WasmSpec/testsuite/unreachable.wast
+M	test/rlexedirs.xml
+
+commit 807ed43c7c904d228a0bce98b62d9083314de9a2
+Author: Oguz Bastemur <ogbastem@microsoft.com>
+Date:   Tue Jun 14 02:32:37 2016 +0200
+
+    cross-platform: ChakraCore on OSX
+    
+    Disclaimer: Currently, ChakraCore is not officially supported on OSX.
+    
+    This PR targets the individuals interested with experimenting ChakraCore on
+    OSX. After seeing #1131, spent couple of hours to fix the compile, and
+    link time issues on OSX target.
+    
+    Steps to compile :
+    
+    ```
+    brew install icu4c
+    ./build.sh --debug -j:2 --icu=/usr/local/Cellar/icu4c/54.1/include/
+    ```
+    
+    Status:
+    CMAKE has an issue with OSX shared bundles and currently CH does not
+    play well with dylib output.
+
+M	CMakeLists.txt
+M	bin/ChakraCore/CMakeLists.txt
+M	bin/ch/CMakeLists.txt
+M	bin/ch/ChakraRtInterface.cpp
+M	build.sh
+M	lib/Runtime/Language/amd64/JavascriptOperatorsA.S
+M	lib/Runtime/Library/amd64/JavascriptFunctionA.S
+M	lib/Runtime/PlatformAgnostic/Platform/CMakeLists.txt
+M	pal/inc/pal.h
+D	pal/inc/pal_char16.h
+M	pal/inc/pal_mstypes.h
+D	pal/inc/pal_type_traits
+M	pal/inc/safemath.h
+M	pal/src/cruntime/file.cpp
+M	pal/src/cruntime/path.cpp
+M	pal/src/cruntime/printf.cpp
+M	pal/src/cruntime/printfcpp.cpp
+M	pal/src/cruntime/silent_printf.cpp
+M	pal/src/cruntime/wchar.cpp
+M	pal/src/debug/debug.cpp
+M	pal/src/include/pal/cruntime.h
+M	pal/src/include/pal/palinternal.h
+M	pal/src/include/pal/printfcpp.hpp
+M	pal/src/locale/unicode.cpp
+M	pal/src/misc/dbgmsg.cpp
+M	pal/src/safecrt/input.inl
+M	pal/src/safecrt/internal.h
+M	pal/src/safecrt/mbusafecrt.c
+M	pal/src/safecrt/mbusafecrt_internal.h
+M	pal/src/safecrt/output.inl
+M	pal/src/safecrt/safecrt_output_l.c
+M	pal/src/safecrt/safecrt_winput_s.c
+M	pal/src/safecrt/safecrt_woutput_s.c
+M	pal/src/safecrt/sscanf.c
+M	pal/src/safecrt/swprintf.c
+M	pal/src/safecrt/vswprint.c
+M	pal/src/safecrt/wcscat_s.c
+M	pal/src/safecrt/wcscpy_s.c
+M	pal/src/safecrt/wcslen_s.c
+M	pal/src/safecrt/wcsncat_s.c
+M	pal/src/safecrt/wcsncpy_s.c
+M	pal/src/safecrt/wcstok_s.c
+M	pal/src/safecrt/wmakepath_s.c
+M	pal/src/safecrt/wsplitpath_s.c
+M	pal/src/safecrt/xtow_s.c
+M	pal/src/thread/thread.cpp
+M	test/runtests.py
+M	test/runtests.sh
+
+commit dfd30e220dbff8baf85e3b6463b4be32e2b1b3d0
+Author: Suwei Chen <suwc@microsoft.com>
+Date:   Tue Mar 15 14:59:59 2016 -0700
+
+    Assertion: default parameter with class expression
+    
+    Test case:  function foo(a=class { }) { }
+    Assertion failure: childScope == scope->GetEnclosingScope(), FuncInfo::OnStartVisitScope()
+    When parameter scope is merged with body scope, currentChildScope is pushed twice (vs. once otherwise)
+    FuncInfo::OnEndVisitScope(), however, does not pop twice to recover the scope stack, causing the problem.
+    Fix by adding a local flag and pop scope stack properly for merged scope case.
+    Re-enable test case.
+
+M	lib/Runtime/ByteCode/ByteCodeGenerator.cpp
+M	lib/Runtime/ByteCode/FuncInfo.cpp
+M	lib/Runtime/ByteCode/FuncInfo.h
+M	test/es6/default.js
+
+commit 432fd7208b2ed6e90cc7020ab8d59556a651a562
+Author: Michael Ferris <micfer@microsoft.com>
+Date:   Mon Dec 19 18:25:37 2016 -0800
+
+    No longer use the default namespace if the imported name length is zero, so a query using empty string instead.
+
+M	lib/Runtime/Library/WebAssemblyInstance.cpp
+M	test/wasm/api.js
+
+commit da2867540c8c8f292e8f3d10c50876b39daa478c
+Author: Seth Brenith <sethb@microsoft.com>
+Date:   Wed Feb 7 15:25:29 2018 -0800
+
+    Add a test to verify that newly inlined getters can still bail out correctly
+
+A	test/bailout/inline_get_bailout.js
+A	test/bailout/inline_get_bailout_helper.js
+M	test/bailout/rlexe.xml
+
+commit a1e734287eb0b9b018cd1e7f993787313886514e
+Author: Sandeep Agarwal <saagarwa@microsoft.com>
+Date:   Tue Aug 30 17:05:17 2016 -0700
+
+    Remove obsolete file
+
+D	test/DebuggerCommon/es6_forof_decl.baseline.js
+
+commit 9fd90eb97c652dca85b62211a721ec4a748b070f
+Merge: 6bf989aa3 6f9341374
+Author: nmostafa <nagy.mostafa@gmail.com>
+Date:   Fri Apr 15 16:14:03 2016 -0700
+
+    [MERGE #725] SIMD.js - unpin 1-byte opnds to BL
+    
+    Merge pull request #725 from nmostafa:SimdRegAlloc-2
+    Revert UseWithNewType to use the opnd if not in use. Fixed SIMD128 lowerer to avoid calling UseWithNewType on first use of opnd
+
+commit 2b27f485394a617cea8e7af927e6716bfd0913cb
+Merge: 450e9bd79 61782aee9
+Author: Aneesh Divakarakurup <aneeshd@microsoft.com>
+Date:   Fri Nov 17 16:19:31 2017 -0800
+
+    [1.8>master] [MERGE #4254 @aneeshdk] Allowing the usage of large arg count run time
+    
+    Merge pull request #4254 from aneeshdk:LargeArgCountFixRel1.8
+    
+    Keeping the same limit on arg count both parse time and run time does not seem to be acceptable as there are lots of edgecrawler and DRT failures are indicating. So making provision to use large arg count when necessary.
+
+commit e3e310bf2a7f5edba1365e72cde2a682445078a6
+Author: Taylor Woll <taylor.woll@microsoft.com>
+Date:   Tue Sep 26 21:32:51 2017 -0700
+
+    Support for defer parsing lambda functions
+    
+    Fix up the parser to enable the defer parse methods to handle lambda functions. All lambdas are allowed to be deferred, even lambdas with compact parameter lists or function bodies.
+    
+    Should also allow lambda functions to be redeferred, which is really the main reason to do this work.
+    
+    One of the related changes is in `Parser::Parse`. I changed this function to skip calling `ParseStmtList` in the case where we are defer parsing a single function. In these cases we know that we are going to parse a function so we don't need to start parsing a set of statements, then one statement, then one expression, then one terminal, etc until we finally start parsing the function via `ParseFncDecl`. Instead we can just jump directly to `ParseFncDecl` after setting up the correct flags. By doing this, we can avoid reparsing the lambda parameter list (because we never assume it will be an ordinary expression list) which saves us the headache of bookkeeping the block and function ids.
+    
+    One other change of note is in `ScopeInfo::SaveSymbolInfo`. We now need to save symbol info for the `arguments` symbol since a lambda may be deferred in a function and lambdas capture the `arguments` value from their parent. I suppose we could move the `arguments` default binding into a regular special symbol at some point in the future.
+
+M	lib/Parser/Parse.cpp
+M	lib/Parser/Parse.h
+M	lib/Parser/Scan.cpp
+M	lib/Parser/Scan.h
+M	lib/Runtime/Base/FunctionBody.h
+M	lib/Runtime/ByteCode/ByteCodeGenerator.cpp
+M	lib/Runtime/ByteCode/ByteCodeSerializer.cpp
+M	lib/Runtime/ByteCode/FuncInfo.cpp
+M	lib/Runtime/ByteCode/ScopeInfo.cpp
+M	lib/Runtime/Library/InJavascript/Intl.js.bc.32b.h
+M	lib/Runtime/Library/InJavascript/Intl.js.bc.64b.h
+M	lib/Runtime/Library/InJavascript/Intl.js.nojit.bc.32b.h
+M	lib/Runtime/Library/InJavascript/Intl.js.nojit.bc.64b.h
+M	test/AsmJs/lambda.baseline
+A	test/es6/DeferParseLambda.js
+M	test/es6/module-syntax.js
+
+commit f2aad9f83831f3c46aa3c348effd53f7098fc764
+Author: rhuanjl <rhuan.l@gmail.com>
+Date:   Wed Dec 4 23:40:29 2019 +0000
+
+    Error improvements
+
+M	lib/Parser/Parse.cpp
+M	lib/Parser/Parse.h
+M	lib/Parser/perrors.h
+M	test/Basics/SpecialSymbolCapture.js
+M	test/EH/try6.baseline
+M	test/Error/variousErrors3.baseline
+M	test/Optimizer/UnreachableCode.baseline
+M	test/Regex/Bug1153694.baseline
+M	test/Regex/Bug1153694.js
+M	test/es6/ES6NewTarget.js
+M	test/es6/OS_917200.js
+M	test/es6/destructuring_bugs.js
+M	test/es6/destructuring_obj.js
+M	test/es6/generators-syntax.js
+
+commit 5bc710a35c41346ba8387614d818cb5ad9776534
+Merge: 02df0a02e eec6c89e4
+Author: Akrosh Gandhi <akroshg@microsoft.com>
+Date:   Wed Oct 5 13:42:57 2016 -0700
+
+    [MERGE #1696 @akroshg] Fix few more line/column issue.
+    
+    Merge pull request #1696 from akroshg:col1
+    
+    Fixed this time by putting the start/end in the emitboolean expression.
+
+commit 113b040be341e0b31dc7456d7d275e46f5a37a51
+Author: Mark Marron <marron@microsoft.com>
+Date:   Thu Mar 8 13:37:41 2018 -0800
+
+    Fixes for step-back with async
+
+M	lib/Jsrt/Jsrt.cpp
+M	lib/Runtime/Debug/TTExecutionInfo.cpp
+M	lib/Runtime/Library/JavascriptGeneratorFunction.cpp
+M	lib/Runtime/Library/JavascriptGeneratorFunction.h
+A	test/TTBasic/asyncAwait2.js
+A	test/TTBasic/asyncAwait2Record.baseline
+A	test/TTBasic/asyncAwait2Replay_1.baseline
+A	test/TTBasic/asyncAwait2Replay_2.baseline
+A	test/TTBasic/asyncAwait3.js
+A	test/TTBasic/asyncAwait3Record.baseline
+A	test/TTBasic/asyncAwait3Replay_1.baseline
+A	test/TTBasic/asyncAwait3Replay_2.baseline
+M	test/TTBasic/rlexe.xml
+
+commit 765071717317735693f3887848daf598ef0331c3
+Author: Nikolay Korovaiko <korovaikon@gmail.com>
+Date:   Thu Jun 1 15:28:11 2017 -0700
+
+    simd convert and truncate instrs + tests
+
+M	lib/Backend/LowerMDSharedSimd128.cpp
+M	lib/Runtime/Language/InterpreterStackFrame.cpp
+M	lib/Runtime/Language/InterpreterStackFrame.h
+M	lib/WasmReader/WasmBinaryOpcodesSimd.h
+M	test/wasm.simd/rlexe.xml
+A	test/wasm.simd/truncConvTests.js
+A	test/wasm.simd/truncconv.wasm
+A	test/wasm.simd/truncconv.wast
+
+commit 6d2440dba42375ee72dd95a43136427e166f4c7a
+Merge: 7939af39d b5d4089bb
+Author: Jack Horton (CHAKRA) <jahorto@microsoft.com>
+Date:   Mon Apr 9 14:47:20 2018 -0700
+
+    [MERGE #4949 @jackhorton] Various test and functionality fixes for test262
+    
+    Merge pull request #4949 from jackhorton:intl/test262-fixups
+    
+    * added string normalization back to Intl-ICU's localeCompare
+    * re-organized Collator tests to use UnitTestFramework and live all in one file
+    * update platform.formatDateTime to use TimeClip
+    * add TimeClip tests for Intl
+    * fix time zone canonicalization for default time zones
+
+commit 87809f61d3325a2a82d03055b2b0d9439aee5642
+Merge: fc8da31ff 1f4e12556
+Author: Suwei Chen <suwc@microsoft.com>
+Date:   Tue Nov 29 23:00:54 2016 -0800
+
+    [MERGE #2098 @suwc] OS8050875:Direct super calls in a base class constructor
+    
+    Merge pull request #2098 from suwc:build/suwc/bugfix
+    
+    Direct super calls in a base class constructor should be SyntaxError. Define new flags to signify where direct super calls are syntactically correct and pass these flags into eval() and multiple nested cases comprised of a mix of eval and lambda.
+
+commit b6eef1e6fab13e0821ac8ff424dd08a4057f523c
+Author: Sandeep Agarwal <saagarwa@microsoft.com>
+Date:   Tue Jul 18 13:18:09 2017 -0700
+
+    OS#12654029: ArrayBuffer throw OOM if unable to allocate memory after GC
+    
+    Remove test checking for OOM
+    Disable test where null buffer is expected in case of OOM
+
+M	lib/Runtime/Library/ArrayBuffer.cpp
+D	test/es7/arraybuffer_constructor.js
+M	test/es7/rlexe.xml
+M	test/wasm/memory.js
+
+commit 5665022a9165f8c52425e2c1d36120fce8568a76
+Author: Ben Niu <niuben003@gmail.com>
+Date:   Fri Jan 29 20:59:10 2016 -0500
+
+    Bug fixing for handling negative numbers.
+
+M	lib/Backend/LowerMDShared.cpp
+
+commit a24ede7fec98f5999f52c6ff8ba7e8de869185ce
+Author: Wyatt Richter <wyrichte@microsoft.com>
+Date:   Wed Oct 24 16:50:25 2018 -0700
+
+    Fails AsmJs.cpp's module return check if a property definition in the return object literal is not a binary parse node.
+
+M	lib/Runtime/Language/AsmJs.cpp
+A	test/AsmJs/notBinaryPropertyDefinition.baseline
+A	test/AsmJs/notBinaryPropertyDefinition.js
+M	test/AsmJs/rlexe.xml
+
+commit eaa5a0935722fde07d15f0e659afae1d24cfbb66
+Merge: a446c9612 c203d182f
+Author: Aneesh Divakarakurup <aneeshd@microsoft.com>
+Date:   Tue Dec 12 16:27:41 2017 -0800
+
+    [1.8>master] [MERGE #4413 @aneeshdk] RL: Apply the timeout to all tests
+    
+    Merge pull request #4413 from aneeshdk:RLTimeoutFixRel
+    
+    In the PR https://github.com/Microsoft/ChakraCore/pull/4384 the timeout value was geting applied to only those test cases which has timeout entries in the xml. But from the Nightly runs it looks like tests without a timoeut entry can also timeout. So making this change to apply the timeout to all tests.
+
+commit 893301755917c676e943453f2244dcc69b7e5e08
+Author: Doug Ilijev <doilij@microsoft.com>
+Date:   Thu Feb 1 18:26:30 2018 -0800
+
+    Fix #4368: In unicode-mode RegExp, explicitly disallow invalid escapes.
+
+M	lib/Parser/RegexParser.cpp
+M	lib/Parser/rterrors.h
+M	test/Regex/rlexe.xml
+A	test/Regex/unicode_forbidden_escapes.js
+
+commit 1c7410377a9c8cdbe7ad7b38c56f78d64b670782
+Author: Lei Shi <leish@microsoft.com>
+Date:   Fri May 27 11:53:51 2016 -0700
+
+    address review comments
+
+M	lib/Runtime/Library/JavascriptProxy.cpp
+M	test/es6/proxyenumremoval.js
+
+commit e12b48bdfe486d3f4e2db70b7cb8f5d12af2a178
+Author: Sandeep Agarwal <saagarwa@microsoft.com>
+Date:   Fri Nov 11 09:51:04 2016 -0800
+
+    Fix JsParse/JsRun for JavascriptString argument
+    
+    JavascriptString is internally wide, so pass correct length and flag in
+    CompileRun.
+    
+    GetSz for JavascriptString can allocate memory and need to handle OOM so
+    need API wrapper.
+    
+    We are using the wrapper twice but refactoring is not simple as
+    RunScriptCore is called at multiple, for now lets keep two wrappers
+
+M	lib/Jsrt/Jsrt.cpp
+A	test/native-tests/test-char/Platform.js
+A	test/native-tests/test-char/sample.cpp
+
+commit 5dd7568ea76e79a7ba49ea81acf2342b657bbc9d
+Author: Atul Katti <akatti@microsoft.com>
+Date:   Fri Feb 10 18:29:40 2017 -0800
+
+    Fixes Bug#10330888 and duplicates. Fix Block ID accounting. Do not eat left parentheses when parsing destructured var declarations.
+
+M	lib/Parser/Parse.cpp
+M	lib/Parser/Parse.h
+M	test/es6/destructuring.js
+M	test/es6/destructuring_bugs.js
+M	test/es6/lambda-params-shadow.js
+
+commit 2a355394940a3c5fb115b720793ebcb406a52683
+Author: Lei Shi <leish@microsoft.com>
+Date:   Thu Mar 30 12:05:43 2017 -0700
+
+    remove auxptrs global lock
+    
+    after fixing a dead lock issue in PerformRundown, there are more code path still taking etwRundown lock, like the FunctionEntryPointList so we can still hit dead lock when doing etw tracing.
+    all these code path need to take both locks in same order to avoid dead lock. instead of doing this,
+    change to use single lock(the changed etwRundown lock to a more appropriate name) to solve the issue
+    also change the usage of this lock under ScriptContext::Close to only lock function body operation part
+
+M	lib/Runtime/Base/CompactCounters.h
+M	lib/Runtime/Base/EtwTrace.cpp
+M	lib/Runtime/Base/FunctionBody.cpp
+M	lib/Runtime/Base/FunctionBody.h
+M	lib/Runtime/Base/ScriptContext.cpp
+M	lib/Runtime/Base/ThreadContext.cpp
+M	lib/Runtime/Base/ThreadContext.h
+M	lib/Runtime/Base/Utf8SourceInfo.cpp
+
+commit fd21b0f6f897b604bc4d54531f75d56c42b572ba
+Author: Michael Holman <Michael.Holman@microsoft.com>
+Date:   Thu Mar 2 12:43:08 2017 -0800
+
+    fold pattern of a+(b<<pow2) into lea
+
+M	lib/Backend/GlobOpt.cpp
+M	lib/Backend/IR.cpp
+M	lib/Backend/LinearScan.cpp
+M	lib/Backend/Lower.h
+M	lib/Backend/Opnd.cpp
+M	lib/Backend/Opnd.h
+M	lib/Backend/PreLowerPeeps.cpp
+M	lib/Backend/SccLiveness.cpp
+M	lib/Backend/amd64/EncoderMD.cpp
+M	lib/Backend/i386/EncoderMD.cpp
+M	test/Optimizer/rlexe.xml
+A	test/Optimizer/shladdpeep.baseline
+A	test/Optimizer/shladdpeep.js
+
+commit 34ec920c27d8ddc59abec55412e9081780ccea28
+Merge: ba3617b6b 7af682e42
+Author: Derek Morris <demorri@microsoft.com>
+Date:   Thu Mar 9 15:34:29 2017 -0800
+
+    [MERGE #2628 @Penguinwizzard] Add a StatementDebugBreak flag for debug builds
+    
+    Merge pull request #2628 from Penguinwizzard:breakonstatement
+    
+    This flag allows you to insert a debugger break on a given statment.
+    
+    (Also enables GenerateDebugBreak on arm, in non-macro form).
+    
+    Note: was originally rolled into the es5 array length cache fix, split
+    for atomicity of pr purpose.
+
+commit 66fb7ac82ebfa97c2166c70e00c61bd4860d8461
+Merge: 4854878a8 137365b6b
+Author: Matt Gardner <magardn@microsoft.com>
+Date:   Tue Jul 11 09:48:37 2017 -0700
+
+    [MERGE #3314 @sigatrev] os#11759200: end dead lifetimes after op helpers
+    
+    Merge pull request #3314 from sigatrev:opHelperLiveranges
+    
+    When an opHelper block ends a loop, lifetimes that would have ended during the block are extended to end on the branch instruction that ends both block and loop. When processing that instruction, dead spilled lifetimes are be moved from opHelperSpilledLiveranges to activeLiveranges after the call to EndDeadLifetimes but before EndDeadOpHelperLifetimes causing them to remain on the active list while dead, and potentially be considered for a spill on the next non-label instruction.
+    
+    The bug this PR fixes occurs when the loop is followed immediately by an empty OpHelper block. The empty block increments totalOpHelperVisitedLength by 1, and if the next non-label instruction requires a register to be spilled during SetSrcRegs, the dead lifetime will trigger the assert comparing opHelper lengths in GetSpillCost.
+
+commit f2416b5ff9ef3435e45aba9ecbdf29ad152fc1ca
+Author: Akrosh Gandhi <akroshg@microsoft.com>
+Date:   Mon Apr 25 11:34:47 2016 -0700
+
+    Few destructuring fixes
+    
+    The IsArgument optimization code did not handle the pattern nodes. Added
+    'cases' for those nop. This happens when we try to find out the
+    'arguments' usage from a parse node. Here in this case we have an empty pattern and this leads to the assert.
+    We have place holder slots for destructuring patterns - however when we
+    generate the scopeinfo for deferred function we didn't account that piece
+    of information. Fixed that by using the same counter (earlier used for same name args place holder) and increment that for destructuring patterns.
+    Added unittest for those.
+
+M	lib/Runtime/ByteCode/ByteCodeEmitter.cpp
+M	lib/Runtime/ByteCode/ByteCodeGenerator.cpp
+M	lib/Runtime/ByteCode/FuncInfo.cpp
+M	lib/Runtime/ByteCode/FuncInfo.h
+M	lib/Runtime/ByteCode/ScopeInfo.cpp
+M	test/es6/destructuring_bugs.js
+
+commit 27fd81c832c8bcdad1a25f289a8d1590a64267b0
+Merge: 939118df9 a73606e94
+Author: Curtis Man <curtism@microsoft.com>
+Date:   Fri Mar 2 06:09:39 2018 -0800
+
+    [MERGE #4763 @curtisman] Convert parse node to class hierarchy
+    
+    Merge pull request #4763 from curtisman:parse
+    
+    Fix an issue with near null AV in ParseFncFunc when we are validating the function formals with destructuring without passing in a ParseNode for the function.
+    Fix some benign type confusion from the assert where two kind of node have same field at the same location (the sym between ParseNodeVar and ParseNodePid) and between pnodeTarget/pnode1 in ParseNodeCall and ParseNodeBin
+    Fix simple this property assignment statement only constructor identification because of type confusion of ParseNodeVar and ParseNodePid in Parse::ParseExpr
+
+commit 4db0bd20ac5f5a4e260653a10269fef9ef51f91f
+Author: meg-gupta <megupta@microsoft.com>
+Date:   Tue Dec 19 16:34:00 2017 -0800
+
+    [CVE-2018-0758] Integer overflow bug in the latest version of Edge causing RCE - Individual
+
+M	lib/Backend/Lower.cpp
+M	lib/Backend/Lower.h
+
+commit ac5704ac287acd00efc9b7b502919191f19841ec
+Merge: 0e52ceb21 01588ee8f
+Author: Michael Holman <Michael.Holman@microsoft.com>
+Date:   Thu Sep 22 13:57:16 2016 -0700
+
+    [MERGE #1626 @MikeHolman] fix arm64 buildbreak after oopjit
+    
+    Merge pull request #1626 from MikeHolman:arm64build
+
+commit b8cfa4c44f3a484cbe5a62f725747f38566e978f
+Merge: b05acfa03 aee0ac5f2
+Author: Michael Ferris <micfer@microsoft.com>
+Date:   Wed Nov 22 12:10:34 2017 -0800
+
+    [MERGE #4301 @Cellule] WASM: reduce stack usage on compilation exception
+    
+    Merge pull request #4301 from Cellule:wasm/compilation_exception
+    
+    Let the stack unwind on exception in WebAssemblyModule::CreateModule before throwing the JavascriptException.
+    Remove try/catch in WasmBytecodeGenerator::GenerateFunction and use destructor to cleanup instead.
+    Make a function for formatting compilation exception to remove duplication and simplify memory management of exception string.
+
+commit 9833ad592b8633e24974248a91a81a9922b9653d
+Merge: cb4a35cf6 e0c1956e1
+Author: Matt Gardner <magardn@microsoft.com>
+Date:   Fri Jan 19 15:22:15 2018 -0800
+
+    [MERGE #4555 @sigatrev] Add config flag to store jit repro rpc data on EntryPointInfo
+    
+    Merge pull request #4555 from sigatrev:entryPointInfoRpcData
+
+commit 1e14bd7698f11d99fa5c12c6e2c6a9446ef55470
+Merge: 776504e27 e30cab35d
+Author: Paul Leathers <pleath@microsoft.com>
+Date:   Fri May 25 16:04:49 2018 -0700
+
+    [MERGE #5234 @pleath] OS#14915011: Force deferred parsing off under F12 console eval
+    
+    Merge pull request #5234 from pleath:14915011
+    
+    We used to disable deferral and redeferral of console eval expressions based on their length. Short scripts now allow redeferral, which requires creation of scope info, which in turn doesn't work under console eval. Simply forcing deferral off in this scenario.
+
+commit 5db42187c3fd129c9574d61ceb7236d932bb69dc
+Author: Meghana Gupta <megupta@microsoft.com>
+Date:   Wed Nov 14 12:40:41 2018 -0800
+
+    CVE-2018-8618 Edge - Report a type confusion bug
+
+M	lib/Backend/GlobOpt.cpp
+
+commit 01a37e0f62e2b071f9f1c9448d692df3861c75ba
+Author: Michael Holman <michhol@microsoft.com>
+Date:   Mon Jun 5 12:50:02 2017 -0700
+
+    use static interpreter thunk in case OOP JIT thunk allocation fails
+
+M	lib/Backend/InterpreterThunkEmitter.cpp
+M	lib/Backend/InterpreterThunkEmitter.h
+M	lib/Backend/NativeCodeGenerator.cpp
+M	lib/Common/ConfigFlagsList.h
+M	lib/JITClient/JITManager.h
+M	lib/Runtime/Base/FunctionBody.cpp
+M	lib/Runtime/Language/InterpreterStackFrame.cpp
+M	lib/Runtime/Language/InterpreterStackFrame.h
+M	test/AsmJs/rlexe.xml
+M	test/DebuggerCommon/rlexe.xml
+M	test/wasm/rlexe.xml
+
+commit b3fabf19b6492a18ca6cb69dfa40f5740084c202
+Author: Curtis Man <curtism@microsoft.com>
+Date:   Tue Mar 22 20:27:31 2016 -0700
+
+    Reenable and fix warning 4499 - explicit specialization cannot have a storage class (ignored)
+
+M	Build/Chakra.Build.props
+M	lib/Backend/Lower.cpp
+M	lib/Common/Memory/Recycler.cpp
+M	lib/Parser/TextbookBoyerMoore.cpp
+
+commit 398b306addf2ae07d6b9d18d23a513b3123e3263
+Author: Michael Ferris <micfer@microsoft.com>
+Date:   Tue Nov 8 16:57:13 2016 -0800
+
+    Fix x86 reinterpret bits
+
+M	lib/Backend/LowerMDShared.cpp
+
+commit a6c871e19cbc255919bbd68405b8603741feef13
+Author: Vladimir Sadov <vsadov@microsoft.com>
+Date:   Fri Jun 22 13:15:52 2018 -0700
+
+    Adding another kind of OOM errors for more cpecific bucketing of failures.
+
+M	lib/Common/Exceptions/ReportError.cpp
+M	lib/Common/Exceptions/ReportError.h
+
+commit 865f63bd2611e7db44d551fd6063a33b02ffa3a8
+Merge: 08cf998b1 d554d0c2c
+Author: Jimmy Thomson <jithomso@microsoft.com>
+Date:   Tue May 8 13:55:01 2018 -0700
+
+    [1.8>1.9] [MERGE #5116 @MSLaguana] ChakraCore 2018-05 security updates
+    
+    Merge pull request #5116 from MSLaguana:servicing/1805
+
+commit 3176422deb87b80023126a6465d40bdb3d436320
+Merge: b5384a381 9581c86dd
+Author: Hitesh Kanwathirtha <hiteshk@microsoft.com>
+Date:   Sat Nov 5 13:51:03 2016 -0700
+
+    [MERGE #1824 @digitalinfinity] Skip GC during Script Context close
+    
+    Merge pull request #1824 from digitalinfinity:scgc
+    
+    This change adds support to the Recycler to check for an additional heuristic while deciding whether to collect. Clients can indicate that a script context was closed, and therefore the other GC heuristics need to be overridden. This override happens only if the GC gets triggered at callrootlevel = 0- if not, we'll continue to use the existing heuristics.
+
+commit 069c3fb1e597f3eaea32092599de4a72bbecc365
+Author: meg-gupta <megupta@microsoft.com>
+Date:   Wed Jan 31 18:04:36 2018 -0800
+
+    [CVE-2018-0937] Edge - Use after free of LdFld instruction in prePassInstrMap - Google, Inc
+    
+    Run TryReplaceLdLen only when not in loop prepass
+    
+    Found by OSSFuzz
+
+M	lib/Backend/GlobOpt.cpp
+
+commit 00b23ff43c390ccf425b0c3643120990dc4d7624
+Author: Meghana Gupta <megupta@microsoft.com>
+Date:   Thu Apr 20 13:07:15 2017 -0700
+
+    add missing cases to unsigned cmp peep
+
+M	lib/Backend/FlowGraph.cpp
+
+commit 80e661c5e09c76ea12fdcca7ac3220f1939c5886
+Author: Thomas Herzog <tom@therzog.net>
+Date:   Fri Aug 3 06:31:55 2018 +0200
+
+    Simplify propertyString instantiation
+
+M	lib/Runtime/Library/JavascriptProxy.cpp
+
+commit 57ce4a6f818c1f258c3ea2171d0f75c59669bb22
+Merge: 052240b4b b81f2c28b
+Author: Michael Holman <michhol@microsoft.com>
+Date:   Tue Apr 24 09:09:06 2018 -0700
+
+    [MERGE #5035 @MikeHolman] check for CrossSite object at toPrimitive call, not when caching
+    
+    Merge pull request #5035 from MikeHolman:xsitetostring
+    
+    I was trying to keep cross-site objects out of the NoSpecialPropertyCache, but that isn't really possible, since objects can convert to CrossSiteObjects.
+    
+    Instead, just check if the object is a CrossSite object before using the cache when doing ToPrimitive.
+    
+    OS: 17008372
+
+commit 915f996a6abb414c1f409e51e563e182eb53b8a9
+Merge: e2ff4500e 4116a3f52
+Author: Michael Ferris <micfer@microsoft.com>
+Date:   Wed Apr 13 15:15:08 2016 -0700
+
+    [MERGE #792] Clear disable implicit call flag when dispatching exception to debugger
+    
+    Merge pull request #792 from Cellule:exception
+    When dispatching the exception to the debugger, make sure we call `ClearDisableImplicitFlags()`
+
+commit 759af18ab8cacd93d9c9af2354222d9c24367d0f
+Author: Limin Zhu <limzh@microsoft.com>
+Date:   Fri Jan 19 14:45:12 2018 -0800
+
+    Correct FetchImportedModuleFromScriptCallBack comments in header
+
+M	lib/Jsrt/ChakraCore.h
+
+commit 2e0b803d5c723a31be198bb90c2be1a7076ef577
+Author: Michael Ferris <micfer@microsoft.com>
+Date:   Tue Mar 15 14:06:03 2016 -0700
+
+    Code review #565 changes
+
+M	lib/Backend/NativeCodeGenerator.cpp
+M	lib/WasmReader/WasmBinaryReader.cpp
+M	lib/WasmReader/WasmBinaryReader.h
+
+commit 3a6ae504b4d256a91bfe84d6ab7b1b555a23894c
+Author: Jack Horton (CHAKRA) <jahorto@microsoft.com>
+Date:   Mon Aug 27 23:24:56 2018 -0700
+
+    Update bytecode version
+
+M	lib/Runtime/ByteCode/ByteCodeCacheReleaseFileVersion.h
+
+commit 7487cda937ea8aee4f85a61ee96ecd885cbc8f10
+Author: Michael Holman <michhol@microsoft.com>
+Date:   Tue Apr 24 12:51:13 2018 -0700
+
+    update bytecode GUID
+
+M	lib/Runtime/ByteCode/ByteCodeCacheReleaseFileVersion.h
+
+commit 3699396cd155c51412724d8e62be314cd4265e84
+Author: Michael Ferris <micfer@microsoft.com>
+Date:   Fri Dec 16 14:58:22 2016 -0800
+
+    Update baseline for slow test typedarray/samethread and remove the slow tag on that test
+
+M	test/typedarray/rlexe.xml
+M	test/typedarray/samethread.baseline
+
+commit fdd571e2e2612b6ac7226165cc619cec738dae21
+Merge: 5300db27c a9e19789f
+Author: Rajat Dua <radua@microsoft.com>
+Date:   Tue Nov 21 12:57:27 2017 -0800
+
+    [1.8>master] [MERGE #4289 @rajatd] ARM64: Fix emitting unwind codes for SUB_LSL4
+    
+    Merge pull request #4289 from rajatd:arm64_sub_lsl4
+
+commit 8bc4363ab5626fbf9e1d4c94643fb39f43897fe2
+Author: Louis Lafreniere <louisl@microsoft.com>
+Date:   Thu Dec 6 14:49:17 2018 -0800
+
+    Fix non-Windows builds and win8 hosted builds
+
+M	lib/Common/CommonDefines.h
+
+commit 6b156e6b351df779291cb8689e3ab8d88af53f7c
+Merge: 964e7a27b c2ccf4f0a
+Author: Derek Morris <demorri@microsoft.com>
+Date:   Tue Oct 3 16:09:01 2017 -0700
+
+    [1.7>master] [1.6>1.7] [MERGE #3866 @Penguinwizzard] Re-enable RecyclerChecker runs
+    
+    Merge pull request #3866 from Penguinwizzard:reenable_swb_check
+    
+    I disabled this because doing so worked around widespread CI failures
+    (due to the lack of libclang-dev on the new images). This commit does
+    the opposite and re-enables it, for when the package is available.
+
+commit 83d7637c205eae53a2c6110223c94cc7aeffd87c
+Author: Lei Shi <leish@microsoft.com>
+Date:   Mon Nov 14 16:05:37 2016 -0800
+
+    [swb] bring back quick sort
+    
+    we need this when sorting an array from write barrier memory
+
+M	lib/Common/DataStructures/Chakra.Common.DataStructures.vcxproj
+A	lib/Common/DataStructures/QuickSort.h
+M	lib/Common/Memory/RecyclerPointers.h
+M	lib/Runtime/Library/JavascriptArray.cpp
+
+commit 7be00d51bf968aaf42b966c5d0c33b3da54b507e
+Merge: b8d571128 cc5b303ce
+Author: Matt Gardner <magardn@microsoft.com>
+Date:   Tue Dec 12 13:30:47 2017 -0800
+
+    [MERGE #4407 @sigatrev] refactor various MD functions into MI lowerer
+    
+    Merge pull request #4407 from sigatrev:MDtoMI
+    
+    This PR moves numerous functions from MD lowerers into the machine indepedent lowerer by using the various Insert* methods which handle conversion to MD opcodes and legalization.
+
+commit f1186368d598578082f98a51c82cd35fdecaaaec
+Author: Aneesh Divakarakurup <aneeshd@microsoft.com>
+Date:   Tue Mar 29 11:29:08 2016 -0700
+
+    [1.2>master] Fix for deserialization issue with split scope
+    
+    When deserializing a split scoped function, the flag to indicate the
+    function is not merged was not updated. This was causing issues when we
+    try to creat the slots.
+
+M	lib/Backend/IRBuilder.cpp
+M	lib/Runtime/Base/FunctionBody.cpp
+M	lib/Runtime/ByteCode/ByteCodeEmitter.cpp
+M	lib/Runtime/ByteCode/ByteCodeSerializer.cpp
+M	lib/Runtime/Library/InJavascript/Intl.js.bc.32b.h
+M	lib/Runtime/Library/InJavascript/Intl.js.bc.64b.h
+M	lib/Runtime/Library/InJavascript/Intl.js.nojit.bc.32b.h
+M	lib/Runtime/Library/InJavascript/Intl.js.nojit.bc.64b.h
+M	lib/Runtime/SerializableFunctionFields.h
+
+commit a8341a5f6d61e9e6eb70fbd3c5e73aad9618d7ec
+Merge: 62015749e fa03139ec
+Author: Paul Leathers <pleath@microsoft.com>
+Date:   Thu Feb 16 17:15:37 2017 -0800
+
+    [1.4>master] [MERGE #2544 @pleath] Don't attempt to get redeferred FunctionBody from JavascriptExceptionObject
+    
+    Merge pull request #2544 from pleath:9774444
+
+commit 63723e5c7f2ad7d6b804e251ec21a09f6d7c5122
+Merge: 521167067 706e6ce47
+Author: Derek Morris <demorri@microsoft.com>
+Date:   Fri Nov 10 19:37:14 2017 -0800
+
+    [1.8>master] ARM64: fix GenerateAuxSlotAdjustmentRequiredCheck
+
+commit 3daa56768f45594ec3461731e68865323900acf1
+Merge: 0785a01c5 2810b5c01
+Author: Michael Ferris <micfer@microsoft.com>
+Date:   Mon Jun 25 11:45:03 2018 -0700
+
+    [1.10>master] [MERGE #5356 @Cellule] Builtin id instead of address
+    
+    Merge pull request #5356 from Cellule:builtin_id
+    
+    Use LocalFunctionId to recognize Built-in's instead of entry address.
+    This significantly improves the possibility for JitRepro from rpc buffer with builtins.
+
+commit d1984c4e3b53ec76eddcd220db34f739bda3d8ed
+Merge: 8e44ff5a7 1e2cde0bc
+Author: Rajat Dua <radua@microsoft.com>
+Date:   Mon Apr 11 12:09:32 2016 -0700
+
+    [MERGE #777] Dont attempt to get profiled iterations of a functionbody if it's bytecode hasn't been generated yet.
+    
+    Merge pull request #777 from rajatd:profileCall
+    A number of conditions required to be met for this issue to repro:
+    1. A callee at a polymorphic callsite was defer-parsed.
+    2. Upon undeferring, its bytecode generation failed.
+    3. While gathering codegen data for the parent function, we recorded that the said callee cannot be inlined but we still needed to save the info that we will need to emit a call to this function when we inline the rest of the calls at this callsite. We try to save the number of profiled iterations for the callee on the info that we collect for it - that's when we assert that execution mode and limits have not been initialized (because the bytecode wasn't generated)
+
+commit 42eda8e7ff3b75113784c5e99e9005ed31ebeb90
+Author: Oguz Bastemur <ogbastem@microsoft.com>
+Date:   Mon Jan 2 01:56:56 2017 +0100
+
+    InitializeCriticalSectionAndSpinCount duplicate definition
+
+M	pal/inc/pal.h
+
+commit e67d98586f32d477d4d81fbd694f2451108a7321
+Author: Jack Horton <jahorto@microsoft.com>
+Date:   Mon Nov 6 16:00:15 2017 -0800
+
+    Update bytecode
+
+M	lib/Runtime/Library/InJavascript/Intl.js.bc.32b.h
+M	lib/Runtime/Library/InJavascript/Intl.js.bc.64b.h
+M	lib/Runtime/Library/InJavascript/Intl.js.nojit.bc.32b.h
+M	lib/Runtime/Library/InJavascript/Intl.js.nojit.bc.64b.h
+M	lib/Runtime/Library/JsBuiltIn/JsBuiltIn.js.bc.32b.h
+M	lib/Runtime/Library/JsBuiltIn/JsBuiltIn.js.bc.64b.h
+M	lib/Runtime/Library/JsBuiltIn/JsBuiltIn.js.nojit.bc.32b.h
+M	lib/Runtime/Library/JsBuiltIn/JsBuiltIn.js.nojit.bc.64b.h
+
+commit 05dca734dad016992221a82d293fa53041145959
+Author: Petr Penzin <penzin.dev@gmail.com>
+Date:   Thu Apr 30 20:44:50 2020 -0700
+
+    Warn of deprecated declarations and missing braces
+    
+    Remove `-Wno-deprecated-declarations` and `-Wno-missing-braces` from
+    default flags.
+    
+    For #6435
+
+M	CMakeLists.txt
+
+commit 542f482f7e87925306d16d5a1c3ff9897c4f3a4b
+Author: Michael Holman <michhol@microsoft.com>
+Date:   Wed Sep 20 17:53:12 2017 -0700
+
+    fix bug with inlining int64 args on x86
+
+M	lib/Backend/Func.h
+M	lib/Backend/Inline.cpp
+M	lib/Runtime/Language/InterpreterStackFrame.cpp
+
+commit cec1195e47c2ca4f25efa46d97d3264e0f53c4ab
+Merge: d53f4ca40 14a3698be
+Author: Doug Ilijev <doilij@microsoft.com>
+Date:   Tue Oct 17 17:02:40 2017 -0700
+
+    [MERGE #3989 @dilijev] CONTRIBUTING.md: rename 'Your first PR' to 'good first issue' (See #3938)
+    
+    Merge pull request #3989 from dilijev:good-first-issue
+    
+    See also PR #3954 and Microsoft/ChakraCore-wiki@e9a0bdc
+
+commit cddbcb83254a1f5a25e5d3de1762af6026132cdd
+Merge: bc5b2ddb5 cf1490181
+Author: Rajat Dua <radua@microsoft.com>
+Date:   Thu Apr 14 12:06:40 2016 -0700
+
+    [MERGE #763] Fix exception path when excpeption is thrown while processing jit transfer data
+    
+    Merge pull request #763 from rajatd:OOM
+    After generating the jitted code for a function, we pin type references and install property guards on the entryPointInfo. If either one of these throws (OOM/SO, for example), we execute an object destructor that calls a function that allocates a new entryPointInfo. This is a problem if we were throwing an OOM exception. Apart from exceptions, this function can be called when we lazily bailout - in that case, it is ok to create a new entry point info and generate jitted code for it. In fact, we have to do this, otherwise we'll keep bailing out. For OOM scenarios, we dont really have to create a new default entry point info- we could just change the entry point to CheckCodeGenThunk. If the exception was caught and the function was called again, it'll re-use the jitted code and attempt to pin type refs and install property guards again.
+
+commit a402ccadb68019a0a8d50afa3e49bc7629f27727
+Author: Lei Shi <leish@microsoft.com>
+Date:   Fri Jul 1 16:12:10 2016 -0700
+
+    remove fixup method for those types which not necessary to do fixing up
+    dump meaningful information for simple type(like int, Var) allocation which is helpful for debugging.
+
+M	lib/Backend/BailOut.cpp
+M	lib/Backend/BailOut.h
+M	lib/Backend/Encoder.cpp
+M	lib/Backend/Func.cpp
+M	lib/Backend/InlineeFrameInfo.h
+M	lib/Backend/LinearScan.cpp
+M	lib/Backend/Lower.cpp
+M	lib/Backend/LowerMDShared.cpp
+M	lib/Backend/LowerMDSharedSimd128.cpp
+M	lib/Backend/NativeCodeData.h
+M	lib/Runtime/Base/FunctionBody.h
+M	lib/Runtime/Types/TypeHandler.h
+
+commit ae8971a6c032caa559268a9b08e2bb7b63775bd0
+Author: Curtis Man <curtism@microsoft.com>
+Date:   Tue Mar 22 20:32:39 2016 -0700
+
+    Reenable warning 4311 - 'type cast': pointer truncation from '' to ''
+
+M	Build/Chakra.Build.props
+
+commit a8c56e2a2a7b5dd24d070bac4c4a8f25d4f993b5
+Author: Jianchun Xu <jianxu@microsoft.com>
+Date:   Fri May 6 11:05:26 2016 -0700
+
+    xplat: simulate load resource string
+    
+    ChakraCore runtime error message strings are loaded from resources on
+    Windows. On xplat, store the strings in a static string table and simulate
+    load resource string.
+    
+    This enables runtime error messages.
+
+M	lib/Parser/errstr.cpp
+M	lib/Parser/rterror.cpp
+
+commit f9423f526995afe7711132213b52d5135b003bf0
+Merge: 1cf72d697 a672c20a2
+Author: Aaron Giles <aarongi@ntdev.microsoft.com>
+Date:   Fri Nov 10 11:02:39 2017 -0800
+
+    [MERGE #4192 @aaronsgiles] ARM64: Fix/workaround for unwinding complexities.
+    
+    Merge pull request #4192 from aaronsgiles:user/aarongi/work1
+    
+    Do not set up FP in the prolog to avoid it being recovered during unwind. Allocate a full copy of the locals area in the EH helpers to make the unwinding work.
+
+commit d7bb357f9c98a9177c3a7e18a494d27dada1ac16
+Merge: af8b2a821 31d17fb04
+Author: Mike Kaufman <mkaufman@microsoft.com>
+Date:   Tue Jan 9 15:06:45 2018 -0800
+
+    [MERGE #4457 @mike-kaufman] Adding TTD support for generators
+    
+    Merge pull request #4457 from mike-kaufman:build/mkaufman/add-ttd-support-for-generators
+    
+    Generator functions weren't supported in TTD.  This PR adds support and a few tests.
+
+commit 7c5caeef40cb03ed82ea05654b974e823444f56e
+Merge: eb25adb9d bbfb5a968
+Author: Rajat Dua <radua@microsoft.com>
+Date:   Thu Sep 29 13:45:47 2016 -0700
+
+    [MERGE #1579 @rajatd] Regex backtracking improvements
+    
+    Merge pull request #1579 from rajatd:regex
+    
+    This PR improves the algorithm for backtracking through a set with a * or a + wildcard.
+    
+    When we get an unsuccessul match after such a set, we used to backtrack one character at a time over the matched characters of the set. The optimization being made in this change is that if we know at compile time what needs to follow the set for a successful match, we could record the offsets of that (those) character(s) while matching the set, and then backtrack only to those offsets.
+
+commit 5bc62e88f88ef0d3e9a20aab683e1f81ac5b7b23
+Author: Derek Morris <demorri@microsoft.com>
+Date:   Fri Mar 31 18:02:09 2017 -0700
+
+    Work around a VC compiler bug
+    
+    Having an empty-defined preprocessor macro in between a teplate tag
+    and the following function signature should be a-ok, afaik, since a
+    preprocessor macro should be replaced before anything else is done.
+    However, in VC this breaks, but doing an ifdef to remove it works.
+
+M	lib/Common/CommonDefines.h
+M	lib/Common/DataStructures/FixedBitVector.h
+
+commit be74d83bc8bfc6c4882de3e571443338d853d20f
+Author: Taylor Woll <tawoll@ntdev.microsoft.com>
+Date:   Wed Feb 5 13:55:28 2020 -0800
+
+    [CVE-2020-0827]
+
+M	lib/Backend/GlobOptFields.cpp
+
+commit d42b71d66b7b2a572da4762ddf1d52a861281352
+Merge: cf864b3b0 847f0bcdd
+Author: Michael Ferris <micfer@microsoft.com>
+Date:   Wed Jan 11 14:42:35 2017 -0800
+
+    [MERGE #2361 @Cellule] Bug10437242 use of restricted api
+    
+    Merge pull request #2361 from Cellule:bug10437242
+    
+    lstrlen is a restricted api even for testing purposes, changing to use wcslen
+
+commit f806610556fb31b65dfdc7b8ffd20401789c6362
+Merge: 55c62e870 ff9a769f6
+Author: Michael Holman <Michael.Holman@microsoft.com>
+Date:   Wed Nov 30 13:56:06 2016 -0800
+
+    [MERGE #2122 @MikeHolman] skip ConstThis opt if this is non-enumerated library var (e.g. booleanTrue)
+    
+    Merge pull request #2122 from MikeHolman:constthislib
+
+commit 448ac6d6ee82c319fa19eae27f651f61facd4ddf
+Author: Derek Morris <demorri@microsoft.com>
+Date:   Thu Mar 15 15:45:43 2018 -0700
+
+    Clang doesn't seem to like the calling-convention check cast templates
+
+M	lib/Runtime/Base/ThreadContextInfo.h
+
+commit c3500c91f4c21914def45692c8afa0548f10b3b5
+Merge: 1ba3739ab 24f43e872
+Author: Matt Gardner <magardn@microsoft.com>
+Date:   Thu Oct 26 13:34:03 2017 -0700
+
+    [MERGE #4065 @sigatrev] ARM64: fix LegalizeLDIMM logic
+    
+    Merge pull request #4065 from sigatrev:legalizeLDIMM
+

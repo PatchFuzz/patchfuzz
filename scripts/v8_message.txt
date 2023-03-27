@@ -1,0 +1,2364 @@
+commit feb545ceba5cb477ba883b46b60142f441ad5a3d
+Author: Benedikt Meurer <bmeurer@chromium.org>
+Date:   Mon Feb 19 13:11:44 2018 +0100
+
+    [async-generators] Also avoid throwaway promise here.
+    
+    This extends the previously introduced logic for implementing await
+    without having to allocate the throwaway promise and the additional
+    closures and context, to also cover await and yield inside of async
+    generators.
+    
+    Bug: v8:7253
+    Change-Id: I011583a7714bbd148c54e5f204e2076630008db0
+    Reviewed-on: https://chromium-review.googlesource.com/924003
+    Commit-Queue: Benedikt Meurer <bmeurer@chromium.org>
+    Reviewed-by: Georg Neis <neis@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#51361}
+
+M	src/bootstrapper.cc
+M	src/builtins/builtins-async-function-gen.cc
+M	src/builtins/builtins-async-gen.cc
+M	src/builtins/builtins-async-gen.h
+M	src/builtins/builtins-async-generator-gen.cc
+M	src/builtins/builtins-definitions.h
+M	src/builtins/builtins.cc
+M	src/code-stub-assembler.cc
+M	src/code-stub-assembler.h
+M	src/contexts.h
+
+commit 04246dcc1b26f538127187311eba66bbf1bd2ed8
+Author: Clemens Backes <clemensb@chromium.org>
+Date:   Fri Apr 6 11:54:04 2018 +0200
+
+    [wasm] Clean up SetBlockType
+    
+    Remove redundant argument, add a DCHECK and explicitly specify the
+    capture list of the lambdas.
+    
+    R=ahaas@chromium.org
+    
+    Bug: v8:7570
+    Change-Id: I09fc6004ffc5cdc7b4c153748ed95e86ae85aaa2
+    Reviewed-on: https://chromium-review.googlesource.com/998098
+    Reviewed-by: Andreas Haas <ahaas@chromium.org>
+    Commit-Queue: Clemens Hammacher <clemensh@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#52430}
+
+M	src/wasm/function-body-decoder-impl.h
+
+commit 32f5e099d4feb87a759afcdc012906f11fdcd06d
+Author: bmeurer@chromium.org <bmeurer@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Thu Jun 27 13:13:18 2013 +0000
+
+    Add templatized Run() method for Hydrogen phases.
+    
+    Depends upon https://codereview.chromium.org/17657004
+    
+    R=danno@chromium.org
+    BUG=
+    
+    Review URL: https://codereview.chromium.org/18034003
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@15355 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/hydrogen.cc
+M	src/hydrogen.h
+
+commit 838cea4e4ee0e473703e1a1db2ead95dde039684
+Author: rmcilroy <rmcilroy@chromium.org>
+Date:   Thu Mar 24 11:37:56 2016 -0700
+
+    [Interpreter] Make ignition compiler eagerly.
+    
+    Makes --ignition cause eager compilation if we aren't building the startup
+    snapshot.
+    
+    BUG=v8:4280
+    LOG=N
+    
+    Review URL: https://codereview.chromium.org/1811553003
+    
+    Cr-Commit-Position: refs/heads/master@{#35066}
+
+M	src/background-parsing-task.cc
+M	src/compiler.cc
+M	src/flag-definitions.h
+M	test/cctest/cctest.status
+M	test/cctest/compiler/test-run-bytecode-graph-builder.cc
+M	test/cctest/interpreter/interpreter-tester.cc
+M	test/cctest/test-api.cc
+M	test/cctest/test-compiler.cc
+M	test/cctest/test-heap-profiler.cc
+M	test/cctest/test-parsing.cc
+M	test/cctest/test-profile-generator.cc
+M	test/mjsunit/mjsunit.status
+
+commit b07914010138e3093362f56234d30aeb8aa34b9f
+Author: danno@chromium.org <danno@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Thu Nov 17 13:35:15 2011 +0000
+
+    MIPS: Fixed a minor inconsistency in lithium-codegen-mips.cc
+    
+    EmitIsObject is only called from one function, DoIsObjectAndBranch.
+    DoIsObjectAndBranch now passes the temp2 register to EmitIsObject
+    instead of simply relying on the two functions using the same
+    lithium scratch register.
+    
+    BUG=
+    TEST=
+    
+    Review URL: http://codereview.chromium.org/8588004
+    Patch from Gergely Kis <gergely@homejinni.com>.
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@10017 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/mips/lithium-codegen-mips.cc
+M	src/mips/lithium-codegen-mips.h
+
+commit d96131ed9bf14bd7ec13bbf19c2c6caebf851a14
+Author: titzer <titzer@chromium.org>
+Date:   Mon Nov 21 09:58:54 2016 -0800
+
+    [d8] Use virtual memory to allocate large array buffers.
+    
+    R=mstarzinger@chromium.org,clemensh@chromium.org
+    BUG=
+    
+    Review-Url: https://codereview.chromium.org/2520963002
+    Cr-Commit-Position: refs/heads/master@{#41154}
+
+M	src/d8.cc
+
+commit 7e4282d5031cbf9f596747cd4db84c740a2b93c9
+Author: kschimpf <kschimpf@chromium.org>
+Date:   Fri Apr 28 08:47:03 2017 -0700
+
+    Remove collecting data on max memory pages for asm.js, not applicable.
+    
+    Only WASM has the notion of changing the maximum memory pages. This
+    CL corrects the UMA stats to only collect this data for WASM only.
+    
+    BUG=v8:6321
+    R=bradnelson@chromium.org,bbudge@chromium.org
+    
+    Review-Url: https://codereview.chromium.org/2845163002
+    Cr-Commit-Position: refs/heads/master@{#44988}
+
+M	src/counters.h
+M	src/wasm/wasm-objects.cc
+
+commit f85023570d6ff0793ac1bcf751726ce877760d49
+Author: Sigurd Schneider <sigurds@chromium.org>
+Date:   Thu Jun 14 17:01:46 2018 +0200
+
+    [mjsunit] Speed up test by using const
+    
+    Bug: v8:7783
+    Change-Id: I0399d20c990e40b1a6dad8a7c12eb6fbce022d12
+    Reviewed-on: https://chromium-review.googlesource.com/1101028
+    Reviewed-by: Jaroslav Sevcik <jarin@chromium.org>
+    Reviewed-by: Georg Neis <neis@chromium.org>
+    Commit-Queue: Sigurd Schneider <sigurds@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#53739}
+
+M	test/mjsunit/generated-transition-stub.js
+
+commit f3d9f71df195524989bee1dd4387a72f8e1519a0
+Author: Marja Hölttä <marja@chromium.org>
+Date:   Wed May 23 13:19:44 2018 +0200
+
+    [in-place weak refs] Make it possible to CAST to TNode<Object/HeapObject>.
+    
+    BUG=v8:7308
+    
+    Change-Id: I04c21ed1919f9bc9c68312c15d1e1229aaba32b5
+    Reviewed-on: https://chromium-review.googlesource.com/1061013
+    Reviewed-by: Leszek Swirski <leszeks@chromium.org>
+    Reviewed-by: Tobias Tebbi <tebbi@chromium.org>
+    Reviewed-by: Igor Sheludko <ishell@chromium.org>
+    Commit-Queue: Marja Hölttä <marja@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#53301}
+
+M	src/builtins/builtins-constructor-gen.cc
+M	src/code-stub-assembler.cc
+M	src/code-stub-assembler.h
+M	src/compiler/code-assembler.cc
+M	src/compiler/code-assembler.h
+M	src/ic/accessor-assembler.cc
+M	src/interpreter/interpreter-assembler.cc
+M	src/interpreter/interpreter-generator.cc
+
+commit d90a404747bd065d2fe653704222b1e6638ef9e6
+Author: bmeurer <bmeurer@chromium.org>
+Date:   Mon Sep 14 01:40:44 2015 -0700
+
+    [builtins] Remove STRING_ADD_LEFT and STRING_ADD_RIGHT builtins.
+    
+    These builtins present an optimization for the general addition case,
+    where one side is already known to be a string. Unfortunately this
+    optimization is wrong in the presence of @@toPrimitive (there are some
+    ideas how to implement a similar optimization using the prototype
+    backpointer mechanism that jkummerow@ introduced earlier). So this
+    also removes the broken %_IsStringWrapperSafeForDefaultValueOf, which is
+    the key part of the optimization mentioned above.
+    
+    R=mstarzinger@chromium.org
+    BUG=v8:4307
+    LOG=n
+    
+    Review URL: https://codereview.chromium.org/1336273002
+    
+    Cr-Commit-Position: refs/heads/master@{#30707}
+
+M	src/contexts.h
+M	src/full-codegen/arm/full-codegen-arm.cc
+M	src/full-codegen/arm64/full-codegen-arm64.cc
+M	src/full-codegen/full-codegen.h
+M	src/full-codegen/ia32/full-codegen-ia32.cc
+M	src/full-codegen/mips/full-codegen-mips.cc
+M	src/full-codegen/mips64/full-codegen-mips64.cc
+M	src/full-codegen/ppc/full-codegen-ppc.cc
+M	src/full-codegen/x64/full-codegen-x64.cc
+M	src/full-codegen/x87/full-codegen-x87.cc
+M	src/hydrogen.cc
+M	src/objects.h
+M	src/runtime.js
+M	src/runtime/runtime-strings.cc
+M	src/runtime/runtime.h
+
+commit 893ef74101432c39149db332b131c2b6b9ef6b9a
+Author: Clemens Backes <clemensb@chromium.org>
+Date:   Fri Dec 21 13:40:40 2018 +0100
+
+    [Liftoff] Improve merge state initialization
+    
+    Before computing the merge state, compute the list of free registers.
+    This list is used when we need a register for ensuring single register
+    use. It avoids picking a register which is in use by a not-yet-visited
+    merge slot, which would then have to be moved to another register or to
+    the stack.
+    
+    On epic, this saves ~10.5% generated code size in Liftoff.
+    
+    R=herhut@chromium.org
+    
+    Bug: v8:8423
+    Change-Id: If9fac24abbfe2273bf18d9cb287c7c05a59b2118
+    Reviewed-on: https://chromium-review.googlesource.com/c/1387488
+    Commit-Queue: Clemens Hammacher <clemensh@chromium.org>
+    Reviewed-by: Stephan Herhut <herhut@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#58435}
+
+M	src/wasm/baseline/liftoff-assembler.cc
+M	src/wasm/baseline/liftoff-register.h
+
+commit b963cb2351f354d13bbc32277d0a7233c2459ae7
+Author: yangguo <yangguo@chromium.org>
+Date:   Fri Feb 3 04:19:21 2017 -0800
+
+    Add test case for built-in objects' property mode.
+    
+    R=jgruber@chromium.org
+    BUG=v8:5902
+    
+    Review-Url: https://codereview.chromium.org/2669423002
+    Cr-Commit-Position: refs/heads/master@{#42922}
+
+A	test/mjsunit/regress/regress-5902.js
+
+commit 9bc3bd4cddd29c048ea0762aa45dab57fd50bd0e
+Author: kschimpf <kschimpf@chromium.org>
+Date:   Tue Jun 6 10:19:43 2017 -0700
+
+    Clean up issues raised on previous CL.
+    
+    Fixes issues raised in CL https://codereview.chromium.org/2887193002.
+    That is:
+    
+    1) Remove using mutex in Isolate::InitializeCounters().
+    
+    2) Use counters_shared_.get() instead of counters_ (and hence, also
+       remove field counters_).
+    
+    BUG=v8:6361
+    
+    Review-Url: https://codereview.chromium.org/2919953003
+    Cr-Commit-Position: refs/heads/master@{#45743}
+
+M	src/isolate.cc
+M	src/isolate.h
+M	src/wasm/wasm-module.cc
+
+commit 741fc2ce9a30ec94b078a1e6aa075842b2112dd8
+Author: ishell <ishell@chromium.org>
+Date:   Mon Jun 29 07:29:42 2015 -0700
+
+    Avoid allocations during ArrayBuffer initialization.
+    
+    BUG=chromium:505367
+    LOG=N
+    
+    Review URL: https://codereview.chromium.org/1215003002
+    
+    Cr-Commit-Position: refs/heads/master@{#29348}
+
+M	src/hydrogen.cc
+
+commit 74c68e2a04c8aef7f062fe39b6c34604ca5d3022
+Author: Dominik Inführ <dinfuehr@chromium.org>
+Date:   Fri May 20 14:37:02 2022 +0200
+
+    [heap] Disable map space with --future
+    
+    Original CL got reverted, this time the failing test should be fixed.
+    
+    Bug: v8:12578
+    Change-Id: Id2d8801f07742e8b00884fefec8200e4270f4250
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/3657434
+    Commit-Queue: Dominik Inführ <dinfuehr@chromium.org>
+    Reviewed-by: Michael Lippautz <mlippautz@chromium.org>
+    Cr-Commit-Position: refs/heads/main@{#80668}
+
+M	src/flags/flag-definitions.h
+M	test/unittests/api/isolate-unittest.cc
+
+commit 7260f62b88398a4be3c46e951e81c9519121d104
+Author: Andreas Haas <ahaas@chromium.org>
+Date:   Tue Jun 9 07:41:09 2020 +0200
+
+    [wasm][ia32][liftoff] Implement AtomicAdd except AtomicAddU64
+    
+    This CL
+    * Adds the xadd instruction to the ia32 assembler and disassembler;
+    * Implements the AtomicAdd instructions, except AtomicAddU64, on ia32;
+    
+    R=clemensb@chromium.org
+    
+    Bug: v8:10108
+    Change-Id: Ic8653a9f96148282951104fefb4185c4c0db89a3
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/2232719
+    Reviewed-by: Clemens Backes <clemensb@chromium.org>
+    Commit-Queue: Andreas Haas <ahaas@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#68247}
+
+M	src/codegen/ia32/assembler-ia32.cc
+M	src/codegen/ia32/assembler-ia32.h
+M	src/diagnostics/ia32/disasm-ia32.cc
+M	src/wasm/baseline/ia32/liftoff-assembler-ia32.h
+M	test/cctest/test-disasm-ia32.cc
+
+commit 27bd1747b493d02d9bcd8499c51b2d1022838ced
+Author: pierre.langlois <pierre.langlois@arm.com>
+Date:   Wed Jun 1 01:01:05 2016 -0700
+
+    [turbofan] ARM64: Match 64 bit compare with zero and branch
+    
+    This patch enables the following transformations in the instruction
+    selector:
+    
+    | Before           | After                  |
+    |------------------+------------------------|
+    | and x3, x1, #0x1 | tb{,n}z w1, #0, #+0x78 |
+    | cmp x3, #0x0     |                        |
+    | b.{eq,ne} #+0x80 |                        |
+    |------------------+------------------------|
+    | cmp x0, #0x0     | cb{,n}z x0, #+0x48     |
+    | b.{eq,ne} #+0x4c |                        |
+    
+    I have not seen these patterns beeing generated by turbofan, however the
+    stubs hit these cases frequently. A particular reason is that we are
+    turning operations that check for a Smi into a single `tbz`.
+    
+    As a concequence, the interpreter is affected thanks to inlining
+    turbofan stubs into it's bytecode handlers. I have noticed the size of
+    the interpreter was reduced by 200 instructions.
+    
+    BUG=
+    
+    Review-Url: https://codereview.chromium.org/2022073002
+    Cr-Commit-Position: refs/heads/master@{#36632}
+
+M	src/base/bits.h
+M	src/compiler/arm64/code-generator-arm64.cc
+M	src/compiler/arm64/instruction-codes-arm64.h
+M	src/compiler/arm64/instruction-scheduler-arm64.cc
+M	src/compiler/arm64/instruction-selector-arm64.cc
+M	test/unittests/compiler/arm64/instruction-selector-arm64-unittest.cc
+
+commit a35934a67347169e4c711751f212b90beb119cba
+Author: bmeurer <bmeurer@chromium.org>
+Date:   Tue Aug 30 11:35:50 2016 -0700
+
+    [turbofan] Don't mark likely conversion as deferred.
+    
+    When changing from Tagged to Float64 representation, it's not unlikely
+    to see a HeapNumber (or if feedback says so, an Oddball), so we
+    shouldn't penalize the code that deals with this case by marking it as
+    deferred.
+    
+    R=mvstanton@chromium.org
+    BUG=v8:5267
+    
+    Review-Url: https://codereview.chromium.org/2295933003
+    Cr-Commit-Position: refs/heads/master@{#39025}
+
+M	src/compiler/effect-control-linearizer.cc
+
+commit 50703c70a952267699b5d2bb4e241d366750354a
+Author: rodolph.perfetta@gmail.com <rodolph.perfetta@gmail.com@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Tue Mar 5 19:35:59 2013 +0000
+
+    Split and replace the EmitVFPTruncate routine to only do what is needed. Floor
+    and Round have been rewritten to use the default rounding mode.
+    
+    BUG=none
+    TEST=none
+    
+    Review URL: https://codereview.chromium.org/12393008
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@13833 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/arm/code-stubs-arm.cc
+M	src/arm/lithium-codegen-arm.cc
+M	src/arm/macro-assembler-arm.cc
+M	src/arm/macro-assembler-arm.h
+M	src/arm/stub-cache-arm.cc
+
+commit 5486eb6b3da405f294e4c22f759b636b9c92fbfd
+Author: rmcilroy <rmcilroy@chromium.org>
+Date:   Wed Nov 4 11:38:50 2015 -0800
+
+    [Interpreter] Fix U16() calls in test-bytecode-generator for big endian.
+    
+    Avoid double incrementing the variable in the U16() macro.
+    
+    BUG=v8:4280
+    LOG=N
+    
+    Review URL: https://codereview.chromium.org/1431803004
+    
+    Cr-Commit-Position: refs/heads/master@{#31803}
+
+M	test/cctest/interpreter/test-bytecode-generator.cc
+
+commit ee78600543e34f35432ead474fc4370be5e1c35f
+Author: sgjesse@chromium.org <sgjesse@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Wed Jun 22 07:48:32 2011 +0000
+
+    MIPS: Fix arguments-branch update per review comments.
+    
+    This is a follow-on to r8340, http://codereview.chromium.org/7216004/
+    
+    Søren had commited changes and closed issue, as Karl was commenting about
+    problems in the code.
+    
+    Thanks Karl, for your detailed code review. I have corrected the issues
+    you raised.
+    
+    BUG=
+    TEST=
+    
+    Review URL: http://codereview.chromium.org//7232004
+    Patch from Paul Lind <plind44@gmail.com>.
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@8358 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/mips/ic-mips.cc
+
+commit 23235b5fdb5412355e826f7fc0c154c409b9be37
+Author: littledan <littledan@chromium.org>
+Date:   Fri Jan 8 09:34:36 2016 -0800
+
+    Reland of Ship ES2015 sloppy-mode function hoisting, let, class (patchset #1 id:1 of https://codereview.chromium.org/1565263002/ )
+    
+    Reason for revert:
+    Crash fixed by https://codereview.chromium.org/1564923007
+    
+    Original issue's description:
+    > Revert of Ship ES2015 sloppy-mode function hoisting, let, class (patchset #7 id:120001 of https://codereview.chromium.org/1551443002/ )
+    >
+    > Reason for revert:
+    > Causes frequent crashes in Canary: chromium:537816
+    >
+    > Original issue's description:
+    > > Ship ES2015 sloppy-mode function hoisting, let, class
+    > >
+    > > This patch doesn't ship all features of ES2015 variable/scoping
+    > > changes, notably omitting the removal of legacy const. I think
+    > > function hoisting, let and class in sloppy mode can stand to
+    > > themselves as a package, and the legacy const change is much
+    > > riskier and more likely to be reverted, so my intention is to
+    > > pursue those as a separate, follow-on patch.
+    > >
+    > > R=adamk@chromium.org
+    > > BUG=v8:4285,v8:3305
+    > > LOG=Y
+    > > CQ_INCLUDE_TRYBOTS=tryserver.chromium.linux:linux_chromium_rel_ng;tryserver.blink:linux_blink_rel
+    > >
+    > > Committed: https://crrev.com/fcff8588a5a01587643d6c2507c7b882c78a2957
+    > > Cr-Commit-Position: refs/heads/master@{#33133}
+    >
+    > TBR=adamk@chromium.org
+    > # Not skipping CQ checks because original CL landed more than 1 days ago.
+    > BUG=v8:4285,v8:3305,chromium:537816
+    > LOG=Y
+    >
+    > Committed: https://crrev.com/adac5956c6216056a211cfaa460a00ac1500d8f8
+    > Cr-Commit-Position: refs/heads/master@{#33162}
+    
+    TBR=adamk@chromium.org
+    # Skipping CQ checks because original CL landed less than 1 days ago.
+    NOPRESUBMIT=true
+    NOTREECHECKS=true
+    NOTRY=true
+    BUG=v8:4285,v8:3305,chromium:537816
+    
+    Review URL: https://codereview.chromium.org/1571793002
+    
+    Cr-Commit-Position: refs/heads/master@{#33189}
+
+M	src/flag-definitions.h
+M	test/message/no-legacy-const-2.js
+M	test/message/no-legacy-const-2.out
+M	test/message/no-legacy-const-3.js
+M	test/message/no-legacy-const-3.out
+M	test/message/no-legacy-const.js
+M	test/message/no-legacy-const.out
+M	test/mjsunit/es6/block-early-errors.js
+R100	test/mjsunit/harmony/block-eval-var-over-legacy-const.js	test/mjsunit/es6/block-eval-var-over-legacy-const.js
+R100	test/mjsunit/harmony/block-let-contextual-sloppy.js	test/mjsunit/es6/block-let-contextual-sloppy.js
+M	test/mjsunit/es6/block-non-strict-errors.js
+R100	test/mjsunit/harmony/block-scope-class.js	test/mjsunit/es6/block-scope-class.js
+R100	test/mjsunit/harmony/classes-derived-return-type.js	test/mjsunit/es6/classes-derived-return-type.js
+M	test/mjsunit/harmony/destructuring.js
+M	test/mjsunit/mjsunit.status
+M	test/mjsunit/regress/regress-91120.js
+M	test/mjsunit/regress/regress-crbug-323936.js
+R100	test/mjsunit/harmony/regress/regress-crbug-451770.js	test/mjsunit/regress/regress-crbug-451770.js
+M	test/mozilla/mozilla.status
+M	test/webkit/fast/js/kde/func-decl-expected.txt
+M	test/webkit/webkit.status
+
+commit 34f5edd500886b579ad3411f14213e6b97f064f9
+Author: mstarzinger@chromium.org <mstarzinger@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Tue Jul 29 11:41:42 2014 +0000
+
+    Make --always-opt also optimize toplevel code.
+    
+    R=jacob.bramley@arm.com, titzer@chromium.org, rossberg@chromium.org
+    
+    Review URL: https://codereview.chromium.org/410153002
+    
+    git-svn-id: https://v8.googlecode.com/svn/branches/bleeding_edge@22666 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/arm/lithium-codegen-arm.cc
+M	src/arm64/lithium-codegen-arm64.cc
+M	src/factory.cc
+M	src/hydrogen.cc
+M	src/ia32/lithium-codegen-ia32.cc
+M	src/mips/lithium-codegen-mips.cc
+M	src/x64/lithium-codegen-x64.cc
+M	test/cctest/test-api.cc
+M	test/cctest/test-debug.cc
+M	test/cctest/test-decls.cc
+M	test/cctest/test-heap.cc
+M	test/cctest/test-parsing.cc
+M	test/mjsunit/debug-compile-event-newfunction.js
+M	test/mjsunit/mjsunit.status
+
+commit f6a3ef5643e3bc2551c641c392c7f9c31a24db78
+Author: Thibaud Michaud <thibaudm@chromium.org>
+Date:   Tue May 4 17:34:23 2021 +0200
+
+    [regalloc] Avoid duplicate moves for slot constraint
+    
+    We potentially emitted the same gap move multiple times to satisfy slot
+    constraint of live ranges defined by a constant. Avoid this by keeping
+    track of already spilled ranges for a given instruction.
+    
+    This is not expected to cause any regression because this case is rare.
+    If it does, a better approach to save allocations would be to re-use the
+    same vector by storing it somewhere that survives the function calls,
+    e.g. in the ConstraintBuilder.
+    
+    Drive-by: Remove unused functions.
+    
+    R=sigurds@chromium.org
+    CC=nicohartmann@chromium.org
+    
+    Bug: chromium:1204748
+    Change-Id: I75a838a8b27775ecdeddb4c60cf72c56d5f1c2a4
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/2871462
+    Reviewed-by: Sigurd Schneider <sigurds@chromium.org>
+    Commit-Queue: Thibaud Michaud <thibaudm@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#74375}
+
+M	src/compiler/backend/register-allocator.cc
+M	src/compiler/backend/register-allocator.h
+A	test/mjsunit/regress/regress-1204748.js
+
+commit 5679ab102df028a67916a736802943e232df12fd
+Author: Bill Budge <bbudge@chromium.org>
+Date:   Thu Dec 7 13:44:48 2017 -0800
+
+    Reland "[D8] Clean up ArrayBuffer Allocators in shell."
+    
+    This is a reland of 0c2faa0633ea7e384012d93994edf0e6fb0d307b
+    Original change's description:
+    > [D8] Clean up ArrayBuffer Allocators in shell.
+    >
+    > - Reworks the class hierarchy in d8.cc to conform to the allocator API.
+    >   In particular, allocators should malloc/free or equivalent unless
+    >   v8::ArrayBuffer::Allocator::Reserve is called.
+    > - Modifies ExternalizedContents to remember the allocation mode.
+    > - ArrayAllocatorBase now tracks its allocations to make sure it doesn't
+    >   call Free on externalized array buffers it didn't allocate.
+    >
+    > Bug: chromium:756050
+    > Change-Id: Ic2d07d36358f1b4fa542bea27f93d1d51a1757e1
+    > Reviewed-on: https://chromium-review.googlesource.com/807355
+    > Commit-Queue: Bill Budge <bbudge@chromium.org>
+    > Reviewed-by: Ben Titzer <titzer@chromium.org>
+    > Reviewed-by: Eric Holk <eholk@chromium.org>
+    > Cr-Commit-Position: refs/heads/master@{#49893}
+    
+    Bug: chromium:756050,v8:7146
+    Cq-Include-Trybots: master.tryserver.chromium.linux:linux_chromium_rel_ng
+    Change-Id: I8fe3a9d9af43196e16d02342a47347a76c0a1341
+    Reviewed-on: https://chromium-review.googlesource.com/811724
+    Reviewed-by: Eric Holk <eholk@chromium.org>
+    Commit-Queue: Bill Budge <bbudge@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#49945}
+
+M	src/api.cc
+M	src/d8.cc
+M	src/d8.h
+
+commit 4b92b0f8cfe25fe8789c7226cb0ab181bd37614b
+Author: Toon Verwaest <verwaest@chromium.org>
+Date:   Thu Nov 29 14:21:15 2018 +0100
+
+    [parser] Clear scope_snapshot_ upon parser destruction to avoid use-after-(recent)free
+    
+    |scope_snapshot_| might not have been cleared if there was a parser error between setting
+    the snapshot and consuming it. Explicitly clear it at the end of parsing for that case.
+    Otherwise Scope::Snapshot's destructor will possibly write into the already freed zone.
+    
+    Bug: chromium:909976
+    Change-Id: I8469d11f04e7f71528be5cba5663c652cd7eacb2
+    Reviewed-on: https://chromium-review.googlesource.com/c/1354880
+    Commit-Queue: Toon Verwaest <verwaest@chromium.org>
+    Reviewed-by: Leszek Swirski <leszeks@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#57938}
+
+M	src/ast/scopes.h
+M	src/parsing/parser-base.h
+
+commit 8616be0c9422b670030dee4664c7422b3cae548b
+Author: Tobias Tebbi <tebbi@chromium.org>
+Date:   Fri Jul 28 12:18:25 2017 +0000
+
+    Revert "[turbofan] staging new implementation of escape analysis"
+    
+    This reverts commit d230b44f0c5a26c5f7eaff9663139cb7ca50294c.
+    
+    Reason for revert: compile errors on the waterfall
+    
+    Original change's description:
+    > [turbofan] staging new implementation of escape analysis
+    >
+    > Bug:
+    > Change-Id: Idebe4fa6d651a404a0dc1947ed4a34a8dc9707a9
+    > Reviewed-on: https://chromium-review.googlesource.com/565720
+    > Commit-Queue: Tobias Tebbi <tebbi@chromium.org>
+    > Reviewed-by: Jaroslav Sevcik <jarin@chromium.org>
+    > Cr-Commit-Position: refs/heads/master@{#46966}
+    
+    TBR=mstarzinger@chromium.org,jarin@chromium.org,tebbi@chromium.org
+    
+    Change-Id: I73c3cb270d498aeb181e31bad04f1c73d5ca6741
+    No-Presubmit: true
+    No-Tree-Checks: true
+    No-Try: true
+    Reviewed-on: https://chromium-review.googlesource.com/591370
+    Reviewed-by: Tobias Tebbi <tebbi@chromium.org>
+    Commit-Queue: Tobias Tebbi <tebbi@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#46968}
+
+M	BUILD.gn
+M	src/base/functional.h
+M	src/compiler/common-operator.cc
+M	src/compiler/common-operator.h
+M	src/compiler/escape-analysis.cc
+M	src/compiler/escape-analysis.h
+M	src/compiler/instruction-selector.cc
+D	src/compiler/new-escape-analysis-reducer.cc
+D	src/compiler/new-escape-analysis-reducer.h
+D	src/compiler/new-escape-analysis.cc
+D	src/compiler/new-escape-analysis.h
+M	src/compiler/node-properties.cc
+M	src/compiler/node-properties.h
+M	src/compiler/opcodes.h
+D	src/compiler/persistent-map.h
+M	src/compiler/pipeline.cc
+M	src/compiler/simplified-lowering.cc
+M	src/compiler/typer.cc
+M	src/compiler/value-numbering-reducer.cc
+M	src/compiler/verifier.cc
+M	src/flag-definitions.h
+M	src/frames.cc
+M	src/v8.gyp
+M	src/zone/zone-containers.h
+D	test/mjsunit/compiler/escape-analysis-cycle.js
+M	test/mjsunit/optimized-foreach.js
+M	test/mjsunit/optimized-map.js
+M	test/unittests/BUILD.gn
+D	test/unittests/compiler/persistent-unittest.cc
+M	test/unittests/unittests.gyp
+
+commit dc4c8bdb05d8cb0ffc176cb6b661c47de642965f
+Author: Simon Zünd <szuend@chromium.org>
+Date:   Fri Feb 1 15:39:38 2019 +0100
+
+    [cleanup] Use implicit context and sortState for most Call* macros
+    
+    This CL changes most Call* macros (and some others) in Array#sort to
+    pass the context and sortState implicitly. This improves
+    readability, especially for loads and stores.
+    
+    R=jgruber@chromium.org, tebbi@chromium.org
+    
+    Bug: v8:8567
+    Change-Id: I6528d080bb01ab676de3ba6a7bf8223b98b6db7f
+    Reviewed-on: https://chromium-review.googlesource.com/c/1450114
+    Reviewed-by: Jakob Gruber <jgruber@chromium.org>
+    Reviewed-by: Tobias Tebbi <tebbi@chromium.org>
+    Commit-Queue: Simon Zünd <szuend@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#59320}
+
+M	third_party/v8/builtins/array-sort.tq
+
+commit 3cfc9f209ed0c173319659114859b7e848812fd7
+Author: machenbach <machenbach@chromium.org>
+Date:   Wed Jun 29 23:43:27 2016 -0700
+
+    [gn] Switch linux64 debug and internal snapshot to gn
+    
+    BUG=chromium:474921
+    
+    Review-Url: https://codereview.chromium.org/2105353002
+    Cr-Commit-Position: refs/heads/master@{#37414}
+
+M	infra/mb/mb_config.pyl
+
+commit 86aa7960cc53d73d7ffe408184e762fb1c75610e
+Author: Adam Klein <adamk@chromium.org>
+Date:   Wed Apr 26 13:28:01 2017 -0700
+
+    Revert behavioral part of 84dc8ed4c3e6c8c1e3005b2d2445c64328b139a4
+    
+    Clearing out the constructor field is invalid in the case where the
+    function's map has transitioned since the last SetPrototype call.
+    
+    Bug: chromium:714972
+    Change-Id: Ie918702a128219c4995b805f7c9a53b41cc4e4b6
+    Reviewed-on: https://chromium-review.googlesource.com/486130
+    Commit-Queue: Adam Klein <adamk@chromium.org>
+    Reviewed-by: Toon Verwaest <verwaest@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#44906}
+
+M	src/objects.cc
+A	test/mjsunit/regress/regress-crbug-714872.js
+
+commit 9aaf664253063e5a28fcacd58a67106357c3eaed
+Author: Ng Zhi An <zhin@chromium.org>
+Date:   Fri Aug 13 09:41:30 2021 -0700
+
+    Reland "[wasm][diagnostics] Support WasmCode in gdb JIT integration"
+    
+    This is a reland of a3b2c4ec810d7fa52490ea78bac979035659b2df
+    
+    The fix is in PS3, for UBSan. We use WriteUnalignedValue for
+    potentially unaligned memory writes.
+    
+    Original change's description:
+    > [wasm][diagnostics] Support WasmCode in gdb JIT integration
+    >
+    > - Add new enum WASM_CODE to JitCodeEvent::CodeType
+    > - Use AddressRegion instead of AddressRange (remove the latter)
+    > - Change CodeDescription constructor to take an AddressRegion,
+    >   both JIT_CODE and WASM_CODE use this
+    > - Add a simple mjsunit test that sets --gdbjit to check that
+    >   we don't crash.
+    > - Add a api test for adding WASM_CODE
+    >
+    > Bug: v8:11908
+    > Change-Id: I6e87fadc2df67978144d78caf9800c3982bc3705
+    > Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/3067754
+    > Reviewed-by: Adam Klein <adamk@chromium.org>
+    > Reviewed-by: Clemens Backes <clemensb@chromium.org>
+    > Reviewed-by: Jakob Kummerow <jkummerow@chromium.org>
+    > Commit-Queue: Zhi An Ng <zhin@chromium.org>
+    > Cr-Commit-Position: refs/heads/master@{#76271}
+    
+    Bug: v8:11908
+    Change-Id: I5ded6d01cff40803b2f70525163f760edcf97165
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/3093506
+    Reviewed-by: Jakob Kummerow <jkummerow@chromium.org>
+    Reviewed-by: Adam Klein <adamk@chromium.org>
+    Reviewed-by: Clemens Backes <clemensb@chromium.org>
+    Commit-Queue: Zhi An Ng <zhin@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#76327}
+
+M	include/v8.h
+M	src/diagnostics/gdb-jit.cc
+M	src/logging/log.cc
+M	src/logging/log.h
+M	src/wasm/wasm-code-manager.cc
+M	test/cctest/cctest.status
+M	test/cctest/test-api.cc
+A	test/mjsunit/wasm/gdbjit.js
+
+commit 6c1659becf3a8397554676bd3bf7d6f20540abb6
+Author: ishell@chromium.org <ishell@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Tue Feb 25 09:55:02 2014 +0000
+
+    Fix for a smi stores optimization on x64 with a regression test.
+    
+    BUG=345715
+    LOG=N
+    R=verwaest@chromium.org
+    
+    Review URL: https://codereview.chromium.org/178833002
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@19535 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/hydrogen.cc
+A	test/mjsunit/regress/regress-crbug-345715.js
+
+commit 010770085b55260245797b23bdae2076b736d0d9
+Author: adamk <adamk@chromium.org>
+Date:   Fri Nov 4 11:50:22 2016 -0700
+
+    Remove always-true --harmony-restrictive-declarations flag
+    
+    The flag has been on since at least Chrome 53.
+    
+    R=littledan@chromium.org
+    
+    Review-Url: https://codereview.chromium.org/2478883002
+    Cr-Commit-Position: refs/heads/master@{#40780}
+
+M	src/bootstrapper.cc
+M	src/flag-definitions.h
+M	src/parsing/parser-base.h
+M	src/parsing/parser.cc
+M	test/cctest/test-parsing.cc
+R096	test/mjsunit/harmony/sloppy-restrictive-block-function.js	test/mjsunit/es6/sloppy-restrictive-block-function.js
+D	test/mjsunit/harmony/sloppy-implicit-block-function.js
+D	test/mjsunit/regress/regress-220.js
+D	test/mjsunit/regress/regress-536751.js
+D	test/mjsunit/regress/regress-542099.js
+D	test/mjsunit/regress/regress-542100.js
+M	test/webkit/fast/js/parser-syntax-check-expected.txt
+M	test/webkit/fast/js/parser-syntax-check.js
+D	test/webkit/function-declaration-statement-expected.txt
+D	test/webkit/function-declaration-statement.js
+
+commit 0732cbee894c0e518db9c2f337be3794aa46a681
+Author: bjaideep <bjaideep@ca.ibm.com>
+Date:   Thu Jun 8 14:34:22 2017 -0700
+
+    PPC/s390: Inline Array.prototype.forEach in TurboFan
+    
+    Port 90c3a2d54b956d06ace2c97c6bfdb10ea9cb8e58
+    
+    Original Commit Message:
+    
+        This CL contains a few pieces:
+    
+        - A new mechanism to create "BuiltinContinuation" checkpoints in TurboFan
+          graphs, which--when triggered--swizzle the values in the the FrameState to be
+          parameters to a typically TF-generated builtin that resumes execution to finish
+          the slow-case functionality.
+        - Continuation builtins that have special handling in the deoptimizer and their own
+          new frame type to ensure that the values they need to begin executing can be stashed
+          away and restored immediately before the builtin is called via a trampoline that runs
+          when the continuation builtin's frame execution resumes.
+        - An implementation of Array.prototype.forEach in TurboFan that can be used to
+          inline it. The inlined forEach implementation uses the checkpoints mechanism
+          described above to deopt in the middle of the forEach in the cases that optimization
+          invariants are violated. There is a slightly different continuation stub for each
+          deopt point in the forEach implementation to ensure the correct side-effects, i.e.
+          that the deopt of the builtin isn't programmatically observable.
+    
+    R=danno@chromium.org, joransiu@ca.ibm.com, jyan@ca.ibm.com, michael_dawson@ca.ibm.com
+    BUG=
+    LOG=N
+    
+    Review-Url: https://codereview.chromium.org/2926043005
+    Cr-Commit-Position: refs/heads/master@{#45798}
+
+M	src/builtins/ppc/builtins-ppc.cc
+M	src/builtins/s390/builtins-s390.cc
+
+commit c9d7b236583603918a3168cb6cfef0e60be10e10
+Author: Michael Lippautz <mlippautz@chromium.org>
+Date:   Mon Jun 8 11:53:26 2020 +0200
+
+    cppgc: Add basic heap growing strategy
+    
+    Adds allocation-based heap growing strategy that triggers GC based on
+    some limit. The limit is computed based on previous live memory and a
+    constant growing factor.
+    
+    For invoking GC, we support two modes: with and without conservative
+    stack scanning. Without conservative stack scanning, an invoker makes
+    sure that we schedule a GC without stack using the existing platform.
+    
+    Bug: chromium:1056170
+    Change-Id: I1808aeb5806a6ddd5501b556d6b6b129a85b9cda
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/2228887
+    Reviewed-by: Omer Katz <omerkatz@chromium.org>
+    Reviewed-by: Ulan Degenbaev <ulan@chromium.org>
+    Reviewed-by: Anton Bikineev <bikineev@chromium.org>
+    Commit-Queue: Michael Lippautz <mlippautz@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#68235}
+
+M	BUILD.gn
+M	include/cppgc/heap.h
+M	include/cppgc/platform.h
+A	src/heap/cppgc/garbage-collector.h
+A	src/heap/cppgc/gc-invoker.cc
+A	src/heap/cppgc/gc-invoker.h
+A	src/heap/cppgc/heap-growing.cc
+A	src/heap/cppgc/heap-growing.h
+M	src/heap/cppgc/heap.cc
+M	src/heap/cppgc/heap.h
+M	src/heap/cppgc/sweeper.cc
+A	src/heap/cppgc/task-handle.h
+M	test/unittests/BUILD.gn
+A	test/unittests/heap/cppgc/gc-invoker-unittest.cc
+A	test/unittests/heap/cppgc/heap-growing-unittest.cc
+M	test/unittests/heap/cppgc/heap-unittest.cc
+M	test/unittests/heap/cppgc/sweeper-unittest.cc
+
+commit 404e215458df2676f21017cec00a7ae51fb163c1
+Author: titzer <titzer@chromium.org>
+Date:   Fri Oct 28 11:03:21 2016 -0700
+
+    [wasm] Support for restricted table imports.
+    
+    This CL implements basic table import functionality.
+    
+    Missing: growing of tables (WebAssembly.Grow) doesn't change dispatch tables
+    Missing: allowing larger table imports than minimum size
+    
+    R=rossberg@chromium.org,bradnelson@chromium.org
+    BUG=v8:5507
+    
+    Review-Url: https://codereview.chromium.org/2454503005
+    Cr-Commit-Position: refs/heads/master@{#40652}
+
+M	src/compiler/wasm-compiler.cc
+M	src/compiler/wasm-compiler.h
+M	src/wasm/module-decoder.cc
+M	src/wasm/wasm-interpreter.cc
+M	src/wasm/wasm-js.cc
+M	src/wasm/wasm-js.h
+M	src/wasm/wasm-module.cc
+M	src/wasm/wasm-module.h
+M	test/cctest/wasm/wasm-run-utils.h
+M	test/mjsunit/wasm/indirect-tables.js
+M	test/mjsunit/wasm/wasm-module-builder.js
+M	test/unittests/wasm/module-decoder-unittest.cc
+
+commit ed5ee663a9ec0feb9a44db8c941ba388c8d85429
+Author: Michael Achenbach <machenbach@chromium.org>
+Date:   Thu Jul 6 09:28:28 2017 +0200
+
+    [release] Skip CC list on auto-roll CLs
+    
+    NOTRY=true
+    TBR=hablich@chromium.org
+    
+    Bug: v8:6574
+    Change-Id: Ibe9d023a11a062f167a696e752478f3355f32bb4
+    Reviewed-on: https://chromium-review.googlesource.com/561001
+    Reviewed-by: Michael Achenbach <machenbach@chromium.org>
+    Commit-Queue: Michael Achenbach <machenbach@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#46424}
+
+M	tools/release/git_recipes.py
+M	tools/release/test_scripts.py
+
+commit 918b998dc773266de160e34b2193ee7119a488d3
+Author: Leszek Swirski <leszeks@chromium.org>
+Date:   Mon Oct 17 17:15:34 2022 +0200
+
+    [cleanup] More C++20 fixes
+    
+    Fix C++20 removing implicit 'this' copy capture in lambdas by preferring
+    [&](...){...} over [=](...){...} lambdas (predominantly in CSA).
+    
+    Bug: chromium:3956795
+    Change-Id: Ieb4b9f700d32a0676c95dea08b46f9474020d5ce
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/3959742
+    Reviewed-by: Toon Verwaest <verwaest@chromium.org>
+    Commit-Queue: Leszek Swirski <leszeks@chromium.org>
+    Cr-Commit-Position: refs/heads/main@{#83752}
+
+M	src/ast/scopes.cc
+M	src/builtins/builtins-array-gen.cc
+M	src/builtins/builtins-async-iterator-gen.cc
+M	src/builtins/builtins-call-gen.cc
+M	src/builtins/builtins-collections-gen.cc
+M	src/builtins/builtins-constructor-gen.cc
+M	src/builtins/builtins-generator-gen.cc
+M	src/builtins/builtins-handler-gen.cc
+M	src/builtins/builtins-internal-gen.cc
+M	src/builtins/builtins-lazy-gen.cc
+M	src/builtins/builtins-microtask-queue-gen.cc
+M	src/builtins/builtins-object-gen.cc
+M	src/builtins/builtins-regexp-gen.cc
+M	src/builtins/builtins-string-gen.cc
+M	src/builtins/builtins-typed-array-gen.cc
+M	src/codegen/code-stub-assembler.cc
+M	src/codegen/code-stub-assembler.h
+M	src/compiler/js-call-reducer.cc
+M	src/compiler/operator.h
+M	src/compiler/wasm-compiler.cc
+M	src/debug/debug-scopes.cc
+M	src/debug/debug.cc
+M	src/ic/accessor-assembler.cc
+M	src/ic/binary-op-assembler.cc
+M	src/ic/unary-op-assembler.cc
+M	src/interpreter/interpreter-assembler.cc
+M	src/interpreter/interpreter-generator.cc
+M	src/interpreter/interpreter.cc
+M	src/wasm/baseline/liftoff-compiler.cc
+M	test/unittests/codegen/code-pages-unittest.cc
+
+commit 04a22c14d714ca8a6fcfb7d3d4aba32101252501
+Author: paul.lind@imgtec.com <paul.lind@imgtec.com>
+Date:   Thu Sep 18 17:33:24 2014 +0000
+
+    Update cctest OWNERS file for mips committers.
+    
+    BUG=
+    R=jkummerow@chromium.org
+    
+    Review URL: https://codereview.chromium.org/576613003
+    
+    git-svn-id: https://v8.googlecode.com/svn/branches/bleeding_edge@24050 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	test/cctest/OWNERS
+
+commit 9937d0c462a7b6c205142cb0923cbd56133357aa
+Author: Michael Starzinger <mstarzinger@chromium.org>
+Date:   Wed Mar 29 10:32:21 2017 +0200
+
+    [asm.js] Fix debugger test to check listener exception.
+    
+    R=clemensh@chromium.org
+    BUG=v8:6127
+    
+    Change-Id: Id77e8eef3ad909608a5d32fa7373077540e201c7
+    Reviewed-on: https://chromium-review.googlesource.com/461824
+    Reviewed-by: Clemens Hammacher <clemensh@chromium.org>
+    Commit-Queue: Michael Starzinger <mstarzinger@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#44223}
+
+M	test/debugger/debug/wasm/asm-debug.js
+
+commit 057371da13212d91442e79f817ce8a75819f446d
+Author: mstarzinger@chromium.org <mstarzinger@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Tue Mar 27 10:42:38 2012 +0000
+
+    Fix polymorphic load on named fields.
+    
+    This fixes polymorphic loads to correctly compare in-object offsets
+    instead of indices, because indices might coincide even though the
+    actual slot is different because of different instance sizes.
+    
+    R=danno@chromium.org
+    BUG=v8:2030
+    TEST=mjsunit/regress/regress-2030,mjsunit/mirror-array
+    
+    Review URL: https://chromiumcodereview.appspot.com/9864028
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@11153 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/hydrogen.cc
+A	test/mjsunit/regress/regress-2030.js
+
+commit 313f8d3fcb71b66fcc3e3028bb87505c053e1f90
+Author: Michael Starzinger <mstarzinger@chromium.org>
+Date:   Tue Aug 22 10:17:12 2017 +0200
+
+    [asm.js] Fix heap access validation of shift expressions.
+    
+    This makes sure that shift expressions (not wrapped in parentheses) can
+    appear as part of the index in a valid heap access expression. Only the
+    last operand of a sequence of shift expressions is taken into account
+    when validating the heap access.
+    
+    R=jarin@chromium.org
+    TEST=mjsunit/regress/regress-6700
+    BUG=v8:6700,chromium:754751
+    
+    Change-Id: Icc7a71bd64461da4d3daea41b995964e3dfc6dc6
+    Reviewed-on: https://chromium-review.googlesource.com/623811
+    Commit-Queue: Michael Starzinger <mstarzinger@chromium.org>
+    Reviewed-by: Jaroslav Sevcik <jarin@chromium.org>
+    Reviewed-by: Andreas Haas <ahaas@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#47497}
+
+M	src/asmjs/asm-parser.cc
+M	src/asmjs/asm-parser.h
+A	test/mjsunit/regress/regress-6700.js
+
+commit 6f573edc117b0aa0ae0375a957b83fdf0bd47b90
+Author: svenpanne@chromium.org <svenpanne@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Wed Feb 8 10:23:10 2012 +0000
+
+    Prepare push to trunk.  Now working on version 3.9.5.
+    
+    R=jkummerow@chromium.org
+    BUG=
+    TEST=
+    
+    Review URL: https://chromiumcodereview.appspot.com/9358021
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@10633 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	ChangeLog
+M	src/version.cc
+
+commit 2999cea522ee9496318e9986a677810865187505
+Author: Mythri A <mythria@chromium.org>
+Date:   Mon Aug 5 15:37:22 2019 +0100
+
+    Reland "[ic] Don't transition to premonomorphic state"
+    
+    This is a reland of 159df2488ccf042d804f0b7318d78f2b9e6d2d83
+    
+    Original change's description:
+    > [ic] Don't transition to premonomorphic state
+    >
+    > We used to use premonomorphic state to delay initializing the ICs.
+    > This optimization was to avoid the cost of setting up handlers if the
+    > code executed only once. With lazy feedback allocation we no longer
+    > need this.
+    >
+    > This cl also renames LoadIC_Uninitialized to LoadIC_Nofeedback and
+    > StoreIC_Uninitialized to StoreIC_Nofeedback since we now miss to
+    > runtime in the uninitialized state and use the builtin when there
+    > is no feedback.
+    >
+    >
+    > Change-Id: I1633e61ea74664da51348e362c34c47a017a264a
+    > Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/1683525
+    > Commit-Queue: Mythri Alle <mythria@chromium.org>
+    > Reviewed-by: Toon Verwaest <verwaest@chromium.org>
+    > Cr-Commit-Position: refs/heads/master@{#63020}
+    
+    Change-Id: Ica7eb65649615c2f8410d5b815a98b55cb1cfc4d
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/1731000
+    Commit-Queue: Mythri Alle <mythria@chromium.org>
+    Reviewed-by: Toon Verwaest <verwaest@chromium.org>
+    Reviewed-by: Ross McIlroy <rmcilroy@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#63082}
+
+M	src/builtins/builtins-definitions.h
+M	src/builtins/builtins-handler-gen.cc
+M	src/builtins/builtins-ic-gen.cc
+M	src/codegen/compiler.cc
+M	src/codegen/compiler.h
+M	src/heap/factory.cc
+M	src/ic/accessor-assembler.cc
+M	src/ic/accessor-assembler.h
+M	src/ic/ic.cc
+M	src/ic/keyed-store-generic.cc
+M	src/ic/keyed-store-generic.h
+M	src/runtime/runtime-test.cc
+M	test/cctest/test-feedback-vector.cc
+M	test/cctest/test-poison-disasm-arm.cc
+M	test/cctest/test-poison-disasm-arm64.cc
+M	test/mjsunit/es6/large-classes-properties.js
+
+commit 2cb3b9eaf3a6a151b7d99ffcec46313509c5249c
+Author: bradnelson <bradnelson@google.com>
+Date:   Tue Nov 3 14:46:40 2015 -0800
+
+    Increase strictness of asm type conversions.
+    
+    Only cast to integer with xor (closer to the spec which allows only ~~).
+    Check type matching on the bitwise operations.
+    Prevent mixing of types with the arthimetic operations.
+    
+    BUG= https://code.google.com/p/v8/issues/detail?id=4203
+    TEST=test-asm-validator
+    R=titzer@chromium.org,aseemgarg@chromium.org
+    LOG=N
+    
+    Review URL: https://codereview.chromium.org/1405383007
+    
+    Cr-Commit-Position: refs/heads/master@{#31764}
+
+M	src/type-cache.h
+M	src/typing-asm.cc
+M	src/typing-asm.h
+M	test/cctest/test-asm-validator.cc
+
+commit 0b01726bb7333eb8d74a212919fa3b6e47fed680
+Author: Michael Achenbach <machenbach@chromium.org>
+Date:   Sat Jun 27 21:57:35 2020 +0200
+
+    [foozzie] Remove outdated suppressions
+    
+    It is obsolete to filter out error-message differences since the
+    time we pass --correctness-fuzzer-suppressions to d8, which already
+    stubs all messages:
+    https://cs.chromium.org/chromium/src/v8/src/execution/messages.cc?l=1031
+    
+    No-Try: true
+    Bug: chromium:1100114
+    Change-Id: Iac42a8e2a32f9bae4034f79eaff429bf3ee41724
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/2270024
+    Reviewed-by: Maya Lekova <mslekova@chromium.org>
+    Reviewed-by: Tamer Tas <tmrts@chromium.org>
+    Commit-Queue: Michael Achenbach <machenbach@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#68577}
+
+M	tools/clusterfuzz/v8_foozzie_test.py
+M	tools/clusterfuzz/v8_suppressions.py
+
+commit 0199cde71fda33a1a49c185cb03a3d686c6eb5f9
+Author: Michael Achenbach <machenbach@chromium.org>
+Date:   Wed Jan 11 10:22:31 2023 +0100
+
+    [trials] Add new contradictions after readonly-flags introduction
+    
+    No-Try: true
+    Bug: v8:10577
+    Change-Id: I9d17d907f900dbb734ed6e6c22bf7a75766082c0
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/4154412
+    Commit-Queue: Jakob Linke <jgruber@chromium.org>
+    Auto-Submit: Michael Achenbach <machenbach@chromium.org>
+    Reviewed-by: Jakob Linke <jgruber@chromium.org>
+    Cr-Commit-Position: refs/heads/main@{#85205}
+
+M	tools/clusterfuzz/trials/clusterfuzz_trials_config.json
+
+commit 2cea136a877bd88838ce0fbd1df500840b509be1
+Author: hablich <hablich@chromium.org>
+Date:   Wed Dec 23 02:03:09 2015 -0800
+
+    [Test] Mark flaky test cctest/test-lockers/LockAndUnlockDifferentIsolates
+    
+    BUG=v8:4642
+    LOG=N
+    NOTRY=true
+    R=machenbach@chromium.org,mvstanton@chromium.org
+    
+    Review URL: https://codereview.chromium.org/1542253002
+    
+    Cr-Commit-Position: refs/heads/master@{#33021}
+
+M	test/cctest/cctest.status
+
+commit 6aad7fb992e5cbf06229b55bd31bb7b8c8fd01c4
+Author: jkummerow@chromium.org <jkummerow@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Tue Nov 12 12:09:38 2013 +0000
+
+    Fix compilation with GCC 4.8
+    
+    BUG=v8:2767,v8:2149
+    R=bmeurer@chromium.org
+    
+    Review URL: https://codereview.chromium.org/69413002
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@17641 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	include/v8.h
+M	include/v8config.h
+M	src/checks.h
+M	test/cctest/test-macro-assembler-x64.cc
+
+commit da8b72f2b8c54f08e580b02cec6a4c5d98e84b25
+Author: antonm@chromium.org <antonm@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Tue Feb 8 19:04:17 2011 +0000
+
+    1) Return failure if any of property sets failed;
+    2) We cannot assert the declared property will go to the extension in the presence of callbacks and interceptors.
+    
+    BUG=1119
+    TEST=test/mjsunit/regress/regress-1119.js
+    
+    Review URL: http://codereview.chromium.org/6454011
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@6687 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/runtime.cc
+A	test/mjsunit/regress/regress-1119.js
+
+commit 47cce544a31ed5577ffe2963f67acb4144ee0232
+Author: v8-autoroll <v8-autoroll@chromium.org>
+Date:   Thu Mar 24 20:21:24 2016 -0700
+
+    Update V8 DEPS.
+    
+    Rolling v8/buildtools to 80b5126f91be4eb359248d28696746ef09d5be67
+    
+    TBR=machenbach@chromium.org,vogelheim@chromium.org,hablich@chromium.org
+    
+    Review URL: https://codereview.chromium.org/1834743004
+    
+    Cr-Commit-Position: refs/heads/master@{#35070}
+
+M	DEPS
+
+commit 57a1d86ca29bf5f55bba123c33d5ef0e38a3bac8
+Author: Andreas Haas <ahaas@chromium.org>
+Date:   Fri Dec 22 13:49:32 2017 +0100
+
+    [turbofan][x64] Remove the kX64PeekFloat32 and kX64PeekFloat64 instructions
+    
+    Instead of these two instructions I generalize the kX64Peek instruction.
+    
+    R=bmeurer@chromium.org
+    
+    Change-Id: Ie5f8c7d428b65df3ca8b75594f6a06a75cc8e978
+    Reviewed-on: https://chromium-review.googlesource.com/839863
+    Commit-Queue: Andreas Haas <ahaas@chromium.org>
+    Reviewed-by: Benedikt Meurer <bmeurer@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#50294}
+
+M	src/compiler/x64/code-generator-x64.cc
+M	src/compiler/x64/instruction-codes-x64.h
+M	src/compiler/x64/instruction-scheduler-x64.cc
+M	src/compiler/x64/instruction-selector-x64.cc
+M	test/cctest/compiler/test-multiple-return.cc
+
+commit 4447405b179db63748c10d8cb3d139e795195eb3
+Author: danno <danno@chromium.org>
+Date:   Thu Nov 3 01:36:02 2016 -0700
+
+    [builtins]: Uniformly push argument count in TF-generated builtins
+    
+    Review-Url: https://codereview.chromium.org/2467513002
+    Cr-Commit-Position: refs/heads/master@{#40712}
+
+M	src/compiler/arm/code-generator-arm.cc
+M	src/compiler/arm64/code-generator-arm64.cc
+M	src/compiler/code-assembler.cc
+M	src/compiler/ia32/code-generator-ia32.cc
+M	src/compiler/linkage.cc
+M	src/compiler/linkage.h
+M	src/compiler/mips/code-generator-mips.cc
+M	src/compiler/mips64/code-generator-mips64.cc
+M	src/compiler/pipeline.cc
+M	src/compiler/x64/code-generator-x64.cc
+M	src/frames.cc
+M	src/frames.h
+M	test/cctest/compiler/code-assembler-tester.h
+M	test/cctest/test-code-stub-assembler.cc
+
+commit 36dd23aa1b24f1b30defd7037f948610a7d0c767
+Author: verwaest@chromium.org <verwaest@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Mon Sep 17 17:18:27 2012 +0000
+
+    Do not go to slow mode and back to fast in initializer blocks.
+    
+    Review URL: https://chromiumcodereview.appspot.com/10905308
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@12534 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/arm/full-codegen-arm.cc
+M	src/ast.cc
+M	src/ast.h
+M	src/ia32/full-codegen-ia32.cc
+M	src/parser.cc
+M	src/runtime.cc
+M	src/runtime.h
+M	src/x64/full-codegen-x64.cc
+
+commit c916e8cfa7efc1e6cadc49b593a65d53d29d54c0
+Author: Benedikt Meurer <bmeurer@chromium.org>
+Date:   Wed Jan 14 14:49:35 2015 +0100
+
+    Remove stray + character.
+    
+    TBR=jarin@chromium.org
+    
+    Review URL: https://codereview.chromium.org/847383002
+    
+    Cr-Commit-Position: refs/heads/master@{#26055}
+
+M	src/compiler/simplified-lowering.cc
+
+commit 1e1a7a593bccc5ea5676c63d49845626a2ca4334
+Author: mstarzinger@chromium.org <mstarzinger@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Wed Jul 30 15:35:29 2014 +0000
+
+    Fix relative include path in cctest case.
+    
+    R=jarin@chromium.org, titzer@chromium.org
+    
+    Review URL: https://codereview.chromium.org/426233003
+    
+    git-svn-id: https://v8.googlecode.com/svn/branches/bleeding_edge@22721 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	test/cctest/compiler/test-run-deopt.cc
+
+commit 052924abe3fb44df588f6e7c7df9ca691bbfa887
+Author: jkummerow <jkummerow@chromium.org>
+Date:   Fri Apr 10 04:24:25 2015 -0700
+
+    Speculative fix for stack overflow in CollectEvacuationCandidates
+    
+    I don't have a repro, but it seems that when we are close to the stack limit,
+    CollectEvacuationCandidates' local variables can blow the limit. To avoid
+    this, instead of always allocating a 2000-pointer-sizes array on the stack,
+    use a std::vector (which stores its elements on the heap), and while we're
+    at it, only allocate as many elements as we actually need.
+    
+    Review URL: https://codereview.chromium.org/1073123002
+    
+    Cr-Commit-Position: refs/heads/master@{#27742}
+
+M	src/heap/mark-compact.cc
+
+commit ab639e4ac8f565ccf2f195ae0d3acca20587c15d
+Author: Clemens Backes <clemensb@chromium.org>
+Date:   Wed Oct 18 13:55:18 2017 +0000
+
+    Revert "[test] Avoid unnecessary std::vector allocations"
+    
+    This reverts commit e737b4ce0dc534f4531c54be62c98888e427b049.
+    
+    Reason for revert: On windows, V8_INFINITY is not constexpr
+    
+    Original change's description:
+    > [test] Avoid unnecessary std::vector allocations
+    >
+    > Instead of copying an array of fixed values into an std::vector for
+    > each usage of the FOR_INPUTS macro, just iterate the constant data
+    > directly.
+    > This also makes the <type>_vector() functions return {constexpr Vector}
+    > instead of {std::vector}.
+    >
+    > R=​tebbi@chromium.org
+    >
+    > Change-Id: Ifc3e5509b2fbf5e383c967c2f46acf2b07f7b5b4
+    > Reviewed-on: https://chromium-review.googlesource.com/725427
+    > Reviewed-by: Tobias Tebbi <tebbi@chromium.org>
+    > Commit-Queue: Clemens Hammacher <clemensh@chromium.org>
+    > Cr-Commit-Position: refs/heads/master@{#48688}
+    
+    TBR=clemensh@chromium.org,tebbi@chromium.org
+    
+    Change-Id: Iccb52941d4efe71b49b41572c3d922a5d78bdfd2
+    No-Presubmit: true
+    No-Tree-Checks: true
+    No-Try: true
+    Reviewed-on: https://chromium-review.googlesource.com/725899
+    Reviewed-by: Clemens Hammacher <clemensh@chromium.org>
+    Commit-Queue: Clemens Hammacher <clemensh@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#48691}
+
+M	src/vector.h
+M	test/cctest/BUILD.gn
+M	test/cctest/cctest.gyp
+M	test/cctest/compiler/codegen-tester.cc
+D	test/cctest/compiler/value-helper.cc
+M	test/cctest/compiler/value-helper.h
+M	test/cctest/wasm/test-c-wasm-entry.cc
+M	test/cctest/wasm/test-wasm-interpreter-entry.cc
+
+commit 0e3b6bea6d00fbf08eff582bf10305f9c2a355e9
+Author: v8-autoroll <v8-autoroll@chromium.org>
+Date:   Sun Oct 8 20:15:04 2017 -0700
+
+    Update V8 DEPS.
+    
+    Rolling v8/build: https://chromium.googlesource.com/chromium/src/build/+log/58ec823..adaf9e5
+    
+    Rolling v8/third_party/catapult: https://chromium.googlesource.com/catapult/+log/0564bf2..a48a6af
+    
+    TBR=machenbach@chromium.org,hablich@chromium.org
+    
+    Change-Id: I63acc1dd6eadf94a84a72c45bb1216d92dc0874d
+    Reviewed-on: https://chromium-review.googlesource.com/706921
+    Reviewed-by: v8 autoroll <v8-autoroll@chromium.org>
+    Commit-Queue: v8 autoroll <v8-autoroll@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#48360}
+
+M	DEPS
+
+commit 28e74e138a9e8ff4728d13eb6df6e65a881e4cdf
+Author: haitao.feng@intel.com <haitao.feng@intel.com@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Fri Jun 13 02:19:57 2014 +0000
+
+    Specially handle the key of the LoadKeyed and StoreKeyed instruction for x32 port.
+    
+    R=verwaest@chromium.org
+    
+    Review URL: https://codereview.chromium.org/324913002
+    
+    git-svn-id: https://v8.googlecode.com/svn/branches/bleeding_edge@21826 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/x64/lithium-codegen-x64.cc
+M	src/x64/lithium-codegen-x64.h
+M	src/x64/lithium-x64.cc
+M	src/x64/lithium-x64.h
+
+commit 88144ee17fa563a4966eab931913b4189424ca72
+Author: yangguo@chromium.org <yangguo@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Wed Apr 30 12:25:18 2014 +0000
+
+    Kiss goodbye to MaybeObject.
+    
+    R=hpayer@chromium.org
+    
+    Review URL: https://codereview.chromium.org/259173003
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@21086 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/arm64/simulator-arm64.cc
+M	src/assembler.h
+M	src/execution.cc
+M	src/factory.cc
+M	src/gdb-jit.cc
+M	src/handles-inl.h
+M	src/heap-inl.h
+M	src/heap-snapshot-generator.cc
+M	src/heap.cc
+M	src/heap.h
+M	src/incremental-marking-inl.h
+M	src/incremental-marking.cc
+M	src/isolate.h
+M	src/mark-compact.cc
+M	src/objects-debug.cc
+M	src/objects-inl.h
+M	src/objects-printer.cc
+M	src/objects.cc
+M	src/objects.h
+M	src/spaces-inl.h
+M	src/spaces.cc
+M	src/spaces.h
+M	src/v8globals.h
+M	test/cctest/cctest.h
+M	test/cctest/test-alloc.cc
+M	test/cctest/test-heap.cc
+M	test/cctest/test-mark-compact.cc
+M	test/cctest/test-serialize.cc
+M	test/cctest/test-spaces.cc
+M	test/cctest/test-symbols.cc
+
+commit 07e9921f5a5fc914b1f70f1903716c5e004d72ce
+Author: bmeurer <bmeurer@chromium.org>
+Date:   Mon Feb 8 04:33:44 2016 -0800
+
+    [turbofan] Introduce JSCreateLowering for optimizing JSCreate nodes.
+    
+    This moves the JSCreate related functionality from JSTypedLowering into
+    a dedicated JSCreateLowering reducer. This is in preparation of landing
+    the support for optimized literals in TurboFan, which would blow up
+    JSTypedLowering quite seriously otherwise.
+    
+    R=mstarzinger@chromium.org
+    
+    Review URL: https://codereview.chromium.org/1678833002
+    
+    Cr-Commit-Position: refs/heads/master@{#33813}
+
+M	BUILD.gn
+A	src/compiler/js-create-lowering.cc
+A	src/compiler/js-create-lowering.h
+M	src/compiler/js-typed-lowering.cc
+M	src/compiler/js-typed-lowering.h
+M	src/compiler/pipeline.cc
+M	src/type-cache.h
+A	test/unittests/compiler/js-create-lowering-unittest.cc
+M	test/unittests/compiler/js-typed-lowering-unittest.cc
+M	test/unittests/unittests.gyp
+M	tools/gyp/v8.gyp
+
+commit da1327e088d7c78137b7f50a027fd50da52ffc45
+Author: whesse@chromium.org <whesse@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Thu Jul 2 11:49:39 2009 +0000
+
+    X64: Align start of remembered set to a 4-byte boundary
+    Review URL: http://codereview.chromium.org/151198
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@2337 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/spaces.h
+
+commit c0c435b531a9e451442cb9066612f8582d188ea2
+Author: mstarzinger <mstarzinger@chromium.org>
+Date:   Wed Sep 21 00:58:27 2016 -0700
+
+    Remove some dead ZoneList typedefs.
+    
+    R=marja@chromium.org
+    
+    Review-Url: https://codereview.chromium.org/2359443002
+    Cr-Commit-Position: refs/heads/master@{#39577}
+
+M	src/ast/ast.h
+M	src/isolate.h
+
+commit d202d79a6a2289586140c3c5672d94d217710d3b
+Author: mstarzinger <mstarzinger@chromium.org>
+Date:   Thu Feb 12 09:08:47 2015 -0800
+
+    Add missing FrameState to JSTypedLoweringTester::Binop.
+    
+    R=titzer@chromium.org
+    TEST=cctest/test-js-typed-lowering
+    
+    Review URL: https://codereview.chromium.org/925583002
+    
+    Cr-Commit-Position: refs/heads/master@{#26626}
+
+M	test/cctest/compiler/test-js-typed-lowering.cc
+
+commit 90abdd285a3b80a8e5f402169bfb5e9150287fe4
+Author: ager@chromium.org <ager@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Mon Aug 31 16:24:44 2009 +0000
+
+    Mark native regexp macro assembler tests as flaky on ARM until Lasse
+    can look at them.
+    
+    The code seems to work on all of our tests.
+    
+    TBR=lrn@chromium.org
+    
+    Review URL: http://codereview.chromium.org/179040
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@2788 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	test/cctest/cctest.status
+
+commit 260d65d58477f005e6a3b1facaf623b34b9b9f6f
+Author: erik.corry@gmail.com <erik.corry@gmail.com@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Wed Sep 7 11:28:48 2011 +0000
+
+    Optimize the common obfuscator pattern where ["foo","bar","baz"]
+    gets converted fo "foo,bar,baz".split(",").  If the inputs are
+    symbols we cache the result and make the substrings into symbols.
+    Review URL: http://codereview.chromium.org/7782025
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@9164 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/heap.cc
+M	src/heap.h
+M	src/runtime.cc
+
+commit 69bc282fd6c115d00e5f2108efc69ea973b624bc
+Author: vitalyr@chromium.org <vitalyr@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Mon May 23 12:59:02 2011 +0000
+
+    Isolates cleanup: get rid of some ugly macros.
+    
+    Review URL: http://codereview.chromium.org/7062003
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@7993 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/api.h
+M	src/bootstrapper.h
+M	src/isolate.h
+M	src/serialize.h
+M	src/snapshot.h
+M	src/stub-cache.h
+
+commit 870eba4c65474dc5d1e5df0689067c3aff8c54eb
+Author: vegorov@chromium.org <vegorov@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Tue Apr 17 10:37:41 2012 +0000
+
+    Process weak references between optimized JSFunctions on scavenges.
+    
+    R=mstarzinger@chromium.org
+    
+    Review URL: https://chromiumcodereview.appspot.com/10091027
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@11347 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/heap.cc
+M	src/incremental-marking.cc
+M	src/mark-compact.cc
+M	src/mark-compact.h
+M	src/objects-visiting-inl.h
+M	src/objects-visiting.h
+
+commit aba716e6dfbe655aaa08120762a73a3312fe844c
+Author: Junliang Yan <junyan@redhat.com>
+Date:   Thu Aug 5 08:23:31 2021 -0400
+
+    ppc: [liftoff] optimize FillStackSlotsWithZero
+    
+    Change-Id: Ic2576da8adff6935758ecae14ce5441d8af6428b
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/3075123
+    Reviewed-by: Milad Fa <mfarazma@redhat.com>
+    Commit-Queue: Junliang Yan <junyan@redhat.com>
+    Cr-Commit-Position: refs/heads/master@{#76121}
+
+M	src/wasm/baseline/ppc/liftoff-assembler-ppc.h
+
+commit f1f628ea09953df852c2688d0175e1e770d53a05
+Author: mstarzinger@chromium.org <mstarzinger@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Fri Jun 28 13:58:15 2013 +0000
+
+    Prepare push to trunk.  Now working on version 3.20.1.
+    
+    R=jkummerow@chromium.org
+    
+    Review URL: https://codereview.chromium.org/18052019
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@15385 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	ChangeLog
+M	src/version.cc
+
+commit f8a7b0e99bec8c2e5938e733845ab77778bfdab9
+Author: Camillo Bruni <cbruni@chromium.org>
+Date:   Tue Jul 11 11:21:12 2017 +0200
+
+    [cleanup] Move mjsunit regression tests into test/mjsunit/regress
+    
+    Change-Id: Ib1ce302489196b2fe98558cafe31d1f60a18db12
+    Reviewed-on: https://chromium-review.googlesource.com/566820
+    Reviewed-by: Jakob Gruber <jgruber@chromium.org>
+    Commit-Queue: Camillo Bruni <cbruni@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#46551}
+
+R100	test/mjsunit/regress-6223.js	test/mjsunit/regress/regress-6223.js
+R100	test/mjsunit/regress-707410.js	test/mjsunit/regress/regress-707410.js
+
+commit 45ee6f4048a6649c0dfd13615c12d787f402a7a2
+Author: Ng Zhi An <zhin@chromium.org>
+Date:   Tue Dec 3 02:19:31 2019 -0800
+
+    [liftoff] Change PatchPrepareStackFrame to use bytes
+    
+    Calculate the number of bytes of the stack frame used in
+    PatchPrepareStackFrame using the size of the spill instead of the number
+    of slots.
+    
+    We only need the number of bytes spilled (without adding the number of
+    locals) because whenever we spill, we already track the largest offset,
+    with RecordUsedSpillSlot. GetTotalFrameSlotCount can also be changed to
+    remove the num_locals, in a future patch.
+    
+    Change-Id: I08fe3e81eaebf5f2cf1e11292645663474483447
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/1945944
+    Commit-Queue: Zhi An Ng <zhin@chromium.org>
+    Reviewed-by: Clemens Backes <clemensb@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#65303}
+
+M	src/wasm/baseline/arm/liftoff-assembler-arm.h
+M	src/wasm/baseline/arm64/liftoff-assembler-arm64.h
+M	src/wasm/baseline/ia32/liftoff-assembler-ia32.h
+M	src/wasm/baseline/liftoff-assembler.h
+M	src/wasm/baseline/liftoff-compiler.cc
+M	src/wasm/baseline/mips/liftoff-assembler-mips.h
+M	src/wasm/baseline/mips64/liftoff-assembler-mips64.h
+M	src/wasm/baseline/ppc/liftoff-assembler-ppc.h
+M	src/wasm/baseline/s390/liftoff-assembler-s390.h
+M	src/wasm/baseline/x64/liftoff-assembler-x64.h
+
+commit 931f0a031a3a82070daf96acfd42ce9bf7ce1ea0
+Author: sgjesse@chromium.org <sgjesse@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Fri Apr 23 07:42:45 2010 +0000
+
+    Changed inlined property load detection on ARM
+    
+    Instaed of having a nop after all non-inlined calls to load IC use a different nop (mov r1, r1 instead of mov r0, r0) to detect an inlined load IC.
+    
+    Added more infrastructure to the deferred code handling to make it possbile to block constant pool emitting in a deferred code block, including the branch instruction ending the deferred code block.
+    
+    Addressed a couple of comments to http://codereview.chromium.org/1715003, including adding an assert to make sure that the patching of an ldr instruction is always possible.
+    Review URL: http://codereview.chromium.org/1758003
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@4480 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/arm/assembler-arm.cc
+M	src/arm/assembler-arm.h
+M	src/arm/codegen-arm.cc
+M	src/arm/codegen-arm.h
+M	src/arm/full-codegen-arm.cc
+M	src/arm/ic-arm.cc
+M	src/arm/virtual-frame-arm.cc
+M	src/arm/virtual-frame-arm.h
+M	src/codegen.cc
+M	src/codegen.h
+
+commit b85ac2465feb70e41f9ad1cef246dcd319ce8f3b
+Author: sgjesse@chromium.org <sgjesse@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Tue Jan 4 10:25:06 2011 +0000
+
+    Fix presubmit error
+    
+    TBR=whesse@chromium.org
+    Review URL: http://codereview.chromium.org/6008010
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@6144 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/platform-macos.cc
+
+commit 28483ffeb3ce527275a0bf745caac51ae00ea2f8
+Author: bmeurer <bmeurer@chromium.org>
+Date:   Thu Feb 19 02:38:24 2015 -0800
+
+    Revert of [x64] Generate test reg,reg instead of cmp reg,0. (patchset #2 id:20001 of https://codereview.chromium.org/916543004/)
+    
+    Reason for revert:
+    Tanks some benchmarks (for no obvious reason)
+    
+    Original issue's description:
+    > [x64] Generate test reg,reg instead of cmp reg,0.
+    >
+    > The instruction sequence is shorter and saves decoding bandwidth.
+    >
+    > R=svenpanne@chromium.org
+    >
+    > Committed: https://crrev.com/a7fb5ed400701b22c455d0ad410bc98b211e5730
+    > Cr-Commit-Position: refs/heads/master@{#26734}
+    
+    TBR=svenpanne@chromium.org
+    NOPRESUBMIT=true
+    NOTREECHECKS=true
+    NOTRY=true
+    
+    Review URL: https://codereview.chromium.org/939923003
+    
+    Cr-Commit-Position: refs/heads/master@{#26742}
+
+M	src/compiler/x64/code-generator-x64.cc
+
+commit fdabdb04bfea1425c7c0d26978ac7959bf6800a9
+Author: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+Date:   Thu Jul 29 22:07:59 2021 -0700
+
+    Update google_benchmark
+    
+    Rolling v8/third_party/google_benchmark/src: https://chromium.googlesource.com/external/github.com/google/benchmark/+log/ab74ae5..1067dfc
+    
+    Remove dead code from PredictNumItersNeeded (#1206) (Braedy)
+    https://chromium.googlesource.com/external/github.com/google/benchmark/+/1067dfc
+    
+    TBR=v8-waterfall-sheriff@grotations.appspotmail.com,mtv-sf-v8-sheriff@grotations.appspotmail.com,mlippautz@chromium.org
+    
+    Change-Id: I4c52fee681f648ea2f1fbfc253e276a824de7011
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/3062205
+    Reviewed-by: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+    Commit-Queue: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+    Cr-Commit-Position: refs/heads/master@{#76011}
+
+M	DEPS
+
+commit bff9c5daebd71c76c12aee70b65edd3cb7d638e1
+Author: mstarzinger@chromium.org <mstarzinger@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Thu Jul 31 15:36:22 2014 +0000
+
+    Add new files to the GN build after r22709.
+    
+    R=jkummerow@chromium.org
+    
+    Review URL: https://codereview.chromium.org/434673002
+    
+    git-svn-id: https://v8.googlecode.com/svn/branches/bleeding_edge@22768 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	BUILD.gn
+M	tools/gyp/v8.gyp
+
+commit d196d7d9e19debd496392fee6bb2b256c354b612
+Author: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+Date:   Tue Apr 9 06:05:49 2019 -0700
+
+    Update V8 DEPS.
+    
+    Rolling v8/build: https://chromium.googlesource.com/chromium/src/build/+log/2c7bf07..e7cb8dd
+    
+    Rolling v8/third_party/catapult: https://chromium.googlesource.com/catapult/+log/6145021..072a6f1
+    
+    Rolling v8/third_party/depot_tools: https://chromium.googlesource.com/chromium/tools/depot_tools/+log/1fb0463..224e075
+    
+    TBR=machenbach@chromium.org,hablich@chromium.org,sergiyb@chromium.org
+    
+    Change-Id: I77ccd5ff5542e9d64cef6c284cd2dacaa5c15a8a
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/1559838
+    Reviewed-by: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+    Commit-Queue: Sergiy Belozorov <sergiyb@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#60712}
+
+M	DEPS
+
+commit 8d1ec9b1f562497aec930e0a91b2296b8d8fa9b3
+Author: mstarzinger <mstarzinger@chromium.org>
+Date:   Wed Sep 7 05:02:49 2016 -0700
+
+    [compiler] Stop delegating CompilationInfo::context.
+    
+    This implements the CompilationInfo::context explicitly instead of
+    delegating to the underlying ParseInfo. This is in preparation for
+    ParseInfo not having to store the context at all soon.
+    
+    R=jochen@chromium.org
+    
+    Review-Url: https://codereview.chromium.org/2316083002
+    Cr-Commit-Position: refs/heads/master@{#39244}
+
+M	src/compilation-info.cc
+M	src/compilation-info.h
+M	src/compiler/code-generator.cc
+M	src/compiler/pipeline.cc
+
+commit 37eb9b3031f0396be831395ddbc73d43b56e65d5
+Author: vitalyr@chromium.org <vitalyr@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Mon Jun 6 15:43:08 2011 +0000
+
+    Kill some dead code: classic frame element and const lists.
+    
+    R=ager@chromium.org
+    
+    Review URL: http://codereview.chromium.org/7111034
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@8187 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/compiler.cc
+M	src/compiler.h
+M	src/isolate.cc
+M	src/isolate.h
+M	src/jsregexp.cc
+M	src/liveedit.cc
+M	src/parser.cc
+M	src/runtime.cc
+
+commit fa306d43728f3312a5ad64a3a3d5dcc554484b9b
+Author: Sergiy Byelozyorov <sergiyb@chromium.org>
+Date:   Wed Nov 14 11:33:35 2018 -0800
+
+    Update V8 DEPS.
+    
+    Rolling v8/build: https://chromium.googlesource.com/chromium/src/build/+log/8af70c5..6600235
+    
+    Rolling v8/third_party/catapult: https://chromium.googlesource.com/catapult/+log/0cf6ee7..6b8b30c
+    
+    Rolling v8/third_party/depot_tools: https://chromium.googlesource.com/chromium/tools/depot_tools/+log/332c9ff..ef71a5f
+    
+    Rolling v8/third_party/googletest/src: https://chromium.googlesource.com/external/github.com/google/googletest/+log/2e68926..879ac09
+    
+    Rolling v8/tools/luci-go:infra/tools/luci/isolate/${platform}: https://chrome-infra-packages.appspot.com/infra/tools/luci/isolate/${platform}/+log/git_rev..git_rev
+    
+    TBR=machenbach@chromium.org,hablich@chromium.org,sergiyb@chromium.org
+    
+    Change-Id: I0cbffcb71b49e1d54e2aedb19f6dab65448586a0
+    Reviewed-on: https://chromium-review.googlesource.com/c/1336187
+    Reviewed-by: Sergiy Byelozyorov <sergiyb@chromium.org>
+    Reviewed-by: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+    Commit-Queue: Sergiy Byelozyorov <sergiyb@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#57517}
+
+M	DEPS
+M	third_party/googletest/BUILD.gn
+
+commit 101d64c1a65018fa782b7fef912317b737490cd1
+Author: ulan@chromium.org <ulan@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Wed Nov 7 13:22:03 2012 +0000
+
+    Simplify some of the startup code for SubStringStub::Generate.
+    
+    R=ulan@chromium.org
+    
+    Review URL: https://chromiumcodereview.appspot.com/11098043
+    Patch from JF Bastien <jfb@chromium.org>.
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@12887 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/arm/code-stubs-arm.cc
+M	src/arm/macro-assembler-arm.h
+M	src/arm/simulator-arm.cc
+
+commit 857c62788dc69695fdfc24b5f78699b9ac6633d0
+Author: v8-autoroll <v8-autoroll@chromium.org>
+Date:   Sat Mar 11 20:01:02 2017 -0800
+
+    Update V8 DEPS.
+    
+    Rolling v8/build: https://chromium.googlesource.com/chromium/src/build/+log/cc228ab..1748b43
+    
+    TBR=machenbach@chromium.org,vogelheim@chromium.org,hablich@chromium.org
+    
+    Change-Id: I03b8c1bc81ab91e6fc13acd13c88f63c1b7150b3
+    Reviewed-on: https://chromium-review.googlesource.com/453019
+    Reviewed-by: v8 autoroll <v8-autoroll@chromium.org>
+    Commit-Queue: v8 autoroll <v8-autoroll@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#43731}
+
+M	DEPS
+
+commit fd86d20af1eb29a6108f32acec270ed1cf314f54
+Author: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+Date:   Sun Nov 21 19:11:48 2021 -0800
+
+    Update V8 DEPS.
+    
+    Rolling v8/build: https://chromium.googlesource.com/chromium/src/build/+log/63b08e1..eabf027
+    
+    R=v8-waterfall-sheriff@grotations.appspotmail.com,mtv-sf-v8-sheriff@grotations.appspotmail.com
+    
+    Change-Id: I5d37b3b024f5da8769268becc86166d74282c6ee
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/3294405
+    Commit-Queue: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+    Bot-Commit: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+    Cr-Commit-Position: refs/heads/main@{#78012}
+
+M	DEPS
+
+commit acfef3ec9354c07059ebcac5fe0014e66d834785
+Author: Camillo Bruni <cbruni@chromium.org>
+Date:   Fri Nov 17 13:11:58 2017 +0100
+
+    [log] Properly log all maps creating during bootstrapping
+    
+    Logger::LogMaps will print all maps currently present on the heap.
+    
+    Note that currently this does not properly log the detailed transitions
+    for these maps.
+    
+    Change-Id: Ia3218d371549d7634fe3eda9e8e59b0b0bd8bebb
+    Reviewed-on: https://chromium-review.googlesource.com/753885
+    Reviewed-by: Yang Guo <yangguo@chromium.org>
+    Commit-Queue: Camillo Bruni <cbruni@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#49444}
+
+M	src/bootstrapper.cc
+M	src/log.cc
+M	src/log.h
+M	src/objects.cc
+M	test/cctest/test-log.cc
+
+commit 17def81fc94ab8e04021a2f62cf4452be6ba181e
+Author: svenpanne@chromium.org <svenpanne@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Fri Dec 7 08:55:06 2012 +0000
+
+    Use count-based profiling exclusively.
+    
+    Review URL: https://codereview.chromium.org/11437016
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@13158 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/arm/deoptimizer-arm.cc
+M	src/arm/full-codegen-arm.cc
+M	src/execution.cc
+M	src/execution.h
+M	src/flag-definitions.h
+M	src/full-codegen.cc
+M	src/full-codegen.h
+M	src/ia32/deoptimizer-ia32.cc
+M	src/ia32/full-codegen-ia32.cc
+M	src/mips/deoptimizer-mips.cc
+M	src/mips/full-codegen-mips.cc
+M	src/platform-cygwin.cc
+M	src/platform-freebsd.cc
+M	src/platform-linux.cc
+M	src/platform-macos.cc
+M	src/platform-openbsd.cc
+M	src/platform-solaris.cc
+M	src/platform-win32.cc
+M	src/runtime-profiler.cc
+M	src/runtime-profiler.h
+M	src/runtime.cc
+M	src/x64/deoptimizer-x64.cc
+M	src/x64/full-codegen-x64.cc
+
+commit a634b527fb8d4457fda28982c71f04ae2a65216f
+Author: mstarzinger@chromium.org <mstarzinger@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Mon Jul 8 08:35:11 2013 +0000
+
+    Prepare push to trunk.  Now working on version 3.20.4.
+    
+    R=jkummerow@chromium.org
+    
+    Review URL: https://codereview.chromium.org/18396003
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@15536 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	ChangeLog
+M	src/version.cc
+
+commit 1d835561acc42652e06b2b2e821af17c26a0545b
+Author: mvstanton@chromium.org <mvstanton@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Wed Nov 6 16:38:40 2013 +0000
+
+    Change test expectations for webkit/fast/js/object-slow-put and friends.
+    
+    R=verwaest@chromium.org
+    TBR=verwaest@chromium.org
+    
+    Review URL: https://codereview.chromium.org/62213002
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@17530 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	test/webkit/fast/js/array-bad-time-expected.txt
+M	test/webkit/fast/js/array-bad-time.js
+M	test/webkit/fast/js/array-slow-put-expected.txt
+M	test/webkit/fast/js/array-slow-put.js
+M	test/webkit/fast/js/object-bad-time-expected.txt
+M	test/webkit/fast/js/object-bad-time.js
+M	test/webkit/fast/js/object-slow-put-expected.txt
+M	test/webkit/fast/js/object-slow-put.js
+
+commit 43e9e343dd975182bb4cb69d52950a0426c387aa
+Author: erik.corry@gmail.com <erik.corry@gmail.com@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Thu Jan 15 12:45:48 2009 +0000
+
+    Noone really liked the name "GenerationVariant" so here it gets renamed
+    to "Trace".
+    Review URL: http://codereview.chromium.org/18091
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@1080 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/jsregexp.cc
+M	src/jsregexp.h
+
+commit 060711ab374ccdbd378b6e5292e01183f2d04731
+Author: kasperl@chromium.org <kasperl@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Thu Jan 7 09:40:50 2010 +0000
+
+    Improve the performance of String.prototype.concat and the slow-case
+    for compare operations.
+    Review URL: http://codereview.chromium.org/521054
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@3553 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/runtime.js
+M	src/string.js
+
+commit 8d47ca4ed233f64099dc36d72f673afc94a8b3ed
+Author: fschneider@chromium.org <fschneider@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Wed Oct 14 13:12:38 2009 +0000
+
+    Fixed use of 'overwrite' flag for unary minus expressions.
+    
+    Review URL: http://codereview.chromium.org/276018
+    
+    git-svn-id: http://v8.googlecode.com/svn/branches/bleeding_edge@3063 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/ia32/codegen-ia32.cc
+M	src/x64/codegen-x64.cc
+
+commit 15e40c3860dcb5c728c33940ce34728e00839158
+Author: Hannes Payer <hpayer@chromium.org>
+Date:   Wed May 9 10:54:36 2018 +0200
+
+    [heap] Remove unused CodeRange CommitRawMemory and UncommitRawMemory functions.
+    
+    Change-Id: I14237a71c34872e114d7e2afb73a758e011fd731
+    Reviewed-on: https://chromium-review.googlesource.com/1051239
+    Reviewed-by: Michael Lippautz <mlippautz@chromium.org>
+    Commit-Queue: Hannes Payer <hpayer@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#53092}
+
+M	src/heap/spaces.cc
+M	src/heap/spaces.h
+
+commit a6f226e8d4aab28d27094e1eafd2f418f67c5cee
+Author: Toon Verwaest <verwaest@chromium.org>
+Date:   Wed Feb 27 13:10:12 2019 +0100
+
+    [scanner] Speed up multiline comment scanning using AdvanceUntil + ScanFlags
+    
+    This roughly takes 40% less time.
+    
+    Change-Id: I7886bd85cd33c9b2d2225e0f207a3e3bf89f1ef3
+    Reviewed-on: https://chromium-review.googlesource.com/c/1491511
+    Commit-Queue: Toon Verwaest <verwaest@chromium.org>
+    Reviewed-by: Leszek Swirski <leszeks@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#59898}
+
+M	src/parsing/scanner-inl.h
+M	src/parsing/scanner.cc
+
+commit 43bf727bc3a71a68de294049e38f67d216f9ede0
+Author: Mu Tao <pamilty@gmail.com>
+Date:   Sat Oct 19 19:13:50 2019 +0800
+
+    [mips][Liftoff] Fix stack slot initialization on mips
+    
+    Port 7d09b270d8726dd3b70721df3595327f0e516368
+    
+    Original Commit Message:
+    
+        It turns out that because we are *subtracting* from fp, we need to
+        *subtract less* to get a higher address. Who knew.
+    
+    R=xwafish@gmail.com, clemensb@chromium.org
+    
+    Change-Id: I1ddb5e15ef7fab2f198aebf07a5ce607add4c3c4
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/1868559
+    Auto-Submit: Mu Tao <pamilty@gmail.com>
+    Commit-Queue: Clemens Backes <clemensb@chromium.org>
+    Reviewed-by: Clemens Backes <clemensb@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#64406}
+
+M	src/wasm/baseline/mips/liftoff-assembler-mips.h
+M	src/wasm/baseline/mips64/liftoff-assembler-mips64.h
+
+commit 723aeeaba2d672657675306004b9e91fdc396ee6
+Author: clemensh <clemensh@chromium.org>
+Date:   Thu Jan 12 11:29:53 2017 -0800
+
+    [wasm] Skip whole function linking phase
+    
+    As functions are relinked at instantiation anyway, we can just
+    completely skip the LinkFunctions pass at wasm compile time.
+    This way, we also don't need to create one placeholder per wasm
+    function, but we just use one placeholder everywhere. The function
+    index which was stored in the placeholder before is now retrieved from
+    the wire bytes anyway.
+    
+    R=titzer@chromium.org
+    
+    Review-Url: https://codereview.chromium.org/2624383003
+    Cr-Commit-Position: refs/heads/master@{#42285}
+
+M	src/wasm/wasm-module.cc
+
+commit ae1a83859271c91ee969795de6a396eb4914b69e
+Author: rmcilroy@chromium.org <rmcilroy@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Wed Aug 20 14:41:53 2014 +0000
+
+    Add serializer support for builtins pointed by inner pointer and root objects pointed to by code for the out-of-line constant pool.
+    
+    This is required for test-serialize tests which fail at the DCHECK on L1874 of serialize.cc otherwise.
+    
+    R=yangguo@chromium.org
+    
+    Review URL: https://codereview.chromium.org/475753002
+    
+    git-svn-id: https://v8.googlecode.com/svn/branches/bleeding_edge@23242 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/serialize.cc
+
+commit 29ebcc32052d486cbc1933ac4738aa5cb68aa851
+Author: ishell <ishell@chromium.org>
+Date:   Tue Sep 1 00:06:49 2015 -0700
+
+    Crankshaft is now able to compile top level code even if there is a ScriptContext.
+    
+    This CL introduces HPrologue instruction which does the context allocation work and supports deoptimization.
+    
+    Review URL: https://codereview.chromium.org/1317383002
+    
+    Cr-Commit-Position: refs/heads/master@{#30496}
+
+M	src/arm/lithium-arm.cc
+M	src/arm/lithium-arm.h
+M	src/arm/lithium-codegen-arm.cc
+M	src/arm64/lithium-arm64.cc
+M	src/arm64/lithium-arm64.h
+M	src/arm64/lithium-codegen-arm64.cc
+M	src/bootstrapper.cc
+M	src/compiler/ast-graph-builder.cc
+M	src/contexts.cc
+M	src/contexts.h
+M	src/full-codegen/arm/full-codegen-arm.cc
+M	src/full-codegen/arm64/full-codegen-arm64.cc
+M	src/full-codegen/ia32/full-codegen-ia32.cc
+M	src/full-codegen/mips/full-codegen-mips.cc
+M	src/full-codegen/mips64/full-codegen-mips64.cc
+M	src/full-codegen/x64/full-codegen-x64.cc
+M	src/hydrogen-instructions.cc
+M	src/hydrogen-instructions.h
+M	src/hydrogen.cc
+M	src/hydrogen.h
+M	src/ia32/lithium-codegen-ia32.cc
+M	src/ia32/lithium-ia32.cc
+M	src/ia32/lithium-ia32.h
+M	src/mips/lithium-codegen-mips.cc
+M	src/mips/lithium-mips.cc
+M	src/mips/lithium-mips.h
+M	src/mips64/lithium-codegen-mips64.cc
+M	src/mips64/lithium-mips64.cc
+M	src/mips64/lithium-mips64.h
+M	src/utils.h
+M	src/x64/lithium-codegen-x64.cc
+M	src/x64/lithium-x64.cc
+M	src/x64/lithium-x64.h
+
+commit b1e12d70bb08767855115f5bd2d5cc0f935a40e9
+Author: Maya Lekova <mslekova@chromium.org>
+Date:   Tue Jan 18 09:19:18 2022 +0000
+
+    Revert "[wasm] Various small cleanups/fixes"
+    
+    This reverts commit f1c2a2089d7fb880d725f70de6f2eb08de65bb57.
+    
+    Reason for revert: Breaks some tests on no-sse configuration, please see https://ci.chromium.org/ui/p/v8/builders/ci/V8%20Linux/45243/overview
+    
+    Original change's description:
+    > [wasm] Various small cleanups/fixes
+    >
+    > Changes:
+    > - Fix a bug in objects-printer where array elements were not treated as
+    >   tagged pointers.
+    > - Fix a few TODOs, mainly in the wasm interpreter.
+    > - Improve documentation, small refactorings.
+    >
+    > Change-Id: I1d70ad454b3a0693b9b784b17395434d81d01b61
+    > Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/3383136
+    > Reviewed-by: Nikolaos Papaspyrou <nikolaos@chromium.org>
+    > Reviewed-by: Jakob Kummerow <jkummerow@chromium.org>
+    > Commit-Queue: Manos Koukoutos <manoskouk@chromium.org>
+    > Cr-Commit-Position: refs/heads/main@{#78656}
+    
+    Change-Id: Ic698177259bb14b4c251a4212c79cc0d945b07f8
+    No-Presubmit: true
+    No-Tree-Checks: true
+    No-Try: true
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/3398109
+    Auto-Submit: Maya Lekova <mslekova@chromium.org>
+    Commit-Queue: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+    Bot-Commit: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+    Commit-Queue: Maya Lekova <mslekova@chromium.org>
+    Owners-Override: Maya Lekova <mslekova@chromium.org>
+    Cr-Commit-Position: refs/heads/main@{#78657}
+
+M	src/compiler/wasm-compiler.cc
+M	src/diagnostics/objects-printer.cc
+M	src/wasm/function-body-decoder-impl.h
+M	src/wasm/init-expr-interface.h
+M	src/wasm/module-decoder.cc
+M	src/wasm/module-instantiate.cc
+M	src/wasm/value-type.h
+M	src/wasm/wasm-opcodes.h
+M	test/cctest/wasm/test-gc.cc
+M	test/common/wasm/wasm-interpreter.cc
+
+commit f7886fcd9176f3db3ddfd9a8e28903d02578335a
+Author: Mike Stanton <mvstanton@chromium.org>
+Date:   Thu Jan 24 13:11:18 2019 +0100
+
+    [CSA]: Refactor function AllocateUninitializedJSArrayWithoutElements
+    
+    All users have elements already, and we can just pass that in.
+    
+    Change-Id: Ie9b8c1290d74bce120461c9f15695e8eb7dfd7c2
+    Reviewed-on: https://chromium-review.googlesource.com/c/1430072
+    Commit-Queue: Michael Stanton <mvstanton@chromium.org>
+    Reviewed-by: Jakob Gruber <jgruber@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#59064}
+
+M	src/builtins/builtins-object-gen.cc
+M	src/builtins/builtins-proxy-gen.cc
+M	src/builtins/builtins-string-gen.cc
+M	src/builtins/growable-fixed-array-gen.cc
+M	src/code-stub-assembler.cc
+M	src/code-stub-assembler.h
+

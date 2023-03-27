@@ -1,0 +1,1633 @@
+commit 295c4f6effb1c1a6a31931ab00845a25cc4a042d
+Author: Nicolas Chevobbe <nchevobbe@mozilla.com>
+Date:   Fri Oct 1 16:24:49 2021 +0000
+
+    Bug 1730167 - [devtools] Use appropriate walker front to retrieve frame children when EFT is enabled. r=ochameau
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D126064
+
+M	devtools/client/fronts/node.js
+M	devtools/client/fronts/walker.js
+M	devtools/client/inspector/test/browser_inspector_delete-selected-node-01.js
+M	devtools/client/inspector/test/shared-head.js
+M	devtools/server/actors/inspector/node.js
+M	devtools/shared/layout/utils.js
+
+commit 2376337c41f9664b47edcac500387e02b653d4c7
+Author: Thomas Nguyen <tnguyen@mozilla.com>
+Date:   Tue Jul 16 15:03:40 2019 +0000
+
+    Bug 1546334 - Modify URLExtraData rust debug to include referrerInfo r=heycam
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D36475
+    
+    --HG--
+    extra : moz-landing-system : lando
+
+M	layout/style/GeckoBindings.cpp
+M	layout/style/GeckoBindings.h
+M	servo/components/style/gecko_bindings/sugar/refptr.rs
+M	servo/components/style/stylesheets/mod.rs
+
+commit ee54ae21042ef94a6bfc615bd5d9219b6ef41cfb
+Author: Mike Hommey <mh+mozilla@glandium.org>
+Date:   Wed Aug 16 17:17:08 2017 +0900
+
+    Bug 1390776 - Put definition and uses of gProgname under #ifdef CRAWL_STACK_ON_SIGSEGV. r=njn
+    
+    gProgname is actually never used outside #ifdef CRAWL_STACK_ON_SIGSEGV,
+    and it being defined and filled with a strdup even when not used leads
+    to a (purposeful, but useless) leak.
+    
+    The leak was not detected so far because GCC 4.9 generated a call to
+    PL_strdup followed by a store to gProgname, while GCC 6 keeps the
+    PL_strdup but is smart enough to figure out it doesn't need to store to
+    gProgname (and to not keep space for that variable).
+    
+    So with GCC 4.9, the leak was not considered a leak because it was still
+    reachable, but with GCC 6, it's not reachable anymore, and thus
+    considered as a leak.
+    
+    --HG--
+    extra : rebase_source : c189f992d710fddb43e04854b5b780ebfaf590ef
+
+M	toolkit/xre/nsSigHandlers.cpp
+
+commit 5808ee520ece949ceed8f920320c6d31eaea0ec1
+Author: Jason Orendorff <jorendorff@mozilla.com>
+Date:   Sun Aug 26 09:04:33 2012 -0500
+
+    Bug 778851 - Disable E4X in content by default.
+
+M	js/xpconnect/crashtests/603858-1.html
+M	modules/libpref/src/init/all.js
+
+commit 10ba7f4ab58798dd36a2611638f57f9f60887a80
+Author: Christoph Kerschbaumer <ckerschb@christophkerschbaumer.com>
+Date:   Mon Apr 24 21:57:25 2017 +0200
+
+    Bug 1359092 - Extend loadURI within nsIWebNavigation.idl by a triggeringPrincipal argument. r=bz
+
+M	docshell/base/nsDSURIContentListener.cpp
+M	docshell/base/nsDocShell.cpp
+M	docshell/base/nsDocShellTreeOwner.cpp
+M	docshell/base/nsIWebNavigation.idl
+M	docshell/shistory/nsSHistory.cpp
+M	dom/base/nsGlobalWindow.cpp
+M	dom/base/nsGlobalWindow.h
+M	dom/ipc/TabChild.cpp
+M	dom/webidl/Window.webidl
+M	editor/composer/nsEditingSession.cpp
+M	toolkit/components/browser/nsWebBrowser.cpp
+M	xpfe/appshell/nsWebShellWindow.cpp
+
+commit 0ab7d3836fbc4bade36d709390913ae0859895f2
+Author: Johan Lorenzo <jlorenzo@mozilla.com>
+Date:   Thu Mar 5 10:25:18 2020 +0000
+
+    Bug 1619603 - Ship Geckoview at the ship_rc phase r=mtabara
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D65341
+    
+    --HG--
+    extra : moz-landing-system : lando
+
+M	taskcluster/ci/beetmover-geckoview/kind.yml
+M	taskcluster/taskgraph/target_tasks.py
+
+commit 52d23be2f44d943a4c357114bf3be91f6eb26dc2
+Author: Timothy Nikkel <tnikkel@gmail.com>
+Date:   Fri May 19 17:04:19 2017 -0500
+
+    Bug 1409215. Don't change scroll thumbs into AGRs during display list building. r=mstange
+    
+    Find the scrollframe for a scrollbar thumb and use it to determine if the scrollthumb is an AGR, instead of recording if the associated scrollframe is active on a frame property during display list building.
+
+M	layout/base/nsLayoutUtils.cpp
+M	layout/base/nsLayoutUtils.h
+M	layout/generic/nsGfxScrollFrame.h
+M	layout/generic/nsIScrollableFrame.h
+M	layout/painting/nsDisplayList.cpp
+M	layout/xul/nsSliderFrame.cpp
+M	layout/xul/nsSliderFrame.h
+
+commit 309fcdab1e945235e9230ed37067767fcf198a14
+Author: Chris Pearce <chris@pearce.org.nz>
+Date:   Tue Nov 1 18:11:40 2011 +1300
+
+    Bug 691583 - Dispatch showfullscreenwarning chrome event when restricted key pressed in DOM full-screen mode. r=smaug
+
+M	content/html/content/test/file_fullscreen-api-keys.html
+M	dom/tests/mochitest/chrome/Makefile.in
+A	dom/tests/mochitest/chrome/dom_fullscreen_warning.xul
+A	dom/tests/mochitest/chrome/test_dom_fullscreen_warning.xul
+M	layout/base/nsPresShell.cpp
+
+commit 41d5c4cd99f61042bc0355cc528918261f0a8e75
+Author: Neil Rashbrook <neil@parkwaycc.co.uk>
+Date:   Sat Dec 22 20:40:37 2012 +0000
+
+    Bug 818861 Shouldn't allow promising a flat string from a flat string r=dbaron
+
+M	content/base/src/nsFrameMessageManager.cpp
+M	content/canvas/src/WebGLContextGL.cpp
+M	dom/plugins/base/nsPluginInstanceOwner.cpp
+M	dom/plugins/ipc/PluginProcessChild.cpp
+M	gfx/thebes/gfxGDIFontList.cpp
+M	image/decoders/icon/mac/nsIconChannelCocoa.mm
+M	profile/dirserviceprovider/src/nsProfileLock.cpp
+M	toolkit/components/alerts/nsAlertsService.cpp
+M	toolkit/components/places/History.cpp
+M	toolkit/xre/nsAppRunner.cpp
+M	xpcom/base/nsCycleCollector.cpp
+M	xpcom/base/nsMemoryInfoDumper.cpp
+M	xpcom/string/public/nsTPromiseFlatString.h
+
+commit c69268f5ddde1a31acb9ff2816fab24efe9e8885
+Author: Rob Wood <rwood@mozilla.com>
+Date:   Fri Jun 22 11:24:38 2018 -0400
+
+    Bug 1468535 - Port raptor-speedometer firefox to linux64; r=jmaher
+    
+    MozReview-Commit-ID: 2guFxLN3yLq
+    
+    --HG--
+    extra : rebase_source : ffddd40608baaccb4a44eb142e43ad991cc5ab73
+
+M	taskcluster/ci/test/raptor.yml
+M	testing/raptor/raptor/tests/raptor-speedometer.ini
+
+commit 323b7a61270d193e39dbd85f684dbccb1840d443
+Author: B2G Bumper Bot <release+b2gbumper@mozilla.com>
+Date:   Fri Apr 10 07:56:54 2015 -0700
+
+    Bumping gaia.json for 2 gaia revision(s) a=gaia-bump
+    
+    ========
+    
+    https://hg.mozilla.org/integration/gaia-central/rev/13e7783ef0a3
+    Author: No-Jun Park <npark@mozilla.com>
+    Desc: Merge pull request #29436 from npark-mozilla/1152940
+    
+    Bug 1152940 - Update test_play_3gp_video.py in imagecompare test suite
+    
+    ========
+    
+    https://hg.mozilla.org/integration/gaia-central/rev/e8f9d3d7bd27
+    Author: No-Jun Park <npark@mozilla.com>
+    Desc: Bug 1152940 - Update test_play_3gp_video.py in imagecompare test suite
+    
+    Remove unnecessary screencapture,
+    incorporate the fix from Bug 1150573
+    add proper wait after rewind
+
+M	b2g/config/gaia.json
+
+commit a2b953dbcb499a68fd6c3029272a7db1ab5a4f64
+Author: Gaia Pushbot <release+gaiajson@mozilla.com>
+Date:   Sun Dec 15 11:45:24 2013 -0800
+
+    Bumping gaia.json for 2 gaia-central revision(s) a=gaia-bump
+    
+    ========
+    
+    https://hg.mozilla.org/integration/gaia-central/rev/f88be8e2bdfe
+    Author: Etienne Segonzac <etienne@segonzac.info>
+    Desc: Merge pull request #14660 from etiennesegonzac/bug-949487-window-manager-insta-kill
+    
+    Bug 949487 -  Harden the AppWindowManager against apps that gets insta-killed r=alive
+    
+    ========
+    
+    https://hg.mozilla.org/integration/gaia-central/rev/cabdfa599bb7
+    Author: Etienne Segonzac <etienne@segonzac.info>
+    Desc: Bug 949487 -  Harden the AppWindowManager against app that gets
+    insta-killed
+
+M	b2g/config/gaia.json
+
+commit bf6fea29d5fbfac2798f035c591d5bb7221d66f3
+Author: Ms2ger <ms2ger@gmail.com>
+Date:   Sun Jun 23 09:16:10 2013 +0200
+
+    Bug 766546 - Undisable test on non-mac platforms; r=edmorley
+
+M	browser/base/content/test/Makefile.in
+
+commit defe3e929921974718f0f5a9b8e8cbe36df3026a
+Author: Boris Zbarsky <bzbarsky@mit.edu>
+Date:   Wed Apr 1 12:05:29 2015 -0400
+
+    Bug 679939 part 8.  Drop the now-unused compileAndGo from CompileOptions.  r=luke
+
+M	dom/base/nsFrameMessageManager.cpp
+M	dom/base/nsScriptLoader.cpp
+M	js/src/asmjs/AsmJSLink.cpp
+M	js/src/builtin/Eval.cpp
+M	js/src/builtin/TestingFunctions.cpp
+M	js/src/frontend/BytecodeCompiler.cpp
+M	js/src/jit-test/lib/bytecode-cache.js
+M	js/src/jit-test/tests/SIMD/bug1121299.js
+M	js/src/jit-test/tests/TypedObject/bug1004527.js
+M	js/src/jit-test/tests/asm.js/testBug893519.js
+M	js/src/jit-test/tests/auto-regress/bug677977.js
+M	js/src/jit-test/tests/basic/bug1024786.js
+M	js/src/jit-test/tests/basic/bug1057571.js
+M	js/src/jit-test/tests/basic/bug1061534.js
+M	js/src/jit-test/tests/basic/bug1106982-2.js
+M	js/src/jit-test/tests/basic/testLet.js
+M	js/src/jit-test/tests/debug/Debugger-findScripts-15.js
+M	js/src/jit-test/tests/debug/breakpoint-noncng.js
+M	js/src/jit-test/tests/debug/bug1106164.js
+M	js/src/jit-test/tests/debug/bug1107913.js
+M	js/src/jit-test/tests/debug/bug1108556.js
+M	js/src/jit-test/tests/debug/bug1118878.js
+M	js/src/jit-test/tests/debug/onNewScript-01.js
+M	js/src/jit-test/tests/debug/onNewScript-02.js
+M	js/src/jit-test/tests/gc/bug-1016016.js
+M	js/src/jit-test/tests/gc/bug-880776.js
+M	js/src/jit-test/tests/ion/bug1006899.js
+M	js/src/jit-test/tests/ion/bug984830.js
+M	js/src/jit-test/tests/profiler/bug1140643.js
+M	js/src/jit-test/tests/symbol/toNumber-2.js
+M	js/src/jsapi.cpp
+M	js/src/jsapi.h
+M	js/src/jsfun.cpp
+M	js/src/jsobj.h
+M	js/src/shell/js.cpp
+M	js/src/tests/ecma_5/extensions/misplaced-inconsistent-directive.js
+M	js/src/tests/js1_5/Regress/regress-127557.js
+M	js/src/tests/js1_5/extensions/regress-300079.js
+M	js/src/vm/Debugger.cpp
+M	js/xpconnect/loader/mozJSSubScriptLoader.cpp
+M	js/xpconnect/src/XPCJSRuntime.cpp
+M	js/xpconnect/src/XPCShellImpl.cpp
+
+commit 28ddd5d88d5b105d8fad659a2db123ff92920a15
+Author: Ting-Yu Lin <tlin@mozilla.com>
+Date:   Mon Nov 30 22:04:37 2020 +0000
+
+    Bug 1679819 Part 1 - Move the computation of border and margin closer to its usage in ReflowAbsoluteFrame(). r=emilio
+    
+    This patch shouldn't change the behavior.
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D98226
+
+M	layout/generic/nsAbsoluteContainingBlock.cpp
+
+commit 7f564e065b55f2966027cf0a02b2266f7250ae13
+Author: Eugen Sawin <esawin@mozilla.com>
+Date:   Tue Jun 13 20:55:21 2017 +0200
+
+    Bug 1372681 - [2.3] Add GeckoViewHandler utility class for event handler registration. r=snorp,jchen
+
+M	mobile/android/base/moz.build
+A	mobile/android/geckoview/src/main/java/org/mozilla/gecko/GeckoViewHandler.java
+
+commit 4c7f0b9c22b498a5641beaf245bc5aa34f4be79d
+Author: Karl Tomlinson <karlt+@karlt.net>
+Date:   Thu Dec 10 11:25:54 2015 -0500
+
+    bug 1223670 replace public constructors with fallible factory methods r=baku
+    
+    --HG--
+    extra : rebase_source : ae9bc2fbaf1fd547c7355b642b45b9ef062cff25
+
+M	dom/media/webaudio/AudioContext.cpp
+M	dom/media/webaudio/AudioNode.cpp
+M	dom/media/webaudio/AudioNode.h
+M	dom/media/webaudio/MediaElementAudioSourceNode.cpp
+M	dom/media/webaudio/MediaElementAudioSourceNode.h
+M	dom/media/webaudio/MediaStreamAudioSourceNode.cpp
+M	dom/media/webaudio/MediaStreamAudioSourceNode.h
+
+commit 90236200b96f203814b417ef5e97246e625e2351
+Author: Abdoulaye O. Ly <ablayelyfondou@gmail.com>
+Date:   Tue Jun 25 20:29:19 2019 +0000
+
+    Bug 1560229 - [Fission] Make Autoplay work with JSWindowActor. r=NeilDeakin
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D35395
+    
+    --HG--
+    extra : moz-landing-system : lando
+
+M	toolkit/actors/AutoplayChild.jsm
+A	toolkit/actors/AutoplayParent.jsm
+M	toolkit/actors/moz.build
+M	toolkit/content/widgets/browser-custom-element.js
+M	toolkit/modules/ActorManagerParent.jsm
+
+commit efe45f15d3ce5d69921e435c721c4f6fd81ab215
+Author: Boris Chiou <boris.chiou@gmail.com>
+Date:   Mon Mar 21 16:49:50 2016 +0800
+
+    Bug 1249219 - Part 3: Replace Pair<Element*, CSSPseudoElementType> with NonOwningAnimationTarget. r=birtles
+    
+    --HG--
+    extra : rebase_source : 35e69a293cdb7a25ce579dbb453289ed3521e7e2
+
+M	dom/animation/EffectCompositor.cpp
+M	dom/animation/EffectCompositor.h
+M	layout/style/AnimationCollection.cpp
+
+commit 3784ca26dab598db8cd4adea3bffd24756444b3a
+Author: Szu-Yu Chen [:aknow] <szchen@mozilla.com>
+Date:   Mon Aug 12 08:25:24 2013 -0400
+
+    Bug 887690 - Part 3: Add emergency callback mode support (ril). r=hsinyi
+
+M	dom/system/gonk/RILContentHelper.js
+M	dom/system/gonk/RadioInterfaceLayer.js
+M	dom/system/gonk/ril_worker.js
+
+commit f131713362934f6e91fc0a0a70b8f1893f03a695
+Author: Emilio Cobos Álvarez <emilio@crisal.io>
+Date:   Wed Dec 26 03:32:55 2018 +0100
+
+    Bug 1516366 - Move base classes from nsDocument to nsIDocument. r=smaug
+    
+    This is a big step in order to merge both.
+    
+    Also allows to remove some very silly casts, though it causes us to add some
+    ToSupports around to deal with ambiguity of casts from nsIDocument to
+    nsISupports, and add a dummy nsISupports implementation that will go away later
+    in the series.
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D15352
+
+M	docshell/base/nsDocShell.cpp
+M	dom/animation/AnimationEffect.h
+M	dom/base/nsContentSink.cpp
+M	dom/base/nsDocument.cpp
+M	dom/base/nsDocument.h
+M	dom/base/nsFocusManager.cpp
+M	dom/base/nsGlobalWindowOuter.cpp
+M	dom/base/nsIDocument.h
+M	dom/base/nsImageLoadingContent.cpp
+M	dom/base/nsObjectLoadingContent.cpp
+M	dom/bindings/BindingDeclarations.h
+M	dom/events/EventStateManager.cpp
+M	dom/html/ImageDocument.cpp
+M	dom/html/nsHTMLContentSink.cpp
+M	dom/ipc/TabChild.cpp
+M	dom/xhr/XMLHttpRequestMainThread.cpp
+M	dom/xml/XMLDocument.cpp
+M	dom/xml/nsXMLContentSink.cpp
+M	dom/xml/nsXMLFragmentContentSink.cpp
+M	dom/xul/XULDocument.cpp
+M	dom/xul/nsXULContentSink.cpp
+M	image/imgLoader.cpp
+M	layout/base/GeometryUtils.cpp
+M	layout/base/MobileViewportManager.cpp
+M	layout/base/PresShell.cpp
+M	layout/base/ZoomConstraintsClient.cpp
+M	layout/base/nsDocumentViewer.cpp
+M	layout/base/nsLayoutUtils.cpp
+M	layout/generic/nsGfxScrollFrame.cpp
+M	layout/style/MediaQueryList.cpp
+M	parser/html/nsHtml5TreeOpExecutor.cpp
+M	toolkit/components/browser/nsWebBrowser.cpp
+M	uriloader/prefetch/OfflineCacheUpdateChild.cpp
+M	uriloader/prefetch/OfflineCacheUpdateGlue.cpp
+M	uriloader/prefetch/nsOfflineCacheUpdateService.cpp
+M	xpfe/appshell/nsContentTreeOwner.cpp
+
+commit a869b25f817d9a9d9bb16f6da1f2b50470d89835
+Author: Hiroyuki Ikezoe <hiikezoe@mozilla-japan.org>
+Date:   Thu Sep 3 23:00:00 2015 +0200
+
+    Bug 1151694 - Part 2 - imgTools should be inside mozilla::image namespace. r=bbirtles
+    
+    --HG--
+    extra : rebase_source : c4b20c6f962403d863842dcbc297e9cdc724cb80
+
+M	image/imgTools.cpp
+M	image/imgTools.h
+
+commit 837f3c03a0479f78f719055bad875f6041595d02
+Author: Chris Peterson <cpeterson@mozilla.com>
+Date:   Wed Feb 20 00:47:12 2013 -0800
+
+    Bug 842931 - Remove unused private member variable nsPKCS12Blob::mTmpFilePath. r=bsmith
+
+M	security/manager/ssl/src/nsPKCS12Blob.cpp
+M	security/manager/ssl/src/nsPKCS12Blob.h
+
+commit d2f3dc13ece8065a02dcba383ddc8dbcc4f73b3c
+Author: Emilio Cobos Álvarez <emilio@crisal.io>
+Date:   Mon Apr 17 18:01:37 2017 +0200
+
+    Bug 1357142: Kill PresShell::RecreateFramesFor. r=bz
+    
+    It's not only inefficient, but also prone to buggyness. Since styles may not be
+    up-to-date when it happens.
+    
+    Post a reconstruct instead, which ensures a style flush happens before running
+    frame construction.
+    
+    MozReview-Commit-ID: DrakHsJv5fY
+    Signed-off-by: Emilio Cobos Álvarez <emilio@crisal.io>
+    
+    --HG--
+    extra : rebase_source : 11900af908654336cc2391ab9480542c5474e38f
+
+M	dom/base/nsObjectLoadingContent.cpp
+M	dom/xbl/nsBindingManager.cpp
+M	dom/xbl/nsBindingManager.h
+M	dom/xbl/nsXBLResourceLoader.cpp
+M	editor/libeditor/HTMLAnonymousNodeEditor.cpp
+M	layout/base/PresShell.cpp
+M	layout/base/PresShell.h
+M	layout/base/nsIPresShell.h
+
+commit d5bd6db76d040aeadb35218714832ef2bc3677df
+Author: Peter Van der Beken <peterv@propagandism.org>
+Date:   Wed Nov 6 10:21:36 2013 +0100
+
+    Bug 935283 Keep document as a data property on window for now. r=bz
+
+M	content/base/public/nsIDocument.h
+M	content/base/src/nsDocument.cpp
+M	dom/base/nsDOMClassInfo.cpp
+M	dom/webidl/Window.webidl
+
+commit 57307ce7cf1d65f32b547a9487de753edf8274de
+Author: Eric Rahm <erahm@mozilla.com>
+Date:   Tue Feb 21 17:56:35 2017 -0800
+
+    Bug 1333899 - Part 2: Add nsDataHandler::ParsePathWithoutRef. r=valentin
+    
+    This adds a version of |ParseURI| that only deals with the path portion of the
+    URI and expects the ref not to be present. It's mainly copy and pasted from
+    |ParseURI| but updated to use nsString methods rather than NSPR.
+    
+    Additionaly it only returns a substring to the path passed in for the data
+    buffer if requested.
+    
+    |ParseURI| is updated to advance past the scheme and trim the ref, then it
+    just uses |ParseURIWithoutRef|.
+    
+    MozReview-Commit-ID: F5h6bcSLd8P
+
+M	netwerk/protocol/data/nsDataHandler.cpp
+M	netwerk/protocol/data/nsDataHandler.h
+
+commit c25975635cfba3579cfcb77f9b6e0a3d0e308254
+Author: Geoff Brown <gbrown@mozilla.com>
+Date:   Wed Sep 18 22:04:39 2019 +0000
+
+    Bug 1580914 - Ensure config environment before generating test-info report; r=ahal
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D46359
+    
+    --HG--
+    extra : moz-landing-system : lando
+
+M	taskcluster/ci/source-test/file-metadata.yml
+M	testing/mach_commands.py
+
+commit 8de2b7d0e5a8763b9994e7fc0c832437b2a41359
+Author: Karl Tomlinson <karlt+@karlt.net>
+Date:   Tue Oct 30 15:14:35 2018 +0000
+
+    Bug 1503132 when graph time has not advanced, only ensure another iteration if rendering r=padenot
+    
+    Depends on D10164
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D10165
+    
+    --HG--
+    extra : moz-landing-system : lando
+
+M	dom/media/MediaStreamGraph.cpp
+
+commit 855a4bc6c4e8fa37702bec385cdfb9d5225dd834
+Author: JW Wang <jwwang@mozilla.com>
+Date:   Thu Nov 30 11:21:14 2017 +0800
+
+    Bug 1421875. P3 - remove MediaDecoder::DownloadProgressed() which is basically a one-line call to GetOwner()->DownloadProgressed(). r=bechen,gerald
+    
+    Also devirtualize ChannelMediaDecoder::DownloadProgressed() and move it to private.
+    
+    MozReview-Commit-ID: ITv3ISRbN5t
+    
+    --HG--
+    extra : rebase_source : aa75bc11fc1a4af8df15db9224928b1f02267b80
+
+M	dom/media/ChannelMediaDecoder.cpp
+M	dom/media/ChannelMediaDecoder.h
+M	dom/media/MediaDecoder.cpp
+M	dom/media/MediaDecoder.h
+M	dom/media/hls/HLSDecoder.cpp
+M	dom/media/mediasource/MediaSourceDecoder.cpp
+
+commit f052592c5eca9ad76404ac5458e425108ce75db2
+Author: timeless%mozdev.org <timeless%mozdev.org>
+Date:   Sun Jan 19 00:46:16 2003 +0000
+
+    Bug 133383 nsMetaCharsetObserver destructor shouldn't call End
+    r=alecf sr=bz
+
+M	intl/chardet/src/nsMetaCharsetObserver.cpp
+
+commit 56a52b3fc9e85dfb08ef219566459ab27e9b5f1a
+Author: Mike Hommey <mh+mozilla@glandium.org>
+Date:   Fri Dec 21 19:31:34 2018 +0000
+
+    Bug 1514400 - Download minidump_stackwalk by default. r=ahal
+    
+    As of bug 1513157, minidump_stackwalk is not installed in the test
+    docker images, so it needs to be downloaded.
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D14644
+    
+    --HG--
+    extra : moz-landing-system : lando
+
+M	testing/mozharness/configs/android/android_hw.py
+M	testing/mozharness/configs/awsy/linux_config.py
+M	testing/mozharness/configs/awsy/macosx_config.py
+M	testing/mozharness/configs/awsy/taskcluster_windows_config.py
+M	testing/mozharness/configs/firefox_ui_tests/qa_jenkins.py
+M	testing/mozharness/configs/firefox_ui_tests/releng_release.py
+M	testing/mozharness/configs/firefox_ui_tests/taskcluster.py
+M	testing/mozharness/configs/firefox_ui_tests/taskcluster_windows.py
+M	testing/mozharness/configs/marionette/prod_config.py
+M	testing/mozharness/configs/marionette/windows_config.py
+M	testing/mozharness/configs/marionette/windows_taskcluster_config.py
+M	testing/mozharness/configs/raptor/android_hw_config.py
+M	testing/mozharness/configs/raptor/linux64_config_taskcluster.py
+M	testing/mozharness/configs/raptor/linux_config.py
+M	testing/mozharness/configs/raptor/mac_config.py
+M	testing/mozharness/configs/raptor/windows_config.py
+M	testing/mozharness/configs/raptor/windows_vm_config.py
+M	testing/mozharness/configs/talos/linux64_config_taskcluster.py
+M	testing/mozharness/configs/talos/linux_config.py
+M	testing/mozharness/configs/talos/mac_config.py
+M	testing/mozharness/configs/talos/windows_config.py
+M	testing/mozharness/configs/talos/windows_taskcluster_config.py
+M	testing/mozharness/configs/talos/windows_vm_config.py
+M	testing/mozharness/configs/unittests/linux_unittest.py
+M	testing/mozharness/configs/unittests/mac_unittest.py
+M	testing/mozharness/configs/unittests/win_taskcluster_unittest.py
+M	testing/mozharness/configs/unittests/win_unittest.py
+M	testing/mozharness/configs/web_platform_tests/prod_config.py
+M	testing/mozharness/configs/web_platform_tests/prod_config_android.py
+M	testing/mozharness/configs/web_platform_tests/prod_config_windows.py
+M	testing/mozharness/configs/web_platform_tests/prod_config_windows_taskcluster.py
+M	testing/mozharness/mozharness/mozilla/testing/testbase.py
+
+commit d9ab58bfa9a41487aa0051b64db961b6d6d5d9a6
+Author: Razvan Caliman <rcaliman@mozilla.com>
+Date:   Mon Jul 16 19:06:06 2018 +0200
+
+    Bug 1475947 - (Part 1) implement getOwnerGlobalDimensions() on Node actor. r=gl
+    
+    MozReview-Commit-ID: Ij59UBVlCBD
+    
+    --HG--
+    extra : rebase_source : b4b078106f4abb5e16a1ba7e435e65f13082d163
+
+M	devtools/server/actors/inspector/node.js
+M	devtools/shared/specs/node.js
+
+commit 76502ee6b0e7c86fc26ff57e06abae4a48c491e7
+Author: Emilio Cobos Álvarez <emilio@crisal.io>
+Date:   Tue Mar 16 22:08:48 2021 +0000
+
+    Bug 1698477 - Prevent spin buttons from creating overflow. r=dholbert
+    
+    This matches pre-existing behavior.
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D108608
+
+M	layout/forms/nsTextControlFrame.cpp
+M	layout/reftests/forms/input/number/focus-handling.html
+M	layout/reftests/forms/input/number/reftest.list
+A	layout/reftests/forms/input/number/spinner-overflow-ref.html
+A	layout/reftests/forms/input/number/spinner-overflow-vertical-ref.html
+A	layout/reftests/forms/input/number/spinner-overflow-vertical.html
+A	layout/reftests/forms/input/number/spinner-overflow.html
+M	layout/style/res/forms.css
+
+commit d5589171e8e4ac3a07d9b96f0c2e771f4a60fa21
+Author: Florens Verschelde <florens@fvsch.com>
+Date:   Tue Feb 18 16:53:10 2020 +0000
+
+    Bug 1591565 - Remove the SecondaryPanes footer; r=jlast
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D62257
+    
+    --HG--
+    extra : moz-landing-system : lando
+
+M	devtools/client/debugger/src/components/App.js
+M	devtools/client/debugger/src/components/SecondaryPanes/CommandBar.css
+D	devtools/client/debugger/src/components/SecondaryPanes/UtilsBar.js
+M	devtools/client/debugger/src/components/SecondaryPanes/index.js
+M	devtools/client/debugger/src/components/SecondaryPanes/moz.build
+
+commit a5bcf4381ed5e10755cce34ff8d5f7b3e765ed23
+Author: Raymond Lee <raymond@appcoast.com>
+Date:   Mon Jun 28 16:15:37 2010 -0700
+
+    Bug 572889 - Move TabCandy out of a tab and into a per-window xul:deck
+    Wrap the browser in a deck with an iframe for tabcandy.
+
+M	browser/base/content/browser.xul
+
+commit de9f8d8859030b315cd13826731a8cd2ed8a77db
+Author: Joel Maher <jmaher@mozilla.com>
+Date:   Thu Feb 25 13:08:50 2016 -0800
+
+    Bug 1251373 - Remove moz payment API support. r=Margaret
+    
+    MozReview-Commit-ID: IW63XQDyB16
+    
+    --HG--
+    extra : rebase_source : 2038809a37a265843e6033392cbe08641dfb3a50
+
+M	mobile/android/app/mobile.js
+M	mobile/android/chrome/content/browser.js
+D	mobile/android/chrome/content/payment.xhtml
+M	mobile/android/chrome/jar.mn
+M	mobile/android/components/MobileComponents.manifest
+D	mobile/android/components/PaymentProviderStrategy.js
+D	mobile/android/components/PaymentsUI.js
+M	mobile/android/components/moz.build
+M	mobile/android/confvars.sh
+M	mobile/android/installer/package-manifest.in
+D	mobile/android/locales/en-US/chrome/payments.properties
+M	mobile/android/locales/jar.mn
+M	mobile/android/themes/core/jar.mn
+D	mobile/android/themes/core/payment.css
+
+commit ff2c410cf58403c936e06b9121e1b08e5c7e60a8
+Author: Jan de Mooij <jdemooij@mozilla.com>
+Date:   Thu Jul 9 20:55:29 2020 +0000
+
+    Bug 1651645 part 2 - Simplify DeleteArrayElement, make some methods private. r=evilpie
+    
+    Depends on D82958
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D82959
+
+M	js/src/builtin/Array.cpp
+M	js/src/vm/NativeObject.h
+
+commit a30f765ef805cf27c5db1d69bf5475ce4ae91b1b
+Author: Seth Fowler <seth@mozilla.com>
+Date:   Thu Apr 4 18:01:41 2013 -0700
+
+    Bug 857367 - Make it safe to call RasterImage::DecodePool::RequestDecode off the main thread. r=tn
+    
+    --HG--
+    extra : rebase_source : c7c91e08ca0ca200d5c3c4cb24475a6445748842
+
+M	image/src/RasterImage.cpp
+M	image/src/RasterImage.h
+
+commit 3540a4910cbb801246acb21aa800b5df047e810d
+Author: Florian Quèze <florian@queze.net>
+Date:   Fri Feb 24 15:24:13 2023 +0000
+
+    Bug 834343 - [Windows] reset the idle time of the user idle service for mouse move events only if the mouse moved by at least 1 pixel, r=cmartin.
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D170904
+
+M	widget/windows/nsWindow.cpp
+
+commit 44cf16aca9b8a055ca98d64ef83319479e796d04
+Author: William Lachance <wlachance@mozilla.com>
+Date:   Mon Mar 16 20:47:05 2020 +0000
+
+    Bug 1622644 - Fix use of six.reraise within marionette r=whimboo,marionette-reviewers
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D66950
+    
+    --HG--
+    extra : moz-landing-system : lando
+
+M	testing/marionette/client/marionette_driver/geckoinstance.py
+M	testing/marionette/client/marionette_driver/marionette.py
+M	testing/marionette/client/marionette_driver/transport.py
+M	testing/marionette/harness/marionette_harness/runner/base.py
+M	testing/marionette/harness/marionette_harness/runner/mixins/window_manager.py
+
+commit e20e8962190f93346175cbab2dc3f6471358f46b
+Author: Tom Prince <mozilla@hocat.ca>
+Date:   Tue Aug 4 19:50:05 2020 +0000
+
+    Bug 1657199: Generate the same docker-image digests locally as in automation; r=Callek
+    
+    In bug 1626058, I changed how the docker image digest was generated:
+    
+    - I used the same directory structure to generate the digest as was used for generating the context
+    - I moved context generation to the decision task, and used the hash of that as part of the digest.
+    
+    Unfortunately, it turns out the file name in the gzip header of the context
+    .tar.gz differed between when we are creating a context to write out, and when
+    were just generating the hash.
+    
+    This adjust the name used in the gzip header to be consistent.
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D84753
+
+M	taskcluster/taskgraph/docker.py
+M	taskcluster/taskgraph/test/test_util_docker.py
+M	taskcluster/taskgraph/transforms/docker_image.py
+M	taskcluster/taskgraph/util/docker.py
+
+commit d575f4cd3db723b9d32062b11b872a19f59d4bb0
+Author: Emilio Cobos Álvarez <emilio@crisal.io>
+Date:   Mon Feb 1 15:06:12 2021 +0000
+
+    Bug 1637651 - Don't trigger duplicate style link preloads for the same preload key. r=smaug
+    
+    This is equivalent to the check in Document::MaybePreLoadImage, since
+    otherwise this code won't check the preload service at all. Without
+    this, we can trigger the assertion in PreloaderBase::NotifyOpen when we
+    have identical Link header and speculative link element preloads.
+    
+    It's not a correctness nor perf issue, because the CSS loader will
+    coalesce the stylesheet load anyways, but it seems better to do this
+    than to remove the assertion, specially given images already do that.
+    
+    The test-case in the following patch triggers the issue.
+    
+    Depends on D103568
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D103569
+
+M	parser/html/nsHtml5TreeOpExecutor.cpp
+
+commit 8557eb8a03a5558b8ecfce05d3ddb9af08e268c8
+Author: Matt Woodrow <mwoodrow@mozilla.com>
+Date:   Mon Apr 7 13:32:49 2014 +1200
+
+    Bug 991028 - Stop using OpenDescriptor in ContentClientIncremental. r=nical
+
+M	gfx/layers/client/ContentClient.cpp
+M	gfx/layers/client/ContentClient.h
+M	gfx/layers/ipc/CompositorParent.cpp
+M	gfx/layers/ipc/ISurfaceAllocator.cpp
+M	gfx/layers/ipc/ISurfaceAllocator.h
+
+commit d1ef9c31a8ce5158681861c2e852886b3a4146ec
+Author: Chris Pearce <chris@pearce.org.nz>
+Date:   Tue Jul 12 15:39:37 2011 +1200
+
+    Bug 592833 - Shutdown inactive media decode threads, don't start audio thread until needed. r=roc
+
+M	content/media/nsBuiltinDecoderStateMachine.cpp
+M	content/media/nsBuiltinDecoderStateMachine.h
+M	content/media/test/test_buffered.html
+M	content/media/test/test_bug493187.html
+
+commit 84177fa544671db440b8ed191de0b4895ed499ac
+Author: Jean-Yves Avenard <jyavenard@mozilla.com>
+Date:   Thu Jun 7 14:26:11 2018 +0200
+
+    Bug 1409664 - P7. Remove unused TaskQueue method. r=gerald
+    
+    Summary:
+    Depends on D1619
+    
+    Tags: #secure-revision
+    
+    Bug #: 1409664
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D1620
+
+M	xpcom/threads/TaskQueue.cpp
+M	xpcom/threads/TaskQueue.h
+
+commit 936d48d1021f35eb7f49b29ee7dd254bbb436099
+Author: blizzard%redhat.com <blizzard%redhat.com>
+Date:   Tue Dec 5 21:34:39 2000 +0000
+
+    Bug #61774.  Add -remote help text to the cmd line.  Patch from andre@beta.telenordia.se. sr=blizzard sr=alecf
+
+M	xpfe/bootstrap/nsAppRunner.cpp
+
+commit 22d41f0b1fbf31d6797b6932609dd4ba8de41a14
+Author: Brian Hackett <bhackett1024@gmail.com>
+Date:   Thu Jan 24 20:18:34 2013 -0700
+
+    Bug 834242 - Reduce cost of exact stack rooting during property reads, r=terrence.
+
+M	js/src/builtin/MapObject.cpp
+M	js/src/builtin/Object.cpp
+M	js/src/builtin/ParallelArray.cpp
+M	js/src/builtin/RegExp.cpp
+M	js/src/frontend/BytecodeCompiler.cpp
+M	js/src/frontend/FoldConstants.cpp
+M	js/src/frontend/Parser.cpp
+M	js/src/frontend/TokenStream.cpp
+M	js/src/gc/Root.h
+M	js/src/ion/CodeGenerator.cpp
+M	js/src/ion/Ion.cpp
+M	js/src/ion/IonCaches.cpp
+M	js/src/ion/VMFunctions.cpp
+M	js/src/ion/VMFunctions.h
+M	js/src/jsapi-tests/testIndexToString.cpp
+M	js/src/jsapi-tests/testParseJSON.cpp
+M	js/src/jsapi-tests/testStringBuffer.cpp
+M	js/src/jsapi.cpp
+M	js/src/jsatom.cpp
+M	js/src/jsatom.h
+M	js/src/jsatominlines.h
+M	js/src/jsclone.cpp
+M	js/src/jscntxt.h
+M	js/src/jscntxtinlines.h
+M	js/src/jscompartment.cpp
+M	js/src/jsgc.cpp
+M	js/src/jsgcinlines.h
+M	js/src/jsinfer.cpp
+M	js/src/jsinferinlines.h
+M	js/src/jsinterp.cpp
+M	js/src/jsinterp.h
+M	js/src/jsinterpinlines.h
+M	js/src/jsnum.cpp
+M	js/src/jsnum.h
+M	js/src/jsobj.cpp
+M	js/src/jsobj.h
+M	js/src/jsobjinlines.h
+M	js/src/json.cpp
+M	js/src/jsonparser.cpp
+M	js/src/jspropertycache.h
+M	js/src/jspropertycacheinlines.h
+M	js/src/jspropertytree.cpp
+M	js/src/jsscope.cpp
+M	js/src/jsscopeinlines.h
+M	js/src/jsscript.cpp
+M	js/src/jsstr.cpp
+M	js/src/jsstr.h
+M	js/src/jstypedarray.cpp
+M	js/src/jsxml.cpp
+M	js/src/methodjit/StubCalls.cpp
+M	js/src/shell/js.cpp
+M	js/src/vm/ArgumentsObject.cpp
+M	js/src/vm/Debugger.cpp
+M	js/src/vm/RegExpObject.cpp
+M	js/src/vm/SelfHosting.cpp
+M	js/src/vm/String-inl.h
+M	js/src/vm/String.cpp
+M	js/src/vm/String.h
+M	js/src/vm/StringBuffer.cpp
+
+commit aab716a96f718085d37c2fdb9321aa383428b670
+Author: Nicholas Nethercote <nnethercote@mozilla.com>
+Date:   Tue Mar 8 16:10:51 2011 -0800
+
+    Bug 638034 - Make scanning safer.  r=brendan.
+
+M	js/src/jsapi.cpp
+M	js/src/jsatom.cpp
+M	js/src/jscntxt.cpp
+M	js/src/jsinterp.cpp
+M	js/src/jsiter.cpp
+M	js/src/jsparse.cpp
+M	js/src/jsscan.cpp
+M	js/src/jsscan.h
+
+commit aae5d518f8de005d13fa41db4686adbba786f46e
+Author: Tom Ritter <tom@mozilla.com>
+Date:   Fri Apr 15 18:17:39 2022 +0000
+
+    Bug 1762642: Add libopus to mach vendor r=kinetik,jewilde
+    
+    This makes some ./mach vendor improvements needed:
+     - Adds a replace-in-file-regex action
+     - Allows you to skip copying the temporary extract directory
+       so that a script can do it
+     - Removes 'commit' from the look-in-moz.yaml-for-release match
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D142720
+
+M	media/libopus/README_MOZILLA
+M	media/libopus/gen-sources.py
+A	media/libopus/moz.yaml
+M	media/libopus/update.sh
+M	python/mozbuild/mozbuild/vendor/moz_yaml.py
+M	python/mozbuild/mozbuild/vendor/vendor_manifest.py
+
+commit 5557fcdd005f7bb49870d9def51f99c804191646
+Author: Mike Hommey <mh+mozilla@glandium.org>
+Date:   Fri Dec 31 08:53:46 2021 +0000
+
+    Bug 1747532 - Add clang version mappings for more versions of Xcode. r=firefox-build-system-reviewers,andi
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D134861
+
+M	build/moz.configure/toolchain.configure
+
+commit 163a21b01fdb3c163c326bde615a709974268784
+Author: cltbld <cltbld>
+Date:   Fri Apr 21 17:02:08 2006 +0000
+
+    Automated update from host egg
+
+M	configure
+
+commit 5b3af6e85ffb37636aabe079a0e0bbbe73d20bd4
+Merge: c0d2685148b5 846adaea6ccd
+Author: Carsten "Tomcat" Book <cbook@mozilla.com>
+Date:   Wed Nov 9 16:39:18 2016 +0100
+
+    Merge mozilla-central to mozilla-inbound
+
+commit 726bd0ce0bca6906c5c907dd23db2e227b755eba
+Author: mike.morgan%oregonstate.edu <mike.morgan%oregonstate.edu>
+Date:   Tue May 2 22:57:05 2006 +0000
+
+    Updated RSS links at top of lists in extensions/themes main page to point to an HTML page, see bug 336246.
+
+M	webtools/addons/public/htdocs/extensions.php
+M	webtools/addons/public/htdocs/themes.php
+M	webtools/addons/public/tpl/extensions.tpl
+M	webtools/addons/public/tpl/themes.tpl
+
+commit abd8df635c6fb61dda8951227597527f5a072021
+Author: Shawn Wilsher <me@shawnwilsher.com>
+Date:   Fri Nov 28 11:00:36 2008 -0800
+
+    Backed out changeset 527249758771 (bug 457215) to investigate a performance regression (bug 467102)
+
+M	modules/lcms/src/cmsprecache.c
+
+commit abb4a7194901357c4f49caa0a0ffbc8fb93c5188
+Author: Chris Peterson <cpeterson@mozilla.com>
+Date:   Thu May 26 11:10:43 2016 -0700
+
+    Backed out changeset fa77bc23f799 (bug 1275591) for breaking tests. CLOSED TREE
+    
+    --HG--
+    extra : amend_source : ee42a8cecf3eaead5e40f63012d866e8d07817d8
+
+M	modules/libpref/init/all.js
+
+commit 2bf48699238ef1bcb4acec22668def94737d73ca
+Author: cata%netscape.com <cata%netscape.com>
+Date:   Thu Jan 13 23:18:35 2000 +0000
+
+    Various small fixes. r=erik
+
+M	intl/strres/src/nsStringBundle.cpp
+
+commit da1276fb98c15d7663cd2a79982c98ddbe3f7185
+Author: valeski%netscape.com <valeski%netscape.com>
+Date:   Thu Nov 11 02:11:50 1999 +0000
+
+    removed files: mozilla/netwerk/protocol/ftp/public/nsIFTPContext.idl
+
+M	netwerk/protocol/ftp/macbuild/ftpIDL.mcp
+
+commit 60bf5b16d5c9058aeea9694fafc076a1fd97debf
+Author: Dão Gottwald <dao@mozilla.com>
+Date:   Tue Aug 12 14:51:02 2008 +0200
+
+    browser chrome test for bug 445369
+
+M	browser/base/content/test/browser_ctrlTab.js
+
+commit b8f6c447f04ca6bc79576762c8949c672ca24951
+Author: jgmyers%netscape.com <jgmyers%netscape.com>
+Date:   Fri May 18 00:04:17 2001 +0000
+
+    remove unused ssl redirect prefs: bug 79572 r=thayes sr=blizzard
+
+M	security/manager/pki/resources/content/pref-ssl.xul
+
+commit 289f67a60369d22eb3b60d81c04dd26b78663ee7
+Merge: e125040c2f6a daa05061c1d9
+Author: Ciure Andrei <aciure@mozilla.com>
+Date:   Wed Mar 27 18:40:06 2019 +0200
+
+    Merge mozilla-central to autoland.  a=merge CLOSED TREE
+
+commit 84845ed8177227c6f5e323d79291885f4f8b5ff7
+Merge: c55cb99cf151 2518fecc4c14
+Author: Ryan VanderMeulen <ryanvm@gmail.com>
+Date:   Tue Aug 19 16:01:41 2014 -0400
+
+    Merge fx-team to m-c. a=merge
+
+commit 6d1cc05193f32c6031e1a023943063a6eb701a03
+Author: karlt+@karlt.net <karlt+@karlt.net>
+Date:   Tue Apr 22 20:13:09 2008 -0700
+
+    clip parts of stretchy chars more carefully b=427666 (also fixes b=349907) r+sr=roc a1.9=damons
+
+M	layout/mathml/base/src/nsMathMLChar.cpp
+A	layout/reftests/mathml/overbar-width-1-ref.xhtml
+A	layout/reftests/mathml/overbar-width-1.xhtml
+M	layout/reftests/mathml/reftest.list
+
+commit 02692c7c641fdd66396df2844408b0934f7c6a07
+Author: michaelp%netscape.com <michaelp%netscape.com>
+Date:   Fri Oct 30 02:51:08 1998 +0000
+
+    fixed build bustage.
+
+M	gfx/src/motif/nsRenderingContextUnix.cpp
+
+commit e0a60d6cadeacdb476c3958e58615059090f2bc4
+Author: Mike de Boer <mdeboer@mozilla.com>
+Date:   Thu Jun 13 19:35:48 2013 +0200
+
+    Backed out changeset 7ef2a2d43849 (bug 881131)
+
+M	browser/components/customizableui/src/CustomizableWidgets.jsm
+
+commit 65038e9551648860c24e14ca5f0a15bc74e2dd56
+Author: cyeh%netscape.com <cyeh%netscape.com>
+Date:   Sat Nov 21 00:34:32 1998 +0000
+
+    Removing static makefiles as a part of the transition to Autoconf. I have taken great
+    care to only remove makefiles affailiated with building nglayout. I have also verified that
+    the build at this point in time succesfully builds with autoconf.
+    
+    If you must recover one of these makefiles, you can use the static tag STATIC_MAKEFILES.
+    If I removed a makefile that you need, please e-mail cyeh@netscape.com.
+
+D	base/Makefile
+D	base/public/Makefile
+D	base/src/Makefile
+D	base/src/gtk/Makefile
+D	base/src/motif/Makefile
+D	base/src/rhapsody/Makefile
+D	base/tests/Makefile
+D	config/Makefile
+D	config/mkdepend/Makefile
+D	config/mkdetect/Makefile
+D	config/ports/Makefile
+D	dbm/Makefile
+D	dbm/include/Makefile
+D	dbm/src/Makefile
+D	dbm/tests/Makefile
+D	dom/Makefile
+D	dom/public/Makefile
+D	dom/public/base/Makefile
+D	dom/public/coreDom/Makefile
+D	dom/public/coreEvents/Makefile
+D	dom/public/css/Makefile
+D	dom/public/events/Makefile
+D	dom/public/html/Makefile
+D	dom/src/Makefile
+D	dom/src/base/Makefile
+D	dom/src/build/Makefile
+D	dom/src/coreDOM/Makefile
+D	dom/src/css/Makefile
+D	dom/src/events/Makefile
+D	dom/src/html/Makefile
+D	dom/src/jsurl/Makefile
+D	dom/tools/Makefile
+D	editor/Makefile
+D	editor/base/Makefile
+D	editor/core/Makefile
+D	editor/public/Makefile
+D	editor/txmgr/Makefile
+D	editor/txmgr/public/Makefile
+D	editor/txmgr/src/Makefile
+D	editor/txmgr/tests/Makefile
+D	gfx/Makefile
+D	gfx/public/Makefile
+D	gfx/src/Makefile
+D	gfx/src/gtk/Makefile
+D	gfx/src/motif/Makefile
+D	gfx/src/rhapsody/Makefile
+D	gfx/tests/Makefile
+D	htmlparser/Makefile
+D	htmlparser/robot/Makefile
+D	htmlparser/src/Makefile
+D	include/Makefile
+D	jpeg/Makefile
+D	js/Makefile
+D	js/jsd/Makefile
+D	js/jsd/classes/Makefile
+D	js/src/Makefile
+D	js/src/fdlibm/Makefile
+D	js/src/liveconnect/Makefile
+D	js/src/liveconnect/classes/Makefile
+D	js/src/xpcom/Makefile
+D	layout/Makefile
+D	layout/base/Makefile
+D	layout/base/public/Makefile
+D	layout/base/src/Makefile
+D	layout/base/tests/Makefile
+D	layout/build/Makefile
+D	layout/events/Makefile
+D	layout/events/public/Makefile
+D	layout/events/src/Makefile
+D	layout/html/Makefile
+D	layout/html/base/Makefile
+D	layout/html/base/src/Makefile
+D	layout/html/content/Makefile
+D	layout/html/content/public/Makefile
+D	layout/html/content/src/Makefile
+D	layout/html/document/Makefile
+D	layout/html/document/src/Makefile
+D	layout/html/forms/Makefile
+D	layout/html/forms/public/Makefile
+D	layout/html/forms/src/Makefile
+D	layout/html/style/Makefile
+D	layout/html/style/public/Makefile
+D	layout/html/style/src/Makefile
+D	layout/html/table/Makefile
+D	layout/html/table/src/Makefile
+D	layout/html/tests/Makefile
+D	layout/tools/Makefile
+D	layout/xml/Makefile
+D	layout/xml/content/Makefile
+D	layout/xml/content/public/Makefile
+D	layout/xml/content/src/Makefile
+D	layout/xml/document/Makefile
+D	layout/xml/document/public/Makefile
+D	layout/xml/document/src/Makefile
+D	lib/liblayer/Makefile
+D	lib/liblayer/include/Makefile
+D	lib/liblayer/src/Makefile
+D	lib/libpwcac/Makefile
+D	lib/xp/Makefile
+D	modules/libimg/Makefile
+D	modules/libimg/classes/Makefile
+D	modules/libimg/classes/netscape/Makefile
+D	modules/libimg/classes/netscape/libimg/Makefile
+D	modules/libimg/png/Makefile
+D	modules/libimg/public/Makefile
+D	modules/libimg/src/Makefile
+D	modules/libpref/Makefile
+D	modules/libpref/admin/Makefile
+D	modules/libpref/l10n/Makefile
+D	modules/libpref/public/Makefile
+D	modules/libpref/src/Makefile
+D	modules/libreg/Makefile
+D	modules/libreg/include/Makefile
+D	modules/libreg/src/Makefile
+D	modules/libutil/Makefile
+D	modules/libutil/public/Makefile
+D	modules/libutil/src/Makefile
+D	modules/oji/Makefile
+D	modules/oji/public/Makefile
+D	modules/oji/src/Makefile
+D	modules/plugin/Makefile
+D	modules/plugin/base/public/Makefile
+D	modules/plugin/base/src/Makefile
+D	modules/plugin/nglsrc/Makefile
+D	modules/plugin/public/Makefile
+D	modules/plugin/samples/simple/Makefile
+D	modules/plugin/src/Makefile
+D	modules/plugin/test/Makefile
+D	modules/security/freenav/Makefile
+D	modules/zlib/Makefile
+D	modules/zlib/src/Makefile
+D	nav-java/Makefile
+D	nav-java/stubs/Makefile
+D	nav-java/stubs/include/Makefile
+D	nav-java/stubs/jri/Makefile
+D	nav-java/stubs/src/Makefile
+D	network/Makefile
+D	network/cache/Makefile
+D	network/cache/nu/Makefile
+D	network/cache/nu/include/Makefile
+D	network/cache/nu/public/Makefile
+D	network/cache/nu/src/Makefile
+D	network/client/Makefile
+D	network/cnvts/Makefile
+D	network/cstream/Makefile
+D	network/main/Makefile
+D	network/mimetype/Makefile
+D	network/module/Makefile
+D	network/module/tests/Makefile
+D	network/protocol/Makefile
+D	network/protocol/about/Makefile
+D	network/protocol/callback/Makefile
+D	network/protocol/certld/Makefile
+D	network/protocol/dataurl/Makefile
+D	network/protocol/file/Makefile
+D	network/protocol/ftp/Makefile
+D	network/protocol/gopher/Makefile
+D	network/protocol/http/Makefile
+D	network/protocol/imap4/Makefile
+D	network/protocol/js/Makefile
+D	network/protocol/ldap/Makefile
+D	network/protocol/mailbox/Makefile
+D	network/protocol/marimba/Makefile
+D	network/protocol/nntp/Makefile
+D	network/protocol/pop3/Makefile
+D	network/protocol/remote/Makefile
+D	network/protocol/smtp/Makefile
+D	network/util/Makefile
+D	parser/htmlparser/Makefile
+D	parser/htmlparser/robot/Makefile
+D	parser/htmlparser/src/Makefile
+D	rdf/Makefile
+D	rdf/include/Makefile
+D	rdf/src/Makefile
+D	sun-java/Makefile
+D	sun-java/stubs/Makefile
+D	sun-java/stubs/include/Makefile
+D	sun-java/stubs/jri/Makefile
+D	sun-java/stubs/src/Makefile
+D	view/Makefile
+D	view/public/Makefile
+D	view/src/Makefile
+D	webshell/Makefile
+D	webshell/public/Makefile
+D	webshell/src/Makefile
+D	webshell/tests/Makefile
+D	webshell/tests/viewer/Makefile
+D	widget/Makefile
+D	widget/public/Makefile
+D	widget/src/Makefile
+D	widget/src/build/Makefile
+D	widget/src/motif/Makefile
+D	widget/src/rhapsody/Makefile
+D	widget/src/xpwidgets/Makefile
+D	widget/tests/Makefile
+D	widget/tests/scribble/Makefile
+D	widget/tests/widget/Makefile
+D	xpcom/Makefile
+D	xpcom/public/Makefile
+D	xpcom/src/Makefile
+D	xpcom/tests/Makefile
+D	xpcom/tests/dynamic/Makefile
+D	xpfe/Makefile
+D	xpfe/xpviewer/Makefile
+D	xpfe/xpviewer/public/Makefile
+D	xpfe/xpviewer/src/Makefile
+
+commit 81f4fc8f9bf541a5657e4693fcc32ab20fd75725
+Author: B2G Bumper Bot <release+b2gbumper@mozilla.com>
+Date:   Tue Nov 25 23:17:13 2014 -0800
+
+    Bumping manifests a=b2g-bump
+
+M	b2g/config/dolphin/sources.xml
+M	b2g/config/emulator-ics/sources.xml
+M	b2g/config/emulator-jb/sources.xml
+M	b2g/config/emulator-kk/sources.xml
+M	b2g/config/emulator/sources.xml
+M	b2g/config/flame-kk/sources.xml
+M	b2g/config/flame/sources.xml
+M	b2g/config/hamachi/sources.xml
+M	b2g/config/helix/sources.xml
+M	b2g/config/nexus-4/sources.xml
+M	b2g/config/wasabi/sources.xml
+
+commit c29021f235b3d2521af10055cc0d6e5f5b67b448
+Author: mattwillis%gmail.com <mattwillis%gmail.com>
+Date:   Fri Feb 2 20:14:01 2007 +0000
+
+    debugging mac l10n
+
+M	tools/tinderbox-configs/sunbird/macosx/CLOBBER
+M	tools/tinderbox-configs/sunbird/macosx/mozconfig
+
+commit 62ee54ce79694e05749f8abad54f43d9dd07b06a
+Author: Andreea Pavel <apavel@mozilla.com>
+Date:   Sat Mar 14 01:21:24 2020 +0200
+
+    Backed out changeset 05881652e940 (bug 1611053) for dt crashes on a CLOSED TREE
+
+M	js/xpconnect/src/XPCJSContext.cpp
+
+commit 1a90cb3c8fcc5e589d52c57f00ecd47c12a28714
+Author: chak%netscape.com <chak%netscape.com>
+Date:   Mon Apr 16 20:19:44 2001 +0000
+
+    Fix for bug#66334 - Viewsource needs to be a protocol handler
+    Changes to make the mozilla to use viewsource: URL
+    r=valeski,sr=rpotts
+
+M	xpfe/browser/resources/content/viewsource.js
+
+commit 5eb0402620e4d6dee645557fd56ebd092faf8a54
+Author: Carsten "Tomcat" Book <cbook@mozilla.com>
+Date:   Mon Sep 22 12:43:02 2014 +0200
+
+    Backed out changeset 422fd81a4118 (bug 1032125) for causing regressions / Bug 1070850
+
+M	dom/ipc/ContentParent.cpp
+
+commit b958c4890fcc3bf3bf872710e34785cded457df6
+Author: antunovicm <mate@antunovic.nz>
+Date:   Fri May 26 10:10:36 2017 -0500
+
+    servo: Merge #16920 - Implement window.closed (from synlestidae:servo-16705); r=asajeffrey
+    
+    <!-- Please describe your changes on the following line: -->
+    
+    Implements #16705. window.closed should evaluate to true if BrowsingContext is discarded
+    
+    ---
+    <!-- Thank you for contributing to Servo! Please replace each `[ ]` by `[X]` when the step is complete, and replace `__` with appropriate data: -->
+    - [X] `./mach build -d` does not report any errors
+    - [X] `./mach test-tidy` does not report any errors
+    - [X] These changes fix #16705 (github issue number if applicable).
+    
+    <!-- Either: -->
+    - [X] There are tests for these changes OR
+    - [ ] These changes do not require tests because _____
+    
+    <!-- Also, please make sure that "Allow edits from maintainers" checkbox is checked, so that we can help you if you get stuck somewhere along the way.-->
+    
+    <!-- Pull requests that do not address these steps are welcome, but they will require additional verification as part of the review process. -->
+    
+    Source-Repo: https://github.com/servo/servo
+    Source-Revision: 8747ccc9e853bcede73b838634992638655934f5
+    
+    --HG--
+    extra : subtree_source : https%3A//hg.mozilla.org/projects/converted-servo-linear
+    extra : subtree_revision : 601cc1122010a95a15a2d44cf6c98c261f30045a
+
+M	servo/components/script/dom/webidls/Window.webidl
+M	servo/components/script/dom/window.rs
+
+commit 7b70c6daf9e758e246b17f1e5c8e1bcda1d77c21
+Author: dveditz%netscape.com <dveditz%netscape.com>
+Date:   Fri Sep 17 06:38:05 1999 +0000
+
+    a little more debug output to show where startup time is going
+
+M	xpfe/bootstrap/nsAppRunner.cpp
+
+commit b36c9249be12c3082902e2f46ec02debad10c68c
+Author: B2G Bumper Bot <release+b2gbumper@mozilla.com>
+Date:   Mon Dec 29 10:21:57 2014 -0800
+
+    Bumping manifests a=b2g-bump
+
+M	b2g/config/dolphin/sources.xml
+M	b2g/config/emulator-ics/sources.xml
+M	b2g/config/emulator-jb/sources.xml
+M	b2g/config/emulator-kk/sources.xml
+M	b2g/config/emulator/sources.xml
+M	b2g/config/flame-kk/sources.xml
+M	b2g/config/flame/sources.xml
+M	b2g/config/hamachi/sources.xml
+M	b2g/config/helix/sources.xml
+M	b2g/config/nexus-4/sources.xml
+M	b2g/config/wasabi/sources.xml
+
+commit 2f1ff8bde0a7a96801b6b690bbadb64c9c40b627
+Author: mkaply%us.ibm.com <mkaply%us.ibm.com>
+Date:   Wed Aug 7 04:06:57 2002 +0000
+
+    Better fix for OS/2 bustage earlier
+
+M	gfx/src/nsDeviceContext.cpp
+M	layout/base/nsPresShell.cpp
+M	layout/html/base/src/nsPresShell.cpp
+
+commit 26d3d4dc2c07475bf8c78417c9ffbb339fbd9587
+Author: alecf%netscape.com <alecf%netscape.com>
+Date:   Mon May 3 23:50:58 1999 +0000
+
+    fix for #5792 - fix move/copy message in message menu to use the new account manager datasource
+
+M	mailnews/ui/messenger/resources/mailshell.xul
+
+commit 23e67bd959524c8905969f2336318d53ac2ce3cf
+Author: Ryan VanderMeulen <ryanvm@gmail.com>
+Date:   Mon Dec 2 13:47:29 2013 -0500
+
+    Backed out 2 changesets (bug 941012, bug 931921) for suspicion of breaking Mn on OSX. CLOSED TREE
+    
+    Backed out changeset c50cca7d248a (bug 941012)
+    Backed out changeset eb8d750eabb3 (bug 931921)
+
+M	browser/devtools/debugger/test/browser_dbg_globalactor.js
+M	toolkit/devtools/Loader.jsm
+M	toolkit/devtools/server/actors/root.js
+M	toolkit/devtools/server/dbg-server.jsm
+M	toolkit/devtools/server/main.js
+M	toolkit/devtools/server/tests/unit/test_add_actors.js
+
+commit 6a60c444fd12c2e260ad3f4526990967ba96fd7d
+Author: pschwartau%netscape.com <pschwartau%netscape.com>
+Date:   Thu Oct 31 21:24:25 2002 +0000
+
+    Improving comments.
+
+M	js/tests/js1_5/LexicalConventions/regress-177314.js
+
+commit 52cb1d3edc2f10a4aa7293afeb01933c694334f9
+Author: Doug Turner <dougt@meer.net>
+Date:   Sat Oct 24 23:09:46 2009 -0700
+
+    Expose device type in user agent. r=vlad
+
+M	gfx/thebes/src/gfxPlatformGtk.cpp
+M	netwerk/protocol/http/public/nsIHttpProtocolHandler.idl
+M	netwerk/protocol/http/src/nsHttpHandler.cpp
+M	netwerk/protocol/http/src/nsHttpHandler.h
+M	xpcom/base/nsSystemInfo.cpp
+
+commit 835c4116684b7614f68f87a7a908d3c373ad5ac5
+Merge: 91b46744c9da d0849cfd3c63
+Author: Ryan VanderMeulen <ryanvm@gmail.com>
+Date:   Mon Apr 7 22:38:32 2014 -0400
+
+    Merge m-c to inbound.
+
+commit c927cc065749245fa181427565ebff8cbaa26e51
+Author: Edward Lee <edilee@mozilla.com>
+Date:   Fri Aug 6 12:47:16 2010 -0700
+
+    Backout d6a355524fcb from bug 581894 now that bug 579869 is fixed.
+
+M	browser/base/content/tabbrowser.xml
+
+commit c78316b55c75b5739362b1020d47e77e2cac4319
+Author: Carsten "Tomcat" Book <cbook@mozilla.com>
+Date:   Fri Dec 16 12:32:25 2016 +0100
+
+    Backed out changeset 7ec63ef95514 (bug 1243415)
+
+M	testing/marionette/driver.js
+
+commit 5f9d087c631649b0e716e8bd34243ffbcf100973
+Merge: 087c914285b9 884e6b758559
+Author: Cosmin Sabou <csabou@mozilla.com>
+Date:   Tue Oct 16 19:27:54 2018 +0300
+
+    Merge mozilla-central to autoland. a=merge
+
+commit 73d09ea7e1ad323f1321a9fd45cb6a1a11a0d946
+Author: rhelmer@mozilla.com <rhelmer@mozilla.com>
+Date:   Fri Oct 5 13:40:09 2007 -0700
+
+    update verify configs for Fx 2008 rc1 b=398212 r=rhelmer p=joduinn
+
+M	testing/release/updates/moz18-firefox-linux.cfg
+M	testing/release/updates/moz18-firefox-mac.cfg
+M	testing/release/updates/moz18-firefox-win32.cfg
+
+commit cd1d7968b9ea93bf7bbb1fa5723a3ddd885c6ce9
+Author: vidur%netscape.com <vidur%netscape.com>
+Date:   Thu Sep 30 22:04:39 1999 +0000
+
+    Converted parser into a module. Removed static linkage.
+
+M	layout/build/Makefile.in
+M	layout/build/makefile.win
+
+commit 89a458521a3420963045cbee18c754e9c2bb1ef6
+Author: hyatt%netscape.com <hyatt%netscape.com>
+Date:   Sat May 15 02:52:51 1999 +0000
+
+    Popup cleanup.
+
+M	widget/src/build/nsWinWidgetFactory.cpp
+M	widget/src/windows/nsContextMenu.cpp
+
+commit ff3207dea92f795c8bf40c06f6e5d4f02eee9bb5
+Author: Wes Kocher <wkocher@mozilla.com>
+Date:   Tue Jul 21 16:54:09 2015 -0700
+
+    Backed out changeset b3d392163411 (bug 1160014) (Linux part), too CLOSED TREE
+
+M	widget/gtk/nsWindow.cpp
+M	widget/gtk/nsWindow.h
+
+commit 81197a29f862465c9ad91b154ec167182938b356
+Author: pierre%netscape.com <pierre%netscape.com>
+Date:   Wed Jul 29 21:09:25 1998 +0000
+
+    added nsSetupRegistry.cpp and nsWebCrawler.cpp
+
+M	webshell/tests/viewer/mac/viewer.mcp
+
+commit 568a29495d075662994ded51da8aee2ef5289bae
+Author: Karl Tomlinson <karlt+@karlt.net>
+Date:   Mon Aug 20 16:21:37 2012 +1200
+
+    b=780059 combine two variables both indicating an alpha channel r=mattwoodrow
+    
+    --HG--
+    extra : rebase_source : be734411d2a108e4db3f4b6be1bf97b3097d631f
+
+M	gfx/gl/GLContextProviderGLX.cpp
+
+commit 501794abed8f3534fc7723a2d562359e0035b27e
+Author: beard%netscape.com <beard%netscape.com>
+Date:   Thu Aug 2 03:32:14 2001 +0000
+
+    factor out SIOUX console, use true UNIX console on Mac OS X. b=86550, r=pinkerton, sr=scc
+
+M	build/mac/build_scripts/MozillaBuildList.pm
+M	lib/mac/NSStdLib/NSStdLib.mcp
+
+commit 32f8739bf9048f393326ec15a75d3508c3798644
+Author: wtc%netscape.com <wtc%netscape.com>
+Date:   Fri Jun 14 05:37:41 2002 +0000
+
+    The previous checkin didn't work.  Backed it out.
+
+M	nsprpub/pr/tests/anonfm.c
+
+commit aa95291e324e5a842652aa3ece62baedd3264c98
+Author: peterl%netscape.com <peterl%netscape.com>
+Date:   Thu Apr 15 21:22:41 1999 +0000
+
+    fixed pseudo element parsing
+
+M	content/html/style/src/nsCSSParser.cpp
+M	layout/html/style/src/nsCSSParser.cpp
+M	layout/style/nsCSSParser.cpp
+
+commit a330eebbf9ef3d70b3c68162c2ed926293df54f2
+Author: Brian Hackett <bhackett1024@gmail.com>
+Date:   Tue Oct 11 16:46:42 2011 -0700
+
+    Fix test failures, bug 693479.
+
+M	js/src/jsgcinlines.h
+M	js/src/jsobj.h
+M	js/src/jsobjinlines.h
+M	js/src/jsscope.h
+M	js/src/jsscript.cpp
+M	js/src/shell/js.cpp
+M	js/src/vm/CallObject.cpp
+M	js/src/vm/CallObject.h
+
+commit c04cf5e555143e77e6fa85df8ddfdd988cbe600f
+Author: mvl%exedo.nl <mvl%exedo.nl>
+Date:   Tue Apr 19 12:28:28 2005 +0000
+
+    make observers work in ics calendar. npotb.
+
+M	calendar/providers/ics/calICSCalendar.js
+
+commit 2ffd55371bd56b5bdfb64a6528e407ca0da96682
+Author: sspitzer%netscape.com <sspitzer%netscape.com>
+Date:   Fri Apr 13 20:30:10 2001 +0000
+
+    #75948, bullet proof crasher when reading mail.  sr=mscott, a=leaf
+
+M	extensions/cookie/nsCookieService.cpp
+
+commit deabaa3febba308d871fb743ce1a1d5ffe9c0ed8
+Author: dbaron%fas.harvard.edu <dbaron%fas.harvard.edu>
+Date:   Tue Jan 15 23:57:01 2002 +0000
+
+    Add nsValueArray.cpp to the build for blythe.
+
+M	xpcom/macbuild/xpcomPPC.xml
+
+commit fcb2a5060af3f63f54fc1d92888c8af6f1ad5d26
+Merge: d04352af5df2 9d4e9c499eb5
+Author: Wes Kocher <wkocher@mozilla.com>
+Date:   Tue Nov 24 16:52:38 2015 -0800
+
+    Merge b2ginbound to central, a=merge
+    
+    --HG--
+    extra : commitid : DY49ZjkFuGD
+
+commit d96a9a02a4ccce974efe35e9f690a762556c33e5
+Author: rogerl%netscape.com <rogerl%netscape.com>
+Date:   Thu Apr 27 01:27:09 2000 +0000
+
+    More exception handling handling.
+
+M	js/js2/icodegenerator.cpp
+M	js/js2/icodegenerator.h
+M	js/js2/interpreter.cpp
+M	js/js2/jstypes.h
+M	js/js2/vmtypes.h
+M	js2/src/icodegenerator.cpp
+M	js2/src/icodegenerator.h
+M	js2/src/interpreter.cpp
+M	js2/src/jstypes.h
+M	js2/src/vmtypes.h
+
+commit 162fe3efdf2949fd0ccbac3af43472b8328037eb
+Author: richm%stanfordalumni.org <richm%stanfordalumni.org>
+Date:   Thu Mar 10 16:07:34 2005 +0000
+
+    HAVE_SVRCORE is now an external option since it has been open sourced in mozilla/security/svrcore
+
+M	directory/Makefile
+
+commit 0a01939a3608d02845e926033e25b9853488044c
+Author: bzbarsky%mit.edu <bzbarsky%mit.edu>
+Date:   Tue Jan 7 00:37:19 2003 +0000
+
+    asserting that a PRUint32 is >= 0 is silly.  Bug 187002, r=sicking, sr=peterv
+
+M	content/html/style/src/nsCSSLoader.cpp
+M	layout/style/nsCSSLoader.cpp
+
+commit 3ccf5574404e4e056570144a3299c058a7dcdd08
+Author: sfraser%netscape.com <sfraser%netscape.com>
+Date:   Tue Aug 10 00:56:40 1999 +0000
+
+    Zero out the return value from QI in case of failure.
+
+M	view/src/nsScrollingView.cpp
+M	view/src/nsView.cpp
+
