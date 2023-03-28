@@ -27,9 +27,10 @@ def parse_je_commit(commitLines):
             commit['poc'] = []
             commit['changedfiles'] = []
             commit['component'] = ""
+            ismerge = False
         elif bool(re.match('merge:', nextLine, re.IGNORECASE)):
-            # Merge: xxxx xxxx
-            pass
+            ismerge = True
+            pass       
         elif bool(re.match('author:', nextLine, re.IGNORECASE)):
             # Author: xxxx <xxxx@xxxx.com>
             m = re.compile('Author: (.*) <(.*)>').match(nextLine)
@@ -39,12 +40,11 @@ def parse_je_commit(commitLines):
         elif bool(re.match('date:', nextLine, re.IGNORECASE)):
             t = re.compile('Date:   (.*)').match(nextLine)
             commit['date'] = t.group(1)
-        elif bool(re.match('    ', nextLine, re.IGNORECASE)):
-            # (4 empty spaces)
-            if commit.get('message') is None:
-                commit['message'] = nextLine.strip()
-                if bool(re.search('bug', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
+        elif bool(re.match('    ', nextLine, re.IGNORECASE)) and not ismerge :
 
+            if bool(re.search('bug\s', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
+            
+            
             elif bool(re.search('fix', nextLine.strip(), re.IGNORECASE)):
                 commit['ctype'] = "bug"
                 component = re.compile('Fix.+(#\d+)').match(nextLine.strip())
@@ -52,7 +52,7 @@ def parse_je_commit(commitLines):
 
 
         
-        elif bool(re.match('[MAD]\t', nextLine, re.IGNORECASE)):
+        elif bool(re.match('[MA]\t', nextLine, re.IGNORECASE)):
             if bool(re.compile('tests/\S*[.]js').match(nextLine[2:])):
                 commit['poc'].append(nextLine[2:])
                 commit['ctype'] = "bug"

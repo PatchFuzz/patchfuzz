@@ -27,10 +27,10 @@ def parse_jsc_commit(commitLines):
             commit['poc'] = []
             commit['changedfiles'] = []
             commit['component'] = ""
-            commit['message'] = ""
+            ismerge = False
         elif bool(re.match('merge:', nextLine, re.IGNORECASE)):
-            # Merge: xxxx xxxx
-            pass
+            ismerge = True
+            pass 
         elif bool(re.match('author:', nextLine, re.IGNORECASE)):
             # Author: xxxx <xxxx@xxxx.com>
             m = re.compile('Author: (.*) <(.*)>').match(nextLine)
@@ -40,11 +40,9 @@ def parse_jsc_commit(commitLines):
         elif bool(re.match('date:', nextLine, re.IGNORECASE)):
             t = re.compile('Date:   (.*)').match(nextLine)
             commit['date'] = t.group(1)
-        elif bool(re.match('    ', nextLine, re.IGNORECASE)):
-            # (4 empty spaces)
-            commit['message'] = commit['message'] + nextLine
-            if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
-            elif bool(re.search('bugs.webkit.org',nextLine)):
+        elif bool(re.match('    ', nextLine, re.IGNORECASE)) and not ismerge:
+            if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)) or bool(re.search('fix', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
+            elif bool(re.search('bugs.webkit.org',nextLine)) or bool(re.search('http://webkit.org/b/',nextLine)):
                 commit['urlofbug'] = nextLine.strip()
                 commit['ctype'] = "bug"
 

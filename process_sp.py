@@ -28,9 +28,10 @@ def parse_sp_commit(commitLines):
             commit['changedfiles'] = []
             commit['component'] = ""
             commit['message'] = ""
+            ismerge = False
         elif bool(re.match('merge:', nextLine, re.IGNORECASE)):
-            # Merge: xxxx xxxx
-            pass
+            ismerge = True
+            pass 
         elif bool(re.match('author:', nextLine, re.IGNORECASE)):
             # Author: xxxx <xxxx@xxxx.com>
             m = re.compile('Author: (.*) <(.*)>').match(nextLine)
@@ -40,10 +41,10 @@ def parse_sp_commit(commitLines):
         elif bool(re.match('date:', nextLine, re.IGNORECASE)):
             t = re.compile('Date:   (.*)').match(nextLine)
             commit['date'] = t.group(1)
-        elif bool(re.match('    ', nextLine, re.IGNORECASE)):
+        elif bool(re.match('    ', nextLine, re.IGNORECASE)) and not ismerge :
             # (4 empty spaces)
-            if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)):
-                commit['ctype'] = "bug"
+            if (bool(re.match('bug', nextLine.strip(), re.IGNORECASE)) or bool(re.match('fix', nextLine.strip(), re.IGNORECASE))) :commit['ctype'] = "bug"
+                
                 # component = re.compile('\\[(.*)\\]').match(nextLine.strip())
                 # if component: commit['component'] = component.group(1)
             elif bool(re.search('phabricator.services.mozilla.com',nextLine)):

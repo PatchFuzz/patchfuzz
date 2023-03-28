@@ -1414,118 +1414,184 @@ M	lib/Backend/Func.h
 M	lib/Backend/Inline.cpp
 M	lib/Runtime/Language/InterpreterStackFrame.cpp
 
-commit cec1195e47c2ca4f25efa46d97d3264e0f53c4ab
-Merge: d53f4ca40 14a3698be
-Author: Doug Ilijev <doilij@microsoft.com>
-Date:   Tue Oct 17 17:02:40 2017 -0700
+commit f0da7b6bf3b4ccaa8c86c22d28b233feb2c4f0ba
+Author: wyrichte <wyrichte@microsoft.com>
+Date:   Wed Jan 9 16:30:23 2019 -0800
 
-    [MERGE #3989 @dilijev] CONTRIBUTING.md: rename 'Your first PR' to 'good first issue' (See #3938)
+    Mult optimization in MemOp bug fix
+
+M	lib/Backend/BackwardPass.cpp
+M	lib/Backend/GlobOpt.cpp
+A	test/loop/MemOp.baseline
+A	test/loop/MemOp.js
+M	test/loop/rlexe.xml
+
+commit 84a25cbfc8f11857faed0921564f57958352ba0e
+Author: Akrosh Gandhi <akroshg@microsoft.com>
+Date:   Wed Apr 13 14:15:57 2016 -0700
+
+    Destructuring issue with assignment.
     
-    Merge pull request #3989 from dilijev:good-first-issue
+    We were passing the rhs regslot location while emitting bytecode for the object's member. However if the first member changes the variable which is stored in that rhslocation, then the second member will work on the updated one instead of the original value on the rhs location.
+    For fixing that we storing the rhslocation to a temp and use that temp for emitting the members of the object pattern.
+
+M	lib/Runtime/ByteCode/ByteCodeEmitter.cpp
+M	test/es6/destructuring_bugs.js
+
+commit 6a6ba18b43564be763f1547bcb11ad8c5f19c597
+Author: Taylor Woll <tawoll@ntdev.microsoft.com>
+Date:   Fri Jun 22 17:40:33 2018 -0700
+
+    OS#17830745 - ASSERT:  childModuleRecord->WasParsed() (chakra!<lambda_dd028cf82b8b597299372d12cc6b9c81>::operator()+84
     
-    See also PR #3954 and Microsoft/ChakraCore-wiki@e9a0bdc
-
-commit cddbcb83254a1f5a25e5d3de1762af6026132cdd
-Merge: bc5b2ddb5 cf1490181
-Author: Rajat Dua <radua@microsoft.com>
-Date:   Thu Apr 14 12:06:40 2016 -0700
-
-    [MERGE #763] Fix exception path when excpeption is thrown while processing jit transfer data
+    If a parent module has multiple children and one child fails to load (results in error) but children which resolve later succeed, we will attempt to instantiate the parent module anyway because we forget that a previous child failed.
     
-    Merge pull request #763 from rajatd:OOM
-    After generating the jitted code for a function, we pin type references and install property guards on the entryPointInfo. If either one of these throws (OOM/SO, for example), we execute an object destructor that calls a function that allocates a new entryPointInfo. This is a problem if we were throwing an OOM exception. Apart from exceptions, this function can be called when we lazily bailout - in that case, it is ok to create a new entry point info and generate jitted code for it. In fact, we have to do this, otherwise we'll keep bailing out. For OOM scenarios, we dont really have to create a new default entry point info- we could just change the entry point to CheckCodeGenThunk. If the exception was caught and the function was called again, it'll re-use the jitted code and attempt to pin type refs and install property guards again.
-
-commit a402ccadb68019a0a8d50afa3e49bc7629f27727
-Author: Lei Shi <leish@microsoft.com>
-Date:   Fri Jul 1 16:12:10 2016 -0700
-
-    remove fixup method for those types which not necessary to do fixing up
-    dump meaningful information for simple type(like int, Var) allocation which is helpful for debugging.
-
-M	lib/Backend/BailOut.cpp
-M	lib/Backend/BailOut.h
-M	lib/Backend/Encoder.cpp
-M	lib/Backend/Func.cpp
-M	lib/Backend/InlineeFrameInfo.h
-M	lib/Backend/LinearScan.cpp
-M	lib/Backend/Lower.cpp
-M	lib/Backend/LowerMDShared.cpp
-M	lib/Backend/LowerMDSharedSimd128.cpp
-M	lib/Backend/NativeCodeData.h
-M	lib/Runtime/Base/FunctionBody.h
-M	lib/Runtime/Types/TypeHandler.h
-
-commit ae8971a6c032caa559268a9b08e2bb7b63775bd0
-Author: Curtis Man <curtism@microsoft.com>
-Date:   Tue Mar 22 20:32:39 2016 -0700
-
-    Reenable warning 4311 - 'type cast': pointer truncation from '' to ''
-
-M	Build/Chakra.Build.props
-
-commit a8c56e2a2a7b5dd24d070bac4c4a8f25d4f993b5
-Author: Jianchun Xu <jianxu@microsoft.com>
-Date:   Fri May 6 11:05:26 2016 -0700
-
-    xplat: simulate load resource string
+    ```javascript
+    import { default as d0 } from 'module0.js';
+    import { default as d1 } from 'module1.js'; // module1.js doesn't exist or otherwise results in error
+    ```
     
-    ChakraCore runtime error message strings are loaded from resources on
-    Windows. On xplat, store the strings in a static string table and simulate
-    load resource string.
+    In above, we resolve children modules from bottom-up so module1.js is resolved first. Since it results in an error we'll save the error in our parent module. Next we'll continue to resolve module0.js which parses successfully. Since the child didn't result in an error, we'll attempt to instantiate the parent module but not all children were parsed so we'll hit an assert.
     
-    This enables runtime error messages.
-
-M	lib/Parser/errstr.cpp
-M	lib/Parser/rterror.cpp
-
-commit f9423f526995afe7711132213b52d5135b003bf0
-Merge: 1cf72d697 a672c20a2
-Author: Aaron Giles <aarongi@ntdev.microsoft.com>
-Date:   Fri Nov 10 11:02:39 2017 -0800
-
-    [MERGE #4192 @aaronsgiles] ARM64: Fix/workaround for unwinding complexities.
+    Attempt to fix this by checking to see if parent module already has an error before calling to instantiate the parent module.
     
-    Merge pull request #4192 from aaronsgiles:user/aarongi/work1
-    
-    Do not set up FP in the prolog to avoid it being recovered during unwind. Allocate a full copy of the locals area in the EH helpers to make the unwinding work.
+    Fixes:
+    https://microsoft.visualstudio.com/OS/_workitems/edit/17830745
 
-commit d7bb357f9c98a9177c3a7e18a494d27dada1ac16
-Merge: af8b2a821 31d17fb04
-Author: Mike Kaufman <mkaufman@microsoft.com>
-Date:   Tue Jan 9 15:06:45 2018 -0800
+M	lib/Runtime/Language/SourceTextModuleRecord.cpp
+A	test/es6module/bug_OS17830745.js
+M	test/es6module/rlexe.xml
 
-    [MERGE #4457 @mike-kaufman] Adding TTD support for generators
-    
-    Merge pull request #4457 from mike-kaufman:build/mkaufman/add-ttd-support-for-generators
-    
-    Generator functions weren't supported in TTD.  This PR adds support and a few tests.
+commit 76102c8aaf5533f8cdbad193e1726bcc7d9fa290
+Author: Louis Lafreniere <louisl@microsoft.com>
+Date:   Thu Jul 20 10:52:31 2017 -0700
 
-commit 7c5caeef40cb03ed82ea05654b974e823444f56e
-Merge: eb25adb9d bbfb5a968
-Author: Rajat Dua <radua@microsoft.com>
-Date:   Thu Sep 29 13:45:47 2016 -0700
-
-    [MERGE #1579 @rajatd] Regex backtracking improvements
+    Initialize locals
     
-    Merge pull request #1579 from rajatd:regex
+    OS:11689018, OS:11688872, OS:11688790, OS:11688685, OS:11688481, OS:11666867,
+    OS:11500875, OS:11499068, OS:11498539, OS:11500490, OS:11498110, OS:11497430,
+    OS:11495656 and OS:11445851. Initialize a bunch of uninitialized local variables
+    used as out params.  This doesn't fix existing bugs but is good code hygiene
+    and can prevent future issues.
     
-    This PR improves the algorithm for backtracking through a set with a * or a + wildcard.
+    Fixed a couple more.
+
+M	lib/Runtime/Base/ScriptContext.cpp
+
+commit b3e3959d14814f42ee2197c504c322bcbe12347d
+Author: Aneesh Divakarakurup <aneeshd@microsoft.com>
+Date:   Wed Sep 6 15:29:25 2017 -0700
+
+    [CVE-2017-11767] Do not instantiate param scope if only the function expression symbol is captured
     
-    When we get an unsuccessul match after such a set, we used to backtrack one character at a time over the matched characters of the set. The optimization being made in this change is that if we know at compile time what needs to follow the set for a successful match, we could record the offsets of that (those) character(s) while matching the set, and then backtrack only to those offsets.
+    If a split scope happens because of the function expression being captured then the param scope may not have any locals in closure as the function expression symbol belongs to the function expression scope. In this case we don't have to instantiate the param scope in split scope.
 
-commit 5bc62e88f88ef0d3e9a20aab683e1f81ac5b7b23
-Author: Derek Morris <demorri@microsoft.com>
-Date:   Fri Mar 31 18:02:09 2017 -0700
+M	lib/Runtime/ByteCode/ByteCodeEmitter.cpp
+M	test/es6/default-splitscope.js
 
-    Work around a VC compiler bug
+commit 461f3b557b6847091873a689d4c33b89165c8de7
+Author: Taylor Woll <tawoll@ntdev.microsoft.com>
+Date:   Mon Aug 5 14:25:35 2019 -0700
+
+    Enable dynamic import by default
     
-    Having an empty-defined preprocessor macro in between a teplate tag
-    and the following function signature should be a-ok, afaik, since a
-    preprocessor macro should be replaced before anything else is done.
-    However, in VC this breaks, but doing an ifdef to remove it works.
+    Fixes #6231
 
-M	lib/Common/CommonDefines.h
-M	lib/Common/DataStructures/FixedBitVector.h
+M	lib/Common/ConfigFlagsList.h
+
+commit c2787ef8fdb7401922e9ec6540e4e5895d11c631
+Author: Suwei Chen <suwc@microsoft.com>
+Date:   Tue Sep 27 10:07:12 2016 -0700
+
+    Change to address CVE-2016-7200,CVE-2016-7201,CVE-2016-7202,CVE-2016-7203,CVE-2016-7208,CVE-2016-7240,CVE-2016-7241,CVE-2016-7242,CVE-2016-7243
+    
+    Type confusion in Array.prototype.filter
+    Type confusion due to reentrancy can cause a Var to be written into a native int array.
+    Fix by making sure type-specialized code path is used only when ArraySpeciesCreate() invokes
+    built-in Array constructor.
+    
+    Heap overflow in Array.prototype.splice
+    In Array.prototype.splice, array length is cached before ArraySpeciesCreate() is invoked.
+    Side-effect from ArraySpeciesCreate() can change array length and result in inconsistent states
+    and possibly heap overflow.
+    Fix by adding length check to keep cases with side effects out of fast path with pre-calculated length.
+    Also tweak logic in ArraySpeciesCreate() to flag a non-built-in constructor with missing [@species] property.
+    
+    Type confusion in FillFromPrototypes
+    In ForEachOwnMissingArrayIndexOfObject(), existing array enumeration logic assumes Var array.
+    A native array from caller can cause type confusion and leak.
+    Fix by converting incoming native arrays to Var arrays.
+    
+    Parameter type confusion in eval
+    Extra argument signified by CallFlags_ExtraArg shall be cast to FrameDisplay unless the extra argument
+    is used for new.target, in which case CallFlags_NewTarget is be set. Type confusion and AV occur because
+    existing logic in eval() does not check if CallFlags_NewTarget is cleared before using extra argument as
+    FrameDisplay.
+    Fix by adding CallFlags_NewTarget check to eval() before cast to FrameDisplay.
+    
+    Type confusion in JSON.parse
+    Non-native array is expected in JSONParser::Walk(). A native array from caller
+    can cause type confusion and heap overflow
+    Fix by converting native arrays to Var arrays.
+    
+    Type confusion in Array.prototype.concat and .splice
+    Array newly created by ArraySpeciesCreate is not being checked if it is a
+    JavascriptCopyOnAccessNativeIntArray, causing near-nullptr AVs.
+    Fix by adding check-and-convert against JavascriptCopyOnAccessNativeIntArray in
+    affected built-ins.
+
+M	lib/Runtime/Base/CallInfo.h
+M	lib/Runtime/Library/GlobalObject.cpp
+M	lib/Runtime/Library/JSONParser.cpp
+M	lib/Runtime/Library/JavascriptArray.cpp
+M	lib/Runtime/Library/JavascriptPromise.cpp
+M	test/Array/Array_TypeConfusion_bugs.js
+M	test/es6/ES6NewTarget_bugfixes.js
+
+commit 8f2c91b4d92efeda587c26d2eea275fdd33701be
+Author: Michael Ferris <micfer@microsoft.com>
+Date:   Tue Mar 15 16:16:55 2016 -0700
+
+    Fix prefast warning
+    update baseline printing global properties
+    Fix uint div broken in interpreter after wasm changes
+    LoadBinary and LoadTextFile return undefined if too few arguments
+
+M	bin/ch/WScriptJsrt.cpp
+M	lib/Runtime/Math/AsmJsMath.inl
+M	lib/WasmReader/WasmBinaryReader.h
+M	test/LetConst/p.baseline
+M	test/LetConst/q.baseline
+M	test/typedarray/crossthread_es6.baseline
+M	test/typedarray/dataview.baseline
+M	test/typedarray/dataview.js
+M	test/typedarray/samethread.baseline
+
+commit 8c17a3b3cb749433bc324101119de2da17945b90
+Author: Yong Qu <yongqu@microsoft.com>
+Date:   Thu Mar 3 20:21:59 2016 -0800
+
+    Restore context after beforeCollectCallback
+    
+    restore threadcontext & jsrt context after return from per-object pre collection callback.
+    Remove the requirement to SetCurrentContext for JsAddRef and JsRelease inside the callback.
+    
+    Fixed JsrtContext leak by not pinning global object in JSRT scenario. GlobalObject is being
+    kept alive by the JsrtContext itself. We don't need to pin it in the ScriptContext anymore.
+
+M	lib/Common/Memory/Recycler.cpp
+M	lib/Common/Memory/Recycler.h
+M	lib/Jsrt/Chakra.Jsrt.vcxproj
+M	lib/Jsrt/Jsrt.cpp
+M	lib/Jsrt/JsrtExternalObject.cpp
+A	lib/Jsrt/JsrtHelper.cpp
+M	lib/Jsrt/JsrtInternal.h
+M	lib/Jsrt/JsrtRuntime.cpp
+A	lib/Jsrt/jsrtHelper.h
+M	lib/Runtime/Base/ScriptContext.cpp
+M	lib/Runtime/Base/ThreadContext.h
+M	lib/Runtime/Language/JavascriptExceptionObject.cpp
+M	lib/Runtime/Library/JavascriptExternalFunction.cpp
 
 commit be74d83bc8bfc6c4882de3e571443338d853d20f
 Author: Taylor Woll <tawoll@ntdev.microsoft.com>
@@ -1535,40 +1601,111 @@ Date:   Wed Feb 5 13:55:28 2020 -0800
 
 M	lib/Backend/GlobOptFields.cpp
 
-commit d42b71d66b7b2a572da4762ddf1d52a861281352
-Merge: cf864b3b0 847f0bcdd
-Author: Michael Ferris <micfer@microsoft.com>
-Date:   Wed Jan 11 14:42:35 2017 -0800
+commit 2acc18a04cc30c5da4ced68584fb63ac65a6f086
+Author: Meghana Gupta <megupta@microsoft.com>
+Date:   Mon Jul 30 12:27:31 2018 -0700
 
-    [MERGE #2361 @Cellule] Bug10437242 use of restricted api
+    OS#17531342 : Fix provability check on BrOnObject
     
-    Merge pull request #2361 from Cellule:bug10437242
+    BrOnObject returns true for all non primitives in the interpreter, fix the case for BrOnObject while checking for provability to reflect the same.
+
+M	lib/Backend/GlobOpt.cpp
+
+commit bd3f559d8a78d977966f097424b34f6d142a657b
+Author: Suwei Chen <suwc@microsoft.com>
+Date:   Wed Mar 22 09:52:38 2017 -0700
+
+    Issue2681/2702: Multiple imports of same module
     
-    lstrlen is a restricted api even for testing purposes, changing to use wcslen
-
-commit f806610556fb31b65dfdc7b8ffd20401789c6362
-Merge: 55c62e870 ff9a769f6
-Author: Michael Holman <Michael.Holman@microsoft.com>
-Date:   Wed Nov 30 13:56:06 2016 -0800
-
-    [MERGE #2122 @MikeHolman] skip ConstThis opt if this is non-enumerated library var (e.g. booleanTrue)
+    While resolving a module, a counter ("numUnInitializedChildModule")
+    is maintained to reflect the number of its child modules that have
+    not been instantiated. Once a child module is parsed and all its children
+    resolved, its parent modules will be notified through OnChildModuleReady(),
+    where the counter is decremented. The counter has to be zero for a module
+    to be instantiated.
     
-    Merge pull request #2122 from MikeHolman:constthislib
-
-commit 448ac6d6ee82c319fa19eae27f651f61facd4ddf
-Author: Derek Morris <demorri@microsoft.com>
-Date:   Thu Mar 15 15:45:43 2018 -0700
-
-    Clang doesn't seem to like the calling-convention check cast templates
-
-M	lib/Runtime/Base/ThreadContextInfo.h
-
-commit c3500c91f4c21914def45692c8afa0548f10b3b5
-Merge: 1ba3739ab 24f43e872
-Author: Matt Gardner <magardn@microsoft.com>
-Date:   Thu Oct 26 13:34:03 2017 -0700
-
-    [MERGE #4065 @sigatrev] ARM64: fix LegalizeLDIMM logic
+    This causes a problem when there are multiple imports referring to
+    the same child module, and the child module is parsed and resolved
+    before some of its other parent modules. Because the child module is only parsed
+    once, parent modules that are parsed and linked to the child module after
+    the notification will never see their counter going back to zero. As a result,
+    these parent modules and all modules importing them will never be instantiated.
     
-    Merge pull request #4065 from sigatrev:legalizeLDIMM
+    Proposed fix is to add a flag ("readyAsChildModule") and flip it from false to true
+    upon notification of a module's parents. Future parent modules will see the
+    flag and deem that child module resolved. Also proposed a name change of the
+    counter from "numUnInitializedChildModule" to "numPendingChildModule" to
+    reflect the logic change.
+
+M	lib/Runtime/ByteCode/ByteCodeGenerator.cpp
+M	lib/Runtime/Language/SourceTextModuleRecord.cpp
+M	lib/Runtime/Language/SourceTextModuleRecord.h
+A	test/es6/moduletest2.js
+A	test/es6/moduletest2_mod0.js
+A	test/es6/moduletest2_mod1a.js
+A	test/es6/moduletest2_mod1b.js
+A	test/es6/moduletest2_mod2a.js
+A	test/es6/moduletest2_mod2b.js
+M	test/es6/rlexe.xml
+
+commit 2e2270c5fa91c68226211faa81b582e02f3e8cfd
+Author: Sandeep Agarwal <saagarwa@microsoft.com>
+Date:   Wed Aug 23 11:19:43 2017 -0700
+
+    [CVE-2017-11799] Edge - Chakra: JIT: Incorrect GenerateBailOut calling patterns.
+    
+    Due to a bug in super property access we were reaching the code path where we had src2 on instrcution but didn't freed it before generating bailout. After the fix for issue #3423/#3064 went in 2b9da669 the bu no longer reproes but for previous branches I am putting a conservative fix to always free src2 if we have it and don't have src1. For RS4 we have a WI to add asserts to better track no. of surces on instruction and add checks.
+
+M	lib/Backend/Lower.cpp
+
+commit a99327b2a1a4eb194665325f4ecb879dbfa80f2d
+Author: Aneesh Divakarakurup <aneeshd@microsoft.com>
+Date:   Thu Aug 4 23:27:03 2016 -0700
+
+    Updating async function implementation to fix the symbol capturing issues
+    
+    This change removes the function wrapper implementation of async
+    functions. Now the async functions will behave similar to generator
+    functions. The actual function body will be in the sciptFunction field.
+    Symbols now need not be forced to slots. asyncspawn opcode and parse
+    node are no more needed.In the backend async functions are also
+    added to the generator JIT flag. await is desugared into yield.
+
+M	lib/Backend/BailOut.cpp
+M	lib/Backend/FlowGraph.cpp
+M	lib/Backend/Func.cpp
+M	lib/Backend/Func.h
+M	lib/Backend/IRBuilder.cpp
+M	lib/Backend/JnHelperMethodList.h
+M	lib/Backend/Lower.cpp
+M	lib/Backend/amd64/LowererMDArch.cpp
+M	lib/Backend/arm/LowerMD.cpp
+M	lib/Backend/i386/LowererMDArch.cpp
+M	lib/Common/BackendApi.h
+M	lib/Parser/Parse.cpp
+M	lib/Parser/Parse.h
+M	lib/Parser/ptlist.h
+M	lib/Parser/ptree.h
+M	lib/Runtime/Base/FunctionBody.h
+M	lib/Runtime/Base/FunctionInfo.h
+M	lib/Runtime/ByteCode/ByteCodeEmitter.cpp
+M	lib/Runtime/ByteCode/ByteCodeGenerator.cpp
+M	lib/Runtime/ByteCode/Symbol.cpp
+M	lib/Runtime/Language/InterpreterHandler.inl
+M	lib/Runtime/Language/InterpreterStackFrame.cpp
+M	lib/Runtime/Language/JavascriptOperators.cpp
+M	lib/Runtime/Language/JavascriptOperators.h
+M	lib/Runtime/Library/InJavascript/Intl.js.nojit.bc.32b.h
+M	lib/Runtime/Library/InJavascript/Intl.js.nojit.bc.64b.h
+M	lib/Runtime/Library/JavascriptFunction.cpp
+M	lib/Runtime/Library/JavascriptGeneratorFunction.cpp
+M	lib/Runtime/Library/JavascriptGeneratorFunction.h
+M	lib/Runtime/Library/JavascriptLibrary.cpp
+M	lib/Runtime/Library/JavascriptLibrary.h
+M	lib/Runtime/Library/JavascriptPromise.cpp
+M	lib/Runtime/Library/JavascriptPromise.h
+M	lib/Runtime/Library/ScriptFunction.cpp
+M	lib/Runtime/Runtime.h
+M	test/es7/asyncawait-functionality.baseline
+M	test/es7/asyncawait-functionality.js
 

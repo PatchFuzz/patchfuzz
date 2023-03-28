@@ -27,9 +27,10 @@ def parse_v8_commit(commitLines):
             commit['poc'] = []
             commit['changedfiles'] = []
             commit['component'] = ""
+            ismerge = False
         elif bool(re.match('merge:', nextLine, re.IGNORECASE)):
-            # Merge: xxxx xxxx
-            pass
+            ismerge = True
+            pass 
         elif bool(re.match('author:', nextLine, re.IGNORECASE)):
             # Author: xxxx <xxxx@xxxx.com>
             m = re.compile('Author: (.*) <(.*)>').match(nextLine)
@@ -39,17 +40,10 @@ def parse_v8_commit(commitLines):
         elif bool(re.match('date:', nextLine, re.IGNORECASE)):
             t = re.compile('Date:   (.*)').match(nextLine)
             commit['date'] = t.group(1)
-        elif bool(re.match('    ', nextLine, re.IGNORECASE)):
-            # (4 empty spaces)
-            if commit.get('message') is None:
-                commit['message'] = nextLine.strip()
+        elif bool(re.match('    ', nextLine, re.IGNORECASE)) and not ismerge:
+            if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)):
+                if nextLine.strip() !='Bug:' or nextLine.strip() !='BUG=': commit['ctype'] = "bug"
                 
-                component = re.compile('\\[(.*)\\]').match(nextLine.strip())
-                if component: commit['component'] = component.group(1)
-                if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
-
-            elif bool(re.match('bug', nextLine.strip(), re.IGNORECASE)):
-                commit['ctype'] = "bug"
             elif (bool(re.search('chromium-review.googlesource.com',nextLine)) or bool(re.search('codereview.chromium.org',nextLine))) and commit['ctype']=="bug":
                 commit['urlofbug'] = nextLine.strip()
 

@@ -1,1157 +1,468 @@
-commit 473a7c6db4b17c2f54759f0fa2dcd6f63ea874d1
-Author: Alexey Proskuryakov <ap@apple.com>
-Date:   Fri Jan 8 23:53:12 2010 +0000
+commit 3da558819394ab7a9308d881ef3a93e2fb7d83a8
+Author: Darin Adler <darin@apple.com>
+Date:   Tue Mar 31 00:17:07 2009 +0000
 
-            Reviewed by Eric Seidel.
+    2009-03-30  Darin Adler  <darin@apple.com>
     
-            https://bugs.webkit.org/show_bug.cgi?id=33279
-            fast/websockets/websocket-event-target.html causes any test after it to fail
+            Reviewed by Sam Weinig.
     
-            * fast/websockets/script-tests/websocket-event-target.js: The test uses an HTTP server
-            URL to create a WebSocket, so an error may be logged to console when detected (this is
-            timing dependent).
+            Make policy-delegate logging work even for local files by processing the URLs as we
+            do for other delegates.
     
-            * platform/mac/Skipped: Removed the test from Skipped list.
+            * DumpRenderTree/mac/PolicyDelegate.mm:
+            (-[PolicyDelegate webView:decidePolicyForNavigationAction:request:frame:decisionListener:]):
+            Use _drt_descriptionSuitableForTestResult on the URL.
+    
+            * DumpRenderTree/win/PolicyDelegate.cpp:
+            (PolicyDelegate::decidePolicyForNavigationAction): Use urlSuitableForTestResult on the URL.
     
     
     
-    Canonical link: https://commits.webkit.org/44431@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@53019 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    Canonical link: https://commits.webkit.org/34174@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@42119 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-M	LayoutTests/ChangeLog
-M	LayoutTests/fast/websockets/script-tests/websocket-event-target.js
-M	LayoutTests/platform/mac/Skipped
+M	WebKitTools/ChangeLog
+M	WebKitTools/DumpRenderTree/mac/PolicyDelegate.mm
+M	WebKitTools/DumpRenderTree/win/PolicyDelegate.cpp
 
-commit d0501773e20880cfd22b7a66868ec335b7671b12
-Author: Devin Rousso <drousso@apple.com>
-Date:   Fri Aug 21 01:37:40 2015 +0000
+commit 7d446f0c3dcf93f0c31ca267f8dc5865cb8ec56a
+Author: Mark Rowe <mrowe@bdash.net.nz>
+Date:   Fri Jul 27 11:59:09 2007 +0000
 
-    Web Inspector: Visual editor adds extra spaces to styles with no properties
-    https://bugs.webkit.org/show_bug.cgi?id=148242
+    2007-07-27  Patrick Hanna  <phanna@email.unc.edu>
     
-    Reviewed by Timothy Hatcher.
+            Reviewed by Darin Adler.
     
-    * UserInterface/Models/CSSStyleDeclaration.js:
-    (WebInspector.CSSStyleDeclaration.prototype.set text):
-    Now trims the text and, if the resulting string has no length or the style is inline,
-    replaces the text to be set with the trimmed text.
+            Change PluginBase::refresh to be static and update PluginsFunc::callAsFunction accordingly. Now we no longer
+            allocate an instance of a JSObject subclass on the stack which could lead to a crash during garbage collection.
     
-    * UserInterface/Views/VisualStylePropertyCombiner.js:
-    (WebInspector.VisualStylePropertyCombiner.prototype.modifyPropertyText):
-    Removed unnecessary trim.
+            * bindings/js/kjs_navigator.cpp:
+            (KJS::PluginsFunc::callAsFunction):
     
     
-    Canonical link: https://commits.webkit.org/166381@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@188730 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    Canonical link: https://commits.webkit.org/19320@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@24719 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-M	Source/WebInspectorUI/ChangeLog
-M	Source/WebInspectorUI/UserInterface/Models/CSSStyleDeclaration.js
-M	Source/WebInspectorUI/UserInterface/Views/VisualStylePropertyCombiner.js
+M	WebCore/ChangeLog
+M	WebCore/bindings/js/kjs_navigator.cpp
 
-commit 5078620d6c67b081d66c7e02a0505211909ad1c0
-Author: Zhenyao Mo <zmo@google.com>
-Date:   Tue Jun 21 02:23:19 2011 +0000
+commit 7768820ec9f58ecbc6a804ac5a88de62325e515c
+Author: beidson <beidson>
+Date:   Sun Sep 17 07:29:59 2006 +0000
 
-    2011-06-20  Zhenyao Mo  <zmo@google.com>
+    WebCore:
     
-            Reviewed by Kenneth Russell.
+            Reviewed by Hyatt
     
-            Update ANGLE to r696.
-            https://bugs.webkit.org/show_bug.cgi?id=56396
+            Pruning code relating to WebKit's icon loader
     
-            * platform/graphics/ANGLEWebKitBridge.cpp:
-            (WebCore::ANGLEWebKitBridge::validateShaderSource): Specify backend.
-    2011-06-20  Zhenyao Mo  <zmo@google.com>
+            * bridge/mac/WebCoreIconDatabaseBridge.h:
+            * bridge/mac/WebCoreIconDatabaseBridge.mm:
+            * loader/icon/IconDatabase.h:
+            * page/Frame.cpp:
+            (WebCore::Frame::endIfNotLoading): Moved a FIXME in from WebKit's IconLoader to
+            its new home
     
-            Reviewed by Kenneth Russell.
+    WebKit:
     
-            Update ANGLE to r696
-            https://bugs.webkit.org/show_bug.cgi?id=56396
+            Reviewed by Hyatt
     
-            * ANGLE.xcodeproj/project.pbxproj:
-            * include/EGL/eglext.h:
-            * include/GLSLANG/ShaderLang.h:
-            * src/build_angle.xcodeproj/project.pbxproj:
-            * src/common/debug.cpp:
-            (gl::output):
-            (gl::trace):
-            (gl::perfActive):
-            (gl::ScopedPerfEventHelper::ScopedPerfEventHelper):
-            (gl::ScopedPerfEventHelper::~ScopedPerfEventHelper):
-            * src/common/debug.h:
-            * src/common/version.h: Added.
-            * src/compiler/CodeGenGLSL.cpp:
-            (ConstructCompiler):
-            * src/compiler/CodeGenHLSL.cpp:
-            (ConstructCompiler):
-            * src/compiler/Compiler.cpp:
-            (TCompiler::compile):
-            (TCompiler::mapLongVariableNames):
-            (TCompiler::getMappedNameMaxLength):
-            (TCompiler::getExtensionBehavior):
-            * src/compiler/ConstantUnion.h:
-            (ConstantUnion::operator==):
-            (ConstantUnion::operator>):
-            (ConstantUnion::operator<):
-            * src/compiler/ExtensionBehavior.h:
-            (getBehaviorString):
-            * src/compiler/ForLoopUnroll.cpp: Added.
-            (ForLoopUnroll::FillLoopIndexInfo):
-            (ForLoopUnroll::Step):
-            (ForLoopUnroll::SatisfiesLoopCondition):
-            (ForLoopUnroll::NeedsToReplaceSymbolWithValue):
-            (ForLoopUnroll::GetLoopIndexValue):
-            (ForLoopUnroll::Push):
-            (ForLoopUnroll::Pop):
-            (ForLoopUnroll::getLoopIncrement):
-            (ForLoopUnroll::evaluateIntConstant):
-            * src/compiler/ForLoopUnroll.h: Added.
-            (ForLoopUnroll::ForLoopUnroll):
-            * src/compiler/Initialize.cpp:
-            (BuiltInFunctionsVertex):
-            * src/compiler/MapLongVariableNames.cpp: Added.
-            (MapLongVariableNames::MapLongVariableNames):
-            (MapLongVariableNames::visitSymbol):
-            (MapLongVariableNames::visitConstantUnion):
-            (MapLongVariableNames::visitBinary):
-            (MapLongVariableNames::visitUnary):
-            (MapLongVariableNames::visitSelection):
-            (MapLongVariableNames::visitAggregate):
-            (MapLongVariableNames::visitLoop):
-            (MapLongVariableNames::visitBranch):
-            (MapLongVariableNames::mapVaryingLongName):
-            * src/compiler/MapLongVariableNames.h: Added.
-            * src/compiler/OutputESSL.cpp: Added.
-            (TOutputESSL::TOutputESSL):
-            (TOutputESSL::writeVariablePrecision):
-            * src/compiler/OutputESSL.h: Added.
-            * src/compiler/OutputGLSL.cpp:
-            (TOutputGLSL::TOutputGLSL):
-            (TOutputGLSL::writeVariablePrecision):
-            * src/compiler/OutputGLSL.h:
-            * src/compiler/OutputGLSLBase.cpp: Added.
-            (TOutputGLSLBase::TOutputGLSLBase):
-            (TOutputGLSLBase::writeTriplet):
-            (TOutputGLSLBase::writeVariableType):
-            (TOutputGLSLBase::writeFunctionParameters):
-            (TOutputGLSLBase::writeConstantUnion):
-            (TOutputGLSLBase::visitSymbol):
-            (TOutputGLSLBase::visitConstantUnion):
-            (TOutputGLSLBase::visitBinary):
-            (TOutputGLSLBase::visitUnary):
-            (TOutputGLSLBase::visitSelection):
-            (TOutputGLSLBase::visitAggregate):
-            (TOutputGLSLBase::visitLoop):
-            (TOutputGLSLBase::visitBranch):
-            (TOutputGLSLBase::visitCodeBlock):
-            * src/compiler/OutputGLSLBase.h: Added.
-            (TOutputGLSLBase::objSink):
-            * src/compiler/OutputHLSL.cpp:
-            (sh::OutputHLSL::OutputHLSL):
-            (sh::OutputHLSL::header):
-            (sh::OutputHLSL::visitUnary):
-            (sh::OutputHLSL::visitAggregate):
-            (sh::OutputHLSL::visitSelection):
-            (sh::OutputHLSL::visitLoop):
-            (sh::OutputHLSL::visitBranch):
-            (sh::OutputHLSL::handleExcessiveLoop):
-            (sh::OutputHLSL::outputLineDirective):
-            * src/compiler/OutputHLSL.h:
-            * src/compiler/ParseHelper.cpp:
-            (TParseContext::precisionErrorCheck):
-            (TParseContext::constructorErrorCheck):
-            (TParseContext::nonInitErrorCheck):
-            * src/compiler/ParseHelper.h:
-            (TParseContext::TParseContext):
-            * src/compiler/ShHandle.h:
-            * src/compiler/ShaderLang.cpp:
-            (getVariableInfo):
-            (ShConstructCompiler):
-            (ShGetInfo):
-            (ShGetActiveAttrib):
-            (ShGetActiveUniform):
-            * src/compiler/TranslatorESSL.cpp: Added.
-            (TranslatorESSL::TranslatorESSL):
-            (TranslatorESSL::translate):
-            (TranslatorESSL::writeExtensionBehavior):
-            * src/compiler/TranslatorESSL.h: Added.
-            * src/compiler/ValidateLimitations.cpp:
-            (ValidateLimitations::visitBinary):
-            (ValidateLimitations::visitLoop):
-            * src/compiler/ValidateLimitations.h:
-            * src/compiler/VariableInfo.cpp:
-            (getVariableInfo):
-            (getBuiltInVariableInfo):
-            (getUserDefinedVariableInfo):
-            (CollectAttribsUniforms::visitAggregate):
-            * src/compiler/VariableInfo.h:
-            * src/compiler/VersionGLSL.cpp:
-            (TVersionGLSL::visitSymbol):
-            (TVersionGLSL::visitConstantUnion):
-            (TVersionGLSL::visitBinary):
-            (TVersionGLSL::visitUnary):
-            (TVersionGLSL::visitSelection):
-            (TVersionGLSL::visitAggregate):
-            (TVersionGLSL::visitLoop):
-            (TVersionGLSL::visitBranch):
-            * src/compiler/VersionGLSL.h:
-            * src/compiler/glslang.y:
-            * src/compiler/glslang_tab.cpp:
-            * src/compiler/glslang_tab.h:
-            * src/compiler/intermediate.h:
-            (TIntermLoop::TIntermLoop):
-            (TIntermLoop::setUnrollFlag):
-            (TIntermLoop::getUnrollFlag):
-            (TIntermSymbol::TIntermSymbol):
-            (TIntermSymbol::setId):
-            (TIntermSymbol::setSymbol):
-            (TIntermSymbol::getOriginalSymbol):
-            (TIntermAggregate::TIntermAggregate):
-            (TIntermAggregate::setEndLine):
-            (TIntermAggregate::getEndLine):
-            * src/compiler/preprocessor/atom.c:
-            (AddString):
-            * src/compiler/preprocessor/compile.h:
-            * src/compiler/preprocessor/cpp.c:
-            (CPPelse):
-            (eval):
-            (CPPif):
-            (CPPifdef):
-            (readCPPline):
-            (ChkCorrectElseNesting):
-            * src/compiler/preprocessor/cppstruct.c:
-            (ResetPreprocessor):
-            * src/compiler/preprocessor/scanner.c:
-            (byte_scan):
-            (yylex_CPP):
-            * src/compiler/preprocessor/scanner.h:
-            * src/libEGL/Config.cpp:
-            (egl::Config::Config):
-            (egl::Config::set):
-            (egl::ConfigSet::add):
-            (egl::ConfigSet::getConfigs):
-            * src/libEGL/Config.h:
-            * src/libEGL/Display.cpp:
-            (egl::Display::Display):
-            (egl::Display::initialize):
-            (egl::Display::terminate):
-            (egl::Display::getConfigAttrib):
-            (egl::Display::createDevice):
-            (egl::Display::createWindowSurface):
-            (egl::Display::createOffscreenSurface):
-            (egl::Display::createContext):
-            (egl::Display::destroyContext):
-            (egl::Display::isInitialized):
-            (egl::Display::getAdapterIdentifier):
-            (egl::Display::isDeviceLost):
-            (egl::Display::getBufferPool):
-            (egl::Display::initExtensionString):
-            (egl::Display::getExtensionString):
-            (egl::Display::getVertexTextureSupport):
-            (egl::Display::getNonPower2TextureSupport):
-            * src/libEGL/Display.h:
-            (egl::Display::isD3d9ExDevice):
-            * src/libEGL/Surface.cpp:
-            (egl::Surface::Surface):
-            (egl::Surface::initialize):
-            (egl::Surface::release):
-            (egl::Surface::resetSwapChain):
-            (egl::SurfaceWindowProc):
-            (egl::Surface::subclassWindow):
-            (egl::Surface::unsubclassWindow):
-            (egl::Surface::swap):
-            (egl::Surface::getRenderTarget):
-            (egl::Surface::getOffscreenTexture):
-            (egl::Surface::getTextureFormat):
-            (egl::Surface::getTextureTarget):
-            (egl::Surface::setBoundTexture):
-            (egl::Surface::getBoundTexture):
-            (egl::Surface::getFormat):
-            * src/libEGL/Surface.h:
-            (egl::Surface::getShareHandle):
-            * src/libEGL/libEGL.cpp:
-            (validateDisplay):
-            (validateConfig):
-            (validateContext):
-            (validateSurface):
-            * src/libEGL/libEGL.rc: Added.
-            * src/libEGL/libEGL.vcproj:
-            * src/libEGL/main.cpp:
-            (DllMain):
-            * src/libEGL/main.h:
-            * src/libEGL/resource.h: Added.
-            * src/libGLESv2/Blit.cpp:
-            (gl::Blit::initGeometry):
-            (gl::Blit::copy):
-            * src/libGLESv2/Blit.h:
-            * src/libGLESv2/Buffer.cpp:
-            (gl::Buffer::Buffer):
-            (gl::Buffer::~Buffer):
-            (gl::Buffer::bufferData):
-            (gl::Buffer::bufferSubData):
-            (gl::Buffer::getStaticVertexBuffer):
-            (gl::Buffer::getStaticIndexBuffer):
-            (gl::Buffer::invalidateStaticData):
-            (gl::Buffer::promoteStaticUsage):
-            * src/libGLESv2/Buffer.h:
-            * src/libGLESv2/Context.cpp:
-            (gl::Context::Context):
-            (gl::Context::~Context):
-            (gl::Context::makeCurrent):
-            (gl::Context::markAllStateDirty):
-            (gl::Context::setActiveSampler):
-            (gl::Context::createFramebuffer):
-            (gl::Context::createFence):
-            (gl::Context::deleteFramebuffer):
-            (gl::Context::deleteFence):
-            (gl::Context::bindTexture2D):
-            (gl::Context::bindTextureCubeMap):
-            (gl::Context::getTexture2D):
-            (gl::Context::getTextureCubeMap):
-            (gl::Context::getSamplerTexture):
-            (gl::Context::getIntegerv):
-            (gl::Context::applyRenderTarget):
-            (gl::Context::applyState):
-            (gl::Context::applyVertexBuffer):
-            (gl::Context::applyShaders):
-            (gl::Context::applyTextures):
-            (gl::Context::readPixels):
-            (gl::Context::clear):
-            (gl::Context::drawArrays):
-            (gl::Context::drawElements):
-            (gl::Context::finish):
-            (gl::Context::flush):
-            (gl::Context::drawClosingLine):
-            (gl::Context::getMaximumVertexTextureImageUnits):
-            (gl::Context::getMaximumCombinedTextureImageUnits):
-            (gl::Context::supportsNonPower2Texture):
-            (gl::Context::detachTexture):
-            (gl::Context::getIncompleteTexture):
-            (gl::Context::initExtensionString):
-            (gl::Context::blitFramebuffer):
-            (gl::VertexDeclarationCache::VertexDeclarationCache):
-            (gl::VertexDeclarationCache::~VertexDeclarationCache):
-            (gl::VertexDeclarationCache::applyDeclaration):
-            * src/libGLESv2/Context.h:
-            * src/libGLESv2/Framebuffer.cpp:
-            (gl::Framebuffer::lookupRenderbuffer):
-            (gl::Framebuffer::completeness):
-            * src/libGLESv2/Framebuffer.h:
-            * src/libGLESv2/HandleAllocator.cpp: Added.
-            (gl::HandleAllocator::HandleAllocator):
-            (gl::HandleAllocator::~HandleAllocator):
-            (gl::HandleAllocator::setBaseHandle):
-            (gl::HandleAllocator::allocate):
-            (gl::HandleAllocator::release):
-            * src/libGLESv2/HandleAllocator.h: Added.
-            * src/libGLESv2/IndexDataManager.cpp: Added.
-            (gl::IndexDataManager::IndexDataManager):
-            (gl::IndexDataManager::~IndexDataManager):
-            (gl::convertIndices):
-            (gl::computeRange):
-            (gl::IndexDataManager::prepareIndexData):
-            (gl::IndexDataManager::indexSize):
-            (gl::IndexDataManager::typeSize):
-            (gl::IndexBuffer::IndexBuffer):
-            (gl::IndexBuffer::~IndexBuffer):
-            (gl::IndexBuffer::getBuffer):
-            (gl::IndexBuffer::unmap):
-            (gl::StreamingIndexBuffer::StreamingIndexBuffer):
-            (gl::StreamingIndexBuffer::~StreamingIndexBuffer):
-            (gl::StreamingIndexBuffer::map):
-            (gl::StreamingIndexBuffer::reserveSpace):
-            (gl::StaticIndexBuffer::StaticIndexBuffer):
-            (gl::StaticIndexBuffer::~StaticIndexBuffer):
-            (gl::StaticIndexBuffer::map):
-            (gl::StaticIndexBuffer::reserveSpace):
-            (gl::StaticIndexBuffer::lookupType):
-            (gl::StaticIndexBuffer::lookupRange):
-            (gl::StaticIndexBuffer::addRange):
-            * src/libGLESv2/IndexDataManager.h: Added.
-            (gl::IndexBuffer::size):
-            * src/libGLESv2/Program.cpp:
-            (gl::Program::getSemanticIndex):
-            (gl::Program::getSamplerMapping):
-            (gl::Program::getSamplerTextureType):
-            (gl::Program::compileToBinary):
-            (gl::Program::packVaryings):
-            (gl::Program::linkVaryings):
-            (gl::Program::link):
-            (gl::Program::linkUniforms):
-            (gl::Program::defineUniform):
-            (gl::Program::applyUniform1iv):
-            (gl::Program::appendToInfoLogSanitized):
-            (gl::Program::unlink):
-            (gl::Program::getActiveUniformMaxLength):
-            (gl::Program::validate):
-            (gl::Program::validateSamplers):
-            * src/libGLESv2/Program.h:
-            * src/libGLESv2/Renderbuffer.cpp:
-            (gl::Renderbuffer::getWidth):
-            (gl::Renderbuffer::getHeight):
-            (gl::Renderbuffer::getInternalFormat):
-            (gl::Renderbuffer::getRedSize):
-            (gl::Renderbuffer::getGreenSize):
-            (gl::Renderbuffer::getBlueSize):
-            (gl::Renderbuffer::getAlphaSize):
-            (gl::Renderbuffer::getDepthSize):
-            (gl::Renderbuffer::getStencilSize):
-            (gl::Renderbuffer::getSamples):
-            (gl::RenderbufferStorage::RenderbufferStorage):
-            (gl::RenderbufferStorage::getWidth):
-            (gl::RenderbufferStorage::getHeight):
-            (gl::RenderbufferStorage::getInternalFormat):
-            (gl::RenderbufferStorage::getRedSize):
-            (gl::RenderbufferStorage::getGreenSize):
-            (gl::RenderbufferStorage::getBlueSize):
-            (gl::RenderbufferStorage::getAlphaSize):
-            (gl::RenderbufferStorage::getDepthSize):
-            (gl::RenderbufferStorage::getStencilSize):
-            (gl::RenderbufferStorage::getD3DFormat):
-            (gl::Colorbuffer::Colorbuffer):
-            (gl::Colorbuffer::getWidth):
-            (gl::Colorbuffer::getHeight):
-            (gl::Colorbuffer::getInternalFormat):
-            (gl::Colorbuffer::getType):
-            (gl::Colorbuffer::getD3DFormat):
-            (gl::Colorbuffer::isColorbuffer):
-            (gl::Colorbuffer::getRenderTarget):
-            (gl::DepthStencilbuffer::DepthStencilbuffer):
-            (gl::Depthbuffer::Depthbuffer):
-            (gl::Stencilbuffer::Stencilbuffer):
-            * src/libGLESv2/Renderbuffer.h:
-            * src/libGLESv2/ResourceManager.cpp:
-            (gl::ResourceManager::createBuffer):
-            (gl::ResourceManager::createShader):
-            (gl::ResourceManager::createProgram):
-            (gl::ResourceManager::createTexture):
-            (gl::ResourceManager::createRenderbuffer):
-            (gl::ResourceManager::deleteBuffer):
-            (gl::ResourceManager::deleteShader):
-            (gl::ResourceManager::deleteProgram):
-            (gl::ResourceManager::deleteTexture):
-            (gl::ResourceManager::deleteRenderbuffer):
-            (gl::ResourceManager::checkTextureAllocation):
-            * src/libGLESv2/ResourceManager.h:
-            * src/libGLESv2/Shader.cpp:
-            (gl::Shader::Shader):
-            (gl::Shader::compileToHLSL):
-            * src/libGLESv2/Shader.h:
-            * src/libGLESv2/Texture.cpp:
-            (gl::Texture::Image::Image):
-            (gl::Texture::Image::~Image):
-            (gl::Texture::Image::isRenderable):
-            (gl::Texture::Image::getD3DFormat):
-            (gl::Texture::Texture):
-            (gl::Texture::setMinFilter):
-            (gl::Texture::setMagFilter):
-            (gl::Texture::setWrapS):
-            (gl::Texture::setWrapT):
-            (gl::Texture::loadImageData):
-            (gl::Texture::loadAlphaImageData):
-            (gl::Texture::loadAlphaFloatImageData):
-            (gl::Texture::loadAlphaHalfFloatImageData):
-            (gl::Texture::loadLuminanceImageData):
-            (gl::Texture::loadLuminanceFloatImageData):
-            (gl::Texture::loadLuminanceHalfFloatImageData):
-            (gl::Texture::loadLuminanceAlphaImageData):
-            (gl::Texture::loadLuminanceAlphaFloatImageData):
-            (gl::Texture::loadLuminanceAlphaHalfFloatImageData):
-            (gl::Texture::loadRGBUByteImageData):
-            (gl::Texture::loadRGB565ImageData):
-            (gl::Texture::loadRGBFloatImageData):
-            (gl::Texture::loadRGBHalfFloatImageData):
-            (gl::Texture::loadRGBAUByteImageDataSSE2):
-            (gl::Texture::loadRGBAUByteImageData):
-            (gl::Texture::loadRGBA4444ImageData):
-            (gl::Texture::loadRGBA5551ImageData):
-            (gl::Texture::loadRGBAFloatImageData):
-            (gl::Texture::loadRGBAHalfFloatImageData):
-            (gl::Texture::loadBGRAImageData):
-            (gl::Texture::loadCompressedImageData):
-            (gl::Texture::createSurface):
-            (gl::Texture::setImage):
-            (gl::Texture::setCompressedImage):
-            (gl::Texture::subImage):
-            (gl::Texture::subImageCompressed):
-            (gl::Texture::copyToImage):
-            (gl::Texture::getTexture):
-            (gl::Texture::isDirtyParameter):
-            (gl::Texture::isDirtyImage):
-            (gl::Texture::resetDirty):
-            (gl::Texture::getSerial):
-            (gl::Texture::creationLevels):
-            (gl::Texture::levelCount):
-            (gl::Texture::issueSerial):
-            (gl::Texture2D::Texture2D):
-            (gl::Texture2D::~Texture2D):
-            (gl::Texture2D::getWidth):
-            (gl::Texture2D::getHeight):
-            (gl::Texture2D::getInternalFormat):
-            (gl::Texture2D::getType):
-            (gl::Texture2D::getD3DFormat):
-            (gl::Texture2D::redefineTexture):
-            (gl::Texture2D::setImage):
-            (gl::Texture2D::bindTexImage):
-            (gl::Texture2D::releaseTexImage):
-            (gl::Texture2D::setCompressedImage):
-            (gl::Texture2D::commitRect):
-            (gl::Texture2D::copyImage):
-            (gl::Texture2D::copySubImage):
-            (gl::Texture2D::isComplete):
-            (gl::Texture2D::isCompressed):
-            (gl::Texture2D::getBaseTexture):
-            (gl::Texture2D::createTexture):
-            (gl::Texture2D::updateTexture):
-            (gl::Texture2D::convertToRenderTarget):
-            (gl::Texture2D::generateMipmaps):
-            (gl::Texture2D::getRenderbuffer):
-            (gl::Texture2D::getRenderTarget):
-            (gl::TextureCubeMap::getWidth):
-            (gl::TextureCubeMap::getHeight):
-            (gl::TextureCubeMap::getInternalFormat):
-            (gl::TextureCubeMap::getType):
-            (gl::TextureCubeMap::getD3DFormat):
-            (gl::TextureCubeMap::setImagePosX):
-            (gl::TextureCubeMap::setImageNegX):
-            (gl::TextureCubeMap::setImagePosY):
-            (gl::TextureCubeMap::setImageNegY):
-            (gl::TextureCubeMap::setImagePosZ):
-            (gl::TextureCubeMap::setImageNegZ):
-            (gl::TextureCubeMap::setCompressedImage):
-            (gl::TextureCubeMap::commitRect):
-            (gl::TextureCubeMap::isComplete):
-            (gl::TextureCubeMap::isCompressed):
-            (gl::TextureCubeMap::getBaseTexture):
-            (gl::TextureCubeMap::createTexture):
-            (gl::TextureCubeMap::updateTexture):
-            (gl::TextureCubeMap::convertToRenderTarget):
-            (gl::TextureCubeMap::setImage):
-            (gl::TextureCubeMap::redefineTexture):
-            (gl::TextureCubeMap::copyImage):
-            (gl::TextureCubeMap::getCubeMapSurface):
-            (gl::TextureCubeMap::copySubImage):
-            (gl::TextureCubeMap::generateMipmaps):
-            (gl::TextureCubeMap::getRenderbuffer):
-            (gl::TextureCubeMap::getRenderTarget):
-            * src/libGLESv2/Texture.h:
-            * src/libGLESv2/VertexDataManager.cpp: Added.
-            (gl::VertexDataManager::VertexDataManager):
-            (gl::VertexDataManager::~VertexDataManager):
-            (gl::VertexDataManager::writeAttributeData):
-            (gl::VertexDataManager::prepareVertexData):
-            (gl::VertexDataManager::spaceRequired):
-            (gl::VertexDataManager::checkVertexCaps):
-            (gl::VertexDataManager::typeIndex):
-            (gl::VertexBuffer::VertexBuffer):
-            (gl::VertexBuffer::~VertexBuffer):
-            (gl::VertexBuffer::unmap):
-            (gl::VertexBuffer::getBuffer):
-            (gl::ConstantVertexBuffer::ConstantVertexBuffer):
-            (gl::ConstantVertexBuffer::~ConstantVertexBuffer):
-            (gl::ArrayVertexBuffer::ArrayVertexBuffer):
-            (gl::ArrayVertexBuffer::~ArrayVertexBuffer):
-            (gl::ArrayVertexBuffer::addRequiredSpace):
-            (gl::ArrayVertexBuffer::addRequiredSpaceFor):
-            (gl::StreamingVertexBuffer::StreamingVertexBuffer):
-            (gl::StreamingVertexBuffer::~StreamingVertexBuffer):
-            (gl::StreamingVertexBuffer::map):
-            (gl::StreamingVertexBuffer::reserveRequiredSpace):
-            (gl::StaticVertexBuffer::StaticVertexBuffer):
-            (gl::StaticVertexBuffer::~StaticVertexBuffer):
-            (gl::StaticVertexBuffer::map):
-            (gl::StaticVertexBuffer::reserveRequiredSpace):
-            (gl::StaticVertexBuffer::lookupAttribute):
-            (gl::VertexDataManager::formatConverter):
-            * src/libGLESv2/VertexDataManager.h: Added.
-            (gl::ArrayVertexBuffer::size):
-            (gl::VertexDataManager::dirtyCurrentValue):
-            * src/libGLESv2/libGLESv2.cpp:
-            (validImageSize):
-            (Extension::glBindTexImage):
-            * src/libGLESv2/libGLESv2.def:
-            * src/libGLESv2/libGLESv2.rc: Added.
-            * src/libGLESv2/libGLESv2.vcproj:
-            * src/libGLESv2/main.cpp:
-            (error):
-            * src/libGLESv2/mathutil.h:
-            (gl::clamp):
-            (gl::clamp01):
-            (gl::transformPixelRect):
-            (gl::transformPixelYOffset):
-            (gl::adjustWinding):
-            (gl::supportsSSE2):
-            * src/libGLESv2/resource.h: Added.
-            * src/libGLESv2/utilities.cpp:
-            (gl::ComputeCompressedPitch):
-            (es2dx::ConvertCubeFace):
-            (es2dx::ConvertPrimitiveType):
-            (es2dx::ConvertRenderbufferFormat):
-            (es2dx::GetMultisampleTypeFromSamples):
-            (dx2es::GetStencilSize):
-            (dx2es::GetAlphaSize):
-            (dx2es::GetRedSize):
-            (dx2es::GetGreenSize):
-            (dx2es::GetBlueSize):
-            (dx2es::GetDepthSize):
-            (getTempPath):
-            (writeFile):
-            * src/libGLESv2/utilities.h:
-            * src/libGLESv2/vertexconversion.h: Added.
-            (gl::Identity::convert):
-            (gl::Cast::convert):
-            (gl::Normalize::convert):
-            (gl::FixedToFloat::convert):
-            (gl::SimpleDefaultValues::zero):
-            (gl::SimpleDefaultValues::one):
-            (gl::NormalizedDefaultValues::zero):
-            (gl::NormalizedDefaultValues::one):
-            (gl::VertexDataConverter::convertArray):
-            (gl::VertexDataConverter::pointerAddBytes):
-            (gl::VertexDataConverter::copyComponent):
-    2011-06-20  Zhenyao Mo  <zmo@google.com>
+            WebIconLoader is dead, long live WebCore::IconLoader
+            (code prune)
     
-            Reviewed by Kenneth Russell.
-    
-            Update ANGLE to r696
-            https://bugs.webkit.org/show_bug.cgi?id=56396
-    
-            * fast/canvas/webgl/glsl-conformance.html: Fix a bug in the test (otherwise after the roll this test will fail).
-            * platform/chromium/test_expectations.txt: Once this test is fixed, it should pass in chromium.
+            * Loader/WebFrameLoader.h:
+            * Loader/WebFrameLoader.m:
+            (-[WebFrameLoader dealloc]):
+            (-[WebFrameLoader commitProvisionalLoad]):
+            * Loader/WebIconLoader.h: Removed.
+            * Loader/WebIconLoader.m: Removed.
+            * Misc/WebIconDatabase.h:
+            * Misc/WebIconDatabase.m:
+            * Misc/WebIconDatabasePrivate.h:
+            * WebCoreSupport/WebFrameBridge.m:
+            (-[WebFrameBridge notifyIconChanged:]):
+            * WebCoreSupport/WebIconDatabaseBridge.h:
+            * WebCoreSupport/WebIconDatabaseBridge.m:
+            (-[WebIconDatabaseBridge _init]):
+            (-[WebIconDatabaseBridge _setIconData:forIconURL:]):
+            (-[WebIconDatabaseBridge _setHaveNoIconForIconURL:]):
+            * WebKit.exp:
+            * WebKit.xcodeproj/project.pbxproj:
+            * WebView/WebDataSource.m:
+            (-[WebDataSourcePrivate dealloc]):
+            (-[WebDataSource _stopLoading]):
+            (-[WebDataSource _setPrimaryLoadComplete:]):
+            * WebView/WebDataSourceInternal.h:
     
     
-    Canonical link: https://commits.webkit.org/78645@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@89330 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    
+    Canonical link: https://commits.webkit.org/13756@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@16395 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebCore/ChangeLog
+M	WebCore/bridge/mac/WebCoreIconDatabaseBridge.h
+M	WebCore/bridge/mac/WebCoreIconDatabaseBridge.mm
+M	WebCore/loader/icon/IconDatabase.h
+M	WebCore/page/Frame.cpp
+M	WebKit/ChangeLog
+M	WebKit/Loader/WebFrameLoader.h
+M	WebKit/Loader/WebFrameLoader.m
+D	WebKit/Loader/WebIconLoader.h
+D	WebKit/Loader/WebIconLoader.m
+M	WebKit/Misc/WebIconDatabase.h
+M	WebKit/Misc/WebIconDatabase.m
+M	WebKit/Misc/WebIconDatabasePrivate.h
+M	WebKit/WebCoreSupport/WebFrameBridge.m
+M	WebKit/WebCoreSupport/WebIconDatabaseBridge.h
+M	WebKit/WebCoreSupport/WebIconDatabaseBridge.m
+M	WebKit/WebKit.exp
+M	WebKit/WebKit.xcodeproj/project.pbxproj
+M	WebKit/WebView/WebDataSource.m
+M	WebKit/WebView/WebDataSourceInternal.h
+
+commit 98ec42a5cf722b740b220ed7c079d77dd152f1f7
+Author: Andrey Adaykin <aandrey@chromium.org>
+Date:   Thu Dec 27 13:31:13 2012 +0000
+
+    Forgot to SKIP a test on QT.
+    
+    * platform/qt/TestExpectations:
+    
+    Canonical link: https://commits.webkit.org/123982@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@138498 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
 M	LayoutTests/ChangeLog
-M	LayoutTests/fast/canvas/webgl/glsl-conformance.html
+M	LayoutTests/platform/qt/TestExpectations
+
+commit 03e2c8ab1129626a2623f8551536cda88a9790f2
+Author: Hayato Ito <hayato@chromium.org>
+Date:   Thu Dec 1 12:17:20 2011 +0000
+
+    Unreviewed. Update chromium test expectations.
+    Mark two tests flaky.
+    
+    * platform/chromium/test_expectations.txt:
+    
+    Canonical link: https://commits.webkit.org/90129@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@101657 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	LayoutTests/ChangeLog
 M	LayoutTests/platform/chromium/test_expectations.txt
-M	Source/ThirdParty/ANGLE/ANGLE.xcodeproj/project.pbxproj
-M	Source/ThirdParty/ANGLE/ChangeLog
-M	Source/ThirdParty/ANGLE/include/EGL/eglext.h
-M	Source/ThirdParty/ANGLE/include/GLSLANG/ShaderLang.h
-M	Source/ThirdParty/ANGLE/src/build_angle.xcodeproj/project.pbxproj
-M	Source/ThirdParty/ANGLE/src/common/debug.cpp
-M	Source/ThirdParty/ANGLE/src/common/debug.h
-A	Source/ThirdParty/ANGLE/src/common/version.h
-M	Source/ThirdParty/ANGLE/src/compiler/CodeGenGLSL.cpp
-M	Source/ThirdParty/ANGLE/src/compiler/CodeGenHLSL.cpp
-M	Source/ThirdParty/ANGLE/src/compiler/Compiler.cpp
-M	Source/ThirdParty/ANGLE/src/compiler/ConstantUnion.h
-M	Source/ThirdParty/ANGLE/src/compiler/ExtensionBehavior.h
-A	Source/ThirdParty/ANGLE/src/compiler/ForLoopUnroll.cpp
-A	Source/ThirdParty/ANGLE/src/compiler/ForLoopUnroll.h
-M	Source/ThirdParty/ANGLE/src/compiler/Initialize.cpp
-A	Source/ThirdParty/ANGLE/src/compiler/MapLongVariableNames.cpp
-A	Source/ThirdParty/ANGLE/src/compiler/MapLongVariableNames.h
-A	Source/ThirdParty/ANGLE/src/compiler/OutputESSL.cpp
-A	Source/ThirdParty/ANGLE/src/compiler/OutputESSL.h
-M	Source/ThirdParty/ANGLE/src/compiler/OutputGLSL.cpp
-M	Source/ThirdParty/ANGLE/src/compiler/OutputGLSL.h
-A	Source/ThirdParty/ANGLE/src/compiler/OutputGLSLBase.cpp
-A	Source/ThirdParty/ANGLE/src/compiler/OutputGLSLBase.h
-M	Source/ThirdParty/ANGLE/src/compiler/OutputHLSL.cpp
-M	Source/ThirdParty/ANGLE/src/compiler/OutputHLSL.h
-M	Source/ThirdParty/ANGLE/src/compiler/ParseHelper.cpp
-M	Source/ThirdParty/ANGLE/src/compiler/ParseHelper.h
-M	Source/ThirdParty/ANGLE/src/compiler/ShHandle.h
-M	Source/ThirdParty/ANGLE/src/compiler/ShaderLang.cpp
-A	Source/ThirdParty/ANGLE/src/compiler/TranslatorESSL.cpp
-A	Source/ThirdParty/ANGLE/src/compiler/TranslatorESSL.h
-M	Source/ThirdParty/ANGLE/src/compiler/ValidateLimitations.cpp
-M	Source/ThirdParty/ANGLE/src/compiler/ValidateLimitations.h
-M	Source/ThirdParty/ANGLE/src/compiler/VariableInfo.cpp
-M	Source/ThirdParty/ANGLE/src/compiler/VariableInfo.h
-M	Source/ThirdParty/ANGLE/src/compiler/VersionGLSL.cpp
-M	Source/ThirdParty/ANGLE/src/compiler/VersionGLSL.h
-M	Source/ThirdParty/ANGLE/src/compiler/glslang.y
-M	Source/ThirdParty/ANGLE/src/compiler/glslang_tab.cpp
-M	Source/ThirdParty/ANGLE/src/compiler/glslang_tab.h
-M	Source/ThirdParty/ANGLE/src/compiler/intermediate.h
-M	Source/ThirdParty/ANGLE/src/compiler/preprocessor/atom.c
-M	Source/ThirdParty/ANGLE/src/compiler/preprocessor/compile.h
-M	Source/ThirdParty/ANGLE/src/compiler/preprocessor/cpp.c
-M	Source/ThirdParty/ANGLE/src/compiler/preprocessor/cppstruct.c
-M	Source/ThirdParty/ANGLE/src/compiler/preprocessor/scanner.c
-M	Source/ThirdParty/ANGLE/src/compiler/preprocessor/scanner.h
-M	Source/ThirdParty/ANGLE/src/libEGL/Config.cpp
-M	Source/ThirdParty/ANGLE/src/libEGL/Config.h
-M	Source/ThirdParty/ANGLE/src/libEGL/Display.cpp
-M	Source/ThirdParty/ANGLE/src/libEGL/Display.h
-M	Source/ThirdParty/ANGLE/src/libEGL/Surface.cpp
-M	Source/ThirdParty/ANGLE/src/libEGL/Surface.h
-M	Source/ThirdParty/ANGLE/src/libEGL/libEGL.cpp
-A	Source/ThirdParty/ANGLE/src/libEGL/libEGL.rc
-M	Source/ThirdParty/ANGLE/src/libEGL/libEGL.vcproj
-M	Source/ThirdParty/ANGLE/src/libEGL/main.cpp
-M	Source/ThirdParty/ANGLE/src/libEGL/main.h
-A	Source/ThirdParty/ANGLE/src/libEGL/resource.h
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Blit.cpp
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Blit.h
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Buffer.cpp
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Buffer.h
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Context.cpp
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Context.h
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Framebuffer.cpp
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Framebuffer.h
-A	Source/ThirdParty/ANGLE/src/libGLESv2/HandleAllocator.cpp
-A	Source/ThirdParty/ANGLE/src/libGLESv2/HandleAllocator.h
-A	Source/ThirdParty/ANGLE/src/libGLESv2/IndexDataManager.cpp
-A	Source/ThirdParty/ANGLE/src/libGLESv2/IndexDataManager.h
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Program.cpp
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Program.h
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Renderbuffer.cpp
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Renderbuffer.h
-M	Source/ThirdParty/ANGLE/src/libGLESv2/ResourceManager.cpp
-M	Source/ThirdParty/ANGLE/src/libGLESv2/ResourceManager.h
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Shader.cpp
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Shader.h
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Texture.cpp
-M	Source/ThirdParty/ANGLE/src/libGLESv2/Texture.h
-A	Source/ThirdParty/ANGLE/src/libGLESv2/VertexDataManager.cpp
-A	Source/ThirdParty/ANGLE/src/libGLESv2/VertexDataManager.h
-M	Source/ThirdParty/ANGLE/src/libGLESv2/libGLESv2.cpp
-M	Source/ThirdParty/ANGLE/src/libGLESv2/libGLESv2.def
-A	Source/ThirdParty/ANGLE/src/libGLESv2/libGLESv2.rc
-M	Source/ThirdParty/ANGLE/src/libGLESv2/libGLESv2.vcproj
-M	Source/ThirdParty/ANGLE/src/libGLESv2/main.cpp
-M	Source/ThirdParty/ANGLE/src/libGLESv2/mathutil.h
-A	Source/ThirdParty/ANGLE/src/libGLESv2/resource.h
-M	Source/ThirdParty/ANGLE/src/libGLESv2/utilities.cpp
-M	Source/ThirdParty/ANGLE/src/libGLESv2/utilities.h
-A	Source/ThirdParty/ANGLE/src/libGLESv2/vertexconversion.h
-M	Source/WebCore/ChangeLog
-M	Source/WebCore/platform/graphics/ANGLEWebKitBridge.cpp
 
-commit 07fbab8bcb6a171fc2d93001afa034a064a45b43
-Author: Tony Chang <tony@chromium.org>
-Date:   Wed Oct 12 22:07:07 2011 +0000
+commit 9f25a8914a122381e767ea966c8fe48370fde174
+Author: Maciej Stachowiak <mjs@apple.com>
+Date:   Sat Jun 14 22:13:18 2008 +0000
 
-    [chromium] remove old build dirs on chromium-win
-    https://bugs.webkit.org/show_bug.cgi?id=69961
+    2008-06-14  Maciej Stachowiak  <mjs@apple.com>
     
-    Reviewed by Adam Barth.
+            Reviewed by Oliver.
     
-    * Scripts/webkitpy/layout_tests/port/chromium_win.py: Output is now
-      always in build and never in chrome or webkit.
+            - initialize local vars as side effect of call instead of in bytecode
+            1.004x speedup on SunSpider.
+    
+            This removes just the dispatch overhead for these loads - in the
+            future, dead store elimination might be able to eliminate them
+            entirely.
+    
+            * VM/CodeGenerator.cpp:
+            (KJS::CodeGenerator::CodeGenerator): For function blocks, don't
+            emit loads of undefined for var initialization.
+            * VM/Machine.cpp:
+            (KJS::slideRegisterWindowForCall): Instead, initialize locals
+            as part of the call.
     
     
-    Canonical link: https://commits.webkit.org/86038@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@97307 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    
+    Canonical link: https://commits.webkit.org/26990@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@34541 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-M	Tools/ChangeLog
-M	Tools/Scripts/webkitpy/layout_tests/port/chromium_win.py
+M	JavaScriptCore/ChangeLog
+M	JavaScriptCore/VM/CodeGenerator.cpp
+M	JavaScriptCore/VM/Machine.cpp
 
-commit a7b8badb3d2bd6989257f7774a97c19e6002fb53
-Author: Shinichiro Hamaji <hamaji@chromium.org>
-Date:   Thu Aug 12 12:36:52 2010 +0000
+commit 9b9d026ab8c293623520eed18d60992285063300
+Author: David Levin <levin@chromium.org>
+Date:   Thu Sep 15 01:46:16 2011 +0000
 
-    2010-08-12  Sheriff Bot  <webkit.review.bot@gmail.com>
+    [chromium] rebaselines due to r95096, r95121, and r95129.
     
-            Unreviewed, rolling out r65181.
-            http://trac.webkit.org/changeset/65181
-            https://bugs.webkit.org/show_bug.cgi?id=43909
+    * platform/chromium-cg-mac-leopard/fast/borders/border-image-scaled-gradient-expected.png: Added.
+    * platform/chromium-cg-mac-leopard/svg/as-border-image/svg-as-border-image-expected.png: Added.
+    * platform/chromium-cg-mac/fast/css/getComputedStyle/computed-style-expected.txt: Copied from LayoutTests/platform/chromium-win/fast/css/getComputedStyle/computed-style-expected.txt.
+    * platform/chromium-cg-mac/fast/css/getComputedStyle/computed-style-without-renderer-expected.txt: Copied from LayoutTests/platform/chromium-win/fast/css/getComputedStyle/computed-style-without-renderer-expected.txt.
+    * platform/chromium-cg-mac/svg/as-border-image/svg-as-border-image-expected.png: Added.
+    * platform/chromium-cg-mac/svg/as-border-image/svg-as-border-image-expected.txt: Added.
+    * platform/chromium-cg-mac/svg/css/getComputedStyle-basic-expected.txt: Copied from LayoutTests/platform/chromium-win/svg/css/getComputedStyle-basic-expected.txt.
+    * platform/chromium-linux/fast/borders/border-image-border-radius-expected.png:
+    * platform/chromium-linux/fast/borders/border-image-massive-scale-expected.png: Added.
+    * platform/chromium-linux/fast/borders/border-image-scale-transform-expected.png:
+    * platform/chromium-linux/fast/borders/border-image-scaled-expected.png:
+    * platform/chromium-linux/svg/as-border-image/svg-as-border-image-expected.png:
+    * platform/chromium-win/fast/borders/border-image-01-expected.png:
+    * platform/chromium-win/fast/borders/border-image-border-radius-expected.png:
+    * platform/chromium-win/fast/borders/border-image-longhand-expected.png:
+    * platform/chromium-win/fast/borders/border-image-massive-scale-expected.png: Added.
+    * platform/chromium-win/fast/borders/border-image-massive-scale-expected.txt: Added.
+    * platform/chromium-win/fast/borders/border-image-repeat-expected.png:
+    * platform/chromium-win/fast/borders/border-image-scale-transform-expected.png:
+    * platform/chromium-win/fast/borders/border-image-scaled-expected.png:
+    * platform/chromium-win/fast/borders/border-image-scaled-gradient-expected.png: Added.
+    * platform/chromium-win/fast/borders/border-image-side-reduction-expected.png:
+    * platform/chromium-win/fast/borders/border-image-slices-expected.png:
+    * platform/chromium-win/fast/borders/border-image-source-expected.png:
+    * platform/chromium-win/fast/css/getComputedStyle/computed-style-expected.txt:
+    * platform/chromium-win/fast/css/getComputedStyle/computed-style-without-renderer-expected.txt:
+    * platform/chromium-win/svg/as-border-image/svg-as-border-image-expected.png:
+    * platform/chromium-win/svg/as-border-image/svg-as-border-image-expected.txt:
+    * platform/chromium-win/svg/css/getComputedStyle-basic-expected.txt:
     
-            It broke 35 layout tests fail on chromium-win (Requested by
-            hamaji on #webkit).
-    
-            * public/WebFrameClient.h:
-            * src/FrameLoaderClientImpl.cpp:
-            (WebKit::FrameLoaderClientImpl::detachedFromParent3):
-    
-    Canonical link: https://commits.webkit.org/56038@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@65238 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    Canonical link: https://commits.webkit.org/84031@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@95149 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-M	WebKit/chromium/ChangeLog
-M	WebKit/chromium/public/WebFrameClient.h
-M	WebKit/chromium/src/FrameLoaderClientImpl.cpp
+M	LayoutTests/ChangeLog
+A	LayoutTests/platform/chromium-cg-mac-leopard/fast/borders/border-image-scaled-gradient-expected.png
+A	LayoutTests/platform/chromium-cg-mac-leopard/svg/as-border-image/svg-as-border-image-expected.png
+A	LayoutTests/platform/chromium-cg-mac/fast/css/getComputedStyle/computed-style-expected.txt
+A	LayoutTests/platform/chromium-cg-mac/fast/css/getComputedStyle/computed-style-without-renderer-expected.txt
+A	LayoutTests/platform/chromium-cg-mac/svg/as-border-image/svg-as-border-image-expected.png
+A	LayoutTests/platform/chromium-cg-mac/svg/as-border-image/svg-as-border-image-expected.txt
+A	LayoutTests/platform/chromium-cg-mac/svg/css/getComputedStyle-basic-expected.txt
+M	LayoutTests/platform/chromium-linux/fast/borders/border-image-border-radius-expected.png
+A	LayoutTests/platform/chromium-linux/fast/borders/border-image-massive-scale-expected.png
+M	LayoutTests/platform/chromium-linux/fast/borders/border-image-scale-transform-expected.png
+M	LayoutTests/platform/chromium-linux/fast/borders/border-image-scaled-expected.png
+M	LayoutTests/platform/chromium-linux/svg/as-border-image/svg-as-border-image-expected.png
+M	LayoutTests/platform/chromium-win/fast/borders/border-image-01-expected.png
+M	LayoutTests/platform/chromium-win/fast/borders/border-image-border-radius-expected.png
+M	LayoutTests/platform/chromium-win/fast/borders/border-image-longhand-expected.png
+A	LayoutTests/platform/chromium-win/fast/borders/border-image-massive-scale-expected.png
+A	LayoutTests/platform/chromium-win/fast/borders/border-image-massive-scale-expected.txt
+M	LayoutTests/platform/chromium-win/fast/borders/border-image-repeat-expected.png
+M	LayoutTests/platform/chromium-win/fast/borders/border-image-scale-transform-expected.png
+M	LayoutTests/platform/chromium-win/fast/borders/border-image-scaled-expected.png
+A	LayoutTests/platform/chromium-win/fast/borders/border-image-scaled-gradient-expected.png
+M	LayoutTests/platform/chromium-win/fast/borders/border-image-side-reduction-expected.png
+M	LayoutTests/platform/chromium-win/fast/borders/border-image-slices-expected.png
+M	LayoutTests/platform/chromium-win/fast/borders/border-image-source-expected.png
+M	LayoutTests/platform/chromium-win/fast/css/getComputedStyle/computed-style-expected.txt
+M	LayoutTests/platform/chromium-win/fast/css/getComputedStyle/computed-style-without-renderer-expected.txt
+M	LayoutTests/platform/chromium-win/svg/as-border-image/svg-as-border-image-expected.png
+M	LayoutTests/platform/chromium-win/svg/as-border-image/svg-as-border-image-expected.txt
+M	LayoutTests/platform/chromium-win/svg/css/getComputedStyle-basic-expected.txt
 
-commit e495abce95de0b7f8c06571678a46d60249c1079
-Author: Mikhail Naganov <mnaganov@chromium.org>
-Date:   Tue May 10 16:22:40 2011 +0000
+commit 90c92d02f7e22904bc290a851f542af62b0f2d3f
+Author: David Hyatt <hyatt@apple.com>
+Date:   Wed Feb 4 05:06:19 2009 +0000
 
-    2011-05-10  Mikhail Naganov  <mnaganov@chromium.org>
+    2009-02-03  David Hyatt  <hyatt@apple.com>
     
-            Reviewed by Yury Semikhatsky.
+            Move the isRenderInline checks for clientWidth/Height and scrollWidth/Height to the DOM element
+            versions of the functions.  Since internal render tree usage doesn't ever (incorrectly) call these
+            functions on RenderInlines, this manages to get virtual function calls out of contentWidth/Height and
+            availableWidth/Height.
     
-            Web Inspector: [Chromium] Drop obsolete test code for the Profiles panel.
-            https://bugs.webkit.org/show_bug.cgi?id=60471
+            Reviewed by Mark Rowe
     
-            * src/js/Tests.js:
+            * dom/Element.cpp:
+            (WebCore::Element::clientWidth):
+            (WebCore::Element::clientHeight):
+            (WebCore::Element::scrollWidth):
+            (WebCore::Element::scrollHeight):
+            * rendering/RenderBox.cpp:
+            (WebCore::RenderBox::clientWidth):
+            (WebCore::RenderBox::clientHeight):
+            (WebCore::RenderBox::scrollWidth):
+            (WebCore::RenderBox::scrollHeight):
     
-    Canonical link: https://commits.webkit.org/75823@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@86159 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    
+    
+    Canonical link: https://commits.webkit.org/32751@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@40606 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-M	Source/WebKit/chromium/ChangeLog
-M	Source/WebKit/chromium/src/js/Tests.js
+M	WebCore/ChangeLog
+M	WebCore/dom/Element.cpp
+M	WebCore/rendering/RenderBox.cpp
 
-commit 19ab857e236edc56d5a6f7c58079a8fca9edfa8e
-Author: Brent Fulgham <bfulgham@apple.com>
-Date:   Tue Jun 5 18:14:00 2018 +0000
+commit fe5798c29f70fb070671c05788edf26d7c084d7e
+Author: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Date:   Mon Dec 14 13:00:42 2015 +0000
 
-    Revise DEFAULT_EXPERIMENTAL_FEATURES_ENABLED to work properly on Apple builds
-    https://bugs.webkit.org/show_bug.cgi?id=186286
-    <rdar://problem/40782992>
+    [GTK] Unreviewed gardening.
     
-    Reviewed by Dan Bernstein.
+    * platform/gtk/TestExpectations: Update TestExpectations with the following changes:
+      - Remove expectations for tests removed after r193411 r193426 and r19366.
+      - Merge repeated expectations from some tests.
+      - Mark tests failing after r188159.
+      - Update list of imported/blink tests failing.
     
-    Use the WK_RELOCATABLE_FRAMEWORKS flag (which is always defined for non-production builds)
-    to define ENABLE(EXPERIMENTAL_FEATURES) so that we do not need to manually
-    change this flag when preparing for a production release.
-    
-    Source/JavaScriptCore:
-    
-    * Configurations/FeatureDefines.xcconfig: Use WK_RELOCATABLE_FRAMEWORKS to determine
-    whether experimental features should be enabled, and use it to properly define the
-    feature flag.
-    
-    Source/WebCore:
-    
-    * Configurations/FeatureDefines.xcconfig: Use WK_RELOCATABLE_FRAMEWORKS to determine
-    whether experimental features should be enabled, and use it to properly define the
-    feature flag.
-    
-    Source/WebCore/PAL:
-    
-    * Configurations/FeatureDefines.xcconfig: Use WK_RELOCATABLE_FRAMEWORKS to determine
-    whether experimental features should be enabled, and use it to properly define the
-    feature flag.
-    
-    Source/WebKit:
-    
-    * Configurations/FeatureDefines.xcconfig: Use WK_RELOCATABLE_FRAMEWORKS to determine whether
-    experimental features should be enabled, and use it to properly define the feature flag.
-    * Shared/WebPreferencesDefaultValues.h:
-    
-    Source/WebKitLegacy/mac:
-    
-    * Configurations/FeatureDefines.xcconfig: Use WK_RELOCATABLE_FRAMEWORKS to determine
-    whether experimental features should be enabled, and use it to properly define the
-    feature flag.
-    
-    Tools:
-    
-    * TestWebKitAPI/Configurations/FeatureDefines.xcconfig: Use WK_RELOCATABLE_FRAMEWORKS to
-    determine whether experimental features should be enabled, and use it to properly define
-    the feature flag.
-    
-    Canonical link: https://commits.webkit.org/201696@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@232515 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    Canonical link: https://commits.webkit.org/170354@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@194032 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-M	Source/JavaScriptCore/ChangeLog
-M	Source/JavaScriptCore/Configurations/FeatureDefines.xcconfig
-M	Source/WebCore/ChangeLog
-M	Source/WebCore/Configurations/FeatureDefines.xcconfig
-M	Source/WebCore/PAL/ChangeLog
-M	Source/WebCore/PAL/Configurations/FeatureDefines.xcconfig
-M	Source/WebKit/ChangeLog
-M	Source/WebKit/Configurations/FeatureDefines.xcconfig
-M	Source/WebKit/Shared/WebPreferencesDefaultValues.h
-M	Source/WebKitLegacy/mac/ChangeLog
-M	Source/WebKitLegacy/mac/Configurations/FeatureDefines.xcconfig
-M	Tools/ChangeLog
-M	Tools/TestWebKitAPI/Configurations/FeatureDefines.xcconfig
+M	LayoutTests/ChangeLog
+M	LayoutTests/platform/gtk/TestExpectations
 
-commit 50eff1b49a9ac385dce99d6286aa938d5b42b41b
-Author: Matt Baker <mattbaker01@gmail.com>
-Date:   Tue Feb 7 20:09:28 2017 +0000
+commit 45eff763f014596084682914ebf8c1a5ff7e076f
+Author: Tim Horton <timothy_horton@apple.com>
+Date:   Wed Jun 27 04:36:49 2018 +0000
 
-    Web Inspector: DOMTreeOutline becomes collapsed after switching back to Elements tab
-    https://bugs.webkit.org/show_bug.cgi?id=167924
+    Rearrange some WebPreferences; move two experimental prefs into the experimental section
     
-    Reviewed by Brian Burg.
-    
-    * UserInterface/Views/DOMTreeOutline.js:
-    (WebInspector.DOMTreeOutline.prototype.update):
-    Drive-by fix: move variable initialization below the early return.
-    
-    * UserInterface/Views/ElementsTabContentView.js:
-    (WebInspector.ElementsTabContentView.prototype.shown): Deleted.
-    Calling this._showDOMTreeContentView isn't necessary. The base class
-    implementation will call `shown` on the content view.
+    * Shared/WebPreferences.yaml:
     
     
-    Canonical link: https://commits.webkit.org/184978@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@211829 268f45cc-cd09-0410-ab3c-d52691b4dbfc
-
-M	Source/WebInspectorUI/ChangeLog
-M	Source/WebInspectorUI/UserInterface/Views/DOMTreeOutline.js
-M	Source/WebInspectorUI/UserInterface/Views/ElementsTabContentView.js
-
-commit 8c9ac438ef742df504289e891e894a394af6d9ff
-Author: Kelly Norton <knorton@google.com>
-Date:   Thu Dec 1 22:16:10 2011 +0000
-
-    More void functions eager to return values in RenderObject & WebFrameImpl
-    https://bugs.webkit.org/show_bug.cgi?id=73571
-    
-    Reviewed by Adam Barth.
-    
-    Source/WebCore:
-    
-    * rendering/RenderObject.h:
-    (WebCore::RenderObject::computeAbsoluteRepaintRect):
-    
-    Source/WebKit/chromium:
-    
-    * src/WebFrameImpl.cpp:
-    (WebKit::ChromePrintContext::computePageRects):
-    
-    
-    Canonical link: https://commits.webkit.org/90177@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@101706 268f45cc-cd09-0410-ab3c-d52691b4dbfc
-
-M	Source/WebCore/ChangeLog
-M	Source/WebCore/rendering/RenderObject.h
-M	Source/WebKit/chromium/ChangeLog
-M	Source/WebKit/chromium/src/WebFrameImpl.cpp
-
-commit 45b95075881d3798da9d2818abaebb398344748e
-Author: Matt Rajca <mrajca@apple.com>
-Date:   Tue Jun 30 18:10:55 2015 +0000
-
-    Media Session: implement algorithm for updating a media element's session (6.1)
-    https://bugs.webkit.org/show_bug.cgi?id=146460
-    
-    Reviewed by Darin Adler.
-    
-    In addition to storing a pointer to the new media session, we now:
-    
-    - pause the media element if it is 'active' in the current media session
-    - remove the media element from the current media session
-    - release the current media session if there are no more active media elements
-    - set the default media session if the new media session is null
-    - update the 'kind' attribute to match the kind of the new media session
-    
-    * Modules/mediasession/MediaSession.cpp:
-    (WebCore::MediaSession::isMediaElementActive):
-    (WebCore::MediaSession::hasActiveMediaElements):
-    * Modules/mediasession/MediaSession.h:
-    * html/HTMLMediaElement.cpp:
-    (WebCore::HTMLMediaElement::setSession):
-    (WebCore::HTMLMediaElement::setSessionInternal):
-    * html/HTMLMediaElement.h:
-    
-    Canonical link: https://commits.webkit.org/164551@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@186123 268f45cc-cd09-0410-ab3c-d52691b4dbfc
-
-M	Source/WebCore/ChangeLog
-M	Source/WebCore/Modules/mediasession/MediaSession.cpp
-M	Source/WebCore/Modules/mediasession/MediaSession.h
-M	Source/WebCore/html/HTMLMediaElement.cpp
-M	Source/WebCore/html/HTMLMediaElement.h
-
-commit 204e0baf9c58ce4492595fd1a86cc469717724fd
-Author: Rob Buis <rwlbuis@webkit.org>
-Date:   Fri Feb 10 15:41:22 2012 +0000
-
-    [BlackBerry] Upstream graphics helper classes in WebKitSupport
-    https://bugs.webkit.org/show_bug.cgi?id=78278
-    
-    Reviewed by Antonio Gomes.
-    
-    Initial upstream, no new tests.
-    
-    * blackberry/WebKitSupport/SurfacePool.cpp: Added.
-    * blackberry/WebKitSupport/SurfacePool.h: Added.
-    * blackberry/WebKitSupport/TileIndex.h: Added.
-    * blackberry/WebKitSupport/TileIndexHash.h: Added.
-    
-    Canonical link: https://commits.webkit.org/95273@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@107401 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    Canonical link: https://commits.webkit.org/202332@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@233243 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
 M	Source/WebKit/ChangeLog
-A	Source/WebKit/blackberry/WebKitSupport/SurfacePool.cpp
-A	Source/WebKit/blackberry/WebKitSupport/SurfacePool.h
-A	Source/WebKit/blackberry/WebKitSupport/TileIndex.h
-A	Source/WebKit/blackberry/WebKitSupport/TileIndexHash.h
+M	Source/WebKit/Shared/WebPreferences.yaml
 
-commit a6ba50287012f4860d74d0ac41f2ce2661afdc94
-Author: Aakash Jain <aakash_jain@apple.com>
-Date:   Wed Apr 3 20:27:12 2019 +0000
+commit bb4fb14306a569f19fec59da480f216a2e73d9e5
+Author: Filip Pizlo <fpizlo@apple.com>
+Date:   Thu Aug 20 21:28:34 2015 +0000
 
-    [ews-app] Status bubble should not display certain infrastructure status messages
-    https://bugs.webkit.org/show_bug.cgi?id=196550
+    Unreviewed, shorten a test that runs too long and times out.
     
-    Reviewed by Lucas Forschler.
-    
-    Do not display the steps which are un-needed for end-user. This information is still avaiable
-    if the user click on the bubble and look at the Buildbot build.
-    * BuildSlaveSupport/ews-app/ews/views/statusbubble.py:
-    (StatusBubble._steps_messages):
-    (StatusBubble._should_display_step): Method to decide whether to display the step or not.
-    
-    
-    Canonical link: https://commits.webkit.org/210819@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@243823 268f45cc-cd09-0410-ab3c-d52691b4dbfc
-
-M	Tools/BuildSlaveSupport/ews-app/ews/views/statusbubble.py
-M	Tools/ChangeLog
-
-commit af4ef3fb5a6e3eb8fcdf5500fc18461eab33dbd9
-Author: Joseph Pecoraro <joepeck@webkit.org>
-Date:   Sun Jul 15 21:26:51 2012 +0000
-
-    Windowless WebView not firing JavaScript load event if there is a media element
-    https://bugs.webkit.org/show_bug.cgi?id=91331
-    
-    Reviewed by Eric Carlson.
-    
-    Source/WebCore:
-    
-    In prepareForLoad we start deferring the load event. If we fall into this
-    clause where the page can not start loading media we bail, potentially
-    indefinitely waiting until we can start loading media. Since we can not
-    be certain this will ever happen, we should stop deferring the page's
-    load event.
-    
-    Test: WebKit1.WindowlessWebViewWithMedia TestWebKitAPI test. The only
-    way this path was reachable right now is on the mac port.
-    
-    * html/HTMLMediaElement.cpp:
-    (WebCore::HTMLMediaElement::loadInternal):
-    
-    Tools:
-    
-    Test a windowless WebView loading a page with a media element. The load
-    event should happen on the next spin of the run loop, but we spin check
-    the page, with a timeout of 250ms.
-    
-    * TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj:
-    * TestWebKitAPI/Tests/mac/WindowlessWebViewWithMedia.html: Added.
-    * TestWebKitAPI/Tests/mac/WindowlessWebViewWithMedia.mm: Added.
-    (-[WindowlessWebViewWithMediaFrameLoadDelegate webView:didFinishLoadForFrame:]):
-    (TestWebKitAPI::spinLoop): Spin check with timeout. Runs a block each spin to early bail.
+    * TestWebKitAPI/Tests/WTF/Lock.cpp:
     (TestWebKitAPI::TEST):
     
-    Canonical link: https://commits.webkit.org/109155@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@122683 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    
+    
+    Canonical link: https://commits.webkit.org/166355@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@188701 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-M	Source/WebCore/ChangeLog
-M	Source/WebCore/html/HTMLMediaElement.cpp
 M	Tools/ChangeLog
-M	Tools/TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj
-A	Tools/TestWebKitAPI/Tests/mac/WindowlessWebViewWithMedia.html
-A	Tools/TestWebKitAPI/Tests/mac/WindowlessWebViewWithMedia.mm
+M	Tools/TestWebKitAPI/Tests/WTF/Lock.cpp
 
-commit 1146b8b1a526618c0be1879fffc981ac3613d9ea
-Author: Michael Saboff <msaboff@apple.com>
-Date:   Tue Jan 29 01:42:07 2013 +0000
+commit 885fbb520aeb884ee9c8ff1add461cdb1d358ae7
+Author: Ryan Haddad <ryanhaddad@apple.com>
+Date:   Fri Mar 18 19:44:25 2016 +0000
 
-    Make integer-modulo.js a try JS-Regress test
-    https://bugs.webkit.org/show_bug.cgi?id=108130
+    Rebaseline inspector/model/remote-object.html for mac after r198435
     
-    Reviewed by Filip Pizlo.
+    Unreviewed test gardening.
     
-    Eliminated the LayoutTest calls.  Sum the values and throw an expection if it doesn't
-    match up.
+    * platform/mac/inspector/model/remote-object-expected.txt:
     
-    * fast/js/regress/script-tests/integer-modulo.js:
-    
-    
-    Canonical link: https://commits.webkit.org/126339@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@141031 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    Canonical link: https://commits.webkit.org/173768@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@198438 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
 M	LayoutTests/ChangeLog
-M	LayoutTests/fast/js/regress/script-tests/integer-modulo.js
+M	LayoutTests/platform/mac/inspector/model/remote-object-expected.txt
 
-commit 71672e5bf882d443ed99b17766c8144a98912cb9
-Author: Saam Barati <sbarati@apple.com>
-Date:   Fri Aug 5 06:46:55 2016 +0000
+commit bbbd32117f8c58c08b36bde1ff70282b51611faa
+Author: staikos <staikos>
+Date:   Mon Dec 11 01:17:36 2006 +0000
 
-    Restore CodeBlock jettison code to jettison when a CodeBlock has been alive for a long time
-    https://bugs.webkit.org/show_bug.cgi?id=151241
+            Make the xpath grammar hack more specific (and work on OS X) until
+            it's cleaned up.
     
-    Reviewed by Benjamin Poulain.
+    
+    
+    Canonical link: https://commits.webkit.org/15234@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@18146 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebCore/ChangeLog
+M	WebCore/WebCore.pro
+
+commit 50e4441ae885cd647471ffe7df66ea23631f3fa1
+Author: Simon Hausmann <hausmann@webkit.org>
+Date:   Mon Nov 14 13:01:03 2011 +0000
+
+    [Qt] Replace use of QApplication with QGuiApplication.
+    
+    Reviewed by Tor Arne Vestbø.
     
     Source/JavaScriptCore:
     
-    This patch rolls back in the jettisoning policy from https://bugs.webkit.org/show_bug.cgi?id=149727.
-    We can now jettison a CodeBlock when it has been alive for a long time
-    and is only pointed to by its owner executable. I haven't been able to get this
-    patch to crash on anything it used to crash on, so I suspect we've fixed the bugs that
-    were causing this before. I've also added some stress options for this feature that
-    will cause us to either eagerly old-age jettison or to old-age jettison whenever it's legal.
-    These options helped me find a bug where we would ask an Executable to create a CodeBlock,
-    and then the Executable would do some other allocations, causing a GC, immediately causing
-    the CodeBlock to jettison. There is a small chance that this was the bug we were seeing before,
-    however, it's unlikely given that the previous timing metrics require at least 5 second between
-    compiling to jettisoning.
+    * wtf/qt/compat/qguiapplication.h:
+    (QGuiApplication::styleHints): Introduce styleHints wrapper hack.
     
-    This patch also enables the stress options for various modes
-    of JSC stress tests.
+    Source/WebCore:
     
-    * bytecode/CodeBlock.cpp:
-    (JSC::CodeBlock::shouldJettisonDueToWeakReference):
-    (JSC::timeToLive):
-    (JSC::CodeBlock::shouldJettisonDueToOldAge):
-    * interpreter/CallFrame.h:
-    (JSC::ExecState::callee):
-    (JSC::ExecState::unsafeCallee):
-    (JSC::ExecState::codeBlock):
-    (JSC::ExecState::addressOfCodeBlock):
-    (JSC::ExecState::unsafeCodeBlock):
-    (JSC::ExecState::scope):
-    * interpreter/Interpreter.cpp:
-    (JSC::Interpreter::execute):
-    (JSC::Interpreter::executeCall):
-    (JSC::Interpreter::executeConstruct):
-    (JSC::Interpreter::prepareForRepeatCall):
-    * jit/JITOperations.cpp:
-    * llint/LLIntSlowPaths.cpp:
-    (JSC::LLInt::setUpCall):
-    * runtime/Executable.cpp:
-    (JSC::ScriptExecutable::installCode):
-    (JSC::setupJIT):
-    (JSC::ScriptExecutable::prepareForExecutionImpl):
-    * runtime/Executable.h:
-    (JSC::ScriptExecutable::prepareForExecution):
-    * runtime/Options.h:
+    Replace use of QApplication by QGuiApplication where applicable.
     
-    Tools:
+    * platform/qt/RenderThemeQt.cpp:
+    (WebCore::RenderThemeQt::RenderThemeQt):
+    (WebCore::RenderThemeQt::platformActiveSelectionBackgroundColor):
+    (WebCore::RenderThemeQt::platformInactiveSelectionBackgroundColor):
+    (WebCore::RenderThemeQt::platformActiveSelectionForegroundColor):
+    (WebCore::RenderThemeQt::platformInactiveSelectionForegroundColor):
+    (WebCore::RenderThemeQt::platformFocusRingColor):
+    (WebCore::RenderThemeQt::systemColor):
+    (WebCore::RenderThemeQt::minimumMenuListSize):
+    (WebCore::RenderThemeQt::getMediaControlForegroundColor):
+    (WebCore::RenderThemeQt::paintMediaVolumeSliderTrack):
+    (WebCore::RenderThemeQt::caretBlinkInterval):
     
-    * Scripts/run-jsc-stress-tests:
-    
-    
-    
-    Canonical link: https://commits.webkit.org/178702@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@204162 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    Canonical link: https://commits.webkit.org/88688@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@100131 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
 M	Source/JavaScriptCore/ChangeLog
-M	Source/JavaScriptCore/bytecode/CodeBlock.cpp
-M	Source/JavaScriptCore/interpreter/CallFrame.h
-M	Source/JavaScriptCore/interpreter/Interpreter.cpp
-M	Source/JavaScriptCore/jit/JITOperations.cpp
-M	Source/JavaScriptCore/llint/LLIntSlowPaths.cpp
-M	Source/JavaScriptCore/runtime/Executable.cpp
-M	Source/JavaScriptCore/runtime/Executable.h
-M	Source/JavaScriptCore/runtime/Options.h
-M	Tools/ChangeLog
-M	Tools/Scripts/run-jsc-stress-tests
-
-commit 282daa6398118e18ef5ebb32674f3cd0c6f83104
-Author: Sanjoy Pal <sanjoy.pal@samsung.com>
-Date:   Thu Jun 27 06:02:51 2013 +0000
-
-    Avoid redundant checks for Compositing reasons in RenderLayerCompositor
-    https://bugs.webkit.org/show_bug.cgi?id=118114
-    
-    Patch by Sanjoy Pal <sanjoy.pal@samsung.com> on 2013-06-26
-    Reviewed by Anders Carlsson.
-    
-    A RenderObject can be any one of the Video, Canvas, Plugin or Iframe.
-    Hence removing the redundant checks.
-    
-    No new tests as no functionality change.
-    
-    * rendering/RenderLayerCompositor.cpp:
-    (WebCore::RenderLayerCompositor::reasonsForCompositing):
-    
-    Canonical link: https://commits.webkit.org/136157@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@152078 268f45cc-cd09-0410-ab3c-d52691b4dbfc
-
+M	Source/JavaScriptCore/wtf/qt/compat/qguiapplication.h
 M	Source/WebCore/ChangeLog
-M	Source/WebCore/rendering/RenderLayerCompositor.cpp
+M	Source/WebCore/platform/qt/RenderThemeQt.cpp
+
+commit c6540e16abf242ed2dd97d0f7b34d20a37bea671
+Author: Adam Barth <abarth@webkit.org>
+Date:   Thu Dec 17 08:27:25 2009 +0000
+
+    2009-12-17  Adam Barth  <abarth@webkit.org>
+    
+            Rubber stamp by Seidel.
+    
+            Clean up exception handling in WorkQueue.  Basically, a bunch of the
+            delegate messages can throw exceptions because of network errors.  We
+            want the queues to keep on ticking instead of erroring out.  That means
+            we want to catch generic exceptions and continue looping.
+    
+            Also, cleaned up the exception handling in the EWS to properly log
+            failures.
+    
+            * Scripts/modules/commands/early_warning_system.py:
+            * Scripts/modules/commands/queues.py:
+            * Scripts/modules/workqueue.py:
+    
+    Canonical link: https://commits.webkit.org/43666@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@52242 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebKitTools/ChangeLog
+M	WebKitTools/Scripts/modules/commands/early_warning_system.py
+M	WebKitTools/Scripts/modules/commands/queues.py
+M	WebKitTools/Scripts/modules/workqueue.py
+
+commit 5bf0e027179e98bea69c2c4895cde68c8c5aec5c
+Author: Maciej Stachowiak <mjs@apple.com>
+Date:   Tue May 10 22:24:09 2005 +0000
+
+            Reviewed by John.
+    
+            - remove init hint argument from VisiblePosition
+    
+            * khtml/editing/visible_position.cpp:
+            (khtml::VisiblePosition::VisiblePosition):
+            (khtml::VisiblePosition::init):
+            * khtml/editing/visible_position.h:
+            * khtml/editing/visible_units.cpp:
+            (khtml::previousBoundary):
+            (khtml::nextBoundary):
+            * khtml/xml/dom_docimpl.cpp:
+            (DocumentImpl::updateSelection):
+            * kwq/KWQKHTMLPart.mm:
+            (KWQKHTMLPart::styleForSelectionStart):
+            * kwq/WebCoreBridge.mm:
+            (-[WebCoreBridge setSelectedDOMRange:affinity:closeTyping:]):
+    
+    
+    Canonical link: https://commits.webkit.org/8017@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@9154 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	WebCore/ChangeLog-2005-08-23
+M	WebCore/khtml/editing/visible_position.cpp
+M	WebCore/khtml/editing/visible_position.h
+M	WebCore/khtml/editing/visible_units.cpp
+M	WebCore/khtml/xml/dom_docimpl.cpp
+M	WebCore/kwq/KWQKHTMLPart.mm
+M	WebCore/kwq/WebCoreBridge.mm
 
 commit 03de3c215137b92a4991ec23027feaac61754620
 Author: Noam Rosenthal <noam@webkit.org>

@@ -1,187 +1,112 @@
-commit 295c4f6effb1c1a6a31931ab00845a25cc4a042d
-Author: Nicolas Chevobbe <nchevobbe@mozilla.com>
-Date:   Fri Oct 1 16:24:49 2021 +0000
+commit ef9946d39a97872e135a87a8949bf1b0c9716fcf
+Merge: 9f31ade69287 a7c3948d0aed
+Author: Kyle Huey <me@kylehuey.com>
+Date:   Tue Mar 9 01:16:43 2010 -0500
 
-    Bug 1730167 - [devtools] Use appropriate walker front to retrieve frame children when EFT is enabled. r=ochameau
-    
-    Differential Revision: https://phabricator.services.mozilla.com/D126064
+    Backing out Bug 544097 due to test failures.
 
-M	devtools/client/fronts/node.js
-M	devtools/client/fronts/walker.js
-M	devtools/client/inspector/test/browser_inspector_delete-selected-node-01.js
-M	devtools/client/inspector/test/shared-head.js
-M	devtools/server/actors/inspector/node.js
-M	devtools/shared/layout/utils.js
+commit 37bbc01ac798bd63d77e977425efa26dc43b1de0
+Merge: 8d5be851b444 1ce168a40fca
+Author: Wes Kocher <wkocher@mozilla.com>
+Date:   Tue Jun 10 18:57:00 2014 -0700
 
-commit 2376337c41f9664b47edcac500387e02b653d4c7
-Author: Thomas Nguyen <tnguyen@mozilla.com>
-Date:   Tue Jul 16 15:03:40 2019 +0000
+    Merge m-c to b2g-inbound
 
-    Bug 1546334 - Modify URLExtraData rust debug to include referrerInfo r=heycam
-    
-    Differential Revision: https://phabricator.services.mozilla.com/D36475
-    
-    --HG--
-    extra : moz-landing-system : lando
+commit 3f64a023328e7dfb2733681baff99c811c511b9f
+Author: rbs%maths.uq.edu.au <rbs%maths.uq.edu.au>
+Date:   Fri Feb 2 21:25:07 2001 +0000
 
-M	layout/style/GeckoBindings.cpp
-M	layout/style/GeckoBindings.h
-M	servo/components/style/gecko_bindings/sugar/refptr.rs
-M	servo/components/style/stylesheets/mod.rs
+    Added a flag for operators that need to be centered around the axis
 
-commit ee54ae21042ef94a6bfc615bd5d9219b6ef41cfb
-Author: Mike Hommey <mh+mozilla@glandium.org>
-Date:   Wed Aug 16 17:17:08 2017 +0900
+M	layout/mathml/content/src/nsMathMLOperators.h
 
-    Bug 1390776 - Put definition and uses of gProgname under #ifdef CRAWL_STACK_ON_SIGSEGV. r=njn
-    
-    gProgname is actually never used outside #ifdef CRAWL_STACK_ON_SIGSEGV,
-    and it being defined and filled with a strdup even when not used leads
-    to a (purposeful, but useless) leak.
-    
-    The leak was not detected so far because GCC 4.9 generated a call to
-    PL_strdup followed by a store to gProgname, while GCC 6 keeps the
-    PL_strdup but is smart enough to figure out it doesn't need to store to
-    gProgname (and to not keep space for that variable).
-    
-    So with GCC 4.9, the leak was not considered a leak because it was still
-    reachable, but with GCC 6, it's not reachable anymore, and thus
-    considered as a leak.
-    
-    --HG--
-    extra : rebase_source : c189f992d710fddb43e04854b5b780ebfaf590ef
+commit 7101d3b7aee26ae34c2c42e90393bfb25dff6a66
+Author: Benjamin Smedberg <benjamin@smedbergs.us>
+Date:   Tue Aug 10 13:26:30 2010 -0400
 
-M	toolkit/xre/nsSigHandlers.cpp
+    Disable test_rooting on a CLOSED TREE, since with the GC changes the handle isn't being collected deterministically.
 
-commit 5808ee520ece949ceed8f920320c6d31eaea0ec1
-Author: Jason Orendorff <jorendorff@mozilla.com>
-Date:   Sun Aug 26 09:04:33 2012 -0500
+M	js/jetpack/tests/unit/test_rooting.js
 
-    Bug 778851 - Disable E4X in content by default.
+commit f5b77e12aa1c5b9ff5ec20c2e6be2db5d84fc6e0
+Author: cbiesinger@gmx.at <cbiesinger@gmx.at>
+Date:   Fri Aug 17 13:27:50 2007 -0700
 
-M	js/xpconnect/crashtests/603858-1.html
+    381812 make it possible to get storage input streams for empty streams r=bsmedberg
+
+M	xpcom/io/nsStorageStream.cpp
+
+commit 0d00d81542e3cc45708237e3a0be3fedec0afae2
+Author: B2G Bumper Bot <release+b2gbumper@mozilla.com>
+Date:   Wed Jan 22 08:11:43 2014 -0800
+
+    Bumping manifests a=b2g-bump
+
+M	b2g/config/emulator-ics/sources.xml
+M	b2g/config/emulator-jb/sources.xml
+M	b2g/config/emulator/sources.xml
+M	b2g/config/hamachi/sources.xml
+M	b2g/config/helix/sources.xml
+M	b2g/config/inari/sources.xml
+M	b2g/config/leo/sources.xml
+M	b2g/config/mako/sources.xml
+M	b2g/config/wasabi/sources.xml
+
+commit 934c3a85a45b8ea375259fcea5ecc8634038bf65
+Merge: 7bd880a44579 5175a4f42b08
+Author: Ed Morley <emorley@mozilla.com>
+Date:   Fri Jun 28 14:36:56 2013 +0100
+
+    Merge mozilla-central and inbound
+
+commit ce40da0e6fa5ef1dcc46c9f19e73fac13123ca15
+Author: atotic <atotic>
+Date:   Fri Jun 12 22:24:09 1998 +0000
+
+    First Checked In.
+
+A	modules/libimg/macbuild/imglib.mcp
+
+commit c1c9d64ac23467e2d5a0e0dd5e31f202cb7ba518
+Author: B2G Bumper Bot <release+b2gbumper@mozilla.com>
+Date:   Tue Feb 25 20:06:27 2014 -0800
+
+    Bumping manifests a=b2g-bump
+
+M	b2g/config/emulator-ics/sources.xml
+M	b2g/config/emulator-jb/sources.xml
+M	b2g/config/emulator/sources.xml
+M	b2g/config/hamachi/sources.xml
+M	b2g/config/helix/sources.xml
+M	b2g/config/inari/sources.xml
+M	b2g/config/leo/sources.xml
+M	b2g/config/mako/sources.xml
+M	b2g/config/wasabi/sources.xml
+
+commit f3917d8ee8c5d114faabc4ff147d9e3f0ccf3995
+Author: ben%netscape.com <ben%netscape.com>
+Date:   Sun Feb 6 22:37:01 2000 +0000
+
+    provide default pref for modal about window showing. r=bryner
+
 M	modules/libpref/src/init/all.js
 
-commit 10ba7f4ab58798dd36a2611638f57f9f60887a80
-Author: Christoph Kerschbaumer <ckerschb@christophkerschbaumer.com>
-Date:   Mon Apr 24 21:57:25 2017 +0200
+commit 7f26ff6952a002edb4a5c18069345e9cfad82925
+Author: valeski%netscape.com <valeski%netscape.com>
+Date:   Mon May 21 22:42:46 2001 +0000
 
-    Bug 1359092 - Extend loadURI within nsIWebNavigation.idl by a triggeringPrincipal argument. r=bz
+    r=ccarlen, sr=rpotts on the mozilla/docshell/* and mozilla/embedding/* mods (81263). embedding apps can now control whether or not images are loaded in a specific nsWebBrowser window. This is done via nsIWebBrowserSetup. shaver@mozilla.org provided a nsWebBrowserContentPolicy implementation which registers for, and responds to,  nsIContentPolicy callbacks giving nsIContentPolicies an opportunity to cancel a load or the processing of an element. processing isn't hooked up yet, and some of the content policy types in the switch statement won't become relevant until further nsIContentPolicy hookup is done. Those cases are handled inside the docshell/webshell until the content policy hook-up is made.
 
-M	docshell/base/nsDSURIContentListener.cpp
 M	docshell/base/nsDocShell.cpp
-M	docshell/base/nsDocShellTreeOwner.cpp
-M	docshell/base/nsIWebNavigation.idl
-M	docshell/shistory/nsSHistory.cpp
-M	dom/base/nsGlobalWindow.cpp
-M	dom/base/nsGlobalWindow.h
-M	dom/ipc/TabChild.cpp
-M	dom/webidl/Window.webidl
-M	editor/composer/nsEditingSession.cpp
-M	toolkit/components/browser/nsWebBrowser.cpp
-M	xpfe/appshell/nsWebShellWindow.cpp
-
-commit 0ab7d3836fbc4bade36d709390913ae0859895f2
-Author: Johan Lorenzo <jlorenzo@mozilla.com>
-Date:   Thu Mar 5 10:25:18 2020 +0000
-
-    Bug 1619603 - Ship Geckoview at the ship_rc phase r=mtabara
-    
-    Differential Revision: https://phabricator.services.mozilla.com/D65341
-    
-    --HG--
-    extra : moz-landing-system : lando
-
-M	taskcluster/ci/beetmover-geckoview/kind.yml
-M	taskcluster/taskgraph/target_tasks.py
-
-commit 52d23be2f44d943a4c357114bf3be91f6eb26dc2
-Author: Timothy Nikkel <tnikkel@gmail.com>
-Date:   Fri May 19 17:04:19 2017 -0500
-
-    Bug 1409215. Don't change scroll thumbs into AGRs during display list building. r=mstange
-    
-    Find the scrollframe for a scrollbar thumb and use it to determine if the scrollthumb is an AGR, instead of recording if the associated scrollframe is active on a frame property during display list building.
-
-M	layout/base/nsLayoutUtils.cpp
-M	layout/base/nsLayoutUtils.h
-M	layout/generic/nsGfxScrollFrame.h
-M	layout/generic/nsIScrollableFrame.h
-M	layout/painting/nsDisplayList.cpp
-M	layout/xul/nsSliderFrame.cpp
-M	layout/xul/nsSliderFrame.h
-
-commit 309fcdab1e945235e9230ed37067767fcf198a14
-Author: Chris Pearce <chris@pearce.org.nz>
-Date:   Tue Nov 1 18:11:40 2011 +1300
-
-    Bug 691583 - Dispatch showfullscreenwarning chrome event when restricted key pressed in DOM full-screen mode. r=smaug
-
-M	content/html/content/test/file_fullscreen-api-keys.html
-M	dom/tests/mochitest/chrome/Makefile.in
-A	dom/tests/mochitest/chrome/dom_fullscreen_warning.xul
-A	dom/tests/mochitest/chrome/test_dom_fullscreen_warning.xul
-M	layout/base/nsPresShell.cpp
-
-commit 41d5c4cd99f61042bc0355cc528918261f0a8e75
-Author: Neil Rashbrook <neil@parkwaycc.co.uk>
-Date:   Sat Dec 22 20:40:37 2012 +0000
-
-    Bug 818861 Shouldn't allow promising a flat string from a flat string r=dbaron
-
-M	content/base/src/nsFrameMessageManager.cpp
-M	content/canvas/src/WebGLContextGL.cpp
-M	dom/plugins/base/nsPluginInstanceOwner.cpp
-M	dom/plugins/ipc/PluginProcessChild.cpp
-M	gfx/thebes/gfxGDIFontList.cpp
-M	image/decoders/icon/mac/nsIconChannelCocoa.mm
-M	profile/dirserviceprovider/src/nsProfileLock.cpp
-M	toolkit/components/alerts/nsAlertsService.cpp
-M	toolkit/components/places/History.cpp
-M	toolkit/xre/nsAppRunner.cpp
-M	xpcom/base/nsCycleCollector.cpp
-M	xpcom/base/nsMemoryInfoDumper.cpp
-M	xpcom/string/public/nsTPromiseFlatString.h
-
-commit c69268f5ddde1a31acb9ff2816fab24efe9e8885
-Author: Rob Wood <rwood@mozilla.com>
-Date:   Fri Jun 22 11:24:38 2018 -0400
-
-    Bug 1468535 - Port raptor-speedometer firefox to linux64; r=jmaher
-    
-    MozReview-Commit-ID: 2guFxLN3yLq
-    
-    --HG--
-    extra : rebase_source : ffddd40608baaccb4a44eb142e43ad991cc5ab73
-
-M	taskcluster/ci/test/raptor.yml
-M	testing/raptor/raptor/tests/raptor-speedometer.ini
-
-commit 323b7a61270d193e39dbd85f684dbccb1840d443
-Author: B2G Bumper Bot <release+b2gbumper@mozilla.com>
-Date:   Fri Apr 10 07:56:54 2015 -0700
-
-    Bumping gaia.json for 2 gaia revision(s) a=gaia-bump
-    
-    ========
-    
-    https://hg.mozilla.org/integration/gaia-central/rev/13e7783ef0a3
-    Author: No-Jun Park <npark@mozilla.com>
-    Desc: Merge pull request #29436 from npark-mozilla/1152940
-    
-    Bug 1152940 - Update test_play_3gp_video.py in imagecompare test suite
-    
-    ========
-    
-    https://hg.mozilla.org/integration/gaia-central/rev/e8f9d3d7bd27
-    Author: No-Jun Park <npark@mozilla.com>
-    Desc: Bug 1152940 - Update test_play_3gp_video.py in imagecompare test suite
-    
-    Remove unnecessary screencapture,
-    incorporate the fix from Bug 1150573
-    add proper wait after rewind
-
-M	b2g/config/gaia.json
+M	docshell/base/nsDocShell.h
+M	docshell/base/nsIDocShell.idl
+M	embedding/browser/build/nsWebBrowserModule.cpp
+M	embedding/browser/webBrowser/Makefile.in
+M	embedding/browser/webBrowser/makefile.win
+M	embedding/browser/webBrowser/nsIWebBrowserSetup.idl
+M	embedding/browser/webBrowser/nsWebBrowser.cpp
+A	embedding/browser/webBrowser/nsWebBrowserContentPolicy.cpp
+A	embedding/browser/webBrowser/nsWebBrowserContentPolicy.h
 
 commit a2b953dbcb499a68fd6c3029272a7db1ab5a4f64
 Author: Gaia Pushbot <release+gaiajson@mozilla.com>

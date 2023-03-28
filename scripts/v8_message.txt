@@ -2168,197 +2168,180 @@ Date:   Wed May 9 10:54:36 2018 +0200
 M	src/heap/spaces.cc
 M	src/heap/spaces.h
 
-commit a6f226e8d4aab28d27094e1eafd2f418f67c5cee
-Author: Toon Verwaest <verwaest@chromium.org>
-Date:   Wed Feb 27 13:10:12 2019 +0100
+commit d5c6e4a9f689f4cd6dea043d622e501487d76e68
+Author: yangguo@chromium.org <yangguo@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
+Date:   Wed Jun 11 06:59:25 2014 +0000
 
-    [scanner] Speed up multiline comment scanning using AdvanceUntil + ScanFlags
+    Simplify string copy in SubStringStub.
     
-    This roughly takes 40% less time.
+    The optimizations are unnecessary since the maximum
+    string length they operate on is currently 12.
     
-    Change-Id: I7886bd85cd33c9b2d2225e0f207a3e3bf89f1ef3
-    Reviewed-on: https://chromium-review.googlesource.com/c/1491511
-    Commit-Queue: Toon Verwaest <verwaest@chromium.org>
+    R=bmeurer@chromium.org
+    BUG=352155
+    LOG=N
+    
+    Review URL: https://codereview.chromium.org/326943002
+    
+    git-svn-id: https://v8.googlecode.com/svn/branches/bleeding_edge@21756 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
+
+M	src/arm/code-stubs-arm.cc
+M	src/arm/code-stubs-arm.h
+M	src/ia32/code-stubs-ia32.cc
+M	src/ia32/code-stubs-ia32.h
+M	src/x64/code-stubs-x64.cc
+M	src/x64/code-stubs-x64.h
+
+commit b844d0f4b7f8a3e2e50054e5127eebf9520f82cb
+Author: Liviu Rau <liviurau@chromium.org>
+Date:   Mon Jul 5 14:00:09 2021 +0200
+
+    Build clang for gcmole bootstrap
+    
+    Bug: v8:11169
+    Change-Id: I32e9bb1f91c9583e900c96e158d66407d5560868
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/3003466
+    Reviewed-by: Camillo Bruni <cbruni@chromium.org>
     Reviewed-by: Leszek Swirski <leszeks@chromium.org>
-    Cr-Commit-Position: refs/heads/master@{#59898}
+    Commit-Queue: Liviu Rau <liviurau@chromium.org>
+    Cr-Commit-Position: refs/heads/master@{#75555}
 
-M	src/parsing/scanner-inl.h
-M	src/parsing/scanner.cc
+M	tools/gcmole/bootstrap.sh
 
-commit 43bf727bc3a71a68de294049e38f67d216f9ede0
-Author: Mu Tao <pamilty@gmail.com>
-Date:   Sat Oct 19 19:13:50 2019 +0800
+commit 74c381221c93253bbee513aa2539d93269303b8b
+Author: caitpotter88 <caitpotter88@gmail.com>
+Date:   Thu Apr 9 12:37:14 2015 -0700
 
-    [mips][Liftoff] Fix stack slot initialization on mips
+    [es6] implement spread calls
     
-    Port 7d09b270d8726dd3b70721df3595327f0e516368
+    BUG=v8:3018
+    R=
+    LOG=N
     
-    Original Commit Message:
+    Review URL: https://codereview.chromium.org/938443002
     
-        It turns out that because we are *subtracting* from fp, we need to
-        *subtract less* to get a higher address. Who knew.
-    
-    R=xwafish@gmail.com, clemensb@chromium.org
-    
-    Change-Id: I1ddb5e15ef7fab2f198aebf07a5ce607add4c3c4
-    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/1868559
-    Auto-Submit: Mu Tao <pamilty@gmail.com>
-    Commit-Queue: Clemens Backes <clemensb@chromium.org>
-    Reviewed-by: Clemens Backes <clemensb@chromium.org>
-    Cr-Commit-Position: refs/heads/master@{#64406}
+    Cr-Commit-Position: refs/heads/master@{#27714}
 
-M	src/wasm/baseline/mips/liftoff-assembler-mips.h
-M	src/wasm/baseline/mips64/liftoff-assembler-mips64.h
-
-commit 723aeeaba2d672657675306004b9e91fdc396ee6
-Author: clemensh <clemensh@chromium.org>
-Date:   Thu Jan 12 11:29:53 2017 -0800
-
-    [wasm] Skip whole function linking phase
-    
-    As functions are relinked at instantiation anyway, we can just
-    completely skip the LinkFunctions pass at wasm compile time.
-    This way, we also don't need to create one placeholder per wasm
-    function, but we just use one placeholder everywhere. The function
-    index which was stored in the placeholder before is now retrieved from
-    the wire bytes anyway.
-    
-    R=titzer@chromium.org
-    
-    Review-Url: https://codereview.chromium.org/2624383003
-    Cr-Commit-Position: refs/heads/master@{#42285}
-
-M	src/wasm/wasm-module.cc
-
-commit ae1a83859271c91ee969795de6a396eb4914b69e
-Author: rmcilroy@chromium.org <rmcilroy@chromium.org@ce2b1a6d-e550-0410-aec6-3dcde31c8c00>
-Date:   Wed Aug 20 14:41:53 2014 +0000
-
-    Add serializer support for builtins pointed by inner pointer and root objects pointed to by code for the out-of-line constant pool.
-    
-    This is required for test-serialize tests which fail at the DCHECK on L1874 of serialize.cc otherwise.
-    
-    R=yangguo@chromium.org
-    
-    Review URL: https://codereview.chromium.org/475753002
-    
-    git-svn-id: https://v8.googlecode.com/svn/branches/bleeding_edge@23242 ce2b1a6d-e550-0410-aec6-3dcde31c8c00
-
-M	src/serialize.cc
-
-commit 29ebcc32052d486cbc1933ac4738aa5cb68aa851
-Author: ishell <ishell@chromium.org>
-Date:   Tue Sep 1 00:06:49 2015 -0700
-
-    Crankshaft is now able to compile top level code even if there is a ScriptContext.
-    
-    This CL introduces HPrologue instruction which does the context allocation work and supports deoptimization.
-    
-    Review URL: https://codereview.chromium.org/1317383002
-    
-    Cr-Commit-Position: refs/heads/master@{#30496}
-
-M	src/arm/lithium-arm.cc
-M	src/arm/lithium-arm.h
-M	src/arm/lithium-codegen-arm.cc
-M	src/arm64/lithium-arm64.cc
-M	src/arm64/lithium-arm64.h
-M	src/arm64/lithium-codegen-arm64.cc
+M	BUILD.gn
+M	src/arm/full-codegen-arm.cc
+M	src/arm64/full-codegen-arm64.cc
+M	src/ast-numbering.cc
+M	src/ast-value-factory.h
+M	src/ast.h
 M	src/bootstrapper.cc
 M	src/compiler/ast-graph-builder.cc
-M	src/contexts.cc
-M	src/contexts.h
-M	src/full-codegen/arm/full-codegen-arm.cc
-M	src/full-codegen/arm64/full-codegen-arm64.cc
-M	src/full-codegen/ia32/full-codegen-ia32.cc
-M	src/full-codegen/mips/full-codegen-mips.cc
-M	src/full-codegen/mips64/full-codegen-mips64.cc
-M	src/full-codegen/x64/full-codegen-x64.cc
-M	src/hydrogen-instructions.cc
-M	src/hydrogen-instructions.h
+M	src/compiler/ast-loop-assignment-analyzer.cc
+M	src/flag-definitions.h
+M	src/full-codegen.cc
+M	src/full-codegen.h
+A	src/harmony-spread.js
 M	src/hydrogen.cc
-M	src/hydrogen.h
-M	src/ia32/lithium-codegen-ia32.cc
-M	src/ia32/lithium-ia32.cc
-M	src/ia32/lithium-ia32.h
-M	src/mips/lithium-codegen-mips.cc
-M	src/mips/lithium-mips.cc
-M	src/mips/lithium-mips.h
-M	src/mips64/lithium-codegen-mips64.cc
-M	src/mips64/lithium-mips64.cc
-M	src/mips64/lithium-mips64.h
-M	src/utils.h
-M	src/x64/lithium-codegen-x64.cc
-M	src/x64/lithium-x64.cc
-M	src/x64/lithium-x64.h
+M	src/ia32/full-codegen-ia32.cc
+M	src/parser.cc
+M	src/parser.h
+M	src/preparser.cc
+M	src/preparser.h
+M	src/prettyprinter.cc
+M	src/runtime/runtime-classes.cc
+M	src/runtime/runtime.h
+M	src/typing.cc
+M	src/x64/full-codegen-x64.cc
+M	test/cctest/test-parsing.cc
+M	test/js-perf-test/JSTests.json
+A	test/js-perf-test/SpreadCalls/run.js
+A	test/js-perf-test/SpreadCalls/spreadcalls.js
+A	test/mjsunit/harmony/spread-call-new-class.js
+A	test/mjsunit/harmony/spread-call-new.js
+A	test/mjsunit/harmony/spread-call.js
+M	tools/gyp/v8.gyp
 
-commit b1e12d70bb08767855115f5bd2d5cc0f935a40e9
-Author: Maya Lekova <mslekova@chromium.org>
-Date:   Tue Jan 18 09:19:18 2022 +0000
+commit 234710efd58b7a56f630ee1a1e8f3948657c8c53
+Author: Dominik Inführ <dinfuehr@chromium.org>
+Date:   Tue Nov 29 10:05:21 2022 +0100
 
-    Revert "[wasm] Various small cleanups/fixes"
+    [objects] Avoid temporary shared object to local object pointers
     
-    This reverts commit f1c2a2089d7fb880d725f70de6f2eb08de65bb57.
+    Avoid pointers from shared objects to local objects even temporarily
+    by setting the constructor to null immediately.
     
-    Reason for revert: Breaks some tests on no-sse configuration, please see https://ci.chromium.org/ui/p/v8/builders/ci/V8%20Linux/45243/overview
-    
-    Original change's description:
-    > [wasm] Various small cleanups/fixes
-    >
-    > Changes:
-    > - Fix a bug in objects-printer where array elements were not treated as
-    >   tagged pointers.
-    > - Fix a few TODOs, mainly in the wasm interpreter.
-    > - Improve documentation, small refactorings.
-    >
-    > Change-Id: I1d70ad454b3a0693b9b784b17395434d81d01b61
-    > Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/3383136
-    > Reviewed-by: Nikolaos Papaspyrou <nikolaos@chromium.org>
-    > Reviewed-by: Jakob Kummerow <jkummerow@chromium.org>
-    > Commit-Queue: Manos Koukoutos <manoskouk@chromium.org>
-    > Cr-Commit-Position: refs/heads/main@{#78656}
-    
-    Change-Id: Ic698177259bb14b4c251a4212c79cc0d945b07f8
-    No-Presubmit: true
-    No-Tree-Checks: true
-    No-Try: true
-    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/3398109
-    Auto-Submit: Maya Lekova <mslekova@chromium.org>
-    Commit-Queue: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
-    Bot-Commit: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
-    Commit-Queue: Maya Lekova <mslekova@chromium.org>
-    Owners-Override: Maya Lekova <mslekova@chromium.org>
-    Cr-Commit-Position: refs/heads/main@{#78657}
+    Bug: v8:13267
+    Change-Id: Id5027867f0e1547226399c1308f5d4bfb93a2e90
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/4058947
+    Reviewed-by: Shu-yu Guo <syg@chromium.org>
+    Commit-Queue: Dominik Inführ <dinfuehr@chromium.org>
+    Cr-Commit-Position: refs/heads/main@{#84527}
 
-M	src/compiler/wasm-compiler.cc
-M	src/diagnostics/objects-printer.cc
-M	src/wasm/function-body-decoder-impl.h
-M	src/wasm/init-expr-interface.h
-M	src/wasm/module-decoder.cc
-M	src/wasm/module-instantiate.cc
-M	src/wasm/value-type.h
-M	src/wasm/wasm-opcodes.h
-M	test/cctest/wasm/test-gc.cc
-M	test/common/wasm/wasm-interpreter.cc
+M	src/builtins/builtins-struct.cc
+M	src/init/bootstrapper.cc
+M	src/objects/js-function.cc
+M	src/objects/js-function.h
 
-commit f7886fcd9176f3db3ddfd9a8e28903d02578335a
-Author: Mike Stanton <mvstanton@chromium.org>
-Date:   Thu Jan 24 13:11:18 2019 +0100
+commit a14c682f50e515ded48f614c4c435bd531e9a9f6
+Author: Dominik Inführ <dinfuehr@chromium.org>
+Date:   Tue Dec 13 12:24:24 2022 +0100
 
-    [CSA]: Refactor function AllocateUninitializedJSArrayWithoutElements
+    [heap] Allow handle derefs in GC safepoint epilogue callbacks
     
-    All users have elements already, and we can just pass that in.
+    This is necessary to allow running GC epilogue callbacks after a
+    GC in the safepoint. Handle dereferences are allowed even if that
+    particular thread is parked. They may generally also happen from a
+    different thread than expected by DCHECKs in the case shared GCs
+    combined with multiple main threads.
     
-    Change-Id: Ie9b8c1290d74bce120461c9f15695e8eb7dfd7c2
-    Reviewed-on: https://chromium-review.googlesource.com/c/1430072
-    Commit-Queue: Michael Stanton <mvstanton@chromium.org>
-    Reviewed-by: Jakob Gruber <jgruber@chromium.org>
-    Cr-Commit-Position: refs/heads/master@{#59064}
+    This CL solves this issue by adding an additional assertion scope
+    that can temporarily allow such derefs for running the callbacks.
+    
+    Unlike other assert scopes the new assert scope is disabled by
+    default.
+    
+    Bug: v8:13267, chromium:1399379
+    Change-Id: Ibc741ad6bebb740cf24ae8be116d770f62ae6481
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/4100826
+    Commit-Queue: Dominik Inführ <dinfuehr@chromium.org>
+    Reviewed-by: Michael Lippautz <mlippautz@chromium.org>
+    Cr-Commit-Position: refs/heads/main@{#84821}
 
-M	src/builtins/builtins-object-gen.cc
-M	src/builtins/builtins-proxy-gen.cc
-M	src/builtins/builtins-string-gen.cc
-M	src/builtins/growable-fixed-array-gen.cc
-M	src/code-stub-assembler.cc
-M	src/code-stub-assembler.h
+M	src/common/assert-scope.cc
+M	src/common/assert-scope.h
+M	src/handles/handles.cc
+M	src/heap/heap.cc
+
+commit 03dd4bd834d47f50be0ae6cf8d20f9a85f991f33
+Author: Olivier Flückiger <olivf@chromium.org>
+Date:   Fri Feb 10 11:25:38 2023 +0100
+
+    [static-roots][x64] Encode roots as immediates when possible
+    
+    Either in optimized code or with static roots, root pointers can be
+    embedded as immediates.
+    
+    Bug: v8:13466
+    Change-Id: I92f48d55eae611018b11fc230b0052a7d1d9fd1c
+    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/4231798
+    Commit-Queue: Tobias Tebbi <tebbi@chromium.org>
+    Reviewed-by: Tobias Tebbi <tebbi@chromium.org>
+    Auto-Submit: Olivier Flückiger <olivf@chromium.org>
+    Cr-Commit-Position: refs/heads/main@{#85817}
+
+M	src/compiler/backend/x64/code-generator-x64.cc
+M	src/compiler/backend/x64/instruction-selector-x64.cc
+
+commit def86473440908ca93795bb3af515a721f4583cf
+Author: jacob.bramley <jacob.bramley@arm.com>
+Date:   Thu Jul 30 02:11:12 2015 -0700
+
+    [arm] Fix --enable-vldr-imm.
+    
+    This fixes several bugs related to float64 pool constants.
+    
+    Note that float64 pool constants are still disabled by default, and are
+    only used if --enable-vldr-imm is provided.
+    
+    BUG=
+    
+    Review URL: https://codereview.chromium.org/1260953002
+    
+    Cr-Commit-Position: refs/heads/master@{#29917}
+
+M	src/arm/assembler-arm.cc
 
