@@ -17,19 +17,20 @@ def parse_je_commit(commitLines):
             # ignore empty lines
             pass
         elif bool(re.match('commit', nextLine, re.IGNORECASE)):
-            # commit xxxx
-            if len(commit) != 0:		## new commit, so re-initialize
-                commits.append(commit)
-                commit = {}
-            commit = {'hash' : re.match('commit (.*)', nextLine, re.IGNORECASE).group(1) }
-            commit['urlofbug'] = ""
-            commit['ctype'] = "other"
-            commit['poc'] = []
-            commit['changedfiles'] = []
-            commit['component'] = ""
-            ismerge = False
+            hash = re.match('commit (\w*)', nextLine, re.IGNORECASE).group(1)
+            if  hash!=commit.get('hash'):
+                if len(commit) != 0:
+                    ## new commit, so re-initialize
+                    commits.append(commit)
+                    commit = {}
+                commit = {'hash' : re.match('commit (\w*)', nextLine, re.IGNORECASE).group(1) }
+                commit['urlofbug'] = ""
+                commit['ctype'] = "other"
+                commit['poc'] = []
+                commit['changedfiles'] = []
+            else:
+                pass
         elif bool(re.match('merge:', nextLine, re.IGNORECASE)):
-            ismerge = True
             pass       
         elif bool(re.match('author:', nextLine, re.IGNORECASE)):
             # Author: xxxx <xxxx@xxxx.com>
@@ -40,17 +41,13 @@ def parse_je_commit(commitLines):
         elif bool(re.match('date:', nextLine, re.IGNORECASE)):
             t = re.compile('Date:   (.*)').match(nextLine)
             commit['date'] = t.group(1)
-        elif bool(re.match('    ', nextLine, re.IGNORECASE)) and not ismerge :
+        elif bool(re.match('    ', nextLine, re.IGNORECASE)):
 
             if bool(re.search('bug\s', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
             
             
             elif bool(re.search('fix', nextLine.strip(), re.IGNORECASE)):
                 commit['ctype'] = "bug"
-                component = re.compile('Fix.+(#\d+)').match(nextLine.strip())
-                if component: commit['component'] = component.group(1)
-
-
         
         elif bool(re.match('[MA]\t', nextLine, re.IGNORECASE)):
             if bool(re.compile('tests/\S*[.]js').match(nextLine[2:])):
@@ -62,7 +59,7 @@ def parse_je_commit(commitLines):
         elif bool(re.match('[MADCRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
             pass
         else:
-            print ('ERROR: Unexpected Line: ' + nextLine)
+            pass
     commits.append(commit)
     return commits
 
@@ -89,8 +86,8 @@ if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())
     data=parse_je_commit(sys.stdin.readlines())
     table=cal_chfile(data,'/data/jerryscript','/data/patchFuzz/whitelist/je')
-    file1 = open('/data/patchFuzz/whitelist/je_allowlist.txt', 'w')
-    file2 = open('/data/patchFuzz/whitelist/je.txt', 'w') 
+    file1 = open('/data/patchFuzz/whitelist/je_allowlist.txt.new', 'w')
+    file2 = open('/data/patchFuzz/whitelist/je.txt.new', 'w') 
     for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
         file1.write(str(k)[:-1]+'\n')
         file2.write(str(k)[:-1]+','+str(v)+'\n')        

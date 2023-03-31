@@ -227,19 +227,13 @@ Date:   Thu Sep 24 13:32:32 2020 +0200
 
 M	.github/workflows/gh-actions.yml
 
-commit aaeec7fb09081139d1e90322ca0766df40a337b1
-Author: Peter Gal <pgal.u-szeged@partner.samsung.com>
-Date:   Fri May 22 18:41:49 2015 +0200
+commit e8991abadb69f6edcf94cca316bcf48d77b1cd69
+Author: Ruben Ayrapetyan <r.ayrapetyan@samsung.com>
+Date:   Tue Sep 16 20:53:02 2014 +0400
 
-    Implement Array.prototoype.toLocaleString()
-    
-    JerryScript-DCO-1.0-Signed-off-by: Peter Gal pgal.u-szeged@partner.samsung.com
+    Fixing __printf for format strings with '+' specifier like '%+5d'.
 
-M	jerry-core/ecma/builtin-objects/ecma-builtin-array-prototype.cpp
-M	jerry-core/ecma/builtin-objects/ecma-builtin-array-prototype.inc.h
-M	jerry-core/ecma/builtin-objects/ecma-builtin-helpers.cpp
-M	jerry-core/ecma/builtin-objects/ecma-builtin-helpers.h
-A	tests/jerry/array_prototype_tolocalestring.js
+M	src/libruntime/jerry-libc-printf.c
 
 commit 74045f29648513354e80e3e5be173c97e54c8386
 Author: Zidong Jiang <zidong.jiang@intel.com>
@@ -351,50 +345,29 @@ A	tests/jerry/fail/regression-test-issue-2908-2.js
 A	tests/jerry/fail/regression-test-issue-2908-3.js
 A	tests/jerry/fail/regression-test-issue-2908-4.js
 
-commit e2893f26a1802a2ba849a416b3502c5ed53a0f22
-Author: Szilagyi Adam <aszilagy@inf.u-szeged.hu>
-Date:   Thu Dec 19 11:40:29 2019 +0100
+commit 990b5d24ddc6cbde6a1c931d2cd3bef46b6ffd8e
+Author: Akos Kiss <akiss@inf.u-szeged.hu>
+Date:   Mon Aug 13 06:02:10 2018 +0200
 
-    Add iterator closing for ecma_op_container_create (#3457)
+    Fix include directories of jerry-ext (#2464)
     
-    JerryScript-DCO-1.0-Signed-off-by: Adam Szilagyi aszilagy@inf.u-szeged.hu
-
-M	jerry-core/ecma/operations/ecma-container-object.c
-M	tests/jerry/es2015/map.js
-M	tests/jerry/es2015/set.js
-M	tests/jerry/es2015/weakmap.js
-M	tests/jerry/es2015/weakset.js
-
-commit 5535ea88acfc91cfe3d52549b688a5b5248f7d23
-Author: Zoltan Herczeg <zherczeg.u-szeged@partner.samsung.com>
-Date:   Tue Jun 30 11:21:50 2020 +0200
-
-    Implement for-await-of statement. (#3946)
+    The distinction between public and private include directories was
+    not maintained and the install paths got confusing.
     
-    AsyncIteratorClose has not supported yet.
-    
-    JerryScript-DCO-1.0-Signed-off-by: Zoltan Herczeg zherczeg.u-szeged@partner.samsung.com
+    JerryScript-DCO-1.0-Signed-off-by: Akos Kiss akiss@inf.u-szeged.hu
 
-M	jerry-core/ecma/base/ecma-gc.c
-M	jerry-core/ecma/base/ecma-globals.h
-M	jerry-core/ecma/builtin-objects/ecma-builtin-generator-prototype.c
-M	jerry-core/ecma/operations/ecma-async-generator-object.c
-M	jerry-core/ecma/operations/ecma-async-generator-object.h
-M	jerry-core/ecma/operations/ecma-jobqueue.c
-M	jerry-core/include/jerryscript-snapshot.h
-M	jerry-core/parser/js/byte-code.c
-M	jerry-core/parser/js/byte-code.h
-M	jerry-core/parser/js/js-parser-statm.c
-M	jerry-core/parser/js/js-parser-util.c
-M	jerry-core/parser/js/js-parser.h
-M	jerry-core/parser/js/js-scanner.c
-M	jerry-core/vm/opcodes.c
-M	jerry-core/vm/opcodes.h
-M	jerry-core/vm/vm-stack.c
-M	jerry-core/vm/vm-stack.h
-M	jerry-core/vm/vm.c
-M	jerry-core/vm/vm.h
-A	tests/jerry/es.next/for-await-of.js
+M	jerry-ext/CMakeLists.txt
+
+commit 9900cacb1538c537ffe636b2377b393d09a0a443
+Author: Csaba Osztrogonác <csaba.osztrogonac@h-lab.eu>
+Date:   Fri Jan 22 15:09:16 2021 +0100
+
+    Fix test262 harness to handle async negative tests properly (#4526)
+    
+    JerryScript-DCO-1.0-Signed-off-by: Csaba Osztrogonác csaba.osztrogonac@h-lab.eu
+
+M	tests/test262-esnext-excludelist.xml
+M	tools/runners/test262-harness.py
 
 commit 5060579b909fa055bf8149219430308235a8d19a
 Author: Zoltan Herczeg <zherczeg.u-szeged@partner.samsung.com>
@@ -429,45 +402,30 @@ Date:   Tue Jul 14 12:10:20 2015 +0200
 M	jerry-core/ecma/builtin-objects/ecma-builtin-json.cpp
 M	tests/jerry/json-stringify.js
 
-commit 83fc0aa04f0bf5a3a8bb077fc975c1260239e14f
-Author: Zoltan Herczeg <zherczeg.u-szeged@partner.samsung.com>
-Date:   Tue Oct 30 10:48:35 2018 +0100
+commit 0aa182c378de89f771694589a294c65e9f8e6b25
+Author: Robert Fancsik <robert.fancsik@h-lab.eu>
+Date:   Mon Jan 10 17:35:49 2022 +0100
 
-    Add support for function argument initializers. (#2571)
+    Date.prototype.setYear should invalidate cached tza (#4955)
     
-    EcmaScript 2015 14.1.
+    This patch fixes #4939 and fixes #4940.
     
-    Note: arrow functions with default arguments are not supported yet.
-    
-    JerryScript-DCO-1.0-Signed-off-by: Zoltan Herczeg zherczeg.u-szeged@partner.samsung.com
+    JerryScript-DCO-1.0-Signed-off-by: Robert Fancsik robert.fancsik@h-lab.eu
 
-M	jerry-core/config.h
-M	jerry-core/parser/js/js-parser-scanner.c
-M	jerry-core/parser/js/js-parser-statm.c
-M	jerry-core/parser/js/js-parser-util.c
-M	jerry-core/parser/js/js-parser.c
-M	jerry-core/parser/js/js-parser.h
-M	jerry-core/profiles/README.md
-A	tests/jerry/es2015/function-param-init.js
+M	jerry-core/ecma/builtin-objects/ecma-builtin-date-prototype.c
+A	tests/jerry/es.next/regression-test-issue-4939-4940.js
 
-commit a9c3ddff1fdf872e736ada9072fdc4838e2e542f
-Author: Akos Kiss <akiss@inf.u-szeged.hu>
-Date:   Tue Jan 15 14:02:55 2019 +0100
+commit c829b307e59be65a1d3023a51bb88ce079e281c0
+Author: László Langó <llango.u-szeged@partner.samsung.com>
+Date:   Fri May 11 09:11:20 2018 +0200
 
-    Bump NuttX RTOS target to 7.27 (#2696)
+    Followup fix for SonarQube setup (#2322)
     
-    Both documentation and travis makefile were referring to NuttX 7.22,
-    which was released in Sep 2017. This commit bumps the version to the
-    latest release (7.27, from Nov 2018).
+    Fix the condition whether Travis should run the SonarQube analysis
     
-    Additionally, it also sets the stlink tool to a fixed (and tagged)
-    version.
-    
-    JerryScript-DCO-1.0-Signed-off-by: Akos Kiss akiss@inf.u-szeged.hu
+    JerryScript-DCO-1.0-Signed-off-by: László Langó llango.u-szeged@partner.samsung.com
 
-M	targets/nuttx-stm32f4/Makefile
-M	targets/nuttx-stm32f4/Makefile.travis
-M	targets/nuttx-stm32f4/README.md
+M	.travis.yml
 
 commit c9bbec768351f0eb32230f8b5c4c5988ce9e2068
 Author: Peter Gal <pgal.u-szeged@partner.samsung.com>
@@ -548,27 +506,19 @@ Date:   Tue Aug 12 00:20:39 2014 +0400
 
 D	tests/jerry/N.for.js
 
-commit 0806c16902e458b637ed6e60b0e00d8f4e75d30a
-Author: Levente Orban <orbanl@inf.u-szeged.hu>
-Date:   Thu May 18 09:00:38 2017 +0200
+commit 2d1ad149c160f4442394d53f7bb8d71818bb442a
+Author: Robert Fancsik <frobert@inf.u-szeged.hu>
+Date:   Wed May 8 15:21:43 2019 +0200
 
-    Add pending breakpoints feature to python debugger client (#1810)
+    Fix key iteration in ecma_op_map_foreach (#2855)
     
-    - Support to add pending breakpoints
-     - Add fbreak command for the prompt
-     - Manage this breakpoints
-     - Add tests for it
+    This patch fixes #2852 and fixes #2853 as well.
     
-    JerryScript-DCO-1.0-Signed-off-by: Levente Orban orbanl@inf.u-szeged.hu
+    JerryScript-DCO-1.0-Signed-off-by: Robert Fancsik frobert@inf.u-szeged.hu
 
-M	jerry-debugger/jerry-client-ws.py
-M	tests/debugger/do_help.expected
-A	tests/debugger/do_pending_breakpoints.cmd
-A	tests/debugger/do_pending_breakpoints.expected
-A	tests/debugger/do_pending_breakpoints.js
-A	tests/debugger/do_pending_list.cmd
-A	tests/debugger/do_pending_list.expected
-A	tests/debugger/do_pending_list.js
+M	jerry-core/ecma/operations/ecma-map-object.c
+A	tests/jerry/es2015/regression-test-issue-2852.js
+A	tests/jerry/es2015/regression-test-issue-2853.js
 
 commit 04f0a7a670d41deeff426770c0e104f4109c30f2
 Author: Szilagyi Adam <aszilagy@inf.u-szeged.hu>
@@ -799,14 +749,17 @@ Date:   Tue Feb 9 15:03:06 2021 +0100
 M	jerry-core/ecma/builtin-objects/ecma-builtin-date.c
 M	tests/jerry/date-parse.js
 
-commit c86bf1425d1f1f9ce1cf04a0093a804cb686b52f
-Merge: 50fdccc8 e2bbd6f9
-Author: Sung-Jae Lee <sjlee@mail.com>
-Date:   Tue Sep 8 19:07:48 2015 +0300
+commit 2a78d24fce1b4acc2f2226f0b4b1c18c045308c9
+Author: Ruben Ayrapetyan <r.ayrapetyan@samsung.com>
+Date:   Wed Jul 1 21:57:15 2015 +0300
 
-    Merge pull request #608 from lemmaa/build-for-osx-new
+    Add preprocessor definitions for various character codes, referenced in ECMA-262, and helpers for checking if a character falls into a ECMA-defined character category; remove lit_char_is_carriage_return and lit_char_is_new_line helpers.
     
-    Fix prerequisites setup error on Mac OS X
+    JerryScript-DCO-1.0-Signed-off-by: Ruben Ayrapetyan r.ayrapetyan@samsung.com
+
+M	jerry-core/lit/lit-char-helpers.cpp
+M	jerry-core/lit/lit-char-helpers.h
+M	jerry-core/parser/js/lexer.cpp
 
 commit 95650993a222abe78d23e88f5680ba91393947b8
 Author: Robert Fancsik <frobert@inf.u-szeged.hu>
@@ -870,12 +823,15 @@ M	jerry-core/ecma/operations/ecma-comparison.c
 M	jerry-core/include/jerryscript-core.h
 A	tests/unit-core/test-api-binary-operations.c
 
-commit d25d33cd58ba789c2c1cdf3d5908e3c9e2c0ea87
-Merge: 26f94aa6 45d71fa7
-Author: e.gavrin <e.gavrin@samsung.com>
-Date:   Tue Jul 8 16:16:04 2014 +0400
+commit 0bc7840c5fcbb1c7d8ae05d97d8768b2d0174615
+Author: Robert Sipka <sipka@inf.u-szeged.hu>
+Date:   Mon Sep 12 09:20:24 2016 +0200
 
-    fixes
+    Set the number of simultaneous jobs of the build. (#1336)
+    
+    JerryScript-DCO-1.0-Signed-off-by: Robert Sipka rsipka.uszeged@partner.samsung.com
+
+M	tools/build.py
 
 commit e4f27199d71d971dad5033bff0d1dbf65eb586e3
 Author: Akos Kiss <akiss@inf.u-szeged.hu>
@@ -1036,30 +992,25 @@ Date:   Thu Jul 31 17:52:10 2014 +0400
 
 M	src/libecmaobjects/ecma-helpers.c
 
-commit bc0ca7be5d1081e8a1115b870237f8d3f19b32d9
-Author: SaeHie Park <saehie.park@samsung.com>
-Date:   Sat Jul 11 22:46:13 2015 +0900
+commit 73a5fd78a7d7e1d3d42511d5bf220af7c47f6f3f
+Author: Xin Hu <Xin.A.Hu@intel.com>
+Date:   Thu Jan 14 12:28:25 2016 -0500
 
-    Add heap size limit
-    to solve #342
+    Remove redundant code in lit_charset_literal_get_length
+    
+    JerryScript-DCO-1.0-Signed-off-by: Xin Hu Xin.A.Hu@intel.com
+
+M	jerry-core/lit/lit-literal.cpp
+
+commit 593b1d793fb4809c5149e61007fb2f164323c0e0
+Author: Ruben Ayrapetyan <r.ayrapetyan@samsung.com>
+Date:   Wed May 13 22:03:31 2015 +0300
+
+    Removing magic number from mem_block_header_t.
     
     JerryScript-DCO-1.0-Signed-off-by: Ruben Ayrapetyan r.ayrapetyan@samsung.com
-    JerryScript-DCO-1.0-Signed-off-by: SaeHie Park saehie.park@samsung.com
 
-M	CMakeLists.txt
-M	jerry-core/CMakeLists.txt
-M	jerry-core/config.h
-
-commit 28f6741358fab18a8e157dff754668afc68f9a4b
-Merge: 9886c163 eb3686a4
-Author: Ruben Ayrapetyan <r.ayrapetyan@samsung.com>
-Date:   Thu Apr 2 13:18:59 2015 +0300
-
-    Jerry API development.
-    
-     Details:
-      - support of this binding in function calls;
-      - jerry_api_is_function and jerry_api_is_constructor interfaces.
+M	jerry-core/mem/mem-heap.cpp
 
 commit d2459398f5d591cadb05d1d23c54b1b7455a89d2
 Author: Ruben Ayrapetyan <r.ayrapetyan@samsung.com>
@@ -1523,18 +1474,6 @@ M	jerry-core/ecma/base/ecma-helpers-conversion.c
 M	jerry-core/ecma/base/ecma-helpers-string.c
 M	jerry-core/ecma/base/ecma-helpers.c
 M	jerry-core/ecma/builtin-objects/ecma-builtin-helpers.c
-M	jerry-core/ecma/builtin-objects/ecma-builtins.c
-M	jerry-core/ecma/operations/ecma-conversion.c
-M	jerry-core/ecma/operations/ecma-exceptions.c
-M	jerry-core/ecma/operations/ecma-function-object.c
-M	jerry-core/ecma/operations/ecma-lex-env.c
-M	jerry-core/ecma/operations/ecma-objects-arguments.c
-M	jerry-core/ecma/operations/ecma-objects-general.c
-M	jerry-core/ecma/operations/ecma-objects.c
-M	jerry-core/ecma/operations/ecma-reference.c
-M	jerry-core/ecma/operations/ecma-string-object.c
-M	jerry-core/jerry.c
-M	jerry-core/jrt/jrt.h
 M	jerry-core/mem/mem-allocator.c
 M	jerry-core/mem/mem-heap.c
 M	jerry-core/mem/mem-poolman.c

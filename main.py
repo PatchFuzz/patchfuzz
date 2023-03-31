@@ -20,7 +20,7 @@ from je.save_je import save_je
 def export_csv(export,target,dir_path):
     date = datetime.date.today().strftime('%Y-%m-%d')
     pf = pd.DataFrame(list(export))
-    order = ['date','hash','message','ctype','poc','changedfiles']
+    order = ['date','hash','ctype','poc','changedfiles']
     pf = pf[order]
     file_path = os.path.join(dir_path,target + "-" + date + ".csv")
     pf.fillna(' ',inplace = True)

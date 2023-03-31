@@ -78,20 +78,6 @@ Date:   Sun Sep 17 07:29:59 2006 +0000
             * Loader/WebIconLoader.m: Removed.
             * Misc/WebIconDatabase.h:
             * Misc/WebIconDatabase.m:
-            * Misc/WebIconDatabasePrivate.h:
-            * WebCoreSupport/WebFrameBridge.m:
-            (-[WebFrameBridge notifyIconChanged:]):
-            * WebCoreSupport/WebIconDatabaseBridge.h:
-            * WebCoreSupport/WebIconDatabaseBridge.m:
-            (-[WebIconDatabaseBridge _init]):
-            (-[WebIconDatabaseBridge _setIconData:forIconURL:]):
-            (-[WebIconDatabaseBridge _setHaveNoIconForIconURL:]):
-            * WebKit.exp:
-            * WebKit.xcodeproj/project.pbxproj:
-            * WebView/WebDataSource.m:
-            (-[WebDataSourcePrivate dealloc]):
-            (-[WebDataSource _stopLoading]):
-            (-[WebDataSource _setPrimaryLoadComplete:]):
             * WebView/WebDataSourceInternal.h:
     
     
@@ -187,33 +173,7 @@ Date:   Thu Sep 15 01:46:16 2011 +0000
     [chromium] rebaselines due to r95096, r95121, and r95129.
     
     * platform/chromium-cg-mac-leopard/fast/borders/border-image-scaled-gradient-expected.png: Added.
-    * platform/chromium-cg-mac-leopard/svg/as-border-image/svg-as-border-image-expected.png: Added.
-    * platform/chromium-cg-mac/fast/css/getComputedStyle/computed-style-expected.txt: Copied from LayoutTests/platform/chromium-win/fast/css/getComputedStyle/computed-style-expected.txt.
-    * platform/chromium-cg-mac/fast/css/getComputedStyle/computed-style-without-renderer-expected.txt: Copied from LayoutTests/platform/chromium-win/fast/css/getComputedStyle/computed-style-without-renderer-expected.txt.
-    * platform/chromium-cg-mac/svg/as-border-image/svg-as-border-image-expected.png: Added.
-    * platform/chromium-cg-mac/svg/as-border-image/svg-as-border-image-expected.txt: Added.
-    * platform/chromium-cg-mac/svg/css/getComputedStyle-basic-expected.txt: Copied from LayoutTests/platform/chromium-win/svg/css/getComputedStyle-basic-expected.txt.
-    * platform/chromium-linux/fast/borders/border-image-border-radius-expected.png:
-    * platform/chromium-linux/fast/borders/border-image-massive-scale-expected.png: Added.
-    * platform/chromium-linux/fast/borders/border-image-scale-transform-expected.png:
-    * platform/chromium-linux/fast/borders/border-image-scaled-expected.png:
-    * platform/chromium-linux/svg/as-border-image/svg-as-border-image-expected.png:
-    * platform/chromium-win/fast/borders/border-image-01-expected.png:
-    * platform/chromium-win/fast/borders/border-image-border-radius-expected.png:
-    * platform/chromium-win/fast/borders/border-image-longhand-expected.png:
-    * platform/chromium-win/fast/borders/border-image-massive-scale-expected.png: Added.
-    * platform/chromium-win/fast/borders/border-image-massive-scale-expected.txt: Added.
-    * platform/chromium-win/fast/borders/border-image-repeat-expected.png:
-    * platform/chromium-win/fast/borders/border-image-scale-transform-expected.png:
-    * platform/chromium-win/fast/borders/border-image-scaled-expected.png:
-    * platform/chromium-win/fast/borders/border-image-scaled-gradient-expected.png: Added.
-    * platform/chromium-win/fast/borders/border-image-side-reduction-expected.png:
-    * platform/chromium-win/fast/borders/border-image-slices-expected.png:
-    * platform/chromium-win/fast/borders/border-image-source-expected.png:
-    * platform/chromium-win/fast/css/getComputedStyle/computed-style-expected.txt:
-    * platform/chromium-win/fast/css/getComputedStyle/computed-style-without-renderer-expected.txt:
-    * platform/chromium-win/svg/as-border-image/svg-as-border-image-expected.png:
-    * platform/chromium-win/svg/as-border-image/svg-as-border-image-expected.txt:
+    * platform/chromium-win/fast/borders/border-image-side-reduction-expected.png:e-expected.txt:
     * platform/chromium-win/svg/css/getComputedStyle-basic-expected.txt:
     
     Canonical link: https://commits.webkit.org/84031@main
@@ -228,28 +188,6 @@ A	LayoutTests/platform/chromium-cg-mac/svg/as-border-image/svg-as-border-image-e
 A	LayoutTests/platform/chromium-cg-mac/svg/as-border-image/svg-as-border-image-expected.txt
 A	LayoutTests/platform/chromium-cg-mac/svg/css/getComputedStyle-basic-expected.txt
 M	LayoutTests/platform/chromium-linux/fast/borders/border-image-border-radius-expected.png
-A	LayoutTests/platform/chromium-linux/fast/borders/border-image-massive-scale-expected.png
-M	LayoutTests/platform/chromium-linux/fast/borders/border-image-scale-transform-expected.png
-M	LayoutTests/platform/chromium-linux/fast/borders/border-image-scaled-expected.png
-M	LayoutTests/platform/chromium-linux/svg/as-border-image/svg-as-border-image-expected.png
-M	LayoutTests/platform/chromium-win/fast/borders/border-image-01-expected.png
-M	LayoutTests/platform/chromium-win/fast/borders/border-image-border-radius-expected.png
-M	LayoutTests/platform/chromium-win/fast/borders/border-image-longhand-expected.png
-A	LayoutTests/platform/chromium-win/fast/borders/border-image-massive-scale-expected.png
-A	LayoutTests/platform/chromium-win/fast/borders/border-image-massive-scale-expected.txt
-M	LayoutTests/platform/chromium-win/fast/borders/border-image-repeat-expected.png
-M	LayoutTests/platform/chromium-win/fast/borders/border-image-scale-transform-expected.png
-M	LayoutTests/platform/chromium-win/fast/borders/border-image-scaled-expected.png
-A	LayoutTests/platform/chromium-win/fast/borders/border-image-scaled-gradient-expected.png
-M	LayoutTests/platform/chromium-win/fast/borders/border-image-side-reduction-expected.png
-M	LayoutTests/platform/chromium-win/fast/borders/border-image-slices-expected.png
-M	LayoutTests/platform/chromium-win/fast/borders/border-image-source-expected.png
-M	LayoutTests/platform/chromium-win/fast/css/getComputedStyle/computed-style-expected.txt
-M	LayoutTests/platform/chromium-win/fast/css/getComputedStyle/computed-style-without-renderer-expected.txt
-M	LayoutTests/platform/chromium-win/svg/as-border-image/svg-as-border-image-expected.png
-M	LayoutTests/platform/chromium-win/svg/as-border-image/svg-as-border-image-expected.txt
-M	LayoutTests/platform/chromium-win/svg/css/getComputedStyle-basic-expected.txt
-
 commit 90c92d02f7e22904bc290a851f542af62b0f2d3f
 Author: David Hyatt <hyatt@apple.com>
 Date:   Wed Feb 4 05:06:19 2009 +0000
@@ -464,129 +402,109 @@ M	WebCore/khtml/xml/dom_docimpl.cpp
 M	WebCore/kwq/KWQKHTMLPart.mm
 M	WebCore/kwq/WebCoreBridge.mm
 
-commit 03de3c215137b92a4991ec23027feaac61754620
-Author: Noam Rosenthal <noam@webkit.org>
-Date:   Sun Mar 18 19:28:16 2012 +0000
+commit 012e09e6074c0ca2a9f8d707a88a0ced3da0bed1
+Author: Adam Roben <aroben@apple.com>
+Date:   Thu Feb 12 17:27:44 2009 +0000
 
-    [Qt] The background is visible for tiles inside the contents area which are not ready
-    https://bugs.webkit.org/show_bug.cgi?id=81349
+            Add some tests that fail due to using the wrong font for Hebrew to the Windows Skipped list
     
-    Reviewed by Simon Hausmann.
+            * platform/win/Skipped:
     
-    Split PageProxyNode to BackgroundSGNode and ContentsSGNode.
-    BackgroundSGNode paints a solid background, either white or transparent
-    (depending on drawsTransparentBackground flag).
-    
-    * UIProcess/API/qt/qquickwebpage.cpp:
-    (ContentsSGNode):
-    (ContentsSGNode::ContentsSGNode):
-    (ContentsSGNode::changedStates):
-    (ContentsSGNode::~ContentsSGNode):
-    (BackgroundSGNode):
-    (BackgroundSGNode::BackgroundSGNode):
-    (BackgroundSGNode::contentsNode):
-    (QQuickWebPage::updatePaintNode):
-    
-    
-    Canonical link: https://commits.webkit.org/98680@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@111136 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    Canonical link: https://commits.webkit.org/33027@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@40909 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-M	Source/WebKit2/ChangeLog
-M	Source/WebKit2/UIProcess/API/qt/qquickwebpage.cpp
+M	LayoutTests/ChangeLog
+M	LayoutTests/platform/win/Skipped
 
-commit 8f90402c8904388b500e9133691b352fe406f707
-Author: Andy Estes <aestes@apple.com>
-Date:   Sun Apr 14 16:08:23 2019 +0000
+commit a563ea43fac7f1d282bad1f91d4717848ba47bc2
+Author: Geoffrey Garen <ggaren@apple.com>
+Date:   Sat Apr 10 01:09:44 2010 +0000
 
-    [Cocoa] WKCustomProtocolLoader should store a WeakPtr to its LegacyCustomProtocolManagerProxy
-    https://bugs.webkit.org/show_bug.cgi?id=196893
-    <rdar://problem/48318983>
+    Tidied up some more DOMWrapperWorld lifetime issues.
     
-    Reviewed by Anders Carlsson.
+    Reviewed by Sam "R the K!" Weinig.
     
-    In addition to manually invalidating each WKCustomProtocolLoader's _customProtocolManagerProxy
-    pointer when the LegacyCustomProtocolManagerClient is invalidated, use a WeakPtr in case the
-    LegacyCustomProtocolManagerProxy is ever destroyed without first invalidating the client.
-    Also add null pointer checks to NSURLConnectionDelegate methods, which might be called after
-    the LegacyCustomProtocolManagerProxy has been destroyed.
+    * bindings/js/DOMWrapperWorld.cpp:
+    (WebCore::DOMWrapperWorld::~DOMWrapperWorld): Notify the document that
+    we're going away instead of deleting its data, since deleting other
+    objects' data is error-prone and, more importantly, rude.
     
-    * UIProcess/Cocoa/LegacyCustomProtocolManagerClient.mm:
-    (-[WKCustomProtocolLoader initWithLegacyCustomProtocolManagerProxy:customProtocolID:request:]):
-    (-[WKCustomProtocolLoader cancel]):
-    (-[WKCustomProtocolLoader connection:didFailWithError:]):
-    (-[WKCustomProtocolLoader connection:didReceiveResponse:]):
-    (-[WKCustomProtocolLoader connection:didReceiveData:]):
-    (-[WKCustomProtocolLoader connection:willSendRequest:redirectResponse:]):
-    (-[WKCustomProtocolLoader connectionDidFinishLoading:]):
-    (WebKit::LegacyCustomProtocolManagerClient::startLoading):
-    (WebKit::LegacyCustomProtocolManagerClient::invalidate):
-    (-[WKCustomProtocolLoader customProtocolManagerProxyDestroyed]): Deleted.
-    * UIProcess/Network/CustomProtocols/LegacyCustomProtocolManagerProxy.h:
+    * bindings/js/DOMWrapperWorld.h:
+    (WebCore::DOMWrapperWorld::didCreateWrapperCache):
+    (WebCore::DOMWrapperWorld::didDestroyWrapperCache): A few renames for
+    clarity.
+    
+    * bindings/js/JSDOMBinding.cpp:
+    * bindings/js/JSDOMBinding.h: Converted forgetAllDOMNodesForDocument
+    to a Document member function, for the same reason.
+    
+    * dom/Document.cpp:
+    (WebCore::Document::~Document):
+    (WebCore::Document::createWrapperCache):
+    (WebCore::Document::destroyWrapperCache):
+    (WebCore::Document::destroyAllWrapperCaches):
+    * dom/Document.h: Added a destroyWrapperCache function to balance
+    createWrapperCache, so it's clear who allocates and deletes these wrapper
+    caches.
     
     
-    Canonical link: https://commits.webkit.org/211154@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@244246 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    
+    Canonical link: https://commits.webkit.org/48680@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@57391 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-M	Source/WebKit/ChangeLog
-M	Source/WebKit/UIProcess/Cocoa/LegacyCustomProtocolManagerClient.mm
-M	Source/WebKit/UIProcess/Network/CustomProtocols/LegacyCustomProtocolManagerProxy.h
+M	WebCore/ChangeLog
+M	WebCore/bindings/js/DOMWrapperWorld.cpp
+M	WebCore/bindings/js/DOMWrapperWorld.h
+M	WebCore/bindings/js/JSDOMBinding.cpp
+M	WebCore/bindings/js/JSDOMBinding.h
+M	WebCore/dom/Document.cpp
+M	WebCore/dom/Document.h
 
-commit aa853af262b328d44d02278c02875f61c2222f3f
-Author: Kimmo Kinnunen <kkinnunen@apple.com>
-Date:   Sun Feb 27 07:27:45 2022 +0000
+commit ee773bf139491caea9337a2a507c4ddd311124d6
+Author: Adam Kallai <kadam@inf.u-szeged.hu>
+Date:   Tue Sep 3 13:36:17 2013 +0000
 
-    RemoteCaptureSampleManager, UserMediaSampleCaptureManagerProxy create the RemoteVideoFrame in incorrectly
-    https://bugs.webkit.org/show_bug.cgi?id=237134
+    [Qt] Unreviewed gardening. Skip some failing tests.
     
-    Patch by Kimmo Kinnunen <kkinnunen@apple.com> on 2022-02-26
-    Reviewed by Youenn Fablet.
+    * platform/qt-wk1/TestExpectations:
+    * platform/qt/TestExpectations:
     
-    UserMediaSampleCaptureManagerProxy should not call RemoteVideoFrameObjectHeap::createVideoFrame,
-    the function should be removed. Instead, UserMediaSampleCaptureManagerProxy should construct a
-    write reference to insert the media sample -> remote proxy mapping. Then
-    the result of the insert, a new reference, should be sent as part of the
-    RemoteVideoFrameProxy::Properties to the WP. This way the sent reference is
-    constructed as expected. Previously the reference was correct but matched just
-    by selecting the constants currently used (0).
-    
-    * UIProcess/Cocoa/UserMediaCaptureManagerProxy.cpp:
-    * WebProcess/GPU/webrtc/LibWebRTCCodecs.h:
-    * WebProcess/cocoa/RemoteCaptureSampleManager.cpp:
-    (WebKit::RemoteCaptureSampleManager::videoSampleAvailable):
-    (WebKit::RemoteCaptureSampleManager::videoSampleAvailableCV):
-    * WebProcess/cocoa/RemoteCaptureSampleManager.h:
-    * WebProcess/cocoa/RemoteCaptureSampleManager.messages.in:
-    
-    
-    Canonical link: https://commits.webkit.org/247833@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@290555 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    Canonical link: https://commits.webkit.org/138605@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@154980 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-M	Source/WebKit/ChangeLog
-M	Source/WebKit/GPUProcess/media/RemoteVideoFrameObjectHeap.cpp
-M	Source/WebKit/GPUProcess/media/RemoteVideoFrameObjectHeap.h
-M	Source/WebKit/UIProcess/Cocoa/UserMediaCaptureManagerProxy.cpp
-M	Source/WebKit/WebProcess/GPU/webrtc/LibWebRTCCodecs.h
-M	Source/WebKit/WebProcess/cocoa/RemoteCaptureSampleManager.cpp
-M	Source/WebKit/WebProcess/cocoa/RemoteCaptureSampleManager.h
-M	Source/WebKit/WebProcess/cocoa/RemoteCaptureSampleManager.messages.in
+M	LayoutTests/ChangeLog
+M	LayoutTests/platform/qt-wk1/TestExpectations
+M	LayoutTests/platform/qt/TestExpectations
 
-commit a108d263aa9a64fcc7a9ba632892ab81f6ef619e
-Author: Benjamin Poulain <benjamin@webkit.org>
-Date:   Fri Apr 19 21:13:47 2013 +0000
+commit ecdb5f04c700603e9407e27b2f97cfe027e36294
+Author: Alex Christensen <achristensen@apple.com>
+Date:   Sat Aug 26 00:47:51 2017 +0000
 
-    Remove the declaration of MemoryObjectInfo from StringImpl
-    https://bugs.webkit.org/show_bug.cgi?id=114788
+    Rename TestWebKitAPI/Tests/WebKit to WebKitLegacy following Source directory rename.
     
-    Reviewed by Andreas Kling.
+    Rubber-stamped by Brady Eidson.
     
-    * wtf/text/StringImpl.h: The declaration is an other left over from chromium.
+    * TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj:
+    * TestWebKitAPI/Tests/WebKit: Removed.
+    * TestWebKitAPI/Tests/WebKit/ios: Removed.
+    * TestWebKitAPI/Tests/WebKit/ios/AudioSessionCategoryIOS.mm: Removed.
+    * TestWebKitAPI/Tests/WebKit/ios/SnapshotViaRenderInContext.mm: Removed.
+    * TestWebKitAPI/Tests/WebKit/ios/audio-only.html: Removed.
+    * TestWebKitAPI/Tests/WebKit/win: Removed.
+    * TestWebKitAPI/Tests/WebKit/win/ScaleWebView.cpp: Removed.
+    * TestWebKitAPI/Tests/WebKit/win/WebViewDestruction.cpp: Removed.
+    * TestWebKitAPI/Tests/WebKitLegacy: Copied from TestWebKitAPI/Tests/WebKit.
     
     
-    Canonical link: https://commits.webkit.org/133284@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@148771 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    
+    Canonical link: https://commits.webkit.org/192664@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@221217 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-M	Source/WTF/ChangeLog
-M	Source/WTF/wtf/text/StringImpl.h
+M	Tools/ChangeLog
+M	Tools/TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj
+R100	Tools/TestWebKitAPI/Tests/WebKit/ios/AudioSessionCategoryIOS.mm	Tools/TestWebKitAPI/Tests/WebKitLegacy/ios/AudioSessionCategoryIOS.mm
+R100	Tools/TestWebKitAPI/Tests/WebKit/ios/SnapshotViaRenderInContext.mm	Tools/TestWebKitAPI/Tests/WebKitLegacy/ios/SnapshotViaRenderInContext.mm
+R100	Tools/TestWebKitAPI/Tests/WebKit/ios/audio-only.html	Tools/TestWebKitAPI/Tests/WebKitLegacy/ios/audio-only.html
 
 commit 88b2ee9320cf90accec66b2e78da0b97b2fd9415
 Author: Dirk Pranke <dpranke@chromium.org>
@@ -761,162 +679,23 @@ M	WebKitTools/ChangeLog
 M	WebKitTools/Scripts/webkitdirs.pm
 M	WebKitTools/Scripts/webkitpy/layout_tests/port/chromium_linux.py
 
-commit b6649a9d8738c3f8eec8222a19822cf4f9da6947
-Author: Ryosuke Niwa <rniwa@webkit.org>
-Date:   Fri Apr 22 00:33:21 2011 +0000
+commit 25bb4faaca03882a58c494b657356d8910e3993b
+Author: Filip Pizlo <fpizlo@apple.com>
+Date:   Tue Apr 21 23:01:04 2020 +0000
 
-    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
+    Unreviewed, check in some more files for a blog post.
     
-            Reviewed by Sam Weinig.
-    
-            Add Frame* to the argument lists of canCopyCut and canPaste
-            https://bugs.webkit.org/show_bug.cgi?id=59153
-    
-            * src/EditorClientImpl.cpp:
-            (WebKit::EditorClientImpl::canCopyCut):
-            (WebKit::EditorClientImpl::canPaste):
-            * src/EditorClientImpl.h:
-    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
-    
-            Reviewed by Sam Weinig.
-    
-            Add Frame* to the argument lists of canCopyCut and canPaste
-            https://bugs.webkit.org/show_bug.cgi?id=59153
-    
-            * WebCoreSupport/EditorClientQt.cpp:
-            (WebCore::EditorClientQt::canCopyCut):
-            (WebCore::EditorClientQt::canPaste):
-            * WebCoreSupport/EditorClientQt.h:
-    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
-    
-            Reviewed by Sam Weinig.
-    
-            Add Frame* to the argument lists of canCopyCut and canPaste
-            https://bugs.webkit.org/show_bug.cgi?id=59153
-    
-            * WebCoreSupport/EditorClientGtk.cpp:
-            (WebKit::EditorClient::canCopyCut):
-            (WebKit::EditorClient::canPaste):
-            * WebCoreSupport/EditorClientGtk.h:
-    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
-    
-            Reviewed by Sam Weinig.
-    
-            Add Frame* to the argument lists of canCopyCut and canPaste
-            https://bugs.webkit.org/show_bug.cgi?id=59153
-    
-            * WebCoreSupport/WebEditorClient.cpp:
-            (WebEditorClient::canCopyCut):
-            (WebEditorClient::canPaste):
-            * WebCoreSupport/WebEditorClient.h:
-    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
-    
-            Reviewed by Sam Weinig.
-    
-            Add Frame* to the argument lists of canCopyCut and canPaste
-            https://bugs.webkit.org/show_bug.cgi?id=59153
-    
-            * WebKitSupport/EditorClientWx.cpp:
-            (WebCore::EditorClientWx::canCopyCut):
-            (WebCore::EditorClientWx::canPaste):
-            * WebKitSupport/EditorClientWx.h:
-    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
-    
-            Reviewed by Sam Weinig.
-    
-            Add Frame* to the argument lists of canCopyCut and canPaste
-            https://bugs.webkit.org/show_bug.cgi?id=59153
-    
-            * WebCoreSupport/WebEditorClient.h:
-            * WebCoreSupport/WebEditorClient.mm:
-            (WebEditorClient::canCopyCut):
-            (WebEditorClient::canPaste):
-    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
-    
-            Reviewed by Sam Weinig.
-    
-            Add Frame* to the argument lists of canCopyCut and canPaste
-            https://bugs.webkit.org/show_bug.cgi?id=59153
-    
-            * WebCoreSupport/EditorClientHaiku.cpp:
-            (WebCore::EditorClientHaiku::canCopyCut):
-            (WebCore::EditorClientHaiku::canPaste):
-            * WebCoreSupport/EditorClientHaiku.h:
-    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
-    
-            Reviewed by Sam Weinig.
-    
-            Add Frame* to the argument lists of canCopyCut and canPaste
-            https://bugs.webkit.org/show_bug.cgi?id=59153
-    
-            * WebCoreSupport/EditorClientEfl.cpp:
-            (WebCore::EditorClientEfl::canCopyCut):
-            (WebCore::EditorClientEfl::canPaste):
-            * WebCoreSupport/EditorClientEfl.h:
-    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
-    
-            Reviewed by Sam Weinig.
-    
-            Add Frame* to the argument lists of canCopyCut and canPaste
-            https://bugs.webkit.org/show_bug.cgi?id=59153
-    
-            canCopyCut and canPaste now takes Frame* for which supportedCopyCut and supportedPaste are called.
-            This allows editor client to grant copy/cut and paste permissions per origin.
-    
-            * editing/EditorCommand.cpp:
-            (WebCore::supportedCopyCut):
-            (WebCore::supportedPaste):
-            * loader/EmptyClients.h:
-            (WebCore::EmptyEditorClient::canCopyCut):
-            (WebCore::EmptyEditorClient::canPaste):
-            * page/EditorClient.h:
-    2011-04-21  Ryosuke Niwa  <rniwa@webkit.org>
-    
-            Reviewed by Sam Weinig.
-    
-            Add Frame* to the argument lists of canCopyCut and canPaste
-            https://bugs.webkit.org/show_bug.cgi?id=59153
-    
-            * WebProcess/WebCoreSupport/WebEditorClient.cpp:
-            (WebKit::WebEditorClient::canCopyCut):
-            (WebKit::WebEditorClient::canPaste):
-            * WebProcess/WebCoreSupport/WebEditorClient.h:
+    * blog-files/speculation-in-jsc/clobberize-dependence-graph.graffle:
+    * blog-files/speculation-in-jsc/clobberize-dependence-graph.svg:
     
     
-    Canonical link: https://commits.webkit.org/74311@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@84574 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    
+    Canonical link: https://commits.webkit.org/223710@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@260472 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-M	Source/WebCore/ChangeLog
-M	Source/WebCore/editing/EditorCommand.cpp
-M	Source/WebCore/loader/EmptyClients.h
-M	Source/WebCore/page/EditorClient.h
-M	Source/WebKit/chromium/ChangeLog
-M	Source/WebKit/chromium/src/EditorClientImpl.cpp
-M	Source/WebKit/chromium/src/EditorClientImpl.h
-M	Source/WebKit/efl/ChangeLog
-M	Source/WebKit/efl/WebCoreSupport/EditorClientEfl.cpp
-M	Source/WebKit/efl/WebCoreSupport/EditorClientEfl.h
-M	Source/WebKit/gtk/ChangeLog
-M	Source/WebKit/gtk/WebCoreSupport/EditorClientGtk.cpp
-M	Source/WebKit/gtk/WebCoreSupport/EditorClientGtk.h
-M	Source/WebKit/haiku/ChangeLog
-M	Source/WebKit/haiku/WebCoreSupport/EditorClientHaiku.cpp
-M	Source/WebKit/haiku/WebCoreSupport/EditorClientHaiku.h
-M	Source/WebKit/mac/ChangeLog
-M	Source/WebKit/mac/WebCoreSupport/WebEditorClient.h
-M	Source/WebKit/mac/WebCoreSupport/WebEditorClient.mm
-M	Source/WebKit/qt/ChangeLog
-M	Source/WebKit/qt/WebCoreSupport/EditorClientQt.cpp
-M	Source/WebKit/qt/WebCoreSupport/EditorClientQt.h
-M	Source/WebKit/win/ChangeLog
-M	Source/WebKit/win/WebCoreSupport/WebEditorClient.cpp
-M	Source/WebKit/win/WebCoreSupport/WebEditorClient.h
-M	Source/WebKit/wx/ChangeLog
-M	Source/WebKit/wx/WebKitSupport/EditorClientWx.cpp
-M	Source/WebKit/wx/WebKitSupport/EditorClientWx.h
-M	Source/WebKit2/ChangeLog
-M	Source/WebKit2/WebProcess/WebCoreSupport/WebEditorClient.cpp
-M	Source/WebKit2/WebProcess/WebCoreSupport/WebEditorClient.h
+M	Websites/webkit.org/ChangeLog
+M	Websites/webkit.org/blog-files/speculation-in-jsc/clobberize-dependence-graph.graffle
+M	Websites/webkit.org/blog-files/speculation-in-jsc/clobberize-dependence-graph.svg
 
 commit 16d63a05bc591514962d1b8310e0d0315607686c
 Author: Brady Eidson <beidson@apple.com>
@@ -1734,21 +1513,7 @@ Date:   Fri Dec 19 21:48:38 2014 +0000
     * PluginProcess/PluginProcess.cpp:
     (WebKit::PluginProcess::PluginProcess):
     (WebKit::PluginProcess::initializePluginProcess):
-    * PluginProcess/PluginProcess.h:
-    (WebKit::PluginProcess::compositingRenderServerPort):
-    * PluginProcess/mac/PluginControllerProxyMac.mm:
-    (WebKit::PluginControllerProxy::compositingRenderServerPort):
-    * PluginProcess/mac/PluginProcessMac.mm:
-    (WebKit::PluginProcess::platformInitializePluginProcess):
-    * Shared/Plugins/PluginProcessCreationParameters.cpp:
-    * Shared/Plugins/PluginProcessCreationParameters.h:
-    * Shared/WebCoreArgumentCoders.h:
-    * Shared/WebProcessCreationParameters.h:
-    * Shared/mac/WebCoreArgumentCodersMac.mm:
-    (IPC::ArgumentCoder<MachSendRight>::encode):
-    * UIProcess/Plugins/mac/PluginProcessProxyMac.mm:
-    (WebKit::PluginProcessProxy::platformInitializePluginProcess):
-    * UIProcess/mac/WebContextMac.mm:
+
     (WebKit::WebContext::platformInitializeWebProcess):
     * WebProcess/Plugins/Netscape/NetscapeBrowserFuncs.cpp:
     (WebKit::NPN_GetValue):
@@ -1781,16 +1546,7 @@ M	Source/WebKit2/PluginProcess/PluginControllerProxy.h
 M	Source/WebKit2/PluginProcess/PluginProcess.cpp
 M	Source/WebKit2/PluginProcess/PluginProcess.h
 M	Source/WebKit2/PluginProcess/mac/PluginControllerProxyMac.mm
-M	Source/WebKit2/PluginProcess/mac/PluginProcessMac.mm
-M	Source/WebKit2/Shared/Plugins/PluginProcessCreationParameters.cpp
-M	Source/WebKit2/Shared/Plugins/PluginProcessCreationParameters.h
-M	Source/WebKit2/Shared/WebCoreArgumentCoders.h
-M	Source/WebKit2/Shared/WebProcessCreationParameters.h
-M	Source/WebKit2/Shared/mac/WebCoreArgumentCodersMac.mm
-M	Source/WebKit2/UIProcess/Plugins/mac/PluginProcessProxyMac.mm
-M	Source/WebKit2/UIProcess/mac/WebContextMac.mm
-M	Source/WebKit2/WebProcess/Plugins/Netscape/NetscapeBrowserFuncs.cpp
-M	Source/WebKit2/WebProcess/Plugins/Netscape/NetscapePlugin.h
+
 M	Source/WebKit2/WebProcess/Plugins/Netscape/mac/NetscapePluginMac.mm
 M	Source/WebKit2/WebProcess/Plugins/PluginController.h
 M	Source/WebKit2/WebProcess/Plugins/PluginView.cpp
@@ -2061,25 +1817,6 @@ M	WebCore/html/HTMLElement.h
 M	WebCore/html/HTMLFormControlElement.cpp
 M	WebCore/html/HTMLFormControlElement.h
 M	WebCore/html/HTMLFormElement.cpp
-M	WebCore/html/HTMLLabelElement.cpp
-M	WebCore/html/HTMLLegendElement.cpp
-M	WebCore/page/Frame.cpp
-M	WebCore/page/mac/FrameMac.mm
-M	WebCore/wml/WMLCardElement.cpp
-M	WebCore/wml/WMLCardElement.h
-M	WebCore/wml/WMLDoElement.cpp
-M	WebCore/wml/WMLElement.h
-M	WebCore/wml/WMLEventHandlingElement.cpp
-M	WebCore/wml/WMLEventHandlingElement.h
-A	WebCore/wml/WMLFormControlElement.cpp
-A	WebCore/wml/WMLFormControlElement.h
-M	WebCore/wml/WMLInputElement.cpp
-M	WebCore/wml/WMLInputElement.h
-M	WebCore/wml/WMLOnEventElement.cpp
-M	WebCore/wml/WMLOptGroupElement.cpp
-M	WebCore/wml/WMLOptGroupElement.h
-M	WebCore/wml/WMLOptionElement.cpp
-M	WebCore/wml/WMLOptionElement.h
 M	WebCore/wml/WMLTemplateElement.cpp
 M	WebCore/wml/WMLTemplateElement.h
 
@@ -2491,30 +2228,6 @@ Date:   Fri Mar 25 18:59:07 2011 +0000
     (WebCore::FontPlatformData::orientation):
     (WebCore::FontPlatformData::textOrientation):
     (WebCore::FontPlatformData::widthVariant):
-    (WebCore::FontPlatformData::setOrientation):
-    (WebCore::FontPlatformData::scaledFont):
-    (WebCore::FontPlatformData::fontFace):
-    (WebCore::FontPlatformData::hash):
-    (WebCore::FontPlatformData::operator==):
-    (WebCore::FontPlatformData::isHashTableDeletedValue):
-    (WebCore::FontPlatformData::hashTableDeletedFontValue):
-    * platform/graphics/cg/FontPlatformData.h: Removed.
-    * platform/graphics/cocoa/FontPlatformData.h: Removed.
-    * platform/graphics/cocoa/FontPlatformDataCocoa.mm:
-    (WebCore::~FontPlatformData):
-    (WebCore::FontPlatformData::platformDataInit):
-    (WebCore::FontPlatformData::platformDataAssign):
-    * platform/graphics/win/FontPlatformDataCGWin.cpp:
-    (WebCore::FontPlatformData::FontPlatformData):
-    (WebCore::FontPlatformData::~FontPlatformData):
-    (WebCore::FontPlatformData::platformDataInit):
-    (WebCore::FontPlatformData::platformDataAssign):
-    * platform/graphics/win/FontPlatformDataCairoWin.cpp:
-    (WebCore::FontPlatformData::FontPlatformData):
-    (WebCore::FontPlatformData::~FontPlatformData):
-    (WebCore::FontPlatformData::platformDataInit):
-    (WebCore::FontPlatformData::platformDataAssign):
-    * platform/graphics/win/FontPlatformDataWin.cpp:
     (WebCore::FontPlatformData::FontPlatformData):
     * platform/graphics/win/cairo/FontPlatformData.h: Removed.
     
@@ -2536,29 +2249,22 @@ M	Source/WebCore/platform/graphics/win/FontPlatformDataCairoWin.cpp
 M	Source/WebCore/platform/graphics/win/FontPlatformDataWin.cpp
 D	Source/WebCore/platform/graphics/win/cairo/FontPlatformData.h
 
-commit 893d780d3f8ce1315b05642a5b272d819e4e272c
-Author: Ken Kocienda <kocienda@apple.com>
-Date:   Thu Nov 11 15:28:56 2004 +0000
+commit f1b5aaf83f11c90cd08854159ed4afee10d66830
+Author: Yael Aharon <yael@webkit.org>
+Date:   Tue Nov 27 19:23:04 2012 +0000
 
-            Reviewed by John
+    Unreviewed gardening. fast/loader/submit-form-while-parsing-2.html is still flaky
+    so put it back in TestExpectations.
     
-            Updated some layout test results that changed as a result of my last checking.
-            Added a new test that has been in my tree for a few days.
-    
-            * layout-tests/editing/deleting/delete-3775172-fix-expected.txt:
-            * layout-tests/editing/deleting/delete-3800834-fix-expected.txt:
-            * layout-tests/editing/inserting/insert-3851164-fix-expected.txt: Added.
-            * layout-tests/editing/inserting/insert-3851164-fix.html: Added.
+    * platform/efl/TestExpectations:
     
     
-    Canonical link: https://commits.webkit.org/6975@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@7973 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    
+    Canonical link: https://commits.webkit.org/121533@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@135887 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-M	LayoutTests/editing/deleting/delete-3775172-fix-expected.txt
-M	LayoutTests/editing/deleting/delete-3800834-fix-expected.txt
-A	LayoutTests/editing/inserting/insert-3851164-fix-expected.txt
-A	LayoutTests/editing/inserting/insert-3851164-fix.html
-M	WebCore/ChangeLog-2005-08-23
+M	LayoutTests/ChangeLog
+M	LayoutTests/platform/efl/TestExpectations
 
 commit d2dab8f8c9036f75fe0a8247a7e2e0ce949249a7
 Author: Gustavo Noronha Silva <kov@webkit.org>
@@ -2594,33 +2300,7 @@ Date:   Wed Mar 30 17:35:14 2011 +0000
     * platform/mac-snowleopard/editing/pasteboard: Removed.
     * platform/mac-snowleopard/fast/backgrounds: Removed.
     * platform/mac-snowleopard/fast/backgrounds/repeat: Removed.
-    * platform/mac-snowleopard/fast/block: Removed.
-    * platform/mac-snowleopard/fast/block/float: Removed.
-    * platform/mac-snowleopard/fast/borders: Removed.
-    * platform/mac-snowleopard/fast/canvas: Removed.
-    * platform/mac-snowleopard/fast/css: Removed.
-    * platform/mac-snowleopard/fast/dom: Removed.
-    * platform/mac-snowleopard/fast/dom/HTMLMeterElement: Removed.
-    * platform/mac-snowleopard/fast/images: Removed.
-    * platform/mac-snowleopard/fast/inline: Removed.
-    * platform/mac-snowleopard/fast/inline-block: Removed.
-    * platform/mac-snowleopard/fast/multicol: Removed.
-    * platform/mac-snowleopard/fast/replaced: Removed.
-    * platform/mac-snowleopard/fast/text/basic: Removed.
-    * platform/mac-snowleopard/media: Removed.
-    * platform/mac-snowleopard/plugins: Removed.
-    * platform/mac-snowleopard/scrollbars: Removed.
-    * platform/mac-snowleopard/svg/W3C-SVG-1.1: Removed.
-    * platform/mac-snowleopard/svg/custom: Removed.
-    * platform/mac-snowleopard/svg/dynamic-updates: Removed.
-    * platform/mac-snowleopard/svg/filters: Removed.
-    * platform/mac-snowleopard/svg/text: Removed.
-    * platform/mac-snowleopard/tables: Removed.
-    * platform/mac-snowleopard/tables/mozilla: Removed.
-    * platform/mac-snowleopard/tables/mozilla/core: Removed.
-    * platform/mac-snowleopard/tables/mozilla_expected_failures: Removed.
-    * platform/mac-snowleopard/tables/mozilla_expected_failures/bugs: Removed.
-    
+
     
     
     Canonical link: https://commits.webkit.org/72264@main
@@ -2628,23 +2308,24 @@ Date:   Wed Mar 30 17:35:14 2011 +0000
 
 M	LayoutTests/ChangeLog
 
-commit b6ca63a464359fb4f95e41fece4ab33558c967ce
-Author: Adele Peterson <adele@apple.com>
-Date:   Tue Jul 15 17:06:04 2008 +0000
+commit a16a41478cf4c77c05e4c1ee385c142dc35a5070
+Author: Enrica Casucci <enrica@apple.com>
+Date:   Tue May 10 23:24:00 2011 +0000
 
-    2008-07-15  Adele Peterson  <adele@apple.com>
+    Added my name to the reviewers list and removed my name from
+    to committer-only list.
     
-            Updating results for my fix to <rdar://problem/5784890>.
+    Reviewed by Beth Dakin.
     
-            * http/tests/misc/xhtml-expected.txt:
+    * Scripts/webkitpy/common/config/committers.py:
     
     
     
-    Canonical link: https://commits.webkit.org/27615@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@35183 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    Canonical link: https://commits.webkit.org/75851@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@86191 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-M	LayoutTests/ChangeLog
-M	LayoutTests/http/tests/misc/xhtml-expected.txt
+M	Tools/ChangeLog
+M	Tools/Scripts/webkitpy/common/config/committers.py
 
 commit 95ebadb56e10510c6e10837a80e6cafd37ffe2f8
 Author: Trey Matteson <trey@usa.net>
@@ -2738,17 +2419,6 @@ M	LayoutTests/http/tests/misc/link-rel-icon-beforeload-expected.txt
 M	Source/WebCore/ChangeLog
 M	Source/WebCore/WebCore.exp.in
 M	Source/WebCore/dom/Document.cpp
-M	Source/WebCore/dom/Document.h
-M	Source/WebCore/loader/FrameLoader.cpp
-M	Source/WebCore/loader/MainResourceLoader.cpp
-M	Source/WebCore/loader/MainResourceLoader.h
-M	Source/WebCore/loader/cache/CachedRawResource.cpp
-M	Source/WebCore/loader/cache/CachedRawResource.h
-M	Source/WebCore/loader/cache/CachedResource.cpp
-M	Source/WebCore/loader/cache/CachedResource.h
-M	Source/WebCore/loader/cache/CachedResourceLoader.cpp
-M	Source/WebCore/testing/Internals.cpp
-M	Source/WebCore/testing/Internals.h
 M	Source/WebCore/testing/Internals.idl
 M	Source/WebKit/win/ChangeLog
 M	Source/WebKit/win/WebKit.vcproj/WebKitExports.def.in

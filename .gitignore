@@ -4,3 +4,14 @@ webkit/
 zxw/
 whitelist/*/*
 scripts/sk.txt
+.VSCodeCounter/2023-03-30_15-30-23/details.md
+.VSCodeCounter/2023-03-30_15-30-23/diff-details.md
+.VSCodeCounter/2023-03-30_15-30-23/diff.csv
+.VSCodeCounter/2023-03-30_15-30-23/diff.md
+.VSCodeCounter/2023-03-30_15-30-23/diff.txt
+.VSCodeCounter/2023-03-30_15-30-23/results.csv
+.VSCodeCounter/2023-03-30_15-30-23/results.json
+.VSCodeCounter/2023-03-30_15-30-23/results.md
+.VSCodeCounter/2023-03-30_15-30-23/results.txt
+*.csv
+*.txt

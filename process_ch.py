@@ -17,19 +17,20 @@ def parse_ch_commit(commitLines):
             # ignore empty lines
             pass
         elif bool(re.match('commit', nextLine, re.IGNORECASE)):
-            # commit xxxx
-            if len(commit) != 0:		## new commit, so re-initialize
-                commits.append(commit)
-                commit = {}
-            commit = {'hash' : re.match('commit (.*)', nextLine, re.IGNORECASE).group(1) }
-            commit['urlofbug'] = ""
-            commit['ctype'] = "other"
-            commit['poc'] = []
-            commit['changedfiles'] = []
-            commit['component'] = ""
-            ismerge = False
+            hash = re.match('commit (\w*)', nextLine, re.IGNORECASE).group(1)
+            if  hash!=commit.get('hash'):
+                if len(commit) != 0:
+                    ## new commit, so re-initialize
+                    commits.append(commit)
+                    commit = {}
+                commit = {'hash' : re.match('commit (\w*)', nextLine, re.IGNORECASE).group(1) }
+                commit['urlofbug'] = ""
+                commit['ctype'] = "other"
+                commit['poc'] = []
+                commit['changedfiles'] = []
+            else:
+                pass
         elif bool(re.match('merge:', nextLine, re.IGNORECASE)):
-            ismerge = True
             pass     
         elif bool(re.match('author:', nextLine, re.IGNORECASE)):
             # Author: xxxx <xxxx@xxxx.com>
@@ -40,7 +41,7 @@ def parse_ch_commit(commitLines):
         elif bool(re.match('date:', nextLine, re.IGNORECASE)):
             t = re.compile('Date:   (.*)').match(nextLine)
             commit['date'] = t.group(1)
-        elif bool(re.match('    ', nextLine, re.IGNORECASE)) and not ismerge:
+        elif bool(re.match('    ', nextLine, re.IGNORECASE)):
             if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)) : commit['ctype'] = "bug"
 
 
@@ -51,7 +52,7 @@ def parse_ch_commit(commitLines):
 
 
         
-        elif bool(re.match('[MAD]\t', nextLine, re.IGNORECASE)):
+        elif bool(re.match('[MA]\t', nextLine, re.IGNORECASE)):
             if bool(re.compile('test/\S*[.]js').match(nextLine[2:])):
                 commit['poc'].append(nextLine[2:])
                 commit['ctype'] = "bug"
@@ -62,7 +63,7 @@ def parse_ch_commit(commitLines):
             pass
 
         else:
-            print ('ERROR: Unexpected Line: ' + nextLine)
+            pass
     commits.append(commit)
     return commits
 
@@ -72,8 +73,8 @@ def cal_chfile(commits,base_path,out_dir):
         chfile = commit["changedfiles"]
         for file in chfile:
             #print(file)
-            if re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file) \
-                or re.compile('[\w-]+(?=[.]cc\s)').search(file):
+            if (re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file) \
+                or re.compile('[\w-]+(?=[.]cc\s)').search(file)):
                 try:
                     shutil.copy(os.path.join(base_path,file[:-1]),out_dir)
                 except Exception as e:
@@ -88,13 +89,14 @@ def cal_chfile(commits,base_path,out_dir):
 if __name__ == '__main__':
     data = parse_ch_commit(sys.stdin.readlines())
     table = cal_chfile(data,'/data/ChakraCore','/data/patchFuzz/whitelist/ch')
-    file1 = open('/data/patchFuzz/whitelist/ch_allowlist.txt', 'w')
-    file2 = open('/data/patchFuzz/whitelist/ch.txt', 'w') 
+    file1 = open('/data/patchFuzz/whitelist/ch_allowlist.txt.new', 'w')
+    file2 = open('/data/patchFuzz/whitelist/ch.txt.new', 'w') 
     for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
         file1.write(str(k)[:-1]+'\n')
         file2.write(str(k)[:-1]+','+str(v)+'\n')        
     file1.close()
     file2.close()
+
     #export_csv(data,"ch")
     #print(commits)
     # print('Author'.ljust(15) + '  ' + 'Email'.ljust(20) +'  ' + 'Hash'.ljust(8) + '  ' + 'Message'.ljust(20))
