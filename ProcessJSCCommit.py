@@ -6,7 +6,7 @@ from utils import export_csv
 
 
 
-def parse_je_commit(commitLines):
+def parseJSCCommit(commitLines):
     commits = []
     # dict to store commit data
     commit = {}
@@ -31,7 +31,7 @@ def parse_je_commit(commitLines):
             else:
                 pass
         elif bool(re.match('merge:', nextLine, re.IGNORECASE)):
-            pass       
+            pass 
         elif bool(re.match('author:', nextLine, re.IGNORECASE)):
             # Author: xxxx <xxxx@xxxx.com>
             m = re.compile('Author: (.*) <(.*)>').match(nextLine)
@@ -42,22 +42,23 @@ def parse_je_commit(commitLines):
             t = re.compile('Date:   (.*)').match(nextLine)
             commit['date'] = t.group(1)
         elif bool(re.match('    ', nextLine, re.IGNORECASE)):
+            if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)) or bool(re.search('fix', nextLine.strip(), re.IGNORECASE))\
+                or bool(re.search('crash', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
+            elif bool(re.search('bugs.webkit.org',nextLine)) or bool(re.search('http://webkit.org/b/',nextLine)):
+                commit['urlofbug'] = nextLine.strip()
+                commit['ctype'] = "bug"
 
-            if bool(re.search('bug\s', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
-            
-            
-            elif bool(re.search('fix', nextLine.strip(), re.IGNORECASE)):
-                commit['ctype'] = "bug"
         
-        elif bool(re.match('[MA]\t', nextLine, re.IGNORECASE)):
-            if bool(re.compile('tests/\S*[.]js').match(nextLine[2:])):
-                commit['poc'].append(nextLine[2:])
+        elif bool(re.match('[MA]\t', nextLine, re.IGNORECASE)) :
+            if bool(re.compile('JSTests/stress').match(nextLine[2:])):
                 commit['ctype'] = "bug"
+                commit['poc'].append(nextLine[2:])
             if commit['ctype'] == "bug":
                 commit['changedfiles'].append(nextLine[2:])
 
         elif bool(re.match('[MADCRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
             pass
+        
         else:
             pass
     commits.append(commit)
@@ -68,9 +69,9 @@ def cal_chfile(commits,base_path,out_dir):
     for commit in commits:
         chfile = commit["changedfiles"]
         for file in chfile:
-            #print(file)
-            if (re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file))\
-                and bool(re.match('jerry',file)):
+            
+            if (re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file) \
+                or re.compile('[\w-]+(?=[.]cc\s)').search(file)) and bool(re.match('Source/JavaScriptCore',file)):
                 try:
                     shutil.copy(os.path.join(base_path,file[:-1]),out_dir)
                 except Exception as e:
@@ -82,18 +83,22 @@ def cal_chfile(commits,base_path,out_dir):
                     hashtable[file]=hashtable[file] + 1
     return hashtable
 
+                    
+
+
+
 if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())
-    data=parse_je_commit(sys.stdin.readlines())
-    table=cal_chfile(data,'/data/jerryscript','/data/patchFuzz/whitelist/je')
-    file1 = open('/data/patchFuzz/whitelist/je_allowlist.txt.new', 'w')
-    file2 = open('/data/patchFuzz/whitelist/je.txt.new', 'w') 
+    data = parseJSCCommit(sys.stdin.readlines())
+    table = cal_chfile(data,'/data/WebKit','/data/patchFuzz/whitelist/jsc')
+    file1 = open('/data/patchFuzz/whitelist/jsc_allowlist.txt.new', 'w')
+    file2 = open('/data/patchFuzz/whitelist/jsc.txt.new', 'w') 
     for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
         file1.write(str(k)[:-1]+'\n')
         file2.write(str(k)[:-1]+','+str(v)+'\n')        
     file1.close()
-    file2.close()  
-    #export_csv(data,"je")
+    file2.close()
+    #export_csv(data,"webkit")
     #print(commits)
     # print('Author'.ljust(15) + '  ' + 'Email'.ljust(20) +'  ' + 'Hash'.ljust(8) + '  ' + 'Message'.ljust(20))
     # print("=================================================================================")

@@ -2,22 +2,22 @@ import argparse
 import pandas as pd
 import sys,os,datetime
 
-from process_jsc import parse_jsc_commit
-from process_v8 import parse_v8_commit
-from process_ch import parse_ch_commit
-from process_sp import parse_sp_commit
-from process_je import parse_je_commit
-from utils import mkdir
-from extract import extract_jsc_test,extract_v8_test,extract_ch_test,extract_sp_test,extract_je_test
-from jsc.save_jsc import save_jsc
-from v8.save_v8 import save_v8
-from ch.save_ch import save_ch
-from sp.save_sp import save_sp
-from je.save_je import save_je
+from ProcessJSCCommit import parseJSCCommit
+from ProcessV8Commit import parseV8Commit
+from ProcessChakraCommit import parseChakraCommit
+from ProcessSMCommit import parseSMCommit
+from ProcessJerryCommit import parseJerryCommit
+from utils import mkDir
+from ExtractSample import extractJSCSample,extractV8Sample,extractChakraSample,extractSMSample,extractJerrySample
+from jsc.SaveJSC import saveJsc
+from v8.SaveV8 import saveV8
+from ch.SaveChakra import saveCh
+from sp.SaveSM import saveSp
+from je.SaveJerry import saveJe
 
 
 
-def export_csv(export,target,dir_path):
+def exportCSV(export,target,dir_path):
     date = datetime.date.today().strftime('%Y-%m-%d')
     pf = pd.DataFrame(list(export))
     order = ['date','hash','ctype','poc','changedfiles']
@@ -51,60 +51,60 @@ def main():
         case "jsc":
             dir_path = os.path.join(out_path, "jsc")
             poc_path = os.path.join(dir_path,"poc")
-            mkdir(dir_path)
-            mkdir(poc_path)
-            commits = parse_jsc_commit(sys.stdin.readlines())
-            csv_path = export_csv(commits,"jsc",dir_path)
-            test_path = extract_jsc_test(csv_path,target_root,dir_path)
-            save_jsc(test_path,poc_path,file_type_list)
+            mkDir(dir_path)
+            mkDir(poc_path)
+            commits = parseJSCCommit(sys.stdin.readlines())
+            csv_path = exportCSV(commits,"jsc",dir_path)
+            test_path = extractJSCSample(csv_path,target_root,dir_path)
+            saveJsc(test_path,poc_path,file_type_list)
 
             sys.exit("Finished!")
 
         case "v8":
             dir_path = os.path.join(out_path, "v8")
             poc_path = os.path.join(dir_path,"poc")
-            mkdir(dir_path)
-            mkdir(poc_path)
-            commits = parse_v8_commit(sys.stdin.readlines())
-            csv_path = export_csv(commits,"v8",dir_path)
-            test_path = extract_v8_test(csv_path,target_root,dir_path)
-            save_v8(test_path,poc_path,file_type_list)
+            mkDir(dir_path)
+            mkDir(poc_path)
+            commits = parseV8Commit(sys.stdin.readlines())
+            csv_path = exportCSV(commits,"v8",dir_path)
+            test_path = extractV8Sample(csv_path,target_root,dir_path)
+            saveV8(test_path,poc_path,file_type_list)
 
             sys.exit("Finished!")
 
         case "ch":
             dir_path = os.path.join(out_path, "ch")
             poc_path = os.path.join(dir_path,"poc")
-            mkdir(dir_path)
-            mkdir(poc_path)
-            commits = parse_ch_commit(sys.stdin.readlines())
-            csv_path = export_csv(commits,"ch",dir_path)
-            test_path = extract_ch_test(csv_path,target_root,dir_path)
-            save_ch(test_path,poc_path,file_type_list)
+            mkDir(dir_path)
+            mkDir(poc_path)
+            commits = parseChakraCommit(sys.stdin.readlines())
+            csv_path = exportCSV(commits,"ch",dir_path)
+            test_path = extractChakraSample(csv_path,target_root,dir_path)
+            saveCh(test_path,poc_path,file_type_list)
 
             sys.exit("Finished!")
 
         case "sp":
             dir_path = os.path.join(out_path, "sp")
             poc_path = os.path.join(dir_path,"poc")
-            mkdir(dir_path)
-            mkdir(poc_path)
-            commits = parse_sp_commit(sys.stdin.readlines())
-            csv_path = export_csv(commits,"sp",dir_path)
-            test_path = extract_sp_test(csv_path,target_root,dir_path)
-            save_sp(test_path,poc_path,file_type_list)
+            mkDir(dir_path)
+            mkDir(poc_path)
+            commits = parseSMCommit(sys.stdin.readlines())
+            csv_path = exportCSV(commits,"sp",dir_path)
+            test_path = extractSMSample(csv_path,target_root,dir_path)
+            saveSp(test_path,poc_path,file_type_list)
 
             sys.exit("Finished!")
 
         case "je":
             dir_path = os.path.join(out_path, "je")
             poc_path = os.path.join(dir_path,"poc")
-            mkdir(dir_path)
-            mkdir(poc_path)
-            commits = parse_je_commit(sys.stdin.readlines())
-            csv_path = export_csv(commits,"je",dir_path)
-            test_path = extract_je_test(csv_path,target_root,dir_path)
-            save_je(test_path,poc_path,file_type_list)
+            mkDir(dir_path)
+            mkDir(poc_path)
+            commits = parseJerryCommit(sys.stdin.readlines())
+            csv_path = exportCSV(commits,"je",dir_path)
+            test_path = extractJerrySample(csv_path,target_root,dir_path)
+            saveJe(test_path,poc_path,file_type_list)
 
             sys.exit("Finished!")
 

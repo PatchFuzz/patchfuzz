@@ -43,13 +43,15 @@ def updatefile(path, dest,filename):
     except UnicodeDecodeError:
         print("UnicodeDecodeError")
     fw.close()
-    if "export " in string \
-            or "export{" in string :
-            return
-
-   
     string = re.sub(C_Rule, "", string)
-    string = re.sub("asserts?[.]?\w* ?\\(", "print(",string)
+    string = re.sub("this.WScript.LoadScriptFile", "print",string)
+    string = re.sub("this.WScript", "print",string)
+    string = re.sub("WScript ", "print",string)
+    string = re.sub("WScript[.]\w+[.]\w+", "\"zxw\"",string)
+    string = re.sub("WScript[.]?\w* ?\\(", "print(",string)
+    string = re.sub("console.log\\(", "print(",string)
+    string = re.sub("assert[.]?\w* ?\\(", "print(",string)
+    string = re.sub("testRunner.runTests.*;?", "for (var i = 0; i < tests.length; i ++) {tests[i].body()}",string)
 
 
     
@@ -73,15 +75,15 @@ def listfiles(path, dest, file_types):
             # print prefx
             if prefx in file_types:
                 #print(listpath)
-                updatefile(listpath, dest, file)
+                updatefile(listpath, dest,file)
 
 
-def save_je(path, dest, file_types):
+def saveCh(path, dest, file_types):
     mkdir(os.path.join(dest, "wasm"))
     listfiles(path, dest, file_types)
 
 
 if __name__ == '__main__':
-    src = "/data/table2/testsuite/je"
-    dest = "/data/table2/testsuite/je_new"
-    save_je(src, dest, file_type_list)
+    src = "/data/table2/testsuite/ch"
+    dest = "/data/table2/testsuite/ch_new"
+    saveCh(src, dest, file_type_list)

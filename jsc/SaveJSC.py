@@ -35,6 +35,8 @@ file_type_list = ["js"]
 
 @setTimeout(1)
 def updatefile(path, dest,filename):
+    parent_dir = os.path.abspath(os.path.join(dest, os.pardir))
+    wasm = os.path.join(parent_dir, 'wasm')
     #print(path)
     string = ""
     fw = open(path, "r")
@@ -43,18 +45,25 @@ def updatefile(path, dest,filename):
     except UnicodeDecodeError:
         print("UnicodeDecodeError")
     fw.close()
-    if "instantiate(" in string \
-            or "wasmEvalText(" in string\
-            or "wasmTextToBinary(" in string:
-        fw = open(os.path.join(dest,"wasm",filename), "w")
-        fw.write(string)
+    if "export " in string \
+            or "$vm.Element;" in string \
+            or "$vm.Root;" in string \
+            or "$vm.getElement;" in string :
+            return
+    if "isWasmSupported" in string \
+            or "wasmCode" in string\
+            or "wasmEntry" in string:
+        fw = open(os.path.join(wasm,filename), "w")
+        fw.write(string.lstrip())
         fw.close()
-        return    
+        return       
     string = re.sub(C_Rule, "", string)
+    string = re.sub("\\$vm[.]\w+", "print",string)
+    string = re.sub("abort\\(", "print(",string)    
     string = re.sub("assert[.]?\w* ?\\(", "print(",string)
-    string = re.sub("crash\\(", "print(",string)
-    string = re.sub("appendToActual\\(", "print(",string)    
-    string = re.sub("load\\(.*\\)","",string)
+    string = re.sub("generateBinaryTests\\(", "print(",string)
+           
+    string = re.sub("load\\(.*\\);?","",string)
 
 
     
@@ -63,7 +72,6 @@ def updatefile(path, dest,filename):
     fw = open(os.path.join(dest,filename), "w")
     fw.write(string.lstrip())
     fw.close()
-
 
 def listfiles(path, dest, file_types):
     for file in os.listdir(path):
@@ -77,12 +85,13 @@ def listfiles(path, dest, file_types):
             prefx = splitlist[m - 1]
             # print prefx
             if prefx in file_types:
-                #print(listpath)
                 updatefile(listpath, dest,file)
 
 
-def save_sp(path, dest, file_types):
-    mkdir(os.path.join(dest, "wasm"))
+def saveJsc(path, dest, file_types):
+    parent_dir = os.path.abspath(os.path.join(dest, os.pardir))
+    wasm = os.path.join(parent_dir, 'wasm')
+    mkdir(wasm)
     listfiles(path, dest, file_types)
 
 
@@ -94,6 +103,7 @@ if __name__ == '__main__':
     # args = parser.parse_args()
     # src_path = args.src
     # out_path = args.out
-    src_path = "/data/table2/testsuite/sp"
-    out_path = "/data/table2/testsuite/sp_new"
-    save_sp(src_path, out_path, file_type_list)
+    src_path = "/data/table2/testsuite/jsc"
+    out_path= "/data/table2/testsuite/jsc_new"
+    saveJsc(src_path,out_path,file_type_list)
+

@@ -35,6 +35,8 @@ file_type_list = ["js"]
 
 @setTimeout(1)
 def updatefile(path, dest,filename):
+    parent_dir = os.path.abspath(os.path.join(dest, os.pardir))
+    wasm = os.path.join(parent_dir, 'wasm')
     #print(path)
     string = ""
     fw = open(path, "r")
@@ -46,7 +48,7 @@ def updatefile(path, dest,filename):
     if "export " in string :
         return
     if "WasmModuleBuilder(" in string :
-        fw = open(os.path.join(dest,"wasm",filename), "w")
+        fw = open(os.path.join(wasm,filename), "w")
         fw.write(string.lstrip())
         fw.close()
         return 
@@ -80,8 +82,10 @@ def listfiles(path, dest, file_types):
                 updatefile(listpath, dest,file)
 
 
-def save_v8(path, dest, file_types):
-    mkdir(os.path.join(dest, "wasm"))
+def saveV8(path, dest, file_types):
+    parent_dir = os.path.abspath(os.path.join(dest, os.pardir))
+    wasm = os.path.join(parent_dir, 'wasm')
+    mkdir(wasm)
     listfiles(path, dest, file_types)
 
 
@@ -95,4 +99,4 @@ if __name__ == '__main__':
     # out_path = args.out
     src_path = "/data/table2/testsuite/v8"
     out_path = "/data/table2/testsuite/v8_new"
-    save_v8(src_path, out_path, file_type_list)
+    saveV8(src_path, out_path, file_type_list)

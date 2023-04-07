@@ -1,6 +1,6 @@
 import os
 import re
-import signal,argparse
+import signal
 
 
 class TimeOutException(Exception):
@@ -44,24 +44,12 @@ def updatefile(path, dest,filename):
         print("UnicodeDecodeError")
     fw.close()
     if "export " in string \
-            or "$vm.Element;" in string \
-            or "$vm.Root;" in string \
-            or "$vm.getElement;" in string :
+            or "export{" in string :
             return
-    if "isWasmSupported" in string \
-            or "wasmCode" in string\
-            or "wasmEntry" in string:
-        fw = open(os.path.join(dest,"wasm",filename), "w")
-        fw.write(string.lstrip())
-        fw.close()
-        return       
+
+   
     string = re.sub(C_Rule, "", string)
-    string = re.sub("\\$vm[.]\w+", "print",string)
-    string = re.sub("abort\\(", "print(",string)    
-    string = re.sub("assert[.]?\w* ?\\(", "print(",string)
-    string = re.sub("generateBinaryTests\\(", "print(",string)
-           
-    string = re.sub("load\\(.*\\);?","",string)
+    string = re.sub("asserts?[.]?\w* ?\\(", "print(",string)
 
 
     
@@ -70,6 +58,7 @@ def updatefile(path, dest,filename):
     fw = open(os.path.join(dest,filename), "w")
     fw.write(string.lstrip())
     fw.close()
+
 
 def listfiles(path, dest, file_types):
     for file in os.listdir(path):
@@ -83,23 +72,16 @@ def listfiles(path, dest, file_types):
             prefx = splitlist[m - 1]
             # print prefx
             if prefx in file_types:
-                updatefile(listpath, dest,file)
+                #print(listpath)
+                updatefile(listpath, dest, file)
 
 
-def save_jsc(path, dest, file_types):
+def saveJe(path, dest, file_types):
     mkdir(os.path.join(dest, "wasm"))
     listfiles(path, dest, file_types)
 
 
 if __name__ == '__main__':
-    # parser = argparse.ArgumentParser()
-    # parser.description='findbadpoc'
-    # parser.add_argument("src", help="Path to seeds.", type=str)
-    # parser.add_argument("out", help="Path to store bad seeds", type=str)
-    # args = parser.parse_args()
-    # src_path = args.src
-    # out_path = args.out
-    src_path = "/data/table2/testsuite/jsc"
-    out_path= "/data/table2/testsuite/jsc_new"
-    save_jsc(src_path,out_path,file_type_list)
-
+    src = "/data/table2/testsuite/je"
+    dest = "/data/table2/testsuite/je_new"
+    saveJe(src, dest, file_type_list)

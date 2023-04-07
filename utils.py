@@ -27,7 +27,7 @@ def export_csv(export,target):
     #输出
     pf.to_csv(file_path)
     
-def mkdir(path):
+def mkDir(path):
  
 	folder = os.path.exists(path)
  

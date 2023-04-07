@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 import sys,re,shutil,os
-#from utils import export_csv
+from utils import export_csv
 
 # array to store dict of commit data
 
 
 
-def parse_sp_commit(commitLines):
+def parseV8Commit(commitLines):
     commits = []
     # dict to store commit data
     commit = {}
@@ -42,24 +42,22 @@ def parse_sp_commit(commitLines):
             t = re.compile('Date:   (.*)').match(nextLine)
             commit['date'] = t.group(1)
         elif bool(re.match('    ', nextLine, re.IGNORECASE)):
-            if bool(re.match('Backed out', nextLine.strip(), re.IGNORECASE)): pass
-            elif bool(re.search('bug #?\d+', nextLine.strip(), re.IGNORECASE)) or bool(re.search('fix', nextLine.strip(), re.IGNORECASE)) \
-            or bool(re.search('crash', nextLine.strip(), re.IGNORECASE)) or bool(re.search('b=\d+', nextLine.strip(), re.IGNORECASE)) :commit['ctype'] = "bug"
-                # component = re.compile('\\[(.*)\\]').match(nextLine.strip())
-                # if component: commit['component'] = component.group(1)
-            elif bool(re.search('phabricator.services.mozilla.com',nextLine)):
+            if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)):
+                if nextLine.strip() !='Bug:' and nextLine.strip() !='BUG='\
+                    and nextLine.strip() !='BUG=none' : commit['ctype'] = "bug"
+            elif bool(re.search('fix', nextLine.strip(), re.IGNORECASE))  : commit['ctype'] = "bug"              
+            elif (bool(re.search('chromium-review.googlesource.com',nextLine)) or bool(re.search('codereview.chromium.org',nextLine))) and commit['ctype']=="bug":
                 commit['urlofbug'] = nextLine.strip()
 
         
         elif bool(re.match('[MA]\t', nextLine, re.IGNORECASE)):
-            if bool(re.compile('js/src/jit-test').match(nextLine[2:])):
+            if bool(re.compile('test/mjsunit/regress').match(nextLine[2:])):
                 commit['ctype'] = "bug"
                 commit['poc'].append(nextLine[2:])
             if commit['ctype'] == "bug":
                 commit['changedfiles'].append(nextLine[2:])
-
         elif bool(re.match('[MADCRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
-            pass
+            pass            
 
         else:
             pass
@@ -72,8 +70,8 @@ def cal_chfile(commits,base_path,out_dir):
         chfile = commit["changedfiles"]
         for file in chfile:
             #print(file)
-            if (re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file)\
-                or  re.compile('[\w-]+(?=[.]cc\s)').search(file)) and bool(re.match('js/src',file)):
+            if re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file) \
+                or re.compile('[\w-]+(?=[.]cc\s)').search(file):
                 try:
                     shutil.copy(os.path.join(base_path,file[:-1]),out_dir)
                 except Exception as e:
@@ -87,18 +85,14 @@ def cal_chfile(commits,base_path,out_dir):
 
 if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())
-    data=parse_sp_commit(sys.stdin.readlines())
-    table = cal_chfile(data,'/data/spidermonkey','/data/patchFuzz/whitelist/sp')
-    file1 = open('/data/patchFuzz/whitelist/sp_allowlist.txt.new', 'w')
-    file2 = open('/data/patchFuzz/whitelist/sp.txt.new', 'w') 
+    data=parseV8Commit(sys.stdin.readlines())
+    table=cal_chfile(data,'/home/ubuntu/v8/v8','/home/data/patchFuzz/whitelist/v8')
+    file1 = open('/home/data/patchFuzz/whitelist/v8_allowlist.txt.new', 'w')
+    file2 = open('/home/data/patchFuzz/whitelist/v8.txt.new', 'w') 
     for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
         file1.write(str(k)[:-1]+'\n')
         file2.write(str(k)[:-1]+','+str(v)+'\n')        
     file1.close()
     file2.close()
-    #export_csv(data,"sp")
+    #export_csv(data,"v8")
     #print(commits)
-    # print('Author'.ljust(15) + '  ' + 'Email'.ljust(20) +'  ' + 'Hash'.ljust(8) + '  ' + 'Message'.ljust(20))
-    # print("=================================================================================")
-    # for commit in commits:
-    #     print(commit['author'].ljust(15) + '  ' + commit['email'][:20].ljust(20) + '  ' +  commit['hash'][:7].ljust(8) + '  ' + commit['message'])

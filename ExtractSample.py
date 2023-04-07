@@ -1,7 +1,7 @@
 import pandas as pd
 import re,shutil,os,sys
 import datetime
-from utils import mkdir
+from utils import mkDir
 
 
 
@@ -13,14 +13,14 @@ csvpath_sp = r"D:\workspace\sp-2023-03-02.csv"
 csvpath_ch = r"D:\workspace\ch-2023-03-02.csv"
 
 
-#pf=pd.read_csv(csvpath,usecols=['hash','poc','date'],nrows=4000,squeeze=True)
+#pf=pd.read_csv(csvpath,usecols=['hash','poc','date'],nrows=4000)
 
 #print(data)
-def extract_jsc_test(csv_path,base_path,out_path):
+def extractJSCSample(csv_path,base_path,out_path):
     if not os.path.exists(base_path) : sys.exit("Bad target_root !")
     testpath = os.path.join(out_path,"test",date)
-    mkdir(testpath)
-    pf=pd.read_csv(csv_path,usecols=['hash','poc','date'],squeeze=True)
+    mkDir(testpath)
+    pf=pd.read_csv(csv_path,usecols=['hash','poc','date'])
     data=pf.dropna().values.tolist()
     num=0
     first=""
@@ -58,11 +58,11 @@ def extract_jsc_test(csv_path,base_path,out_path):
     
     return testpath
 
-def extract_v8_test(csv_path,base_path,out_path):
+def extractV8Sample(csv_path,base_path,out_path):
     if not os.path.exists(base_path) : sys.exit("Bad target_root !")
     testpath = os.path.join(out_path,"test",date)
-    mkdir(testpath)
-    pf=pd.read_csv(csv_path,usecols=['hash','poc','date'],squeeze=True)
+    mkDir(testpath)
+    pf=pd.read_csv(csv_path,usecols=['hash','poc','date'])
     data=pf.dropna().values.tolist()
     num=0
     first=""
@@ -103,11 +103,11 @@ def extract_v8_test(csv_path,base_path,out_path):
     print("Number of poc: ",num)
     
     return testpath
-def extract_ch_test(csv_path,base_path,out_path):
+def extractChakraSample(csv_path,base_path,out_path):
     if not os.path.exists(base_path) : sys.exit("Bad target_root !")
     testpath = os.path.join(out_path,"test",date)
-    mkdir(testpath)
-    pf=pd.read_csv(csv_path,usecols=['hash','poc','date'],squeeze=True)
+    mkDir(testpath)
+    pf=pd.read_csv(csv_path,usecols=['hash','poc','date'])
     data=pf.dropna().values.tolist()
     num=0
     first=""
@@ -144,11 +144,11 @@ def extract_ch_test(csv_path,base_path,out_path):
     print("Number of poc: ",num)
     
     return testpath
-def extract_sp_test(csv_path,base_path,out_path):
+def extractSMSample(csv_path,base_path,out_path):
     if not os.path.exists(base_path) : sys.exit("Bad target_root !")
     testpath = os.path.join(out_path,"test",date)
-    mkdir(testpath)
-    pf=pd.read_csv(csv_path,usecols=['hash','poc','date'],squeeze=True)
+    mkDir(testpath)
+    pf=pd.read_csv(csv_path,usecols=['hash','poc','date'])
     data=pf.dropna().values.tolist()
     num=0
     first=""
@@ -185,11 +185,11 @@ def extract_sp_test(csv_path,base_path,out_path):
     print("Number of poc: ",num)
     
     return testpath
-def extract_je_test(csv_path,base_path,out_path):
+def extractJerrySample(csv_path,base_path,out_path):
     if not os.path.exists(base_path) : sys.exit("Bad target_root !")
     testpath = os.path.join(out_path,"test",date)
-    mkdir(testpath)
-    pf=pd.read_csv(csv_path,usecols=['hash','poc','date'],squeeze=True)
+    mkDir(testpath)
+    pf=pd.read_csv(csv_path,usecols=['hash','poc','date'])
     data=pf.dropna().values.tolist()
     num=0
     first=""
@@ -247,8 +247,8 @@ def extract_je_test(csv_path,base_path,out_path):
 def extract_webkit_poc():
     basepath = r"D:\workspace\WebKit"
     outpath =r"D:\workspace\newpoc" + '\\webkit' +  + '\\' + date
-    mkdir(outpath)
-    pf=pd.read_csv(csvpath_wb,usecols=['hash','poc','date'],squeeze=True)
+    mkDir(outpath)
+    pf=pd.read_csv(csvpath_wb,usecols=['hash','poc','date'])
     data=pf.dropna().values.tolist()
     num=0
     first=""
@@ -285,8 +285,8 @@ def extract_webkit_poc():
 def extract_v8_poc():
     basepath = r"D:\workspace\v8"
     outpath =r"D:\workspace\newpoc" + '\\v8\\' + date
-    mkdir(outpath)
-    pf=pd.read_csv(csvpath_v8,usecols=['hash','poc','date'],squeeze=True)
+    mkDir(outpath)
+    pf=pd.read_csv(csvpath_v8,usecols=['hash','poc','date'])
     data=pf.dropna().values.tolist()
     num=0
     first=""
@@ -328,8 +328,8 @@ def extract_v8_poc():
 def extract_sp_poc():
     basepath = r"D:\workspace\gecko-dev"
     outpath =r"D:\workspace\newpoc" + '\\sp\\' + date
-    mkdir(outpath)
-    pf=pd.read_csv(csvpath_sp,usecols=['hash','poc','date'],squeeze=True)
+    mkDir(outpath)
+    pf=pd.read_csv(csvpath_sp,usecols=['hash','poc','date'])
     data=pf.dropna().values.tolist()
     num=0
     first=""
@@ -369,8 +369,8 @@ def extract_sp_poc():
 def extract_ch_poc():
     basepath = r"D:\workspace\ChakraCore"
     outpath =r"D:\workspace\newpoc" + '\\ch\\' + date
-    mkdir(outpath)
-    pf=pd.read_csv(csvpath_ch,usecols=['hash','poc','date'],squeeze=True)
+    mkDir(outpath)
+    pf=pd.read_csv(csvpath_ch,usecols=['hash','poc','date'])
     data=pf.dropna().values.tolist()
     num=0
     first=""
@@ -408,8 +408,8 @@ def extract_ch_poc():
 def extract_je_poc():
     basepath = r"D:\workspace\jerryscript"
     outpath =r"D:\workspace\newpoc" + '\\je\\' + date
-    mkdir(outpath)
-    pf=pd.read_csv(csvpath_je,usecols=['hash','poc','date'],squeeze=True)
+    mkDir(outpath)
+    pf=pd.read_csv(csvpath_je,usecols=['hash','poc','date'])
     data=pf.dropna().values.tolist()
     num=0
     first=""

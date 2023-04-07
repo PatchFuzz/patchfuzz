@@ -1,6 +1,6 @@
 import os
 import re
-import signal
+import signal,argparse
 
 
 class TimeOutException(Exception):
@@ -35,6 +35,8 @@ file_type_list = ["js"]
 
 @setTimeout(1)
 def updatefile(path, dest,filename):
+    parent_dir = os.path.abspath(os.path.join(dest, os.pardir))
+    wasm = os.path.join(parent_dir, 'wasm')
     #print(path)
     string = ""
     fw = open(path, "r")
@@ -43,15 +45,18 @@ def updatefile(path, dest,filename):
     except UnicodeDecodeError:
         print("UnicodeDecodeError")
     fw.close()
+    if "instantiate(" in string \
+            or "wasmEvalText(" in string\
+            or "wasmTextToBinary(" in string:
+        fw = open(os.path.join(wasm,filename), "w")
+        fw.write(string)
+        fw.close()
+        return    
     string = re.sub(C_Rule, "", string)
-    string = re.sub("this.WScript.LoadScriptFile", "print",string)
-    string = re.sub("this.WScript", "print",string)
-    string = re.sub("WScript ", "print",string)
-    string = re.sub("WScript[.]\w+[.]\w+", "\"zxw\"",string)
-    string = re.sub("WScript[.]?\w* ?\\(", "print(",string)
-    string = re.sub("console.log\\(", "print(",string)
     string = re.sub("assert[.]?\w* ?\\(", "print(",string)
-    string = re.sub("testRunner.runTests.*;?", "for (var i = 0; i < tests.length; i ++) {tests[i].body()}",string)
+    string = re.sub("crash\\(", "print(",string)
+    string = re.sub("appendToActual\\(", "print(",string)    
+    string = re.sub("load\\(.*\\)","",string)
 
 
     
@@ -78,12 +83,21 @@ def listfiles(path, dest, file_types):
                 updatefile(listpath, dest,file)
 
 
-def save_ch(path, dest, file_types):
-    mkdir(os.path.join(dest, "wasm"))
+def saveSp(path, dest, file_types):
+    parent_dir = os.path.abspath(os.path.join(dest, os.pardir))
+    wasm = os.path.join(parent_dir, 'wasm')
+    mkdir(wasm)
     listfiles(path, dest, file_types)
 
 
 if __name__ == '__main__':
-    src = "/data/table2/testsuite/ch"
-    dest = "/data/table2/testsuite/ch_new"
-    save_ch(src, dest, file_type_list)
+    # parser = argparse.ArgumentParser()
+    # parser.description='findbadpoc'
+    # parser.add_argument("src", help="Path to seeds.", type=str)
+    # parser.add_argument("out", help="Path to store bad seeds", type=str)
+    # args = parser.parse_args()
+    # src_path = args.src
+    # out_path = args.out
+    src_path = "/data/table2/testsuite/sp"
+    out_path = "/data/table2/testsuite/sp_new"
+    saveSp(src_path, out_path, file_type_list)

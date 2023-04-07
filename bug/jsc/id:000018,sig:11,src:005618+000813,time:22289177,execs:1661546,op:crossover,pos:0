@@ -1,0 +1,18 @@
+function empty() {}
+
+function bar2(...a0) {
+  return a0;
+}
+
+function foo() {
+  let xs = bar2 (/(?<=(\w*) )Dog/,  { size:1, has(foo) { return foo == 1; } } , ["Dog", "Big"]) ;
+  '' == 1 && 0;
+  return empty(...xs,  empty(null) );
+}
+function main () {
+    for (let i = 0; i < 1_000_000; i++) {
+      let a = foo();
+        foo(/(?<=(\w*) )Dog/,  { size:1, has(i) { return i == 1; } } , ["Dog", "Big"])  ;
+    }
+}
+main();

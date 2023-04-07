@@ -6,7 +6,7 @@ from utils import export_csv
 
 
 
-def parse_ch_commit(commitLines):
+def parseJerryCommit(commitLines):
     commits = []
     # dict to store commit data
     commit = {}
@@ -31,7 +31,7 @@ def parse_ch_commit(commitLines):
             else:
                 pass
         elif bool(re.match('merge:', nextLine, re.IGNORECASE)):
-            pass     
+            pass       
         elif bool(re.match('author:', nextLine, re.IGNORECASE)):
             # Author: xxxx <xxxx@xxxx.com>
             m = re.compile('Author: (.*) <(.*)>').match(nextLine)
@@ -42,18 +42,15 @@ def parse_ch_commit(commitLines):
             t = re.compile('Date:   (.*)').match(nextLine)
             commit['date'] = t.group(1)
         elif bool(re.match('    ', nextLine, re.IGNORECASE)):
-            if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)) : commit['ctype'] = "bug"
 
-
-            elif (bool(re.search('fix', nextLine.strip(), re.IGNORECASE)) or bool(re.search('CVE', nextLine.strip()))):
+            if bool(re.search('bug\s', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
+            
+            
+            elif bool(re.search('fix', nextLine.strip(), re.IGNORECASE)):
                 commit['ctype'] = "bug"
-                component = re.compile('Fix (#\d+)').match(nextLine.strip())
-                if component: commit['component'] = component.group(1)
-
-
         
         elif bool(re.match('[MA]\t', nextLine, re.IGNORECASE)):
-            if bool(re.compile('test/\S*[.]js').match(nextLine[2:])):
+            if bool(re.compile('tests/\S*[.]js').match(nextLine[2:])):
                 commit['poc'].append(nextLine[2:])
                 commit['ctype'] = "bug"
             if commit['ctype'] == "bug":
@@ -61,7 +58,6 @@ def parse_ch_commit(commitLines):
 
         elif bool(re.match('[MADCRT][0-9]?[0-9]?[0-9]?\t', nextLine, re.IGNORECASE)):
             pass
-
         else:
             pass
     commits.append(commit)
@@ -73,8 +69,8 @@ def cal_chfile(commits,base_path,out_dir):
         chfile = commit["changedfiles"]
         for file in chfile:
             #print(file)
-            if (re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file) \
-                or re.compile('[\w-]+(?=[.]cc\s)').search(file)):
+            if (re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file))\
+                and bool(re.match('jerry',file)):
                 try:
                     shutil.copy(os.path.join(base_path,file[:-1]),out_dir)
                 except Exception as e:
@@ -87,17 +83,17 @@ def cal_chfile(commits,base_path,out_dir):
     return hashtable
 
 if __name__ == '__main__':
-    data = parse_ch_commit(sys.stdin.readlines())
-    table = cal_chfile(data,'/data/ChakraCore','/data/patchFuzz/whitelist/ch')
-    file1 = open('/data/patchFuzz/whitelist/ch_allowlist.txt.new', 'w')
-    file2 = open('/data/patchFuzz/whitelist/ch.txt.new', 'w') 
+    #parse_webkit_commit(sys.stdin.readlines())
+    data=parseJerryCommit(sys.stdin.readlines())
+    table=cal_chfile(data,'/data/jerryscript','/data/patchFuzz/whitelist/je')
+    file1 = open('/data/patchFuzz/whitelist/je_allowlist.txt.new', 'w')
+    file2 = open('/data/patchFuzz/whitelist/je.txt.new', 'w') 
     for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
         file1.write(str(k)[:-1]+'\n')
         file2.write(str(k)[:-1]+','+str(v)+'\n')        
     file1.close()
-    file2.close()
-
-    #export_csv(data,"ch")
+    file2.close()  
+    #export_csv(data,"je")
     #print(commits)
     # print('Author'.ljust(15) + '  ' + 'Email'.ljust(20) +'  ' + 'Hash'.ljust(8) + '  ' + 'Message'.ljust(20))
     # print("=================================================================================")
