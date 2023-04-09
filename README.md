@@ -7,7 +7,7 @@ git log --date=short --name-status --before=2019-1-1 --after=2023-1-1 . | python
 
 ## V8
 cd v8<br>
-git log --date=short --name-status --before=2019-1-1 --after=2023-1-1 . | python  D:\workspace\patchFuzz\main.py  D:\workspace\patchFuzz\zxw v8 D:\workspace\v8\v8
+git log --date=short -m --name-status --after=2022-11-1 | python3 /data/patchFuzz/main.py /data/patchFuzz/0404/ v8 /home/v8/
 
 ## Spidermonkey
 cd gecko-dev/js

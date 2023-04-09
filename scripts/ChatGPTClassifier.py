@@ -82,38 +82,38 @@ def Evaluate(txt,csv):
     print('Precision: {:.2f}%'.format(TP/(TP+FP)*100))
     print('Recall: {:.2f}%'.format(TP/(TP+FN)*100))
     print(TP,FP,TN,FN)
+if __name__ == '__main__':
+    # print("JSC:")
+    # Evaluate("./jsc_message.txt","./sample_jsc.csv.final.chatgpt")
 
-# print("JSC:")
-# Evaluate("./jsc_message.txt","./sample_jsc.csv.final.chatgpt")
+    print("CH:")
+    Evaluate("./ch_message.txt","./sample_ch.csv.final.chatgpt")
 
-print("CH:")
-Evaluate("./ch_message.txt","./sample_ch.csv.final.chatgpt")
+    print("V8:")
+    Evaluate("./v8_message.txt","./sample_v8.csv.final.chatgpt")
 
-print("V8:")
-Evaluate("./v8_message.txt","./sample_v8.csv.final.chatgpt")
+    print("SP:")
+    Evaluate("./sp_message.txt","./sample_sp.csv.final.chatgpt")
 
-print("SP:")
-Evaluate("./sp_message.txt","./sample_sp.csv.final.chatgpt")
+    print("Je:")
+    Evaluate("./je_message.txt","./sample_je.csv.final.chatgpt")
+    # q="""
+    # commit 25bb4faaca03882a58c494b657356d8910e3993b
+    # Author: Filip Pizlo <fpizlo@apple.com>
+    # Date:   Tue Apr 21 23:01:04 2020 +0000q
 
-print("Je:")
-Evaluate("./je_message.txt","./sample_je.csv.final.chatgpt")
-# q="""
-# commit 25bb4faaca03882a58c494b657356d8910e3993b
-# Author: Filip Pizlo <fpizlo@apple.com>
-# Date:   Tue Apr 21 23:01:04 2020 +0000q
+    #     Unreviewed, check in some more files for a blog post.
+        
+    #     * blog-files/speculation-in-jsc/clobberize-dependence-graph.graffle:
+    #     * blog-files/speculation-in-jsc/clobberize-dependence-graph.svg:
+        
+        
+        
+    #     Canonical link: https://commits.webkit.org/223710@main
+    #     git-svn-id: https://svn.webkit.org/repository/webkit/trunk@260472 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-#     Unreviewed, check in some more files for a blog post.
-    
-#     * blog-files/speculation-in-jsc/clobberize-dependence-graph.graffle:
-#     * blog-files/speculation-in-jsc/clobberize-dependence-graph.svg:
-    
-    
-    
-#     Canonical link: https://commits.webkit.org/223710@main
-#     git-svn-id: https://svn.webkit.org/repository/webkit/trunk@260472 268f45cc-cd09-0410-ab3c-d52691b4dbfc
-
-# M	Websites/webkit.org/ChangeLog
-# M	Websites/webkit.org/blog-files/speculation-in-jsc/clobberize-dependence-graph.graffle
-# M	Websites/webkit.org/blog-files/speculation-in-jsc/clobberize-dependence-graph.svg
-# """
-# print(isBugFix(q))
+    # M	Websites/webkit.org/ChangeLog
+    # M	Websites/webkit.org/blog-files/speculation-in-jsc/clobberize-dependence-graph.graffle
+    # M	Websites/webkit.org/blog-files/speculation-in-jsc/clobberize-dependence-graph.svg
+    # """
+    # print(isBugFix(q))

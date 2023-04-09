@@ -364,5 +364,19 @@ Shadow byte legend (one shadow byte represents 8 application bytes):
   Right alloca redzone:    cb
   Shadow gap:              cc
 """
-
-print(JavaScriptEngine(p3,q3))
+p4="I want you to act as a parser for JavaScript engines. I will give you a piece of JavaScript code. You need to determine if it works correctly. If it doesn't works correctly, you should fix the wrong code to code that works correctly in any other browser and show the whole correct code to me."
+q4="""
+function foo(array) {
+  return array[0];
+};
+%PrepareFunctionForOptimization(foo);
+var a = [1, 2, , 4];  // Holey Smi elements.
+var b = ['abcd', 0];  // Fast elements.
+foo(b);  // Observe fast elements first, or the IC will transition without
+foo(a);  // going polymorphic.
+%OptimizeFunctionOnNextCall(foo);
+var c = [, 0];
+assertEquals(undefined, foo(c));  // Elided hole check will leak the hole.
+"""
+if __name__ == '__main__':
+    print(JavaScriptEngine(p4,q4))
