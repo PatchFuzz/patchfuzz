@@ -48,23 +48,15 @@ A	tests/jerry/es2015/arrow-assignment.js
 M	tests/jerry/es2015/arrow-function.js
 A	tests/jerry/es2015/regression-test-issue-3355.js
 
-commit d77d4ae1c60f86e3b78ed5a69e30bf9cf5f29ab7
-Author: Robert Sipka <rsipka.uszeged@partner.samsung.com>
-Date:   Thu Mar 16 09:32:18 2017 +0100
+commit 133fc6adfd350a8728a9ec3bbf208e4a8918ae6d
+Author: Akos Kiss <akiss@inf.u-szeged.hu>
+Date:   Thu Nov 26 18:37:19 2015 +0100
 
-    Refactor the generator scripts for unicode tables (#1623)
+    Whitespace cleanup: tab removal in tools directory
     
-    Extract the source code generator methods into a separated `unicode_c_source.py` script.
-    Fix the generator scripts to make them compatible with both Python2 and Python3.
-    Remove pylint warnings.
-    
-    JerryScript-DCO-1.0-Signed-off-by: Robert Sipka rsipka.uszeged@partner.samsung.com
+    JerryScript-DCO-1.0-Signed-off-by: Akos Kiss akiss@inf.u-szeged.hu
 
-M	jerry-core/lit/lit-unicode-conversions.inc.h
-M	jerry-core/lit/lit-unicode-ranges.inc.h
-A	tools/unicode_c_source.py
-M	tools/unicode_case_conversion.py
-M	tools/unicode_ranges.py
+M	tools/prerequisites.sh
 
 commit 40a9f273143f7c3d6c0073064a857a65f2e99344
 Author: Robert Fancsik <frobert@inf.u-szeged.hu>
@@ -248,16 +240,17 @@ Date:   Tue Sep 5 12:51:24 2017 +0800
 M	jerry-core/ecma/operations/ecma-promise-object.c
 A	tests/jerry/es2015/regression-test-issue-1996.js
 
-commit 852a6aef53cc379c2b5961363d4a1b1a5a671c42
-Author: Zsolt Borbély <zsborbely.u-szeged@partner.samsung.com>
-Date:   Thu Mar 23 01:08:06 2017 +0100
+commit 0d07b21d4bf7c98e7c07c80f21c35082fafcbe6a
+Author: Tilmann Scheller <t.scheller@samsung.com>
+Date:   Fri Nov 25 10:29:09 2016 +0100
 
-    Minor fixes around the debugger (#1677)
+    Update Travis CI status reference after repository move. (#1447)
     
-    JerryScript-DCO-1.0-Signed-off-by: Zsolt Borbély zsborbely.u-szeged@partner.samsung.com
+    Update URL to match the new repository location so the Travis CI badge will start working again.
+    
+    JerryScript-DCO-1.0-Signed-off-by: Tilmann Scheller t.scheller@samsung.com
 
-M	jerry-core/CMakeLists.txt
-M	jerry-debugger/jerry-client-ws.html
+M	README.md
 
 commit 57db5ca918c33a9330d91a3fe5d69a74d9a19a64
 Author: Akos Kiss <akiss@inf.u-szeged.hu>
@@ -1474,6 +1467,18 @@ M	jerry-core/ecma/base/ecma-helpers-conversion.c
 M	jerry-core/ecma/base/ecma-helpers-string.c
 M	jerry-core/ecma/base/ecma-helpers.c
 M	jerry-core/ecma/builtin-objects/ecma-builtin-helpers.c
+M	jerry-core/ecma/builtin-objects/ecma-builtins.c
+M	jerry-core/ecma/operations/ecma-conversion.c
+M	jerry-core/ecma/operations/ecma-exceptions.c
+M	jerry-core/ecma/operations/ecma-function-object.c
+M	jerry-core/ecma/operations/ecma-lex-env.c
+M	jerry-core/ecma/operations/ecma-objects-arguments.c
+M	jerry-core/ecma/operations/ecma-objects-general.c
+M	jerry-core/ecma/operations/ecma-objects.c
+M	jerry-core/ecma/operations/ecma-reference.c
+M	jerry-core/ecma/operations/ecma-string-object.c
+M	jerry-core/jerry.c
+M	jerry-core/jrt/jrt.h
 M	jerry-core/mem/mem-allocator.c
 M	jerry-core/mem/mem-heap.c
 M	jerry-core/mem/mem-poolman.c

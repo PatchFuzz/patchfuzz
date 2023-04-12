@@ -1,6 +1,6 @@
 import argparse
 import pandas as pd
-import sys,os,datetime
+import sys,os,datetime,time
 
 from ProcessJSCCommit import parseJSCCommit
 from ProcessV8Commit import parseV8Commit
@@ -53,7 +53,10 @@ def main():
             poc_path = os.path.join(dir_path,"poc")
             mkDir(dir_path)
             mkDir(poc_path)
+            start_time=time.time()
             commits = parseJSCCommit(sys.stdin.readlines())
+            end_time=time.time()
+            print(f"the running time is :{end_time - start_time} s")
             csv_path = exportCSV(commits,"jsc",dir_path)
             test_path = extractJSCSample(csv_path,target_root,dir_path)
             saveJsc(test_path,poc_path,file_type_list)
@@ -65,7 +68,10 @@ def main():
             poc_path = os.path.join(dir_path,"poc")
             mkDir(dir_path)
             mkDir(poc_path)
+            start_time=time.time()
             commits = parseV8Commit(sys.stdin.readlines())
+            end_time=time.time()
+            print(f"the running time is :{end_time - start_time} s")
             csv_path = exportCSV(commits,"v8",dir_path)
             test_path = extractV8Sample(csv_path,target_root,dir_path)
             saveV8(test_path,poc_path,file_type_list)
@@ -77,7 +83,10 @@ def main():
             poc_path = os.path.join(dir_path,"poc")
             mkDir(dir_path)
             mkDir(poc_path)
+            start_time=time.time()
             commits = parseChakraCommit(sys.stdin.readlines())
+            end_time=time.time()
+            print(f"the running time is :{end_time - start_time} s")
             csv_path = exportCSV(commits,"ch",dir_path)
             test_path = extractChakraSample(csv_path,target_root,dir_path)
             saveCh(test_path,poc_path,file_type_list)
@@ -89,7 +98,10 @@ def main():
             poc_path = os.path.join(dir_path,"poc")
             mkDir(dir_path)
             mkDir(poc_path)
+            start_time=time.time()
             commits = parseSMCommit(sys.stdin.readlines())
+            end_time=time.time()
+            print(f"the running time is :{end_time - start_time} s")
             csv_path = exportCSV(commits,"sp",dir_path)
             test_path = extractSMSample(csv_path,target_root,dir_path)
             saveSp(test_path,poc_path,file_type_list)
@@ -101,7 +113,10 @@ def main():
             poc_path = os.path.join(dir_path,"poc")
             mkDir(dir_path)
             mkDir(poc_path)
+            start_time=time.time()
             commits = parseJerryCommit(sys.stdin.readlines())
+            end_time=time.time()
+            print(f"the running time is :{end_time - start_time} s")
             csv_path = exportCSV(commits,"je",dir_path)
             test_path = extractJerrySample(csv_path,target_root,dir_path)
             saveJe(test_path,poc_path,file_type_list)

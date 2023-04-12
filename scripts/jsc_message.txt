@@ -74,10 +74,6 @@ Date:   Sun Sep 17 07:29:59 2006 +0000
             * Loader/WebFrameLoader.m:
             (-[WebFrameLoader dealloc]):
             (-[WebFrameLoader commitProvisionalLoad]):
-            * Loader/WebIconLoader.h: Removed.
-            * Loader/WebIconLoader.m: Removed.
-            * Misc/WebIconDatabase.h:
-            * Misc/WebIconDatabase.m:
             * WebView/WebDataSourceInternal.h:
     
     
@@ -120,106 +116,112 @@ Date:   Thu Dec 27 13:31:13 2012 +0000
 M	LayoutTests/ChangeLog
 M	LayoutTests/platform/qt/TestExpectations
 
-commit 03e2c8ab1129626a2623f8551536cda88a9790f2
-Author: Hayato Ito <hayato@chromium.org>
-Date:   Thu Dec 1 12:17:20 2011 +0000
+commit b60b8620fd08d02e67f4c3f1d48dddec7e3f5c15
+Author: Yusuke Suzuki <utatane.tea@gmail.com>
+Date:   Wed Aug 1 16:01:00 2018 +0000
 
-    Unreviewed. Update chromium test expectations.
-    Mark two tests flaky.
+    Add TransformationMatrix::Identity
+    https://bugs.webkit.org/show_bug.cgi?id=188204
     
-    * platform/chromium/test_expectations.txt:
+    Reviewed by Simon Fraser.
     
-    Canonical link: https://commits.webkit.org/90129@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@101657 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    This patch adds TransformationMatrix::Identity, which is a static const variable holding an identity matrix.
+    
+    No behavior change.
+    
+    * platform/graphics/GraphicsLayer.cpp:
+    (WebCore::GraphicsLayer::transform const):
+    (WebCore::GraphicsLayer::childrenTransform const):
+    (): Deleted.
+    * platform/graphics/transforms/TransformationMatrix.cpp:
+    * platform/graphics/transforms/TransformationMatrix.h:
+    
+    
+    Canonical link: https://commits.webkit.org/203333@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@234460 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
-M	LayoutTests/ChangeLog
-M	LayoutTests/platform/chromium/test_expectations.txt
+M	Source/WebCore/ChangeLog
+M	Source/WebCore/platform/graphics/GraphicsLayer.cpp
+M	Source/WebCore/platform/graphics/transforms/TransformationMatrix.cpp
+M	Source/WebCore/platform/graphics/transforms/TransformationMatrix.h
 
-commit 9f25a8914a122381e767ea966c8fe48370fde174
-Author: Maciej Stachowiak <mjs@apple.com>
-Date:   Sat Jun 14 22:13:18 2008 +0000
+commit f97451d7fc3fcd3b2999951103097bbe6200cc93
+Author: Chris Dumez <cdumez@apple.com>
+Date:   Thu Aug 27 21:42:29 2015 +0000
 
-    2008-06-14  Maciej Stachowiak  <mjs@apple.com>
+    Document window.NodeFilter properties
+    https://bugs.webkit.org/show_bug.cgi?id=148531
     
-            Reviewed by Oliver.
+    Reviewed by Geoffrey Garen.
     
-            - initialize local vars as side effect of call instead of in bytecode
-            1.004x speedup on SunSpider.
+    Document window.NodeFilter properties to detect changes to them. This
+    is in preparation of Bug 148415 as this will help detect unwanted
+    changes to the interface when making NodeFilter a callback interface.
     
-            This removes just the dispatch overhead for these loads - in the
-            future, dead store elimination might be able to eliminate them
-            entirely.
+    * fast/dom/node-filter-interface-expected.txt: Added.
+    * fast/dom/node-filter-interface.html: Added.
     
-            * VM/CodeGenerator.cpp:
-            (KJS::CodeGenerator::CodeGenerator): For function blocks, don't
-            emit loads of undefined for var initialization.
-            * VM/Machine.cpp:
-            (KJS::slideRegisterWindowForCall): Instead, initialize locals
-            as part of the call.
-    
-    
-    
-    Canonical link: https://commits.webkit.org/26990@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@34541 268f45cc-cd09-0410-ab3c-d52691b4dbfc
-
-M	JavaScriptCore/ChangeLog
-M	JavaScriptCore/VM/CodeGenerator.cpp
-M	JavaScriptCore/VM/Machine.cpp
-
-commit 9b9d026ab8c293623520eed18d60992285063300
-Author: David Levin <levin@chromium.org>
-Date:   Thu Sep 15 01:46:16 2011 +0000
-
-    [chromium] rebaselines due to r95096, r95121, and r95129.
-    
-    * platform/chromium-cg-mac-leopard/fast/borders/border-image-scaled-gradient-expected.png: Added.
-    * platform/chromium-win/fast/borders/border-image-side-reduction-expected.png:e-expected.txt:
-    * platform/chromium-win/svg/css/getComputedStyle-basic-expected.txt:
-    
-    Canonical link: https://commits.webkit.org/84031@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@95149 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+    Canonical link: https://commits.webkit.org/166652@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@189059 268f45cc-cd09-0410-ab3c-d52691b4dbfc
 
 M	LayoutTests/ChangeLog
-A	LayoutTests/platform/chromium-cg-mac-leopard/fast/borders/border-image-scaled-gradient-expected.png
-A	LayoutTests/platform/chromium-cg-mac-leopard/svg/as-border-image/svg-as-border-image-expected.png
-A	LayoutTests/platform/chromium-cg-mac/fast/css/getComputedStyle/computed-style-expected.txt
-A	LayoutTests/platform/chromium-cg-mac/fast/css/getComputedStyle/computed-style-without-renderer-expected.txt
-A	LayoutTests/platform/chromium-cg-mac/svg/as-border-image/svg-as-border-image-expected.png
-A	LayoutTests/platform/chromium-cg-mac/svg/as-border-image/svg-as-border-image-expected.txt
-A	LayoutTests/platform/chromium-cg-mac/svg/css/getComputedStyle-basic-expected.txt
-M	LayoutTests/platform/chromium-linux/fast/borders/border-image-border-radius-expected.png
-commit 90c92d02f7e22904bc290a851f542af62b0f2d3f
-Author: David Hyatt <hyatt@apple.com>
-Date:   Wed Feb 4 05:06:19 2009 +0000
+A	LayoutTests/fast/dom/node-filter-interface-expected.txt
+A	LayoutTests/fast/dom/node-filter-interface.html
 
-    2009-02-03  David Hyatt  <hyatt@apple.com>
-    
-            Move the isRenderInline checks for clientWidth/Height and scrollWidth/Height to the DOM element
-            versions of the functions.  Since internal render tree usage doesn't ever (incorrectly) call these
-            functions on RenderInlines, this manages to get virtual function calls out of contentWidth/Height and
-            availableWidth/Height.
-    
-            Reviewed by Mark Rowe
-    
-            * dom/Element.cpp:
-            (WebCore::Element::clientWidth):
-            (WebCore::Element::clientHeight):
-            (WebCore::Element::scrollWidth):
-            (WebCore::Element::scrollHeight):
-            * rendering/RenderBox.cpp:
-            (WebCore::RenderBox::clientWidth):
-            (WebCore::RenderBox::clientHeight):
-            (WebCore::RenderBox::scrollWidth):
-            (WebCore::RenderBox::scrollHeight):
-    
-    
-    
-    Canonical link: https://commits.webkit.org/32751@main
-    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@40606 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+commit 8d45109935d669a5d3fc460496bbe300b6219187
+Author: Tadeu Zagallo <tzagallo@apple.com>
+Date:   Fri Jul 5 16:38:40 2019 +0000
 
-M	WebCore/ChangeLog
-M	WebCore/dom/Element.cpp
-M	WebCore/rendering/RenderBox.cpp
+    Scribble Heap::m_worldState on destructor
+    https://bugs.webkit.org/show_bug.cgi?id=199498
+    
+    Reviewed by Sam Weinig.
+    
+    The worldState is dumped when we crash due to a failed checkConn, and
+    this will make it clear if the heap has already been destroyed.
+    
+    * heap/Heap.cpp:
+    (JSC::Heap::~Heap):
+    
+    
+    Canonical link: https://commits.webkit.org/213423@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@247160 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	Source/JavaScriptCore/ChangeLog
+M	Source/JavaScriptCore/heap/Heap.cpp
+
+commit d989b81fcb5a22ebb4cf2e5f14a6a8a926d792b4
+Author: Ryan Haddad <ryanhaddad@apple.com>
+Date:   Tue Jan 16 22:35:39 2018 +0000
+
+    Unreviewed, rolling out r226937.
+    
+    Tests added with this change are failing due to a missing
+    exception check.
+    
+    Reverted changeset:
+    
+    "[JSC] NumberPrototype::extractRadixFromArgs incorrectly cast
+    double to int32_t"
+    https://bugs.webkit.org/show_bug.cgi?id=181182
+    https://trac.webkit.org/changeset/226937
+    
+    Canonical link: https://commits.webkit.org/197546@main
+    git-svn-id: https://svn.webkit.org/repository/webkit/trunk@227004 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+
+M	JSTests/ChangeLog
+M	JSTests/bigIntTests.yaml
+M	JSTests/stress/big-int-constructor.js
+D	JSTests/stress/big-int-prototype-to-string-cast-overflow.js
+D	JSTests/stress/big-int-prototype-to-string-exception.js
+D	JSTests/stress/big-int-prototype-to-string-wrong-values.js
+D	JSTests/stress/number-prototype-to-string-cast-overflow.js
+D	JSTests/stress/number-prototype-to-string-exception.js
+D	JSTests/stress/number-prototype-to-string-wrong-values.js
+M	Source/JavaScriptCore/ChangeLog
+M	Source/JavaScriptCore/runtime/BigIntPrototype.cpp
+M	Source/JavaScriptCore/runtime/NumberPrototype.cpp
+M	Source/JavaScriptCore/runtime/NumberPrototype.h
 
 commit fe5798c29f70fb070671c05788edf26d7c084d7e
 Author: Carlos Alberto Lopez Perez <clopez@igalia.com>
@@ -490,6 +492,12 @@ Date:   Sat Aug 26 00:47:51 2017 +0000
     * TestWebKitAPI/Tests/WebKit/ios/AudioSessionCategoryIOS.mm: Removed.
     * TestWebKitAPI/Tests/WebKit/ios/SnapshotViaRenderInContext.mm: Removed.
     * TestWebKitAPI/Tests/WebKit/ios/audio-only.html: Removed.
+    * TestWebKitAPI/Tests/WebKit/ios/video-with-audio.html: Removed.
+    * TestWebKitAPI/Tests/WebKit/ios/video-with-audio.mp4: Removed.
+    * TestWebKitAPI/Tests/WebKit/ios/video-with-muted-audio-and-webaudio.html: Removed.
+    * TestWebKitAPI/Tests/WebKit/ios/video-with-muted-audio.html: Removed.
+    * TestWebKitAPI/Tests/WebKit/ios/video-without-audio.html: Removed.
+    * TestWebKitAPI/Tests/WebKit/ios/video-without-audio.mp4: Removed.
     * TestWebKitAPI/Tests/WebKit/win: Removed.
     * TestWebKitAPI/Tests/WebKit/win/ScaleWebView.cpp: Removed.
     * TestWebKitAPI/Tests/WebKit/win/WebViewDestruction.cpp: Removed.
@@ -503,8 +511,7 @@ Date:   Sat Aug 26 00:47:51 2017 +0000
 M	Tools/ChangeLog
 M	Tools/TestWebKitAPI/TestWebKitAPI.xcodeproj/project.pbxproj
 R100	Tools/TestWebKitAPI/Tests/WebKit/ios/AudioSessionCategoryIOS.mm	Tools/TestWebKitAPI/Tests/WebKitLegacy/ios/AudioSessionCategoryIOS.mm
-R100	Tools/TestWebKitAPI/Tests/WebKit/ios/SnapshotViaRenderInContext.mm	Tools/TestWebKitAPI/Tests/WebKitLegacy/ios/SnapshotViaRenderInContext.mm
-R100	Tools/TestWebKitAPI/Tests/WebKit/ios/audio-only.html	Tools/TestWebKitAPI/Tests/WebKitLegacy/ios/audio-only.html
+R100	Tools/TestWebKitAPI/Tests/WebKit/ios/SnapshotViaRenderInebKitAPI/Tests/WebKitLegacy/win/WebViewDestruction.cpp
 
 commit 88b2ee9320cf90accec66b2e78da0b97b2fd9415
 Author: Dirk Pranke <dpranke@chromium.org>
@@ -718,78 +725,13 @@ Date:   Fri Sep 25 19:46:51 2015 +0000
     * Modules/indexeddb/IDBAny.h:
     * Modules/indexeddb/IDBCursor.h:
     * Modules/indexeddb/IDBDatabase.h:
-    * Modules/indexeddb/IDBDatabaseError.h:
-    * Modules/indexeddb/IDBFactory.h:
-    * Modules/indexeddb/IDBIndex.h:
-    * Modules/indexeddb/IDBObjectStore.h:
-    * Modules/indexeddb/IDBRequest.h:
-    * Modules/indexeddb/IDBTransaction.h:
-    * Modules/indexeddb/client/IDBFactoryImpl.cpp:
-    (WebCore::IDBClient::IDBFactory::getDatabaseNames):
-    (WebCore::IDBClient::IDBFactory::open):
-    (WebCore::IDBClient::IDBFactory::deleteDatabase):
-    * Modules/indexeddb/client/IDBFactoryImpl.h:
-    * Modules/indexeddb/client/IDBRequestImpl.cpp:
-    (WebCore::IDBClient::IDBRequest::result):
-    (WebCore::IDBClient::IDBRequest::error):
-    (WebCore::IDBClient::IDBRequest::source):
-    (WebCore::IDBClient::IDBRequest::transaction):
-    * Modules/indexeddb/client/IDBRequestImpl.h:
-    * Modules/indexeddb/legacy/LegacyAny.cpp:
-    (WebCore::LegacyAny::createInvalid):
-    (WebCore::LegacyAny::createNull):
-    (WebCore::LegacyAny::createString):
-    (WebCore::LegacyAny::domStringList):
-    (WebCore::LegacyAny::idbCursor):
-    (WebCore::LegacyAny::idbCursorWithValue):
-    (WebCore::LegacyAny::idbDatabase):
-    (WebCore::LegacyAny::idbFactory):
-    (WebCore::LegacyAny::idbIndex):
-    (WebCore::LegacyAny::idbObjectStore):
-    (WebCore::LegacyAny::idbTransaction):
-    (WebCore::LegacyAny::LegacyAny):
-    * Modules/indexeddb/legacy/LegacyAny.h:
-    (WebCore::LegacyAny::create):
-    * Modules/indexeddb/legacy/LegacyCursor.cpp:
-    (WebCore::LegacyCursor::update):
-    (WebCore::LegacyCursor::deleteFunction):
-    * Modules/indexeddb/legacy/LegacyCursor.h:
-    * Modules/indexeddb/legacy/LegacyDatabase.cpp:
-    (WebCore::LegacyDatabase::objectStoreNames):
-    (WebCore::LegacyDatabase::createObjectStore):
-    (WebCore::LegacyDatabase::transaction):
-    * Modules/indexeddb/legacy/LegacyDatabase.h:
-    * Modules/indexeddb/legacy/LegacyFactory.cpp:
-    (WebCore::LegacyFactory::getDatabaseNames):
-    (WebCore::LegacyFactory::open):
-    (WebCore::LegacyFactory::deleteDatabase):
-    * Modules/indexeddb/legacy/LegacyFactory.h:
-    * Modules/indexeddb/legacy/LegacyIndex.cpp:
-    (WebCore::LegacyIndex::openCursor):
-    (WebCore::LegacyIndex::count):
-    (WebCore::LegacyIndex::openKeyCursor):
-    (WebCore::LegacyIndex::get):
-    (WebCore::LegacyIndex::getKey):
-    * Modules/indexeddb/legacy/LegacyIndex.h:
-    (WebCore::LegacyIndex::legacyObjectStore):
-    * Modules/indexeddb/legacy/LegacyObjectStore.cpp:
-    (WebCore::LegacyObjectStore::indexNames):
-    (WebCore::LegacyObjectStore::get):
+
     (WebCore::LegacyObjectStore::add):
     (WebCore::LegacyObjectStore::put):
     (WebCore::LegacyObjectStore::deleteFunction):
     (WebCore::LegacyObjectStore::clear):
     (WebCore::LegacyObjectStore::createIndex):
     (WebCore::LegacyObjectStore::index):
-    (WebCore::LegacyObjectStore::openCursor):
-    (WebCore::LegacyObjectStore::count):
-    * Modules/indexeddb/legacy/LegacyObjectStore.h:
-    (WebCore::LegacyObjectStore::keyPathAny):
-    (WebCore::LegacyObjectStore::transaction):
-    (WebCore::LegacyObjectStore::createIndex):
-    (WebCore::LegacyObjectStore::count):
-    * Modules/indexeddb/legacy/LegacyRequest.cpp:
-    (WebCore::LegacyRequest::result):
     (WebCore::LegacyRequest::error):
     (WebCore::LegacyRequest::source):
     (WebCore::LegacyRequest::transaction):
@@ -814,23 +756,6 @@ M	Source/WebCore/Modules/indexeddb/IDBObjectStore.h
 M	Source/WebCore/Modules/indexeddb/IDBRequest.h
 M	Source/WebCore/Modules/indexeddb/IDBTransaction.h
 M	Source/WebCore/Modules/indexeddb/client/IDBFactoryImpl.cpp
-M	Source/WebCore/Modules/indexeddb/client/IDBFactoryImpl.h
-M	Source/WebCore/Modules/indexeddb/client/IDBRequestImpl.cpp
-M	Source/WebCore/Modules/indexeddb/client/IDBRequestImpl.h
-M	Source/WebCore/Modules/indexeddb/legacy/LegacyAny.cpp
-M	Source/WebCore/Modules/indexeddb/legacy/LegacyAny.h
-M	Source/WebCore/Modules/indexeddb/legacy/LegacyCursor.cpp
-M	Source/WebCore/Modules/indexeddb/legacy/LegacyCursor.h
-M	Source/WebCore/Modules/indexeddb/legacy/LegacyDatabase.cpp
-M	Source/WebCore/Modules/indexeddb/legacy/LegacyDatabase.h
-M	Source/WebCore/Modules/indexeddb/legacy/LegacyFactory.cpp
-M	Source/WebCore/Modules/indexeddb/legacy/LegacyFactory.h
-M	Source/WebCore/Modules/indexeddb/legacy/LegacyIndex.cpp
-M	Source/WebCore/Modules/indexeddb/legacy/LegacyIndex.h
-M	Source/WebCore/Modules/indexeddb/legacy/LegacyObjectStore.cpp
-M	Source/WebCore/Modules/indexeddb/legacy/LegacyObjectStore.h
-M	Source/WebCore/Modules/indexeddb/legacy/LegacyRequest.cpp
-M	Source/WebCore/Modules/indexeddb/legacy/LegacyRequest.h
 M	Source/WebCore/Modules/indexeddb/legacy/LegacyTransaction.cpp
 M	Source/WebCore/Modules/indexeddb/legacy/LegacyTransaction.h
 M	Source/WebCore/inspector/InspectorIndexedDBAgent.cpp
@@ -1502,25 +1427,7 @@ Date:   Fri Dec 19 21:48:38 2014 +0000
     
     * WebCore.exp.in:
     
-    Source/WebKit2:
     
-    * Platform/IPC/HandleMessage.h:
-    (IPC::callMemberFunctionImpl):
-    * Platform/mac/LayerHostingContext.h:
-    * Platform/mac/LayerHostingContext.mm:
-    (WebKit::LayerHostingContext::createForPort):
-    * PluginProcess/PluginControllerProxy.h:
-    * PluginProcess/PluginProcess.cpp:
-    (WebKit::PluginProcess::PluginProcess):
-    (WebKit::PluginProcess::initializePluginProcess):
-
-    (WebKit::WebContext::platformInitializeWebProcess):
-    * WebProcess/Plugins/Netscape/NetscapeBrowserFuncs.cpp:
-    (WebKit::NPN_GetValue):
-    * WebProcess/Plugins/Netscape/NetscapePlugin.h:
-    * WebProcess/Plugins/Netscape/mac/NetscapePluginMac.mm:
-    (WebKit::NetscapePlugin::compositingRenderServerPort):
-    (WebKit::NetscapePlugin::setLayerHostingMode):
     * WebProcess/Plugins/PluginController.h:
     * WebProcess/Plugins/PluginView.cpp:
     (WebKit::PluginView::compositingRenderServerPort):
@@ -1544,14 +1451,7 @@ M	Source/WebKit2/Platform/mac/LayerHostingContext.h
 M	Source/WebKit2/Platform/mac/LayerHostingContext.mm
 M	Source/WebKit2/PluginProcess/PluginControllerProxy.h
 M	Source/WebKit2/PluginProcess/PluginProcess.cpp
-M	Source/WebKit2/PluginProcess/PluginProcess.h
-M	Source/WebKit2/PluginProcess/mac/PluginControllerProxyMac.mm
 
-M	Source/WebKit2/WebProcess/Plugins/Netscape/mac/NetscapePluginMac.mm
-M	Source/WebKit2/WebProcess/Plugins/PluginController.h
-M	Source/WebKit2/WebProcess/Plugins/PluginView.cpp
-M	Source/WebKit2/WebProcess/Plugins/PluginView.h
-M	Source/WebKit2/WebProcess/WebProcess.cpp
 M	Source/WebKit2/WebProcess/WebProcess.h
 M	Source/WebKit2/WebProcess/cocoa/WebProcessCocoa.mm
 
@@ -1812,13 +1712,7 @@ M	WebCore/dom/Element.h
 M	WebCore/dom/FormControlElement.cpp
 M	WebCore/dom/FormControlElement.h
 A	WebCore/dom/FormControlElementWithState.cpp
-A	WebCore/dom/FormControlElementWithState.h
-M	WebCore/html/HTMLElement.h
-M	WebCore/html/HTMLFormControlElement.cpp
-M	WebCore/html/HTMLFormControlElement.h
-M	WebCore/html/HTMLFormElement.cpp
-M	WebCore/wml/WMLTemplateElement.cpp
-M	WebCore/wml/WMLTemplateElement.h
+
 
 commit f121b464c3de1da05773a7b20092bfed7f7f3a1b
 Author: Vsevolod Vlasov <vsevik@chromium.org>
@@ -2001,30 +1895,6 @@ Date:   Sat Jun 12 01:04:58 2004 +0000
             Reviewed by trey.
     
             * Misc.subproj/WebNSPasteboardExtras.h:
-            * Misc.subproj/WebNSPasteboardExtras.m:
-            (-[NSPasteboard _web_declareAndWriteDragImage:URL:title:archive:source:]): new
-            * Misc.subproj/WebNSViewExtras.h:
-            * Misc.subproj/WebNSViewExtras.m:
-            (-[NSView _web_dragImage:rect:event:pasteboard:source:]): simplified, this method now just creates a drag image and starts the drag
-            * WebCoreSupport.subproj/WebBridge.m:
-            (-[WebBridge allowDHTMLDrag:UADrag:]): now calls _delegateDragSourceActionMask on WebHTMLView to interact with the delegate
-            * WebView.subproj/WebDefaultUIDelegate.m:
-            * WebView.subproj/WebHTMLView.m:
-            (-[WebHTMLView _startDraggingImage:at:operation:event:sourceIsDHTML:DHTMLWroteData:]): call new delegate method, cleaned-up a little
-            (-[WebHTMLView draggingUpdatedWithDraggingInfo:actionMask:]): call drag caret methods on WebView instead of WebBridge so WebView can make sure only 1 HTML view has a drag cursor
-            (-[WebHTMLView draggingCancelledWithDraggingInfo:]): ditto
-            (-[WebHTMLView concludeDragForDraggingInfo:actionMask:]): ditto
-            (-[WebHTMLView _delegateDragSourceActionMask]): new, gets drag source action mask from delegate
-            * WebView.subproj/WebHTMLViewInternal.h:
-            * WebView.subproj/WebImageView.h:
-            * WebView.subproj/WebImageView.m:
-            (-[WebImageView mouseDown:]): get the drag source action mask from the delegate
-            (-[WebImageView mouseDragged:]): inform the delegate of the drag
-            * WebView.subproj/WebView.m:
-            (-[WebViewPrivate dealloc]): assert that dragCursorBridge is nil
-            (-[WebView _close]): release dragCursorBridge
-            (-[WebView _bridgeAtPoint:]): new
-            (-[WebView editableDOMRangeForPoint:]): new API
             (-[WebView moveDragCaretToPoint:]): new API
             (-[WebView removeDragCaret]): new API
             (-[WebView _frameViewAtWindowPoint:]): moved so this can be called internally
@@ -2075,27 +1945,7 @@ Date:   Tue Aug 29 01:13:33 2006 +0000
             * platform/ResourceLoader.h:
             * platform/ResourceLoaderClient.h:
             * platform/ResourceLoaderInternal.h:
-            (WebCore::ResourceLoaderInternal::ResourceLoaderInternal):
-            * platform/cfnet/KURLCFNet.cpp: Added.
-            (WebCore::KURL::createCFURL):
-            * platform/cfnet/ResourceLoaderCFNet.cpp: Added.
-            (WebCore::willSendRequest):
-            (WebCore::didReceiveChallenge):
-            (WebCore::didCancelChallenge):
-            (WebCore::didReceiveResponse):
-            (WebCore::didReceiveData):
-            (WebCore::didFinishLoading):
-            (WebCore::didFail):
-            (WebCore::willCacheResponse):
-            (WebCore::addHeadersFromString):
-            (WebCore::ResourceLoaderInternal::~ResourceLoaderInternal):
-            (WebCore::ResourceLoader::~ResourceLoader):
-            (WebCore::arrayFromFormData):
-            (WebCore::emptyPerform):
-            (WebCore::runLoaderThread):
-            (WebCore::ResourceLoader::start):
-            (WebCore::ResourceLoader::cancel):
-            * platform/win/CursorWin.cpp:
+
     
     
     
@@ -2212,24 +2062,7 @@ Date:   Fri Mar 25 18:59:07 2011 +0000
     * WebCore.vcproj/WebCore.vcproj:
     * platform/graphics/FontPlatformData.cpp: Added.
     (WebCore::FontPlatformData::FontPlatformData):
-    (WebCore::FontPlatformData::operator=):
-    * platform/graphics/FontPlatformData.h: Added.
-    (WebCore::toCTFontRef):
-    (WebCore::FontPlatformData::FontPlatformData):
-    (WebCore::FontPlatformData::hfont):
-    (WebCore::FontPlatformData::useGDI):
-    (WebCore::FontPlatformData::font):
-    (WebCore::FontPlatformData::cgFont):
-    (WebCore::FontPlatformData::size):
-    (WebCore::FontPlatformData::setSize):
-    (WebCore::FontPlatformData::syntheticBold):
-    (WebCore::FontPlatformData::syntheticOblique):
-    (WebCore::FontPlatformData::isColorBitmapFont):
-    (WebCore::FontPlatformData::orientation):
-    (WebCore::FontPlatformData::textOrientation):
-    (WebCore::FontPlatformData::widthVariant):
-    (WebCore::FontPlatformData::FontPlatformData):
-    * platform/graphics/win/cairo/FontPlatformData.h: Removed.
+
     
     
     
@@ -2292,15 +2125,15 @@ Date:   Wed Mar 30 17:35:14 2011 +0000
 
     Remove empty directories in platform/mac-snowleopard, as requested by
     Mark Rowe.
+    * platform/mac-snowleopard/svg/dynamic-updates: Removed.
+    * platform/mac-snowleopard/svg/filters: Removed.
+    * platform/mac-snowleopard/svg/text: Removed.
+    * platform/mac-snowleopard/tables: Removed.
+    * platform/mac-snowleopard/tables/mozilla: Removed.
+    * platform/mac-snowleopard/tables/mozilla/core: Removed.
+    * platform/mac-snowleopard/tables/mozilla_expected_failures: Removed.
+    * platform/mac-snowleopard/tables/mozilla_expected_failures/bugs: Removed.
     
-    * platform/mac-snowleopard/css2.1: Removed.
-    * platform/mac-snowleopard/editing: Removed.
-    * platform/mac-snowleopard/editing/deleting: Removed.
-    * platform/mac-snowleopard/editing/inserting: Removed.
-    * platform/mac-snowleopard/editing/pasteboard: Removed.
-    * platform/mac-snowleopard/fast/backgrounds: Removed.
-    * platform/mac-snowleopard/fast/backgrounds/repeat: Removed.
-
     
     
     Canonical link: https://commits.webkit.org/72264@main
@@ -2419,10 +2252,7 @@ M	LayoutTests/http/tests/misc/link-rel-icon-beforeload-expected.txt
 M	Source/WebCore/ChangeLog
 M	Source/WebCore/WebCore.exp.in
 M	Source/WebCore/dom/Document.cpp
-M	Source/WebCore/testing/Internals.idl
-M	Source/WebKit/win/ChangeLog
-M	Source/WebKit/win/WebKit.vcproj/WebKitExports.def.in
-M	Source/autotools/symbols.filter
+
 
 commit 119299cd387324c5ce13b149a884d57772f9fb9c
 Author: Ryosuke Niwa <rniwa@webkit.org>

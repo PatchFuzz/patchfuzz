@@ -436,27 +436,7 @@ Date:   Fri Dec 21 19:31:34 2018 +0000
     --HG--
     extra : moz-landing-system : lando
 
-M	testing/mozharness/configs/android/android_hw.py
-M	testing/mozharness/configs/awsy/linux_config.py
-M	testing/mozharness/configs/awsy/macosx_config.py
-M	testing/mozharness/configs/awsy/taskcluster_windows_config.py
-M	testing/mozharness/configs/firefox_ui_tests/qa_jenkins.py
-M	testing/mozharness/configs/firefox_ui_tests/releng_release.py
-M	testing/mozharness/configs/firefox_ui_tests/taskcluster.py
-M	testing/mozharness/configs/firefox_ui_tests/taskcluster_windows.py
-M	testing/mozharness/configs/marionette/prod_config.py
-M	testing/mozharness/configs/marionette/windows_config.py
-M	testing/mozharness/configs/marionette/windows_taskcluster_config.py
-M	testing/mozharness/configs/raptor/android_hw_config.py
-M	testing/mozharness/configs/raptor/linux64_config_taskcluster.py
-M	testing/mozharness/configs/raptor/linux_config.py
-M	testing/mozharness/configs/raptor/mac_config.py
-M	testing/mozharness/configs/raptor/windows_config.py
-M	testing/mozharness/configs/raptor/windows_vm_config.py
-M	testing/mozharness/configs/talos/linux64_config_taskcluster.py
-M	testing/mozharness/configs/talos/linux_config.py
-M	testing/mozharness/configs/talos/mac_config.py
-M	testing/mozharness/configs/talos/windows_config.py
+
 M	testing/mozharness/configs/talos/windows_taskcluster_config.py
 M	testing/mozharness/configs/talos/windows_vm_config.py
 M	testing/mozharness/configs/unittests/linux_unittest.py
@@ -714,10 +694,50 @@ M	js/src/builtin/ParallelArray.cpp
 M	js/src/builtin/RegExp.cpp
 M	js/src/frontend/BytecodeCompiler.cpp
 M	js/src/frontend/FoldConstants.cpp
+M	js/src/frontend/Parser.cpp
+M	js/src/frontend/TokenStream.cpp
+M	js/src/gc/Root.h
+M	js/src/ion/CodeGenerator.cpp
+M	js/src/ion/Ion.cpp
+M	js/src/ion/IonCaches.cpp
+M	js/src/ion/VMFunctions.cpp
+M	js/src/ion/VMFunctions.h
 M	js/src/jsapi-tests/testIndexToString.cpp
 M	js/src/jsapi-tests/testParseJSON.cpp
 M	js/src/jsapi-tests/testStringBuffer.cpp
 M	js/src/jsapi.cpp
+M	js/src/jsatom.cpp
+M	js/src/jsatom.h
+M	js/src/jsatominlines.h
+M	js/src/jsclone.cpp
+M	js/src/jscntxt.h
+M	js/src/jscntxtinlines.h
+M	js/src/jscompartment.cpp
+M	js/src/jsgc.cpp
+M	js/src/jsgcinlines.h
+M	js/src/jsinfer.cpp
+M	js/src/jsinferinlines.h
+M	js/src/jsinterp.cpp
+M	js/src/jsinterp.h
+M	js/src/jsinterpinlines.h
+M	js/src/jsnum.cpp
+M	js/src/jsnum.h
+M	js/src/jsobj.cpp
+M	js/src/jsobj.h
+M	js/src/jsobjinlines.h
+M	js/src/json.cpp
+M	js/src/jsonparser.cpp
+M	js/src/jspropertycache.h
+M	js/src/jspropertycacheinlines.h
+M	js/src/jspropertytree.cpp
+M	js/src/jsscope.cpp
+M	js/src/jsscopeinlines.h
+M	js/src/jsscript.cpp
+M	js/src/jsstr.cpp
+M	js/src/jsstr.h
+M	js/src/jstypedarray.cpp
+M	js/src/jsxml.cpp
+M	js/src/methodjit/StubCalls.cpp
 M	js/src/shell/js.cpp
 M	js/src/vm/ArgumentsObject.cpp
 M	js/src/vm/Debugger.cpp
@@ -889,13 +909,16 @@ Date:   Fri Oct 30 02:51:08 1998 +0000
 
 M	gfx/src/motif/nsRenderingContextUnix.cpp
 
-commit e0a60d6cadeacdb476c3958e58615059090f2bc4
-Author: Mike de Boer <mdeboer@mozilla.com>
-Date:   Thu Jun 13 19:35:48 2013 +0200
+commit d66f5bc69ffd356c97912e5db11360bcd50eefc8
+Author: Bobby Holley <bobbyholley@gmail.com>
+Date:   Thu Apr 6 15:51:13 2023 +0000
 
-    Backed out changeset 7ef2a2d43849 (bug 881131)
+    Bug 1826668 — Switch to Google's aggregated set. r=nika,supply-chain-reviewers
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D174820
 
-M	browser/components/customizableui/src/CustomizableWidgets.jsm
+M	supply-chain/config.toml
+M	supply-chain/imports.lock
 
 commit 65038e9551648860c24e14ca5f0a15bc74e2dd56
 Author: cyeh%netscape.com <cyeh%netscape.com>
@@ -907,13 +930,6 @@ Date:   Sat Nov 21 00:34:32 1998 +0000
     
     If you must recover one of these makefiles, you can use the static tag STATIC_MAKEFILES.
     If I removed a makefile that you need, please e-mail cyeh@netscape.com.
-
-D	base/Makefile
-D	base/public/Makefile
-D	base/src/Makefile
-D	base/src/gtk/Makefile
-D	base/src/motif/Makefile
-D	base/src/rhapsody/Makefile
 
 
 commit 81f4fc8f9bf541a5657e4693fcc32ab20fd75725
@@ -961,13 +977,15 @@ Date:   Mon Apr 16 20:19:44 2001 +0000
 
 M	xpfe/browser/resources/content/viewsource.js
 
-commit 5eb0402620e4d6dee645557fd56ebd092faf8a54
-Author: Carsten "Tomcat" Book <cbook@mozilla.com>
-Date:   Mon Sep 22 12:43:02 2014 +0200
+commit 7407c425b0e4495315a07f744e21eb6fe18e1444
+Author: Bobby Holley <bobbyholley@gmail.com>
+Date:   Thu Apr 6 15:51:11 2023 +0000
 
-    Backed out changeset 422fd81a4118 (bug 1032125) for causing regressions / Bug 1070850
+    Bug 1826668 — Update cargo-vet to f86dfa11f76f3ec2da2d955a19e66a8d6aaf82bb. r=nika
+    
+    Differential Revision: https://phabricator.services.mozilla.com/D174818
 
-M	dom/ipc/ContentParent.cpp
+M	taskcluster/ci/fetch/toolchains.yml
 
 commit b958c4890fcc3bf3bf872710e34785cded457df6
 Author: antunovicm <mate@antunovic.nz>
@@ -1047,21 +1065,15 @@ Date:   Mon May 3 23:50:58 1999 +0000
 
 M	mailnews/ui/messenger/resources/mailshell.xul
 
-commit 23e67bd959524c8905969f2336318d53ac2ce3cf
-Author: Ryan VanderMeulen <ryanvm@gmail.com>
-Date:   Mon Dec 2 13:47:29 2013 -0500
+commit 0d417463d476f8649095648fd3d2168504540dd7
+Author: Henrik Skupin <mail@hskupin.info>
+Date:   Thu Apr 6 15:43:08 2023 +0000
 
-    Backed out 2 changesets (bug 941012, bug 931921) for suspicion of breaking Mn on OSX. CLOSED TREE
+    Bug 1821039 - [webdriver-bidi] Fix broken object handle tests in browser_RemoteValue.js. r=webdriver-reviewers,jdescottes
     
-    Backed out changeset c50cca7d248a (bug 941012)
-    Backed out changeset eb8d750eabb3 (bug 931921)
+    Differential Revision: https://phabricator.services.mozilla.com/D174903
 
-M	browser/devtools/debugger/test/browser_dbg_globalactor.js
-M	toolkit/devtools/Loader.jsm
-M	toolkit/devtools/server/actors/root.js
-M	toolkit/devtools/server/dbg-server.jsm
-M	toolkit/devtools/server/main.js
-M	toolkit/devtools/server/tests/unit/test_add_actors.js
+M	remote/webdriver-bidi/test/browser/browser_RemoteValue.js
 
 commit 6a60c444fd12c2e260ad3f4526990967ba96fd7d
 Author: pschwartau%netscape.com <pschwartau%netscape.com>
@@ -1167,16 +1179,14 @@ Date:   Wed Jul 29 21:09:25 1998 +0000
 
 M	webshell/tests/viewer/mac/viewer.mcp
 
-commit 568a29495d075662994ded51da8aee2ef5289bae
-Author: Karl Tomlinson <karlt+@karlt.net>
-Date:   Mon Aug 20 16:21:37 2012 +1200
+commit b11c04258299abbaa167d76ce7370d1f6f35543d
+Author: andreww%netscape.com <andreww%netscape.com>
+Date:   Sat Jul 29 05:37:05 2006 +0000
 
-    b=780059 combine two variables both indicating an alpha channel r=mattwoodrow
-    
-    --HG--
-    extra : rebase_source : be734411d2a108e4db3f4b6be1bf97b3097d631f
+    43797 abolish the taskbar sr=hewitt (s)r=hyatt
 
-M	gfx/gl/GLContextProviderGLX.cpp
+M	suite/common/utilityOverlay.xul
+M	suite/locales/en-US/chrome/common/utilityOverlay.dtd
 
 commit 501794abed8f3534fc7723a2d562359e0035b27e
 Author: beard%netscape.com <beard%netscape.com>
@@ -1278,14 +1288,13 @@ Date:   Thu Mar 10 16:07:34 2005 +0000
 
 M	directory/Makefile
 
-commit 0a01939a3608d02845e926033e25b9853488044c
-Author: bzbarsky%mit.edu <bzbarsky%mit.edu>
-Date:   Tue Jan 7 00:37:19 2003 +0000
+commit 866f3de341432eb88b254c8026dea640c14e9258
+Author: dbaron%fas.harvard.edu <dbaron%fas.harvard.edu>
+Date:   Sat Sep 29 05:10:22 2001 +0000
 
-    asserting that a PRUint32 is >= 0 is silly.  Bug 187002, r=sicking, sr=peterv
+    Oops.  Backing that out.
 
-M	content/html/style/src/nsCSSLoader.cpp
-M	layout/style/nsCSSLoader.cpp
+M	gfx/src/gtk/nsImageGTK.cpp
 
 commit 3ccf5574404e4e056570144a3299c058a7dcdd08
 Author: sfraser%netscape.com <sfraser%netscape.com>

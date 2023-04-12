@@ -8,7 +8,7 @@ class TimeOutException(Exception):
 def setTimeout(num):
     def wrape(func):
         def handle(signum, frame):
-            raise TimeOutException("运行超时！")
+            raise TimeOutException("Timeout！")
         def toDo(*args, **kwargs):
             try:
                 signal.signal(signal.SIGALRM, handle)
@@ -79,11 +79,12 @@ def listfiles(path, dest, file_types):
 
 
 def saveCh(path, dest, file_types):
-    mkdir(os.path.join(dest, "wasm"))
+    #mkdir(os.path.join(dest, "wasm"))
     listfiles(path, dest, file_types)
 
 
 if __name__ == '__main__':
-    src = "/data/table2/testsuite/ch"
-    dest = "/data/table2/testsuite/ch_new"
+    src = "/data/tableV/testsuite/ch_bad"
+    dest = "/data/tableV/testsuite/ch_new"
+    mkdir(dest)
     saveCh(src, dest, file_type_list)

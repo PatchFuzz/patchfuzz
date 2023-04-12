@@ -296,11 +296,11 @@ def getRandomSample():
         pd.merge(sample_bug,sample_ohter,how='outer').to_csv(path, index=None)
 
 def getMessageOfSample():
-    pf=pd.read_csv('/data/patchFuzz/scripts/sample_je.csv.final.chatgpt',usecols=['hash'])
-    file = open('/data/patchFuzz/scripts/je_message.txt','w')
+    pf=pd.read_csv('/data/patchFuzz/scripts/sample_ch.csv.final.chatgpt.chatgpt.new',usecols=['hash'])
+    file = open('/data/patchFuzz/scripts/ch_message.txt','w')
 
     for i in pf['hash']:
-        p = subprocess.run(["git","log","-1","--name-status",i], stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=2,cwd="/data/jerryscript")
+        p = subprocess.run(["git","log","-1","--name-status",i], stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=2,cwd="/data/ChakraCore")
         file.write(p.stdout.decode()+"\n")
     file.close() 
 
@@ -325,12 +325,12 @@ def table8(txt,csv,parse_func):
             TP+=1
         if row.ctype=="bug" and row.audit==0:
             FP+=1
-            print(row.hash)
+            #print(row.hash)
         if row.ctype=="other" and row.audit==0:
             TN+=1
         if row.ctype=="other" and row.audit==1:
             FN+=1
-            print(row.hash)
+            #print(row.hash)
     #pf2.to_csv(csv+".final", index=None)
     print('Precision: {:.2f}%'.format(TP/(TP+FP)*100))
     print('Recall: {:.2f}%'.format(TP/(TP+FN)*100))
@@ -354,7 +354,7 @@ def audit(csv):
             TN+=1
         elif bool(re.match('no', row.ChatGPT, re.IGNORECASE)) and row.audit==1:
             FN+=1
-            print(row.hash)
+            #print(row.hash)
         else:
             print("Unhandled")
             print(row.ChatGPT,'\n',row.hash)
@@ -368,25 +368,25 @@ def audit(csv):
 # print("JSC:")
 # table8("./jsc_message.txt","./sample_jsc.csv.final.chatgpt",parse_jsc_commit)
 
-# print("CH:")
-# table8("./ch_message.txt","./sample_ch.csv.final.chatgpt",parse_ch_commit)
-
 # print("V8:")
 # table8("./v8_message.txt","./sample_v8.csv.final.chatgpt",parse_v8_commit)
 
 # print("SP:")
 # table8("./sp_message.txt","./sample_sp.csv.final.chatgpt",parse_sp_commit)
 
+# print("CH:")
+# table8("./ch_message.txt","./sample_ch.csv.final.chatgpt",parse_ch_commit)
+
 # print("Je:")
 # table8("./je_message.txt","./sample_je.csv.final.chatgpt",parse_je_commit)
 
-# print("JSC:")
-# audit("./sample_jsc.csv.final.chatgpt")
+print("JSC:")
+audit("./sample_jsc.csv.final.chatgpt")
 print("CH:")
-audit("./sample_ch.csv.final.chatgpt.chatgpt.new")
-# print("V8:")
-# audit("./sample_v8.csv.final.chatgpt")
-# print("SP:")
-# audit("./sample_sp.csv.final.chadtgpt")
-# print("JE:")s
-# audit("./sample_je.csv.final.chatgpt")
+audit("./sample_ch.csv.final.chatgpt")
+print("V8:")
+audit("./sample_v8.csv.final.chatgpt")
+print("SP:")
+audit("./sample_sp.csv.final.chatgpt")
+print("JE:")
+audit("./sample_je.csv.final.chatgpt")

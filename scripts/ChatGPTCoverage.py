@@ -378,5 +378,46 @@ foo(a);  // going polymorphic.
 var c = [, 0];
 assertEquals(undefined, foo(c));  // Elided hole check will leak the hole.
 """
+p5="Explain the following arguments in spidermonkey"
+q5="""
+        var args = [
+            "--baseline-warmup-threshold=10",
+            "--ion-warmup-threshold=100",
+            "--ion-check-range-analysis",
+            "--ion-extra-checks",
+            "--fuzzing-safe",
+            "--disable-oom-functions"
+            ]
+"""
+p6="Explain the following arguments in v8"
+q6="""
+        var args = [
+            "--expose-gc",
+            "--omit-quit",
+            "--allow-natives-syntax",
+            "--interrupt-budget=1024",
+            "--interrupt-budget-for-maglev=128",
+            "--future",
+            "--harmony",
+            "--fuzzing"]
+"""
+p7="Explain the following arguments in jsc"
+q7="""
+        var args = [
+            "--validateOptions=true",
+            "--thresholdForJITSoon=10",
+            "--thresholdForJITAfterWarmUp=10",
+            "--thresholdForOptimizeAfterWarmUp=100",
+            "--thresholdForOptimizeAfterLongWarmUp=100",
+            "--thresholdForOptimizeSoon=100",
+            "--thresholdForFTLOptimizeAfterWarmUp=1000",
+            "--thresholdForFTLOptimizeSoon=1000",
+            "--validateBCE=true"
+]
+"""
+p8=""
+q8="""
+What does it mean to add f in front of a python string.
+"""
 if __name__ == '__main__':
-    print(JavaScriptEngine(p4,q4))
+    print(JavaScriptEngine(p8,q8))

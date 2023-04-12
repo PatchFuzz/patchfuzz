@@ -50,17 +50,17 @@ def Evaluate(txt,csv):
     FP=0
     fd=open(txt,"r")
     dics = parseCommit(fd.readlines())
-    pf=pd.read_csv(csv,usecols=['hash','ctype','ChatGPT','audit'])
+    pf=pd.read_csv(csv,usecols=['hash','ctype','audit','ChatGPT'])
     
     for index,dic in enumerate(dics):
         try:      
-            pf.iloc[index,2] = isBugFix(dic["message"])
+            pf.iloc[index,3] = isBugFix(dic["message"])
             #print(pf.iloc[index,2])
             time.sleep(3.1)
         except Exception as e:
             print(e,pf.iloc[index,0])
 
-    pf.to_csv(csv+".chatgpt.new", index=None)
+    pf.to_csv(csv+".chatgpt", index=None)
     for row in pf.itertuples():
         if not bool(re.match('yes', row.ChatGPT, re.IGNORECASE)) and not bool(re.match('no', row.ChatGPT, re.IGNORECASE)):
             print(row.ChatGPT,'\n',row.hash)
@@ -83,20 +83,22 @@ def Evaluate(txt,csv):
     print('Recall: {:.2f}%'.format(TP/(TP+FN)*100))
     print(TP,FP,TN,FN)
 if __name__ == '__main__':
-    # print("JSC:")
-    # Evaluate("./jsc_message.txt","./sample_jsc.csv.final.chatgpt")
+    print("JSC:")
+    Evaluate("./jsc_message.txt","./sample_jsc.csv.final")
 
-    print("CH:")
-    Evaluate("./ch_message.txt","./sample_ch.csv.final.chatgpt")
+
 
     print("V8:")
-    Evaluate("./v8_message.txt","./sample_v8.csv.final.chatgpt")
+    Evaluate("./v8_message.txt","./sample_v8.csv.final")
 
     print("SP:")
-    Evaluate("./sp_message.txt","./sample_sp.csv.final.chatgpt")
+    Evaluate("./sp_message.txt","./sample_sp.csv.final")
 
+    print("CH:")
+    Evaluate("./ch_message.txt","./sample_ch.csv.final")
+    
     print("Je:")
-    Evaluate("./je_message.txt","./sample_je.csv.final.chatgpt")
+    Evaluate("./je_message.txt","./sample_je.csv.final")
     # q="""
     # commit 25bb4faaca03882a58c494b657356d8910e3993b
     # Author: Filip Pizlo <fpizlo@apple.com>

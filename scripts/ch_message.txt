@@ -272,7 +272,18 @@ M	test/WasmSpec/baselines/br_if.baseline
 M	test/WasmSpec/baselines/br_table.baseline
 M	test/WasmSpec/baselines/break-drop.baseline
 M	test/WasmSpec/baselines/call.baseline
-
+D	test/WasmSpec/testsuite/runaway-recursion.wast
+M	test/WasmSpec/testsuite/select.wast
+M	test/WasmSpec/testsuite/set_local.wast
+A	test/WasmSpec/testsuite/stack.wast
+M	test/WasmSpec/testsuite/start.wast
+M	test/WasmSpec/testsuite/store_retval.wast
+M	test/WasmSpec/testsuite/switch.wast
+A	test/WasmSpec/testsuite/tee_local.wast
+M	test/WasmSpec/testsuite/traps.wast
+M	test/WasmSpec/testsuite/typecheck.wast
+M	test/WasmSpec/testsuite/unreachable.wast
+M	test/rlexedirs.xml
 
 commit 807ed43c7c904d228a0bce98b62d9083314de9a2
 Author: Oguz Bastemur <ogbastem@microsoft.com>
@@ -303,17 +314,13 @@ M	bin/ch/CMakeLists.txt
 M	bin/ch/ChakraRtInterface.cpp
 M	build.sh
 M	lib/Runtime/Language/amd64/JavascriptOperatorsA.S
-M	pal/src/include/pal/cruntime.h
-M	pal/src/include/pal/palinternal.h
-M	pal/src/include/pal/printfcpp.hpp
-M	pal/src/locale/unicode.cpp
-M	pal/src/misc/dbgmsg.cpp
-M	pal/src/safecrt/input.inl
-M	pal/src/safecrt/internal.h
-M	pal/src/safecrt/mbusafecrt.c
-M	pal/src/safecrt/mbusafecrt_internal.h
-M	pal/src/safecrt/output.inl
-M	pal/src/safecrt/safecrt_output_l.c
+M	lib/Runtime/Library/amd64/JavascriptFunctionA.S
+M	lib/Runtime/PlatformAgnostic/Platform/CMakeLists.txt
+M	pal/inc/pal.h
+D	pal/inc/pal_char16.h
+M	pal/inc/pal_mstypes.h
+D	pal/inc/pal_type_traits
+M	pal/inc/safemath.h
 M	pal/src/safecrt/safecrt_winput_s.c
 M	pal/src/safecrt/safecrt_woutput_s.c
 M	pal/src/safecrt/sscanf.c
@@ -856,13 +863,21 @@ Date:   Tue Oct 25 18:19:00 2016 -0700
 
 M	lib/Backend/i386/LowererMDArch.cpp
 
-commit 759af18ab8cacd93d9c9af2354222d9c24367d0f
-Author: Limin Zhu <limzh@microsoft.com>
-Date:   Fri Jan 19 14:45:12 2018 -0800
+commit eaf36fe3d8627b3e20a66b3280487123dcf9de9f
+Author: Yong Qu <yongqu@microsoft.com>
+Date:   Wed Apr 13 15:47:09 2016 -0700
 
-    Correct FetchImportedModuleFromScriptCallBack comments in header
+    MSFT: 6967505 setInterval(alert(), 10000/237) throws Invalid calling object exception after domtimeline script is injected
+    
+    In debugger when we used to put all globaobject properties in the ActivationObject and use that
+    as "this" pointer for global object. We should separate out the ActivationObject from GlobalObject and
+    use the GlobalObject as "this". Fixed a couple of issues exposed by this change.
 
-M	lib/Jsrt/ChakraCore.h
+M	lib/Runtime/Debug/DebugManager.cpp
+M	lib/Runtime/Debug/DebugManager.h
+M	lib/Runtime/Debug/DiagObjectModel.cpp
+M	lib/Runtime/Debug/DiagObjectModel.h
+M	lib/Runtime/Language/JavascriptOperators.cpp
 
 commit 2e0b803d5c723a31be198bb90c2be1a7076ef577
 Author: Michael Ferris <micfer@microsoft.com>
@@ -1284,17 +1299,6 @@ M	lib/Backend/BailOut.cpp
 M	lib/Backend/FlowGraph.cpp
 M	lib/Backend/Func.cpp
 M	lib/Backend/Func.h
-M	lib/Backend/IRBuilder.cpp
-M	lib/Backend/JnHelperMethodList.h
-M	lib/Backend/Lower.cpp
-M	lib/Backend/amd64/LowererMDArch.cpp
-M	lib/Backend/arm/LowerMD.cpp
-M	lib/Backend/i386/LowererMDArch.cpp
-M	lib/Common/BackendApi.h
-M	lib/Parser/Parse.cpp
-M	lib/Parser/Parse.h
-M	lib/Parser/ptlist.h
-M	lib/Runtime/Library/JavascriptLibrary.h
 M	lib/Runtime/Library/JavascriptPromise.cpp
 M	lib/Runtime/Library/JavascriptPromise.h
 M	lib/Runtime/Library/ScriptFunction.cpp

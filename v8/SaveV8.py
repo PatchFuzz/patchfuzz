@@ -8,7 +8,7 @@ class TimeOutException(Exception):
 def setTimeout(num):
     def wrape(func):
         def handle(signum, frame):
-            raise TimeOutException("运行超时！")
+            raise TimeOutException("Timeout！")
         def toDo(*args, **kwargs):
             try:
                 signal.signal(signal.SIGALRM, handle)
@@ -36,7 +36,7 @@ file_type_list = ["js"]
 @setTimeout(1)
 def updatefile(path, dest,filename):
     parent_dir = os.path.abspath(os.path.join(dest, os.pardir))
-    wasm = os.path.join(parent_dir, 'wasm')
+    wasm = os.path.join(parent_dir, 'wasm_v8')
     #print(path)
     string = ""
     fw = open(path, "r")
@@ -84,7 +84,7 @@ def listfiles(path, dest, file_types):
 
 def saveV8(path, dest, file_types):
     parent_dir = os.path.abspath(os.path.join(dest, os.pardir))
-    wasm = os.path.join(parent_dir, 'wasm')
+    wasm = os.path.join(parent_dir, 'wasm_v8')
     mkdir(wasm)
     listfiles(path, dest, file_types)
 
@@ -97,6 +97,7 @@ if __name__ == '__main__':
     # args = parser.parse_args()
     # src_path = args.src
     # out_path = args.out
-    src_path = "/data/table2/testsuite/v8"
-    out_path = "/data/table2/testsuite/v8_new"
+    src_path = "/data/tableV/testsuite/v8_bad"
+    out_path = "/data/tableV/testsuite/v8_new"
+    mkdir(out_path)
     saveV8(src_path, out_path, file_type_list)
