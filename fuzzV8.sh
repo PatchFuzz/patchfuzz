@@ -33,12 +33,12 @@ done
 # Copy 100 files to each destination DIR
 for ((i=1; i<=PARALLE_NUMBER; i++)); do
     DEST_DIR="${PARENT_DIR}/copy_${i}"
-    FILES=$(ls "${SOURCE_DIR}" | shuf -n 70)
+    FILES=$(ls "${SOURCE_DIR}" | shuf -n 45)
     for file in ${FILES}; do
         cp "${SOURCE_DIR}/${file}" "${DEST_DIR}"
     done
     if [ $i -eq 1 ];then
-    	eval "nohup ${FUZZER_DIR}/afl-fuzz -M v8_1 -m 4G -t 600 -i ${PARENT_DIR}/copy_1 -o ${FUZZOUT_DIR} ${TARGET_PATH} ${ARGS} @@ > /dev/null 2>&1 &" 
+    	eval "nohup ${FUZZER_DIR}/afl-fuzz -S v8_1 -m 4G -t 800 -i ${PARENT_DIR}/copy_1 -o ${FUZZOUT_DIR} ${TARGET_PATH} ${ARGS} @@ > /dev/null 2>&1 &" 
     else
     	eval "nohup ${FUZZER_DIR}/afl-fuzz -S v8_${i} -m 4G -t 500+ -i ${PARENT_DIR}/copy_${i} -o ${FUZZOUT_DIR} ${TARGET_PATH} ${ARGS} @@ > /dev/null 2>&1 &"
     fi

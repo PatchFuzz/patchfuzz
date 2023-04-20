@@ -9,3 +9,4 @@ scripts/sk.txt
 *.csv
 *.txt
 bug/
+core

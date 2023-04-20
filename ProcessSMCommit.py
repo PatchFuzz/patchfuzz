@@ -6,7 +6,7 @@ import sys,re,shutil,os
 
 
 
-def parseSMCommit(commitLines):
+def parseSMCommit(commitLines,dir_path):
     commits = []
     # dict to store commit data
     commit = {}
@@ -64,26 +64,28 @@ def parseSMCommit(commitLines):
         else:
             pass
     commits.append(commit)
+    cal_chfile(commits,dir_path)
     return commits
 
-def cal_chfile(commits,base_path,out_dir):
-    hashtable={}
+def cal_chfile(commits,out_dir):
+    table={}
     for commit in commits:
         chfile = commit["changedfiles"]
         for file in chfile:
             #print(file)
             if (re.compile('[\w-]+(?=[.][ch]\s)').search(file) or re.compile('[\w-]+(?=[.]cpp\s)').search(file)\
                 or  re.compile('[\w-]+(?=[.]cc\s)').search(file)) and bool(re.match('js/src',file)):
-                try:
-                    shutil.copy(os.path.join(base_path,file[:-1]),out_dir)
-                except Exception as e:
-                    #print(e)
-                    pass
-                else:
-                    if hashtable.get(file) is None:
-                        hashtable[file]=0
-                    hashtable[file]=hashtable[file] + 1
-    return hashtable
+                    if table.get(file) is None:
+                        table[file]=0
+                    table[file]=table[file] + 1
+    file1 = open(os.path.join(out_dir,"sm_allowlist.txt"), 'w')
+    #file2 = open('/data/patchFuzz/0417/whitelist/jsc.txt', 'w') 
+    for k,v in sorted(table.items(), key=lambda x:x[1],reverse=True):
+        file1.write(str(k)[:-1]+'\n')
+        #file2.write(str(k)[:-1]+','+str(v)+'\n')        
+    file1.close()
+    #file2.close()
+
 
 if __name__ == '__main__':
     #parse_webkit_commit(sys.stdin.readlines())

@@ -330,7 +330,7 @@ def table8(txt,csv,parse_func):
             TN+=1
         if row.ctype=="other" and row.audit==1:
             FN+=1
-            #print(row.hash)
+            print(row.hash)
     #pf2.to_csv(csv+".final", index=None)
     print('Precision: {:.2f}%'.format(TP/(TP+FP)*100))
     print('Recall: {:.2f}%'.format(TP/(TP+FN)*100))
@@ -365,8 +365,8 @@ def audit(csv):
     print('Recall: {:.2f}%'.format(TP/(TP+FN)*100))
     print(TP,FP,TN,FN)
 
-# print("JSC:")
-# table8("./jsc_message.txt","./sample_jsc.csv.final.chatgpt",parse_jsc_commit)
+print("JSC:")
+table8("./jsc_message.txt","./sample_jsc.csv.final.chatgpt",parse_jsc_commit)
 
 # print("V8:")
 # table8("./v8_message.txt","./sample_v8.csv.final.chatgpt",parse_v8_commit)
@@ -380,13 +380,13 @@ def audit(csv):
 # print("Je:")
 # table8("./je_message.txt","./sample_je.csv.final.chatgpt",parse_je_commit)
 
-print("JSC:")
-audit("./sample_jsc.csv.final.chatgpt")
-print("CH:")
-audit("./sample_ch.csv.final.chatgpt")
-print("V8:")
-audit("./sample_v8.csv.final.chatgpt")
-print("SP:")
-audit("./sample_sp.csv.final.chatgpt")
-print("JE:")
-audit("./sample_je.csv.final.chatgpt")
+# print("JSC:")
+# audit("./sample_jsc.csv.final.chatgpt")
+# print("CH:")
+# audit("./sample_ch.csv.final.chatgpt")
+# print("V8:")
+# audit("./sample_v8.csv.final.chatgpt")
+# print("SP:")
+# audit("./sample_sp.csv.final.chatgpt")
+# print("JE:")
+# audit("./sample_je.csv.final.chatgpt")

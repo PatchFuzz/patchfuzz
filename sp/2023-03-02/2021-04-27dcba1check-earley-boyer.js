@@ -1970,7 +1970,7 @@ function sc_currentDate() {
 function sc_Hashtable() {
 }
 sc_Hashtable.prototype.toString = function() {
-    return "#{%hashtable}";
+    return "#{%table}";
 };
 // sc_toWriteString == sc_toDisplayString == toString
 
@@ -2009,7 +2009,7 @@ function sc_hashtableForEach(ht, f) {
     }
 }
 
-/*** META ((export hashtable-contains?)
+/*** META ((export table-contains?)
            (peephole (hole 2 "sc_hash(" 1 ") in " 0)))
 */
 function sc_hashtableContains(ht, key) {

@@ -1,13 +1,16 @@
-# PocGetter
+# PatchFuzz
 A script for extracting the latest security-related samples from  Webkit/V8/ChakraCore/SpiderMonkey/JerryScript stress test set
 # Usage
 ```sh
 cd $TargetDir
-git log --date=short  -m --name-status --after=$DataYouWant | python3.10 $ToolDir/main.py $OutputDir jsc|v8|ch|sp|je $TargetDir
+git pull
+git log --date=short  -m --name-status --after=$DataYouWant  --before=$DataYouWant| python3.10 $ToolDir/main.py $OutputDir jsc|v8|ch|sp|je $TargetDir
+$ToolDir/fuzzXXX.sh  --args
 ```
 
 ## JavascriptCore
 cd WebKit<br>
+git pull
 git log --date=short  -m --name-status --after=2022-1-1 | python3.10 /data/patchFuzz/main.py /data/patchFuzz/0410/ jsc /data/WebKit/
 /data/patchFuzz/fuzzJSC.sh /data/patchFuzz/0410/jsc/poc/ /data/fuzzout/jscout_0410/ 5
 ## V8
