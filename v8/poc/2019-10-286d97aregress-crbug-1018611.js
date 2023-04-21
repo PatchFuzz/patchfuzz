@@ -1,5 +1,0 @@
-
-
-
-
-print("(l-(c))=>", SyntaxError);
