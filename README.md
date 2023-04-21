@@ -3,8 +3,13 @@ PatchFuzz: Fuzzing for JavaScript Engine Incomplete Security Patches
 ## Usage
 ```sh
 cd $TargetDir
+# Update the repository of JS Engine.
 git pull
+# Get the latest processed security-related samples and whitelist for AFL instrumentation.
 git log --date=short  -m --name-status --after=$DataYouWant  --before=$DataYouWant| python3.10 $ToolDir/main.py $OutputDir jsc|v8|chakra|sm|jerry $TargetDir
+# Compile the JS Engine with crossover
+...
+# Adjust fuzzXXX.sh script as required and strat fuzzing.
 $ToolDir/fuzzXXX.sh  --args
 ```
 
