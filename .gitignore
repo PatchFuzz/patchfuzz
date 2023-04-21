@@ -9,4 +9,5 @@ scripts/sk.txt
 *.csv
 *.txt
 bug/
+crossover/
 core
