@@ -4,7 +4,7 @@ A script for extracting the latest security-related samples from  Webkit/V8/Chak
 ```sh
 cd $TargetDir
 git pull
-git log --date=short  -m --name-status --after=$DataYouWant  --before=$DataYouWant| python3.10 $ToolDir/main.py $OutputDir jsc|v8|ch|sp|je $TargetDir
+git log --date=short  -m --name-status --after=$DataYouWant  --before=$DataYouWant| python3.10 $ToolDir/main.py $OutputDir jsc|v8|chakra|sm|jerry $TargetDir
 $ToolDir/fuzzXXX.sh  --args
 ```
 
