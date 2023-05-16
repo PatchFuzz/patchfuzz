@@ -15,23 +15,23 @@ $ToolDir/fuzzXXX.sh  --args
 
 ### JavascriptCore
 ```sh
-cd WebKit<br>
-git pull<br>
-git log --date=short  -m --name-status --after=2022-1-1 | python3.10 /data/patchFuzz/main.py /data/patchFuzz/0410/ jsc /data/WebKit/<br>
+cd WebKit
+git pull
+git log --date=short  -m --name-status --after=2022-1-1 | python3.10 /data/patchFuzz/main.py /data/patchFuzz/0410/ jsc /data/WebKit/
 /data/patchFuzz/fuzzJSC.sh /data/patchFuzz/0410/jsc/poc/ /data/fuzzout/jscout_0410/ 5
 ```
 ### V8
 ```sh
-cd v8<br>
-git pull<br>
-git log --date=short -m --name-status --after=2022-11-1 | python3.10 /data/patchFuzz/main.py /data/patchFuzz/0404/ v8 /data/v8/<br>
+cd v8
+git pull
+git log --date=short -m --name-status --after=2022-11-1 | python3.10 /data/patchFuzz/main.py /data/patchFuzz/0404/ v8 /data/v8/
 /data/patchFuzz/fuzzV8.sh /data/patchFuzz/0410/v8/poc/ /data/fuzzout/v8out_0410 3
 ```
 ### Spidermonkey
 ```sh
 cd spidermonkey/
-git pull<br>
-git log --date=short -m --name-status --after=2023-1-1 | python3.10 /data/patchFuzz/main.py /data/patchFuzz/0404/ sp /data/spidermonkey/<br>
+git pull
+git log --date=short -m --name-status --after=2023-1-1 | python3.10 /data/patchFuzz/main.py /data/patchFuzz/0404/ sp /data/spidermonkey/
 /data/patchFuzz/fuzzSM.sh /data/patchFuzz/0410/sp/poc/ /data/fuzzout/smout_0410/ 3
 ```
 ### ChaKraCore
