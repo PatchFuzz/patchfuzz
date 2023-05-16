@@ -415,54 +415,12 @@ q7="""
             "--validateBCE=true"
 ]
 """
-p8="Explain the following message for me."
+p8="You are an academic paper writer. Without changing the original meaning, describe the following in one sentence"
 q8="""
-    Cherry-pick 259548.47@safari-7615-branch (0f2c12121b0a). rdar://107474791
-    
-        [JSC] FTL arguments elimination should ensure that replacement sites can access to original stack slots
-        https://bugs.webkit.org/show_bug.cgi?id=251640
-        rdar://99273500
-    
-        Reviewed by Mark Lam.
-    
-        FTL arguments elimination does analysis and attempts to eliminate arguments allocation if it is not escaped.
-        We emit stack access at `arguments[0]` site for example, and remove `arguments` allocations.
-        But important thing is that stack slots used for the `arguments` need to be available at `arguments[0]` access site.
-        Since we are using stack slots for different purpose when inlining different functions, it is possible that the given
-        stack slot is no longer available when using `arguments[0]`. For example,
-    
-            function a() { return arguments; }
-            function b() { do-something }
-    
-            var arg = a()
-            b();
-            arg[0];         // If both "a" and "b" are inlined, stack slots used for inlined "a" can be used for the other purpose for "b"
-                            // As a result, it is possible that the slot is not available at `arg[0]` access point.
-    
-        We were doing stack slot interference analysis to avoid the above problem[1]. However, it was not complete solution since it is only
-        checking block-local status. So if we have branch between a() and arg[0], this analysis didn't work. Attached test
-        "arguments-elimination-should-happen-only-when-stack-slot-is-available-at-replacement-site.js" is literally doing this.
-    
-            function empty() {}
-    
-            function bar2(...a0) {
-              return a0;
-            }
-    
-            function foo() {
-              let xs = bar2(undefined);
-              '' == 1 && 0;
-              return empty(...xs, undefined);
-            }
-    
-        Between bar2 and `...xs` site, we have branch due to &&. And at "...xs" site, the stack slot were no longer available.
-    
-        In this patch, we replace our existing interference analysis with the revised fix. We use OSR availability which can describe the
-        state of each stack slot. For all arguments, initially, it is flushed state with a node. Then, when slot gets unavailable or overridden,
-        we can see the availability change, which no longer points at the same node.
-        We first do this OSR availability analysis and capture availability map of each candidates. And then, we analyze whether replacement sites
-        are still seeing the same availability for arguments. And if it becomes different, we remove the candidate from optimization target. This change
-        simplifies our analysis significantly, and make it procedure global (previous one was block local).
+
+CVE-2018-0777 is one of such cases. It is a buffer overflow vulnerability discovered by Lokihardt, a member of the Google Project Zero team in November 2017.
+ChakraCore was the JavaScript engine of the Edge browser before March 2021 and a popular research focus in the browser security research area.
+CVE-2018-0777 is a buffer overflow vulnerability in the ChakraCore. 
 """
 def Fix(code):
     # prompt = "I want you to act as a parser for JavaScript engines. I will give you a piece of JavaScript code. You need to determine if it works correctly. If it doesn't works correctly, you should fix the wrong code to code that works correctly in any other browser and show the whole correct code to me without any other words. "

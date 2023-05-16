@@ -11,16 +11,16 @@ from utils import mkDir
 from ExtractSample import extractJSCSample,extractV8Sample,extractChakraSample,extractSMSample,extractJerrySample
 from jsc.SaveJSC import saveJsc
 from v8.SaveV8 import saveV8
-from ch.SaveChakra import saveCh
-from sp.SaveSM import saveSp
-from je.SaveJerry import saveJe
+from chakra.SaveChakra import saveCh
+from sm.SaveSM import saveSp
+from jerry.SaveJerry import saveJe
 
 
 
 def exportCSV(export,target,dir_path):
     date = datetime.date.today().strftime('%Y_%m_%d')
     pf = pd.DataFrame(list(export))
-    order = ['date','hash','ctype','poc','changedfiles']
+    order = ['date','hash','ctype','poc','changedfiles','urlofbug']
     pf = pf[order]
     file_path = os.path.join(dir_path,target + "_" + date + ".csv")
     pf.fillna(' ',inplace = True)

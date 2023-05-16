@@ -12,7 +12,7 @@ if [[ -z "$1" || -z "$2" || -z "$3" ]]; then
     exit 1
 fi
 FUZZER_DIR="/home/crossover"
-TARGET_PATH="/home/WebKit/0417/Release/bin/jsc"
+TARGET_PATH="/home/WebKit/0425/Release/bin/jsc"
 PARENT_DIR=$(dirname "${SOURCE_DIR}")
 ARGS="--thresholdForJITSoon=10 --thresholdForJITAfterWarmUp=10 --thresholdForOptimizeAfterWarmUp=100 --thresholdForOptimizeAfterLongWarmUp=100 --thresholdForOptimizeSoon=100 --thresholdForFTLOptimizeAfterWarmUp=1000 --thresholdForFTLOptimizeSoon=1000 --validateBCE=true"
 
@@ -46,7 +46,8 @@ for ((i=1; i<=PARALLE_NUMBER; i++)); do
 done
 
 while true; do
+    sleep 3
     eval "${FUZZER_DIR}/afl-whatsup ${FUZZOUT_DIR}"
-    sleep 300
+    sleep 180
 done
 
