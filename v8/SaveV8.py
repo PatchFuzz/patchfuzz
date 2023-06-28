@@ -48,9 +48,9 @@ def updatefile(path, dest,filename):
     if "export " in string :
         return
     if "WasmModuleBuilder(" in string :
-        fw = open(os.path.join(wasm,filename), "w")
-        fw.write(string.lstrip())
-        fw.close()
+        # fw = open(os.path.join(wasm,filename), "w")
+        # fw.write(string.lstrip())
+        # fw.close()
         return 
 
     string = re.sub(C_Rule, "", string)
@@ -97,7 +97,7 @@ if __name__ == '__main__':
     # args = parser.parse_args()
     # src_path = args.src
     # out_path = args.out
-    src_path = "/data/tableV/testsuite/v8_bad"
-    out_path = "/data/tableV/testsuite/v8_new"
+    src_path = "/data/TempCorpus/testsuite5/v8_bad"
+    out_path = "/data/TempCorpus/testsuite5/v8_bad"
     mkdir(out_path)
     saveV8(src_path, out_path, file_type_list)

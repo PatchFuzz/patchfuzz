@@ -49,7 +49,7 @@ def updatefile(path, dest,filename):
 
    
     string = re.sub(C_Rule, "", string)
-    string = re.sub("asserts?[.]?\w* ?\\(", "print(",string)
+    #string = re.sub("asserts?[.]?\w* ?\\(", "print(",string)
 
 
     

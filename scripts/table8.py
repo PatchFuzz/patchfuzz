@@ -46,7 +46,7 @@ def parse_jsc_commit(commitLines):
         elif bool(re.match('    ', nextLine, re.IGNORECASE)):
             if bool(re.match('bug', nextLine.strip(), re.IGNORECASE)) or bool(re.search('fix', nextLine.strip(), re.IGNORECASE))\
                 or bool(re.search('crash', nextLine.strip(), re.IGNORECASE)): commit['ctype'] = "bug"
-            elif bool(re.search('bugs.webkit.org',nextLine)) or bool(re.search('http://webkit.org/b/',nextLine)):
+            elif bool(re.search('bugs.webkit.org',nextLine)) or bool(re.search('webkit.org/b/',nextLine)):
                 commit['urlofbug'] = nextLine.strip()
                 commit['ctype'] = "bug"
 
@@ -291,21 +291,22 @@ def getRandomSample():
         target = p[-17:-15]
         path = "/data/patchFuzz/sample_" + target + ".csv"
         pf = pd.read_csv(p,usecols=['hash','date','ctype'])
-        sample_bug = pf[pf['ctype']=='bug'].sample(n=50).loc[:,'hash':'ctype']
-        sample_ohter = pf[pf['ctype']=='other'].sample(n=50).loc[:,'hash':'ctype']
+        sample_bug = pf[pf['ctype']=='bug'].sample(n=21).loc[:,'hash':'ctype']
+        sample_ohter = pf[pf['ctype']=='other'].sample(n=4).loc[:,'hash':'ctype']
         pd.merge(sample_bug,sample_ohter,how='outer').to_csv(path, index=None)
 
 def getMessageOfSample():
-    pf=pd.read_csv('/data/patchFuzz/scripts/sample_ch.csv.final.chatgpt.chatgpt.new',usecols=['hash'])
-    file = open('/data/patchFuzz/scripts/ch_message.txt','w')
+    pf=pd.read_csv('/data/patchFuzz/sample_sc.csv',usecols=['hash'])
+    file = open('/data/patchFuzz/jsc_message.txt','w')
 
     for i in pf['hash']:
-        p = subprocess.run(["git","log","-1","--name-status",i], stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=2,cwd="/data/ChakraCore")
+        p = subprocess.run(["git","log","-1","--name-status",i], stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=2,cwd="/data/WebKit/")
         file.write(p.stdout.decode()+"\n")
     file.close() 
+    print("zxw")
 
-#getRandomSample()
-#getMessageOfSample()
+getRandomSample()
+getMessageOfSample()
 
 def table8(txt,csv,parse_func):
     TP=0
@@ -330,7 +331,7 @@ def table8(txt,csv,parse_func):
             TN+=1
         if row.ctype=="other" and row.audit==1:
             FN+=1
-            print(row.hash)
+            #print(row.hash)
     #pf2.to_csv(csv+".final", index=None)
     print('Precision: {:.2f}%'.format(TP/(TP+FP)*100))
     print('Recall: {:.2f}%'.format(TP/(TP+FN)*100))
@@ -365,8 +366,8 @@ def audit(csv):
     print('Recall: {:.2f}%'.format(TP/(TP+FN)*100))
     print(TP,FP,TN,FN)
 
-print("JSC:")
-table8("./jsc_message.txt","./sample_jsc.csv.final.chatgpt",parse_jsc_commit)
+# print("JSC:")
+# table8("./jsc_message.txt","./sample_jsc.csv.final.chatgpt",parse_jsc_commit)
 
 # print("V8:")
 # table8("./v8_message.txt","./sample_v8.csv.final.chatgpt",parse_v8_commit)
@@ -382,11 +383,11 @@ table8("./jsc_message.txt","./sample_jsc.csv.final.chatgpt",parse_jsc_commit)
 
 # print("JSC:")
 # audit("./sample_jsc.csv.final.chatgpt")
-# print("CH:")
-# audit("./sample_ch.csv.final.chatgpt")
 # print("V8:")
 # audit("./sample_v8.csv.final.chatgpt")
 # print("SP:")
 # audit("./sample_sp.csv.final.chatgpt")
+# print("CH:")
+# audit("./sample_ch.csv.final.chatgpt")
 # print("JE:")
 # audit("./sample_je.csv.final.chatgpt")

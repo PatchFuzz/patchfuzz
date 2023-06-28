@@ -48,9 +48,9 @@ def updatefile(path, dest,filename):
     if "instantiate(" in string \
             or "wasmEvalText(" in string\
             or "wasmTextToBinary(" in string:
-        fw = open(os.path.join(wasm,filename), "w")
-        fw.write(string)
-        fw.close()
+        # fw = open(os.path.join(wasm,filename), "w")
+        # fw.write(string)
+        # fw.close()
         return    
     string = re.sub(C_Rule, "", string)
     string = re.sub("assert[.]?\w* ?\\(", "print(",string)
@@ -98,7 +98,7 @@ if __name__ == '__main__':
     # args = parser.parse_args()
     # src_path = args.src
     # out_path = args.out
-    src_path = "/data/tableV/testsuite/sp_bad"
-    out_path = "/data/tableV/testsuite/sp_new"
+    src_path = "/data/TempCorpus/testsuite5/sm_bad"
+    out_path = "/data/TempCorpus/testsuite5/sm_bad"
     mkdir(out_path)
     saveSp(src_path, out_path, file_type_list)

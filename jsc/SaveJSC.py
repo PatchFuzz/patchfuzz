@@ -53,17 +53,18 @@ def updatefile(path, dest,filename):
     if "isWasmSupported" in string \
             or "wasmCode" in string\
             or "wasmEntry" in string:
-        fw = open(os.path.join(wasm,filename), "w")
-        fw.write(string.lstrip())
-        fw.close()
+        # fw = open(os.path.join(wasm,filename), "w")
+        # fw.write(string.lstrip())
+        # fw.close()
         return       
     string = re.sub(C_Rule, "", string)
     string = re.sub("\\$vm[.]\w+", "print",string)
     string = re.sub("abort\\(", "print(",string)    
     string = re.sub("assert[.]?\w* ?\\(", "print(",string)
+    string = re.sub("\\(assert\w*\\)", "(print)",string)
     string = re.sub("generateBinaryTests\\(", "print(",string)
            
-    string = re.sub("load\\(.*\\);?","",string)
+    string = re.sub("load\\(","print(",string)
 
 
     
@@ -104,8 +105,8 @@ if __name__ == '__main__':
     # src_path = args.src
     # out_path = args.out
     
-    src_path = "/data/tableV/testsuite/jsc_bad"
-    out_path= "/data/tableV/testsuite/jsc_new"
+    src_path = "/data/TempCorpus/testsuite5/jsc_bad"
+    out_path= "/data/TempCorpus/testsuite5/jsc_bad"
     mkdir(out_path)
     saveJsc(src_path,out_path,file_type_list)
 

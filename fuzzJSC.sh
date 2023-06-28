@@ -14,8 +14,8 @@ fi
 FUZZER_DIR="/home/crossover"
 TARGET_PATH="/home/WebKit/0425/Release/bin/jsc"
 PARENT_DIR=$(dirname "${SOURCE_DIR}")
-ARGS="--thresholdForJITSoon=10 --thresholdForJITAfterWarmUp=10 --thresholdForOptimizeAfterWarmUp=100 --thresholdForOptimizeAfterLongWarmUp=100 --thresholdForOptimizeSoon=100 --thresholdForFTLOptimizeAfterWarmUp=1000 --thresholdForFTLOptimizeSoon=1000 --validateBCE=true"
-
+ARGS="--useWebAssemblyGC=true  --thresholdForBBQOptimizeAfterWarmUp=15 --thresholdForBBQOptimizeSoon=5 --thresholdForOMGOptimizeAfterWarmUp=5000 --thresholdForOMGOptimizeSoon=50 --useWebAssemblyTypedFunctionReferences=true --useWebAssemblyTailCalls=true --useWebAssemblyRelaxedSIMD=true"
+ARGS2="--useWebAssemblyGC=true"
 
 export AFL_CUSTOM_MUTATOR_ONLY=1 AFL_DISABLE_TRIM=1 AFL_PYTHON_MODULE="example" PYTHONPATH="${FUZZER_DIR}/custom_mutators/examples/"
 

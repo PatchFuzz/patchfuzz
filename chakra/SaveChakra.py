@@ -50,6 +50,7 @@ def updatefile(path, dest,filename):
     string = re.sub("WScript[.]\w+[.]\w+", "\"zxw\"",string)
     string = re.sub("WScript[.]?\w* ?\\(", "print(",string)
     string = re.sub("console.log\\(", "print(",string)
+    string = re.sub("telemetryLog\\(", "print(",string)
     string = re.sub("assert[.]?\w* ?\\(", "print(",string)
     string = re.sub("testRunner.runTests.*;?", "for (var i = 0; i < tests.length; i ++) {tests[i].body()}",string)
 
@@ -84,7 +85,7 @@ def saveCh(path, dest, file_types):
 
 
 if __name__ == '__main__':
-    src = "/data/tableV/testsuite/ch_bad"
-    dest = "/data/tableV/testsuite/ch_new"
+    src = "/data/TempCorpus/testsuite5/ch_bad"
+    dest = "/data/TempCorpus/testsuite5/ch_bad"
     mkdir(dest)
     saveCh(src, dest, file_type_list)
