@@ -1,0 +1,7 @@
+
+
+
+
+
+
+try { Function("") } catch (e) {}

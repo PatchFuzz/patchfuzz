@@ -1,0 +1,16 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+assert (this.hasOwnProperty !== undefined);

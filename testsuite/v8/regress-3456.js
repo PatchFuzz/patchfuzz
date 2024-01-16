@@ -1,0 +1,11 @@
+
+
+
+
+
+
+
+
+
+
+function f() { ++(this.foo) }

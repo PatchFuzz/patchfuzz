@@ -1,0 +1,6 @@
+
+
+
+
+
+ArrayBuffer.prototype['byteLength']

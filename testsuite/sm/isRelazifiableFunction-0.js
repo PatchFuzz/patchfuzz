@@ -1,0 +1,3 @@
+
+
+isRelazifiableFunction(new Array());

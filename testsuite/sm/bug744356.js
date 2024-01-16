@@ -1,0 +1,14 @@
+
+gczeal(4);
+function* gen() {
+  var c = [1, "x"];
+  try {
+    yield c;
+  } finally {
+    gc();
+  }
+}
+var iter = gen();
+for (i of iter) {
+  (SECTION)();
+}

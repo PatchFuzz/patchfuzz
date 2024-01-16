@@ -1,0 +1,31 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function f() { for (var i = 10; i < 100; i++) { return i | i; } }
+assertEquals(10, f());

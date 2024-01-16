@@ -1,0 +1,5 @@
+
+
+
+
+assertThrows("class A {...", SyntaxError);

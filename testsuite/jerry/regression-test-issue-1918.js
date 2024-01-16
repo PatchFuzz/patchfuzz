@@ -1,0 +1,15 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+throw $ = {name: function () {}}

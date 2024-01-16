@@ -1,0 +1,5 @@
+
+
+
+
+assertEq(isLcovEnabled(), true);

@@ -1,0 +1,17 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"use strict"
+
+with (Array) {}

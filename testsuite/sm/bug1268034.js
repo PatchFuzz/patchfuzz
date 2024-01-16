@@ -1,0 +1,6 @@
+
+
+oomTest(function() {
+    offThreadCompileToStencil("");
+});
+"".match();

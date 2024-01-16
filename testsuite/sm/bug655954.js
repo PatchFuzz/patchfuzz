@@ -1,0 +1,5 @@
+
+foo(); 
+function foo() { 
+    this();
+}

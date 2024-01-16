@@ -1,0 +1,32 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var str = "bbaabbbbbbbbabbaaaabbaaabbbaaaabbaaabbabaaabb";
+assertEquals(str, str.replace(/aabab/g, "foo"));

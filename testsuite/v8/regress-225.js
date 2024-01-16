@@ -1,0 +1,32 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+assertEquals("foo", "foo".replace(/(?:)/g, function() { return ""; }));
+
+assertEquals("foo", "foo".replace(/(?:)/g, ""));

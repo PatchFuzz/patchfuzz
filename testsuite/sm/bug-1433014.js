@@ -1,0 +1,5 @@
+
+evaluate(`
+    oomTest(() => {
+        offThreadCompileToStencil("");
+    });`);

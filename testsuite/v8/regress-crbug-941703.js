@@ -1,0 +1,5 @@
+
+
+
+
+assertThrows("(this) , this =>", SyntaxError);

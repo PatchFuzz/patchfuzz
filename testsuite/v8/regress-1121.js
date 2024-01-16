@@ -1,0 +1,34 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Array.prototype.__proto__ = null;
+
+assertEquals([1, 2, 3], [1, 2, 3].slice());

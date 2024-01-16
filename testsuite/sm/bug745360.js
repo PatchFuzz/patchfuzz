@@ -1,0 +1,2 @@
+
+newGlobal().eval("eval.arguments")

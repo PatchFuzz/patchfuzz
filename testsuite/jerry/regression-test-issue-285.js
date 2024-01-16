@@ -1,0 +1,16 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+NaN == RegExp;
+NaN == Date;

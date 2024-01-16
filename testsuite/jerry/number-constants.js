@@ -1,0 +1,19 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+assert(Number.MAX_SAFE_INTEGER === 9007199254740991);
+assert(Number.MIN_SAFE_INTEGER === -9007199254740991);
+assert(Number.EPSILON === 2.2204460492503130808472633361816e-16);

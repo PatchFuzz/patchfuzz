@@ -1,0 +1,2 @@
+
+offThreadCompileToStencil('import("")', {});

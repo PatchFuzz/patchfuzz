@@ -1,0 +1,234 @@
+
+
+
+
+
+
+
+
+
+let testCases = [
+  function() {
+    return {
+      start: 0,
+      end: 100,
+      test: function testBasic(a, src) {
+        for(let i = 0; i < 100; i++) {
+          a[i] = src[i];
+        }
+      }
+    };
+  },
+  function() {
+    return {
+      start: 0,
+      end: 100,
+      test: function testChangedIndex(a, src) {
+        
+        for(let i = 0; i < 100;) {
+          a[i] = src[++i];
+        }
+      }
+    };
+  },
+  function() {
+    let src = new Array(100);
+    for(let i = 0; i < 100; ++i) {
+      src[i] = i;
+    }
+    return {
+      start: 0,
+      end: 100,
+      test: function testLdSlot(a) {
+        
+        for(let i = 0; i < 100; ++i) {
+          a[i] = src[i];
+        }
+      }
+    };
+  },
+  function() {
+    let start = 5, end = 101;
+    return {
+      start: start,
+      end: end,
+      size: end,
+      test: function testReverse(a, src) {
+        for(let i = 100; i >= 5; i--) {
+          a[i] = src[i];
+        }
+      }
+    };
+  },
+  function() {
+    let results = [];
+    let start = 0, end = 10;
+    return {
+      start: start,
+      end: end,
+      runner: function testMultipleMemcopy(arrayGen, src) {
+        let a = arrayGen(), b = arrayGen(), c = arrayGen();
+        
+        for(let i = 0; i < 10; i++) {
+          a[i] = b[i] = c[i] = src[i];
+        }
+        results.push([a, b, c]);
+      },
+      check: function() {
+        let base = results[0];
+        for(let i = 1; i < results.length; ++i) {
+          for(let j = 0; j < 3; ++j) {
+            compareResult("testMultipleMemcopy", base[j], results[i][j], start, end);
+          }
+        }
+      }
+    };
+  },
+  function() {
+    return {
+      start: 0,
+      end: 10,
+      test: function preIncr(a, src) {
+        let ri = -1;
+        for(let i = 0; i < 10; ++i) {
+          a[++ri] = src[ri];
+        }
+      }
+    };
+  },
+  function() {
+    return {
+      start: -50,
+      end: 10,
+      loop: 10, 
+      test: function testNegativeStartIndex(a, src) {
+        for(let i = -50; i < 10; i++) {
+          
+          a[i] = src[i];
+        }
+      }
+    };
+  },
+  function() {
+    return {
+      start: 0,
+      end: 128,
+      test: function bug4468518(a, src) {
+        let x = 0;
+        for(let i = 0; i < 128; i++) {
+          let m = src[i];
+          x += m;
+          a[i] = m;
+        }
+        return x;
+      }
+    };
+  }
+];
+
+let passed = true;
+function compareResult(name, a, b, start, end, start2) {
+  for(let i = start, j = start2 || start; i < end; ++i, ++j) {
+    if(a[i] !== b[j]) {
+      print(`Error ${name}: a[${i}](${a[i]}) !== b[${j}](${b[j]})`);
+      passed = false;
+      return false;
+    }
+  }
+  return true;
+}
+
+const isFloatTest = WScript.Arguments[0] === "float";
+
+function makeArray(size = 10) {
+  let a = new Array(size);
+  for(let i = 0; i < size; ++i) {
+    a[i] = isFloatTest ? 0.5 : 0;
+  }
+  if (isFloatTest) {
+    return eval(`[${a.join(", ")}]`);
+  }
+  return a;
+}
+
+let arrayGenerators = [
+  makeArray,
+];
+
+function makeFloatArray(size = 10) {
+  const arrayValues = new Array(size);
+  for(let i = 0; i < size; ++i) {
+    arrayValues[i] = Math.random() / Math.random() * (Math.random() < 0.2 ? -1 : 1);
+  }
+  return eval(`[${arrayValues.join(", ")}]`);
+}
+
+function makeSource(size = 10) {
+  if (isFloatTest) return makeFloatArray(size);
+  let s = new Array(size);
+  for(let i = 0; i < size; ++i) {
+    s[i] = i;
+  }
+  return s;
+}
+
+for(let testCase of testCases) {
+  let results = [];
+  let testInfo = testCase();
+  let name = testInfo.runner && testInfo.runner.name || testInfo.test && testInfo.test.name || "Unknown";
+
+  let src;
+  if(!testInfo.makeSource) {
+    if (testInfo.size !== undefined) {
+      src = makeSource(testInfo.size);
+    } else if(
+      testInfo.start !== undefined &&
+      testInfo.end !== undefined
+    ) {
+      src = makeSource(testInfo.end - testInfo.start);
+    }
+  }
+  function run(gen) {
+    if(testInfo.makeSource) {
+      src = testInfo.makeSource();
+    }
+
+    if(testInfo.runner) {
+      let result = testInfo.runner(gen, src);
+      results.push(result);
+    } else {
+      let newArray = gen(testInfo.size || testInfo.end - testInfo.start);
+      testInfo.test(newArray, src);
+      results.push(newArray);
+    }
+  }
+
+  
+  run(makeArray);
+  for(let gen of arrayGenerators) {
+    if(testInfo.loop | 0) {
+      for(let i = 0; i < testInfo.loop; ++i) {
+        run(gen);
+      }
+    } else {
+      run(gen);
+    }
+  }
+
+
+  if(testInfo.check) {
+    testInfo.check(results);
+  } else {
+    let base = results[0]; 
+    for(let i = 1; i < results.length; ++i) {
+      compareResult(name, base, results[i], testInfo.start, testInfo.end);
+    }
+  }
+}
+
+if(passed) {
+  print("PASSED");
+} else {
+  print("FAILED");
+}
+

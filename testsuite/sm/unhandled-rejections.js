@@ -1,0 +1,3 @@
+
+
+Promise.reject("some reason");

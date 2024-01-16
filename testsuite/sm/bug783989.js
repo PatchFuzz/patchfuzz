@@ -1,0 +1,2 @@
+
+wrapWithProto(0);

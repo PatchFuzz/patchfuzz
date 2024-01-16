@@ -1,0 +1,6 @@
+
+
+
+
+
+with ({}) L: function f() { }

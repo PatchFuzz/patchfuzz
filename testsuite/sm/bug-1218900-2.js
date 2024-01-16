@@ -1,0 +1,3 @@
+
+startTimingMutator();
+startTimingMutator();

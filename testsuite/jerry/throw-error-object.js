@@ -1,0 +1,15 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+throw new SyntaxError("error");

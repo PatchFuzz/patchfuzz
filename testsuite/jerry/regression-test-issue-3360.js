@@ -1,0 +1,16 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function $ (b = [ ].$) { };
+assert ($() === undefined);

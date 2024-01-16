@@ -1,0 +1,2 @@
+
+evalInWorker(`schedulezone("s1");`);

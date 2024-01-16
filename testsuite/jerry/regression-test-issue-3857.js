@@ -1,0 +1,17 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function async() {}
+
+new async

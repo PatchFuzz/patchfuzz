@@ -1,0 +1,10 @@
+
+
+
+
+
+function $() {
+    "use asm"
+    ( );
+    return
+}

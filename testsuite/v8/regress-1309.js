@@ -1,0 +1,30 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var o = Object.preventExtensions({});
+assertThrows("o.__proto__ = {}");

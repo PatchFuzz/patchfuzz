@@ -1,0 +1,7 @@
+
+
+
+
+
+
+assertThrows('var %OptimizeFunctionOnNextCall()', SyntaxError);

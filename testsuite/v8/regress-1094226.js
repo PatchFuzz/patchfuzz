@@ -1,0 +1,5 @@
+
+
+
+
+assertThrows(() => eval('<' + '!'));

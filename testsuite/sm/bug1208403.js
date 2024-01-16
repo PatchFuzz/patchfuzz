@@ -1,0 +1,2 @@
+
+byteSizeOfScript(Array);

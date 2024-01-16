@@ -1,0 +1,14 @@
+__pycache__
+**/out*/
+webkit/
+zxw/
+04*/
+whitelist/*/*
+scripts/sk.txt
+.VSCodeCounter/*
+*.csv
+*.txt
+bug/
+crossover/
+core
+rebuttal

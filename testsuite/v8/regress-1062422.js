@@ -1,0 +1,30 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Number.prototype.__proto__ = String.prototype;
+assertEquals((123).length, 0)

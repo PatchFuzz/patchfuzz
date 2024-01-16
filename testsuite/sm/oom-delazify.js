@@ -1,0 +1,5 @@
+
+
+
+
+oomTest(() => Object.bind())
