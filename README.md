@@ -7,10 +7,10 @@ Fuzzing for JavaScript Engine Incomplete Security Patches
 | Engine | Alias | Source |
 |--------|-------|--------|
 | JerryScript | jerry | https://github.com/pando-project/jerryscript |
-| SpiderMonkey | sm | Firefox js/src |
-| JavaScriptCore | jsc | WebKit |
-| V8 | v8 | Chrome |
-| ChakraCore | chakra | Microsoft Edge Legacy |
+| SpiderMonkey | sm | https://github.com/mozilla-firefox/firefox |
+| JavaScriptCore | jsc | https://github.com/WebKit/WebKit |
+| V8 | v8 | https://github.com/v8/v8 |
+| ChakraCore | chakra | https://github.com/chakra-core/ChakraCore |
 
 ## Usage
 
