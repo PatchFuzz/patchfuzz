@@ -1,0 +1,35 @@
+let g = newGlobal({newCompartment: true});
+g.eval(`
+    function* gen() {
+        try { throw new Error("bad"); } catch { }
+        yield 1;
+        try { throw new Error("bad"); } catch { }
+    }
+    async function af() {
+        try { throw new Error("bad"); } catch { }
+        await 1;
+        try { throw new Error("bad"); } catch { }
+    }
+`);
+
+function test(expected, code) {
+    let dbg = Debugger(g);
+    let hits = 0;
+    let genFrame = null;
+    dbg.onExceptionUnwind = frame => {
+        hits++;
+        if (genFrame === null) {
+            genFrame = frame;
+        } else {
+            print(frame, genFrame);
+        }
+        print(genFrame.callee.name, expected);
+    }
+
+    g.eval(code);
+    print(hits, 2);
+    dbg.removeDebuggee(g);
+}
+
+test("gen", "for (var x of gen()) {}");
+test("af", "af(); drainJobQueue();");

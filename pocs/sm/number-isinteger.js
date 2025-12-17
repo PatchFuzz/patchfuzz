@@ -1,0 +1,15 @@
+print(Number.isInteger(4), true);
+print(Number.isInteger(4.), true);
+print(Number.isInteger(4.2), false);
+print(Number.isInteger(0.), true);
+print(Number.isInteger(-0.), true);
+print(Number.isInteger(Infinity), false);
+print(Number.isInteger(-Infinity), false);
+print(Number.isInteger(NaN), false);
+print(Number.isInteger(true), false);
+print(Number.isInteger(false), false);
+print(Number.isInteger({valueOf: function () { return 3; }}), false);
+print(Number.isInteger({valueOf: function () { return 0/0; }}), false);
+print(Number.isInteger({ valueOf: function() { throw 17; } }), false);
+print(Number.isInteger({ toString: function() { throw 17; } }), false);
+print(Number.isInteger({ valueOf: function() { throw 17; }, toString: function() { throw 42; } }), false);

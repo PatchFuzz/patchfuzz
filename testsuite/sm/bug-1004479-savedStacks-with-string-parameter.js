@@ -1,4 +1,0 @@
-
-
-Object.preventExtensions(this);
-saveStack();

@@ -1,0 +1,1 @@
+print(%StringLessThan("a", "b"));

@@ -1,0 +1,13 @@
+var m = parseModule("{}", "", "json");
+print(m.evaluationError, undefined);
+print(m.requestedModules, undefined);
+print(m.importEntries, undefined);
+print(m.localExportEntries, undefined);
+print(m.indirectExportEntries, undefined);
+print(m.starExportEntries, undefined);
+print(m.dfsAncestorIndex, undefined);
+print(m.hasTopLevelAwait, undefined);
+print(m.topLevelCapability, undefined);
+print(m.asyncEvaluatingPostOrder, undefined);
+print(m.asyncParentModules, undefined);
+print(m.pendingAsyncDependencies, undefined);

@@ -1,0 +1,32 @@
+function receiver() {
+  return this;
+}
+
+function construct(f) {
+  "use strict";
+  class B {}
+  class C extends B {
+    bar() { return super.foo() }
+  }
+  B.prototype.foo = f;
+  return new C();
+}
+
+function check(x, value, type) {
+  print("object", typeof x);
+  print(x, type);
+  print(value, x);
+}
+
+var o = construct(receiver);
+%PrepareFunctionForOptimization(o.bar);
+check(o.bar.call(123), Object(123), Number);
+check(o.bar.call("a"), Object("a"), String);
+check(o.bar.call(undefined), this, Object);
+check(o.bar.call(null), this, Object);
+
+%OptimizeFunctionOnNextCall(o.bar);
+check(o.bar.call(456), Object(456), Number);
+check(o.bar.call("b"), Object("b"), String);
+check(o.bar.call(undefined), this, Object);
+check(o.bar.call(null), this, Object);

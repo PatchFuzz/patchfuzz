@@ -1,0 +1,33 @@
+print("./resources/v8-mjsunit.js", "caller relative");
+
+let cleanup_call_count = 0;
+let cleanup = function(holdings) {
+  ++cleanup_call_count;
+}
+
+let fg = new FinalizationRegistry(cleanup);
+let key = {"k": "this is the key"};
+
+
+
+(function() {
+  let object = {};
+  fg.register(object, "my holdings", key);
+
+  
+  let success = fg.unregister(key);
+  print(success);
+
+  
+})();
+
+
+gc();
+print(0, cleanup_call_count);
+
+
+let timeout_func = function() {
+  print(0, cleanup_call_count);
+}
+
+setTimeout(timeout_func, 0);

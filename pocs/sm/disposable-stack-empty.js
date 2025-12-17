@@ -1,0 +1,3 @@
+{
+  using stack = new DisposableStack();
+}

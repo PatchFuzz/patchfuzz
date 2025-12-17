@@ -1,0 +1,11 @@
+var g = newGlobal({ newCompartment: true });
+var dbg = new Debugger();
+var gw = dbg.addDebuggee(g);
+g.evaluate("function f(x) {}");
+var fw = gw.getOwnPropertyDescriptor("f").value;
+print(fw.script.source.startLine, 1);
+print(fw.script.source.startColumn, 1);
+g.evaluate("function g(x) {}", { lineNumber: 10, columnNumber: 5 });
+var gw = gw.getOwnPropertyDescriptor("g").value;
+print(gw.script.source.startLine, 10);
+print(gw.script.source.startColumn, 5);

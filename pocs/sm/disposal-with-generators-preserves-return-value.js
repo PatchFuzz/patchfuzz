@@ -1,0 +1,21 @@
+;
+
+{
+  const values = [];
+  function* gen() {
+    yield 1;
+    using a = {
+      [Symbol.dispose]: () => values.push("a")
+    };
+    yield 2;
+    yield 3;
+  }
+  function testGeneratorPreservesReturnValue() {
+    let it = gen();
+    values.push(it.next().value);
+    values.push(it.next().value);
+    values.push(it.return(40).value);
+  }
+  testGeneratorPreservesReturnValue();
+  print(values, [1, 2, "a", 40]);
+}

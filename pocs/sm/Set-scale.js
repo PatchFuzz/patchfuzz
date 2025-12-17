@@ -1,0 +1,6 @@
+var N = 1 << 16;
+var s = new Set;
+for (var i = 0; i < N; i++)
+    print(s.add(i), s);
+for (var i = 0; i < N; i++)
+    print(s.has(i), true);

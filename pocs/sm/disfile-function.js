@@ -1,0 +1,1 @@
+disfile(libdir + "prologue.js");

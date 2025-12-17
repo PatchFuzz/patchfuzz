@@ -1,0 +1,27 @@
+function print(a, e) {
+    if (a !== e)
+        throw new Error("Bad!");
+}
+
+function foo() {
+    let c;
+    do {
+    
+        let a = 2;
+        let b = 3n;
+        for (let i = 0; i < testLoopCount; i++) {
+            c = i;
+        }
+
+        c = a / b; 
+    } while(true);
+
+    return c;
+}
+
+try {
+    foo();
+} catch(e) {
+    print(e instanceof TypeError, true);
+}
+

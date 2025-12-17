@@ -1,0 +1,1 @@
+print("(async)(a)=>{}", SyntaxError);

@@ -1,0 +1,4 @@
+function $() {
+    if ($)
+    function
+}

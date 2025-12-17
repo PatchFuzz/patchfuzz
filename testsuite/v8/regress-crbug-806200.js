@@ -1,7 +1,0 @@
-
-
-
-
-
-
-assertThrows("%Foo(...spread)", SyntaxError);

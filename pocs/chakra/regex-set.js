@@ -1,0 +1,181 @@
+print("..\\UnitTestFramework\\UnitTestFramework.js");
+
+var normalTests = [
+    {
+        regExp: /[-]/u,
+        acceptedCharacters: ['-'],
+        rejectedCharacters: [',', '.']
+    },
+    {
+        regExp: /[b-]/u,
+        acceptedCharacters: ['b', '-'],
+        rejectedCharacters: ['a', 'c']
+    },
+    {
+        regExp: /[\u{10001}-]/u,
+        acceptedCharacters: ['\u{10001}', '-'],
+        rejectedCharacters: ['\u{10000}', '\u{10002}']
+    },
+    {
+        regExp: /[-b]/u,
+        acceptedCharacters: ['-', 'b'],
+        rejectedCharacters: ['a', 'c']
+    },
+    {
+        regExp: /[-\u{10001}]/u,
+        acceptedCharacters: ['-', '\u{10001}'],
+        rejectedCharacters: ['\u{10000}', '\u{10002}']
+    },
+    {
+        regExp: /[b-d]/u,
+        acceptedCharacters: ['b', 'c', 'd'],
+        rejectedCharacters: ['-', 'a', 'e']
+    },
+    {
+        regExp: /[\u{10001}-\u{10003}]/u,
+        acceptedCharacters: ['\u{10001}', '\u{10002}', '\u{10003}'],
+        rejectedCharacters: ['-', '\u{10000}', '\u{10004}']
+    },
+    {
+        regExp: /[+--]/u,
+        acceptedCharacters: ['+', ',', '-'],
+        rejectedCharacters: ['*', '.']
+    },
+    {
+        regExp: /[--/]/u,
+        acceptedCharacters: ['-', '.', '/'],
+        rejectedCharacters: [',', '0']
+    },
+    {
+        regExp: /[b-d-]/u,
+        acceptedCharacters: ['b', 'c', 'd', '-'],
+        rejectedCharacters: ['a', 'e']
+    },
+    {
+        regExp: /[\u{10001}-\u{10003}-]/u,
+        acceptedCharacters: ['\u{10001}', '\u{10002}', '\u{10003}', '-'],
+        rejectedCharacters: ['\u{10000}', '\u{10004}']
+    },
+    {
+        regExp: /[b-df]/u,
+        acceptedCharacters: ['b', 'c', 'd', 'f'],
+        rejectedCharacters: ['-', 'a', 'e']
+    },
+    {
+        regExp: /[\u{10001}-\u{10003}\u{10005}]/u,
+        acceptedCharacters: ['\u{10001}', '\u{10002}', '\u{10003}', '\u{10005}'],
+        rejectedCharacters: ['-', '\u{10000}', '\u{10004}']
+    },
+    {
+        regExp: /[b-df-]/u,
+        acceptedCharacters: ['b', 'c', 'd', 'f', '-'],
+        rejectedCharacters: ['a', 'e', 'g']
+    },
+    {
+        regExp: /[\u{10001}-\u{10003}\u{10005}-]/u,
+        acceptedCharacters: ['\u{10001}', '\u{10002}', '\u{10003}', '\u{10005}', '-'],
+        rejectedCharacters: ['\u{10000}', '\u{10004}', '\u{10006}']
+    },
+    {
+        
+        regExp: /[b-d-f]/u,
+        acceptedCharacters: ['b', 'c', 'd', '-', 'f'],
+        rejectedCharacters: ['a', 'e']
+    },
+    {
+        
+        regExp: /[\u{10001}-\u{10003}-\u{10005}]/u,
+        acceptedCharacters: ['\u{10001}', '\u{10002}', '\u{10003}', '-', '\u{10005}'],
+        rejectedCharacters: ['\u{10000}', '\u{10004}']
+    },
+    {
+        
+        regExp: /[c-e-a]/u,
+        acceptedCharacters: ['c', 'd', 'e', '-', 'a'],
+        rejectedCharacters: ['b', 'f']
+    },
+    {
+        
+        regExp: /[\u{10002}-\u{10004}-\u{10000}]/u,
+        acceptedCharacters: ['\u{10002}', '\u{10003}', '\u{10004}', '-', '\u{10000}'],
+        rejectedCharacters: ['\u{10001}', '\u{10005}']
+    },
+    {
+        regExp: /[b-df-h]/u,
+        acceptedCharacters: ['b', 'c', 'd', 'f', 'g', 'h'],
+        rejectedCharacters: ['-', 'a', 'e', 'i']
+    },
+    {
+        regExp: /[\u{10001}-\u{10003}\u{10005}-\u{10007}]/u,
+        acceptedCharacters: ['\u{10001}', '\u{10002}', '\u{10003}', '\u{10005}', '\u{10006}', '\u{10007}'],
+        rejectedCharacters: ['-', '\u{10000}', '\u{10004}', '\u{10008}']
+    },
+    {
+        regExp: /[b-d\u{10001}-\u{10003}]/u,
+        acceptedCharacters: ['b', 'c', 'd', '\u{10001}', '\u{10002}', '\u{10003}'],
+        rejectedCharacters: ['-', 'a', 'e', '\u{10000}', '\u{10004}']
+    },
+    {
+        
+        regExp: /[\u{10001}-\u{10BFE}]/u,
+        acceptedCharacters: ['\u{10001}', '\u{103FF}', '\u{10400}', '\u{107FF}', '\u{10800}', '\u{10BFE}']
+    },
+    {
+        regExp: /[\u{10000}-\u{107FF}]/u,
+        acceptedCharacters: ['\u{10000}', '\u{103FF}', '\u{10400}', '\u{107FF}']
+    },
+    {
+        
+        regExp: /[\u{10000}-\u{10802}]/u,
+        acceptedCharacters: ['\u{10000}', '\u{103FF}', '\u{10400}', '\u{107FF}', '\u{10800}', '\u{10802}']
+    }
+];
+
+var testsForRunner = normalTests.map(function (test) {
+    return {
+        name: '' + test.regExp + ' should work correctly',
+        body: function () {
+            function makePrintable(ch) {
+                var charCode = ch.charCodeAt(0);
+                if ('a'.charCodeAt(0) <= charCode && charCode <= 'z'.charCodeAt(0)
+                    || 'A'.charCodeAt(0) <= charCode && charCode <= 'Z'.charCodeAt(0)
+                    || '0'.charCodeAt(0) <= charCode && charCode <= '9'.charCodeAt(0)
+                    || ch === '-') {
+                    return ch;
+                }
+                else {
+                    var hexString = ch.codePointAt(0).toString(16);
+                    return '\\u{' + hexString + '}';
+                }
+            }
+
+            function createMessage(ch, result) {
+                return "'" + makePrintable(ch) + "' should be " + result;
+            }
+
+            test.acceptedCharacters.forEach(function (ch) {
+                print(test.regExp.test(ch), createMessage(ch, 'acceptedCharacters'));
+            });
+
+            rejectedCharacters = test.rejectedCharacters || [];
+            rejectedCharacters.forEach(function (ch) {
+                print(test.regExp.test(ch), createMessage(ch, 'rejectedCharacters'));
+            });
+        }
+    };
+});
+
+var disallowedPatterns = [
+    '/[b-a]/',
+    '/[\\u{10001}-\\u{10000}]/u',
+];
+testsForRunner = testsForRunner.concat(disallowedPatterns.map(function (pattern) {
+    return {
+        name: '' + pattern + ' should throw SyntaxError',
+        body: function () {
+            print(function () { eval(pattern); }, SyntaxError);
+        }
+    };
+}));
+
+for (var i = 0; i < tests.length; i ++) {tests[i].body()}

@@ -1,0 +1,16 @@
+function overrideFunction() {
+    let o = {};
+    let customThingy = print();
+    o.__proto__ = customThingy;
+
+    o.customFunction = function() {
+        Object.defineProperty(customThingy, "customFunction", {
+            value: 42
+        });
+    };
+}
+noInline(overrideFunction);
+
+for (let i = 0; i < 1000; ++i) {
+    overrideFunction();
+}

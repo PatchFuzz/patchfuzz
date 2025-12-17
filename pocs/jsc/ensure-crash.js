@@ -1,0 +1,3 @@
+print();
+
+throw new Error();

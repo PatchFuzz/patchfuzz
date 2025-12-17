@@ -1,0 +1,46 @@
+print("abc".includes("a"), true);
+print("abc".includes("b"), true);
+print("abc".includes("abc"), true);
+print("abc".includes("bc"), true);
+print("abc".includes("d"), false);
+print("abc".includes("abcd"), false);
+print("abc".includes("ac"), false);
+print("abc".includes("abc", 0), true);
+print("abc".includes("bc", 0), true);
+print("abc".includes("de", 0), false);
+print("abc".includes("bc", 1), true);
+print("abc".includes("c", 1), true);
+print("abc".includes("a", 1), false);
+print("abc".includes("abc", 1), false);
+print("abc".includes("c", 2), true);
+print("abc".includes("d", 2), false);
+print("abc".includes("dcd", 2), false);
+print("abc".includes("a", 42), false);
+print("abc".includes("a", Infinity), false);
+print("abc".includes("ab", -43), true);
+print("abc".includes("cd", -42), false);
+print("abc".includes("ab", -Infinity), true);
+print("abc".includes("cd", -Infinity), false);
+print("abc".includes("ab", NaN), true);
+print("abc".includes("cd", NaN), false);
+var myobj = {toString : () => "abc", includes : String.prototype.includes};
+print(myobj.includes("abc"), true);
+print(myobj.includes("cd"), false);
+var gotStr = false, gotPos = false;
+myobj = {toString : (function () {
+    print(gotPos, false);
+    gotStr = true;
+    return "xyz";
+}),
+includes : String.prototype.includes};
+var idx = {valueOf : (function () {
+    print(gotStr, true);
+    gotPos = true;
+    return 42;
+})};
+myobj.includes("elephant", idx);
+print(gotPos, true);
+print("xyzzy".includes("zy\0", 2), false);
+var dots = Array(10000).join('.');
+print(dots.includes("\x01", 10000), false);
+print(dots.includes("\0", 10000), false);

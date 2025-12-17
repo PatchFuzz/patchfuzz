@@ -1,7 +1,0 @@
-
-
-
-
-
-
-assertEquals("", %FunctionGetInferredName((function(){}).bind({})));

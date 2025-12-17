@@ -1,0 +1,1 @@
+oomTest(() => evaluate(`meta: { with({}) {} }`));

@@ -1,3 +1,0 @@
-
-
-oomTest(() => parseModule(10));

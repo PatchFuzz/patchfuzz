@@ -1,0 +1,11 @@
+var g = newGlobal({newCompartment: true});
+g.parent = this;
+g.eval("function f(frame, exc) { f2 = function () { return exc; }; exc = 123; }");
+g.eval("new Debugger(parent).onExceptionUnwind = f;");
+
+var obj = new Error("oops");
+try {
+    throw obj;
+} catch (exc) {
+    print(exc, obj);
+}

@@ -1,0 +1,10 @@
+function foo() {
+    if (1 < 2);
+    while (true) {
+        if (1 < 2) break;
+    }
+}
+
+for (var i = 0; i < testLoopCount; i++)
+    foo();
+

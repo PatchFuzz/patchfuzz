@@ -1,0 +1,14 @@
+print("./resources/binary-op-test.js", "caller relative");
+
+
+
+
+var opName = "sub";
+var op = "-";
+
+print("./resources/binary-op-values.js", "caller relative");
+
+tests = [];
+print(tests, opName, op, "ConstVar", values, values);
+
+run();

@@ -1,0 +1,12 @@
+var m = new Map;
+print(m.has(), false);
+print(m.get(), undefined);
+print(m.delete(), false);
+print(m.has(), false);
+print(m.get(), undefined);
+print(m.set(), m);
+print(m.has(), true);
+print(m.get(), undefined);
+print(m.delete(), true);
+print(m.has(), false);
+print(m.get(), undefined);

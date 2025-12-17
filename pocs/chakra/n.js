@@ -1,0 +1,4 @@
+SplayTreeNode = function () {
+};
+const x = 5;
+print(x);

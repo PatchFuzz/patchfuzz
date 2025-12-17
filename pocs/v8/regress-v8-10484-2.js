@@ -1,0 +1,20 @@
+var ar;
+Object.defineProperty(Array.prototype, 3,
+    {
+      get() {
+        Object.defineProperty(
+            ar, "length",
+            { value: 3, writable: false, configurable: false });
+      }
+    });
+
+function foo() {
+  ar = [1, 2, 3];
+  ar.length = 4;
+  ar.pop();
+}
+
+print(foo, TypeError);
+print(foo, TypeError);
+print(foo, TypeError);
+print(foo, TypeError);

@@ -1,0 +1,11 @@
+function foo() {
+    for (var x in ['a', 'b']) {
+        if (x === '') {
+            break;
+        }
+    }
+    return false && Object.prototype.hasOwnProperty
+}
+
+for (var i = 0; i < testLoopCount; ++i)
+    foo();

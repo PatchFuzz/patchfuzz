@@ -1,4 +1,0 @@
-
-
-
-RegExp.__proto__

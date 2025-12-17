@@ -1,2 +1,0 @@
-
-evalInWorker("new WeakRef({});");

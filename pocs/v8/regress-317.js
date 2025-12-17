@@ -1,0 +1,1 @@
+print("a$ec", "abc".replace("b", "$e"), "$e isn't meaningful");

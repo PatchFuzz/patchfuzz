@@ -1,0 +1,98 @@
+(function testIndexedDB() {
+    const IDB_NAME = "spec-test";
+    const OBJECT_STORE_NAME = "wasm";
+
+    let db = null;
+
+    function openDB() {
+        print('Opening db...');
+        return new Promise((resolve, reject) => {
+            request = indexedDB.open(IDB_NAME, 1);
+            request.onerror = reject;
+            request.onsuccess = () => {
+                db = request.result;
+                print('Retrieved db:', db);
+                resolve();
+            };
+            request.onupgradeneeded = () => {
+                print('Creating object store...');
+                request.result.createObjectStore(OBJECT_STORE_NAME);
+                request.onerror = reject;
+                request.onupgradeneeded = reject;
+                request.onsuccess = () => {
+                    db = request.result;
+                    print('Created db:', db);
+                    resolve();
+                };
+            };
+        });
+    }
+
+    function getObjectStore() {
+        return db.transaction([OBJECT_STORE_NAME], "readwrite").objectStore(OBJECT_STORE_NAME);
+    }
+
+    function clearStore() {
+        print('Clearing store...');
+        return new Promise((resolve, reject) => {
+            var request = getObjectStore().clear();
+            request.onerror = reject;
+            request.onupgradeneeded = reject;
+            request.onsuccess = resolve;
+        });
+    }
+
+    function makeModule() {
+        return new Promise(resolve => {
+            let builder = new WasmModuleBuilder();
+            builder.addFunction('run', kSig_i_v)
+                .addBody([
+                    kExprI32Const,
+                    42,
+                    kExprReturn
+                ])
+                .exportFunc();
+            let source = builder.toBuffer();
+
+            let module = new WebAssembly.Module(source);
+            let i = new WebAssembly.Instance(module);
+            print(i.exports.run(), 42);
+
+            resolve(module);
+        });
+    }
+
+    function storeWasm(module) {
+        print('Storing wasm object...', module);
+        return new Promise((resolve, reject) => {
+            request = getObjectStore().add(module, 1);
+            request.onsuccess = resolve;
+            request.onerror = reject;
+            request.onupgradeneeded = reject;
+        });
+    }
+
+    function loadWasm() {
+        print('Loading wasm object...');
+        return new Promise((resolve, reject) => {
+            var request = getObjectStore().get(1);
+            request.onsuccess = () => {
+                let i = new WebAssembly.Instance(request.result);
+                print(i.exports.run(), 42);
+                resolve();
+            }
+            request.onerror = reject;
+            request.onupgradeneeded = reject;
+        });
+    }
+
+    function run() {
+        return openDB()
+        .then(() => clearStore())
+        .then(() => makeModule())
+        .then(wasm => storeWasm(wasm))
+        .then(() => loadWasm());
+    }
+
+    promise_test(run, "store and load from indexeddb");
+})();

@@ -1,0 +1,14 @@
+let called = 0;
+
+async function testDisposalMethodOnlyExtractedOnce() {
+  await using x = {
+    get [Symbol.asyncDispose]() {
+      called++;
+      return () => {}
+    }
+  }
+}
+
+testDisposalMethodOnlyExtractedOnce();
+drainJobQueue();
+print(called, 1);

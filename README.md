@@ -1,46 +1,62 @@
 # PatchFuzz
-PatchFuzz: Fuzzing for JavaScript Engine Incomplete Security Patches
+
+Fuzzing for JavaScript Engine Incomplete Security Patches
+
+## Supported Engines
+
+| Engine | Alias | Source |
+|--------|-------|--------|
+| JerryScript | jerry | https://github.com/pando-project/jerryscript |
+| SpiderMonkey | sm | Firefox js/src |
+| JavaScriptCore | jsc | WebKit |
+| V8 | v8 | Chrome |
+| ChakraCore | chakra | Microsoft Edge Legacy |
+
 ## Usage
+
 ```sh
-cd $TargetDir
-# Update the repository of JS Engine.
-git pull
-# Get the latest processed security-related samples and whitelist for AFL instrumentation.
-git log --date=short  -m --name-status --after=$DataYouWant  --before=$DataYouWant| python3.10 $ToolDir/main.py $OutputDir jsc|v8|chakra|sm|jerry $TargetDir
-# Compile the JS Engine with crossover
-...
-# Adjust fuzzXXX.sh script as required and strat fuzzing.
-$ToolDir/fuzzXXX.sh  --args
+cd <engine_repo>
+git log --date=short -m --name-status | python3 main.py <output_dir> <engine> <repo_dir>
 ```
 
-### JavascriptCore
+### Examples
+
 ```sh
-cd WebKit
-git pull
-git log --date=short  -m --name-status --after=2022-1-1 | python3.10 /data/patchFuzz/main.py /data/patchFuzz/0410/ jsc /data/WebKit/
-/data/patchFuzz/fuzzJSC.sh /data/patchFuzz/0410/jsc/poc/ /data/fuzzout/jscout_0410/ 5
+# JerryScript
+cd /data/workspace/jerryscript
+git log --date=short -m --name-status | python3 /data/workspace/patchfuzz/main.py /data/workspace/patchfuzz/output jerry /data/workspace/jerryscript
+
+# SpiderMonkey
+cd /data/workspace/firefox
+git log --date=short -m --name-status | python3 /data/workspace/patchfuzz/main.py /data/workspace/patchfuzz/output sm /data/workspace/firefox
+
+# JavaScriptCore
+cd /data/workspace/WebKit
+git log --date=short -m --name-status | python3 /data/workspace/patchfuzz/main.py /data/workspace/patchfuzz/output jsc /data/workspace/WebKit
+
+# V8
+cd /data/workspace/chromium
+git log --date=short -m --name-status | python3 /data/workspace/patchfuzz/main.py /data/workspace/patchfuzz/output v8 /data/workspace/chromium
+
+# ChakraCore
+cd /data/workspace/ChakraCore
+git log --date=short -m --name-status | python3 /data/workspace/patchfuzz/main.py /data/workspace/patchfuzz/output chakra /data/workspace/ChakraCore
 ```
-### V8
-```sh
-cd v8
-git pull
-git log --date=short -m --name-status --after=2022-11-1 | python3.10 /data/patchFuzz/main.py /data/patchFuzz/0404/ v8 /data/v8/
-/data/patchFuzz/fuzzV8.sh /data/patchFuzz/0410/v8/poc/ /data/fuzzout/v8out_0410 3
+
+## Output
+
 ```
-### Spidermonkey
-```sh
-cd spidermonkey/
-git pull
-git log --date=short -m --name-status --after=2023-1-1 | python3.10 /data/patchFuzz/main.py /data/patchFuzz/0404/ sp /data/spidermonkey/
-/data/patchFuzz/fuzzSM.sh /data/patchFuzz/0410/sp/poc/ /data/fuzzout/smout_0410/ 3
+output/<engine>/
+├── <engine>_<date>.csv      # Extracted commit info
+├── <engine>_allowlist.txt   # AFL instrumentation allowlist
+├── test/<date>/             # Raw extracted JS files
+└── poc/                     # Preprocessed POC files for fuzzing
 ```
-### ChaKraCore
+
+## Fuzzing
+
 ```sh
-cd ChaKraCore
-git log --date=short -m --name-status --after=2023-1-1 | python3.10 /data/patchFuzz/main.py /data/patchFuzz/0404/ ch /data/ChakraCore/
-```
-### jerryscript
-```sh
-cd jerryscript
-git log --date=short -m --name-status --after=2023-1-1 | python3.10 /data/patchFuzz/main.py /data/patchFuzz/0404/ je /data/jerryscript/
+./fuzzJSC.sh <poc_dir> <output_dir> <num_instances>
+./fuzzV8.sh <poc_dir> <output_dir> <num_instances>
+./fuzzSM.sh <poc_dir> <output_dir> <num_instances>
 ```

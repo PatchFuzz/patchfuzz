@@ -1,0 +1,39 @@
+var g = newGlobal({newCompartment: true});
+var dbg1 = new Debugger(g);
+var log1;
+function h1(promise) {
+  log1 += 's';
+  print(promise.seen, undefined);
+  promise.seen = true;
+}
+
+var dbg2 = new Debugger(g);
+var log2;
+function h2(promise) {
+  log2 += 's';
+  print(promise.seen, undefined);
+  promise.seen = true;
+}
+
+log1 = log2 = '';
+g.settlePromiseNow(new g.Promise(function (){}));
+print(log1, '');
+print(log2, '');
+
+log1 = log2 = '';
+dbg1.onPromiseSettled = h1;
+g.settlePromiseNow(new g.Promise(function (){}));
+print(log1, 's');
+print(log2, '');
+
+log1 = log2 = '';
+dbg2.onPromiseSettled = h2;
+g.settlePromiseNow(new g.Promise(function (){}));
+print(log1, 's');
+print(log2, 's');
+
+log1 = log2 = '';
+dbg1.onPromiseSettled = undefined;
+g.settlePromiseNow(new g.Promise(function (){}));
+print(log1, '');
+print(log2, 's');

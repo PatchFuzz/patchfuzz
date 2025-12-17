@@ -1,0 +1,25 @@
+var g = newGlobal({newCompartment: true});
+g.a = 1;
+g.eval("function f(a) {\n" +
+       "    var x = 2 * a;\n" +
+       "    return x * x;\n" +
+       "}\n");
+
+var dbg = Debugger(g);
+var log = '';
+dbg.onEnterFrame = function (frame) {
+    log += '+';
+    frame.onStep = function () {
+        if (log.charAt(log.length - 1) != 's')
+            log += 's';
+    };
+};
+
+g.f(1);
+log += '|';
+g.f(2);
+log += '|';
+dbg.onEnterFrame = undefined;
+g.f(3);
+
+print(log, '+s|+s|');

@@ -1,0 +1,1 @@
+newGlobal().eval('enableShellAllocationMetadataBuilder(); Array');

@@ -1,0 +1,22 @@
+var g = newGlobal({newCompartment: true});
+var dbg = Debugger(g);
+dbg.onDebuggerStatement = function (frame) {
+  const env = frame.environment;
+  print(env.names().join(','), "y,x,z");
+  print(env.getVariable('x'), 0);
+  print(env.getVariable('y'), 1);
+  print(env.getVariable('z'), 2);
+};
+const m = g.parseModule(`
+  var x = 0;
+  export var y = 1;
+  const z = 2;
+  debugger;
+  await 10;
+  debugger;
+  await 10;
+  debugger;
+`);
+moduleLink(m);
+moduleEvaluate(m);
+drainJobQueue();

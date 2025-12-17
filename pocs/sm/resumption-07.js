@@ -1,0 +1,32 @@
+;
+
+var g = newGlobal({newCompartment: true});
+var dbg = new Debugger;
+
+var log;
+
+function handlerWithResumption(resumption) {
+  return function (frame) {
+    log += 'd';
+    dbg.removeDebuggee(g);
+    return resumption;
+  };
+}
+
+log = '';
+dbg.onDebuggerStatement = handlerWithResumption(undefined);
+dbg.addDebuggee(g);
+print(g.eval('debugger; 42;'), 42);
+print(log, 'd');
+
+log = '';
+dbg.onDebuggerStatement = handlerWithResumption({ return: 1729 });
+dbg.addDebuggee(g);
+print(g.eval('debugger; 42;'), 1729);
+print(log, 'd');
+
+log = '';
+dbg.onDebuggerStatement = handlerWithResumption(null);
+dbg.addDebuggee(g);
+print(g.evaluate('debugger; 42;', { catchTermination: true }), 'terminated');
+print(log, 'd');

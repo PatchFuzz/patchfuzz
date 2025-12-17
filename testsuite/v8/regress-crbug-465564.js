@@ -1,7 +1,0 @@
-
-
-
-
-
-
-assertTrue(%StringLessThan("a", "b"));

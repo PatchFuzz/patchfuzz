@@ -1,0 +1,15 @@
+var o = {};
+var arr = [o,o,o,o,o,o,o,o,o,o,o,o,o];
+var out = [];
+
+const OUTER = 10;
+
+for (var i = 0; i < 10; ++i) {
+    for (var j = 0; j < arr.length; ++j) {
+        out.push(String.prototype.indexOf.call(arr[i], 'object'));
+    }
+}
+
+print(out.length, 10 * arr.length);
+for (var i = 0; i < out.length; ++i)
+    print(out[i], 1);

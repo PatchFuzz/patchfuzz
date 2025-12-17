@@ -1,0 +1,1 @@
+oomTest(() => import.meta);

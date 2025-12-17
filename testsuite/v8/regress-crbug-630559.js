@@ -1,7 +1,0 @@
-
-
-
-
-
-
-assertThrows("try{}%");

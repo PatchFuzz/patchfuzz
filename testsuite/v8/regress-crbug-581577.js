@@ -1,5 +1,0 @@
-
-
-
-
-assertEquals("", RegExp.prototype.flags);

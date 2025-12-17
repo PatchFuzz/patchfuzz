@@ -1,0 +1,22 @@
+;
+
+
+var g = newGlobal({newCompartment: true});
+g.parent = this;
+g.eval("dbg = new Debugger(parent);");
+
+print(g.dbg.allowUnobservedAsmJS, false);
+
+enableLastWarning();
+
+var asmFunStr = USE_ASM + 'function f() {} return f';
+offThreadCompileToStencil("(function() {" + asmFunStr + "})");
+var stencil = finishOffThreadStencil();
+evalStencil(stencil);
+
+var msg = getLastWarning().message;
+print(msg === "asm.js type error: Asm.js optimizer disabled by debugger" ||
+         msg === "asm.js type error: Asm.js optimizer disabled because no suitable wasm compiler is available" ||
+         msg === "asm.js type error: Asm.js optimizer disabled by 'asmjs' runtime option" ||
+         msg === "asm.js type error: Asm.js optimizer disabled because the compiler is disabled or unavailable",
+         true);

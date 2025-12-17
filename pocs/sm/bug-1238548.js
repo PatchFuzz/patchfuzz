@@ -1,0 +1,1 @@
+gcparam("highFrequencySmallHeapGrowth", 1);

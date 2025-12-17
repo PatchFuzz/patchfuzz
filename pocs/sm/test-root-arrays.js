@@ -1,0 +1,10 @@
+gczeal(0);
+let objects = [{}, {}, {}];
+blackRoot()[0] = objects[0];
+grayRoot()[0] = objects[1];
+addMarkObservers(objects);
+objects = undefined;
+gc();
+print(getMarks()[0], "black");
+print(getMarks()[1], "gray");
+print(getMarks()[2], "dead");

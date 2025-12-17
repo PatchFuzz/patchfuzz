@@ -1,0 +1,76 @@
+let g = newGlobal({newCompartment: true});
+g.eval(`
+  function* f() {
+    yield 1;
+  }
+`);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function test(ttl) {
+  let dbg = new Debugger(g);
+  let exiting = false;  
+  let done = false;  
+  let reported = false;  
+
+  dbg.onEnterFrame = frame => {
+    print(frame.callee.name, "f");
+    dbg.onEnterFrame = undefined;
+    frame.onStep = () => {
+      if (ttl == 0) {
+        exiting = true;
+        
+        
+        
+        return {return: "ponies"};
+      }
+      ttl--;
+    };
+    frame.onPop = completion => {
+      if (!exiting)
+        done = true;
+    };
+  };
+
+  dbg.uncaughtExceptionHook = (exc) => {
+    
+    
+    print(exc instanceof TypeError, true);
+    reported = true;
+    return {throw: "FAIL"};  
+  };
+
+  let result;
+  let caught = undefined;
+  try {
+    result = g.f();
+  } catch (exc) {
+    caught = exc;
+  }
+
+  if (done) {
+    print(reported, false);
+    print(result instanceof g.f, true);
+    print(caught, undefined);
+  } else {
+    print(reported, true);
+    print(caught, "FAIL");
+  }
+
+  dbg.enabled = false;
+  return done;
+}
+
+for (let ttl = 0; !test(ttl); ttl++) {}

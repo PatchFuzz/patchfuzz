@@ -1,0 +1,133 @@
+var undetectable = %GetUndetectable();
+
+
+print(typeof 0 == 'number');
+print(typeof 0 === 'number');
+print(typeof 0 != 'number');
+print(typeof 0 !== 'number');
+print(typeof 1.2 == 'number');
+print(typeof 1.2 === 'number');
+print(typeof 1.2 != 'number');
+print(typeof 1.2 !== 'number');
+print(typeof 'x' != 'number');
+print(typeof 'x' !== 'number');
+print(typeof 'x' == 'number');
+print(typeof 'x' === 'number');
+print(typeof Object() != 'number');
+print(typeof Object() !== 'number');
+print(typeof Object() == 'number');
+print(typeof Object() === 'number');
+
+
+print(typeof 'x' == 'string');
+print(typeof 'x' === 'string');
+print(typeof 'x' != 'string');
+print(typeof 'x' !== 'string');
+print(typeof ('x' + 'x') == 'string');
+print(typeof ('x' + 'x') === 'string');
+print(typeof ('x' + 'x') != 'string');
+print(typeof ('x' + 'x') !== 'string');
+print(typeof 1 != 'string');
+print(typeof 1 !== 'string');
+print(typeof 1 == 'string');
+print(typeof 1 === 'string');
+print(typeof Object() != 'string');
+print(typeof Object() !== 'string');
+print(typeof Object() == 'string');
+print(typeof Object() === 'string');
+
+
+print(typeof true == 'boolean');
+print(typeof true === 'boolean');
+print(typeof true != 'boolean');
+print(typeof true !== 'boolean');
+print(typeof false == 'boolean');
+print(typeof false === 'boolean');
+print(typeof false != 'boolean');
+print(typeof false !== 'boolean');
+print(typeof 1 != 'boolean');
+print(typeof 1 !== 'boolean');
+print(typeof 1 == 'boolean');
+print(typeof 1 === 'boolean');
+print(typeof 'x' != 'boolean');
+print(typeof 'x' !== 'boolean');
+print(typeof 'x' == 'boolean');
+print(typeof 'x' === 'boolean');
+print(typeof Object() != 'boolean');
+print(typeof Object() !== 'boolean');
+print(typeof Object() == 'boolean');
+print(typeof Object() === 'boolean');
+
+
+print(typeof void 0 == 'undefined');
+print(typeof void 0 === 'undefined');
+print(typeof void 0 != 'undefined');
+print(typeof void 0 !== 'undefined');
+print(typeof 1 != 'undefined');
+print(typeof 1 !== 'undefined');
+print(typeof 1 == 'undefined');
+print(typeof 1 === 'undefined');
+print(typeof null != 'undefined');
+print(typeof null !== 'undefined');
+print(typeof null == 'undefined');
+print(typeof null === 'undefined');
+print(typeof Object() != 'undefined');
+print(typeof Object() !== 'undefined');
+print(typeof Object() == 'undefined');
+print(typeof Object() === 'undefined');
+print(typeof undetectable == 'undefined');
+print(typeof undetectable === 'undefined');
+print(typeof undetectable != 'undefined');
+print(typeof undetectable !== 'undefined');
+
+
+print(typeof Object == 'function');
+print(typeof Object === 'function');
+print(typeof Object != 'function');
+print(typeof Object !== 'function');
+print(typeof 1 != 'function');
+print(typeof 1 !== 'function');
+print(typeof 1 == 'function');
+print(typeof 1 === 'function');
+print(typeof Object() != 'function');
+print(typeof Object() !== 'function');
+print(typeof Object() == 'function');
+print(typeof Object() === 'function');
+print(typeof undetectable != 'function');
+print(typeof undetectable !== 'function');
+print(typeof undetectable == 'function');
+print(typeof undetectable === 'function');
+
+
+print(typeof Object() == 'object');
+print(typeof Object() === 'object');
+print(typeof Object() != 'object');
+print(typeof Object() !== 'object');
+print(typeof new String('x') == 'object');
+print(typeof new String('x') === 'object');
+print(typeof new String('x') != 'object');
+print(typeof new String('x') !== 'object');
+print(typeof ['x'] == 'object');
+print(typeof ['x'] === 'object');
+print(typeof ['x'] != 'object');
+print(typeof ['x'] !== 'object');
+print(typeof null == 'object');
+print(typeof null === 'object');
+print(typeof null != 'object');
+print(typeof null !== 'object');
+print(typeof 1 != 'object');
+print(typeof 1 !== 'object');
+print(typeof 1 == 'object');
+print(typeof 1 === 'object');
+print(typeof 'x' != 'object');
+print(typeof 'x' !== 'object');
+print(typeof 'x' == 'object');  
+print(typeof 'x' === 'object');
+print(typeof Object != 'object');
+print(typeof Object !== 'object');
+print(typeof Object == 'object');
+print(typeof Object === 'object');
+print(typeof undetectable != 'object');
+print(typeof undetectable !== 'object');
+print(typeof undetectable == 'object');
+print(typeof undetectable === 'object');

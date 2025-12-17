@@ -1,0 +1,1 @@
+var o = { f: "x" ? function () {} : function () {} };

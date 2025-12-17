@@ -1,5 +1,0 @@
-
-
-
-
-assertThrows("const [(x)] = []", SyntaxError);

@@ -1,0 +1,15 @@
+print(Number.isNaN(NaN), true);
+print(Number.isNaN(0/0), true);
+print(Number.isNaN(Number("NaN")), true);
+print(Number.isNaN(4), false);
+print(Number.isNaN(4.5), false);
+print(Number.isNaN("hi"), false);
+print(Number.isNaN("1.3"), false);
+print(Number.isNaN("51"), false);
+print(Number.isNaN(0), false);
+print(Number.isNaN(-0), false);
+print(Number.isNaN({valueOf: function () { return 3; }}), false);
+print(Number.isNaN({valueOf: function () { return 0/0; }}), false);
+print(Number.isNaN({ valueOf: function() { throw 17; } }), false);
+print(Number.isNaN({ toString: function() { throw 17; } }), false);
+print(Number.isNaN({ valueOf: function() { throw 17; }, toString: function() { throw 42; } }), false);

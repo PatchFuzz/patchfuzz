@@ -1,0 +1,11 @@
+var actual = '';
+
+var a = [0, 1];
+a.x = 10;
+delete a.x;
+for (var i in a) {
+    print(i);
+    a.pop();
+}
+
+print(actual, "0,");

@@ -1,0 +1,7 @@
+function Dump() {
+    const x = 5;
+    if (true) {
+        print(x);
+    }
+}
+Dump();

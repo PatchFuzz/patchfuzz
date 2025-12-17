@@ -1,5 +1,0 @@
-
-
-
-
-assertThrows("(this) , this =>", SyntaxError);

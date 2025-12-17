@@ -1,0 +1,29 @@
+var o = {x: 1};
+
+function Ctor() {};
+Ctor.prototype.valueOf = function() { 
+    return o.x++;
+}
+
+var c = new Ctor();
+
+var test_less = function(o, c)
+{
+    var n = 0;
+    for (var i = 0; i < 1; i++)
+    {
+        if (o.x < c)
+        {
+            n += o.x;
+        }
+        else
+        {
+            n -= o.x; 
+        }
+    }
+    return n;
+}
+
+print("RESULT: " + test_less(o,c));
+
+

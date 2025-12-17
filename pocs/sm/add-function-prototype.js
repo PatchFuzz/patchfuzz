@@ -1,0 +1,55 @@
+function checkPrototype(fun, proto, resolvesPrototype) {
+    var desc = Object.getOwnPropertyDescriptor(fun, "prototype");
+    print(desc.value, proto);
+    print(desc.configurable, !resolvesPrototype);
+    print(desc.enumerable, !resolvesPrototype);
+    print(desc.writable, true);
+}
+function addPrototype(fun, proto, resolvesPrototype) {
+    fun.prototype = proto;
+    checkPrototype(fun, proto, resolvesPrototype);
+}
+function test() {
+    for (var i=0; i<50; i++) {
+        addPrototype(function() {}, i, true);
+        addPrototype(function*() {}, i, true);
+        addPrototype(function async() {}, i, true);
+        
+        
+        addPrototype(Math.abs, i, false);
+        addPrototype(Array.prototype.map, i, false);
+        addPrototype(() => 1, i, false);
+        addPrototype((function() {}).bind(null), i, false);
+    }
+
+    
+    for (var i=0; i<50; i++) {
+        var f = function() {};
+        f.prototype = i;
+        checkPrototype(f, i, true);
+
+        f = function*() {};
+        f.prototype = i;
+        checkPrototype(f, i, true);
+
+        f = function async() {};
+        f.prototype = i;
+        checkPrototype(f, i, true);
+
+        Math.sin.prototype = i;
+        checkPrototype(Math.sin, i, false);
+
+        Array.prototype.filter.prototype = i;
+        checkPrototype(Array.prototype.filter, i, false);
+
+        f = () => 1;
+        f.prototype = i;
+        checkPrototype(f, i, false);
+
+        f = (function() {}).bind(null);
+        f.prototype = i;
+        checkPrototype(f, i, false);
+    }
+
+}
+test();

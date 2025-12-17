@@ -1,0 +1,12 @@
+var m = new Map();
+m.delete(3);
+print(m.size, 0);
+m.set({}, 'ok');
+m.set(Math, 'ok');
+print(m.size, 2);
+m.delete({});
+print(m.size, 2);
+m.delete(Math);
+print(m.size, 1);
+m.delete(Math);
+print(m.size, 1);

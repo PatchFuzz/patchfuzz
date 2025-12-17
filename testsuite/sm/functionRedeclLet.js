@@ -1,5 +1,0 @@
-
-{
-    let x;
-    function x() { }
-}

@@ -1,5 +1,0 @@
-
-foo(); 
-function foo() { 
-    this();
-}

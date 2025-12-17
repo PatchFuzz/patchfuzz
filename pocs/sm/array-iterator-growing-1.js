@@ -1,0 +1,24 @@
+;
+;
+
+var arr = [0, 1];
+var it = arr[Symbol.iterator]();
+var ki = arr.keys();
+var ei = arr.entries();
+print(it, 0);
+print(ki, 0);
+print(ei, [0, 0]);
+print(it, 1);
+print(ki, 1);
+print(ei, [1, 1]);
+arr[2] = 2;
+arr.length = 4;
+print(it, 2);
+print(ki, 2);
+print(ei, [2, 2]);
+print(it, undefined);
+print(ki, 3);
+print(ei, [3, undefined]);
+print(it, undefined);
+print(ki, undefined);
+print(ei, undefined);

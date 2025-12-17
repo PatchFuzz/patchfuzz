@@ -1,0 +1,11 @@
+var obj = {s: ""};
+var name = "s";
+var a = [];
+for (var i = 0; i <= 13; i++) {
+    a[i] = 'x';
+    if (i > 8)
+        a[i] = --obj[name];  
+}
+print(a.join(','), Array(10).join('x,') + '-1,-2,-3,-4,-5');
+print(obj.s, -5);
+

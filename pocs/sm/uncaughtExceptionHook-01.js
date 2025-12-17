@@ -1,0 +1,16 @@
+var g = newGlobal({newCompartment: true});
+var dbg = new Debugger(g);
+var log;
+dbg.onDebuggerStatement = function () {
+    log += 'x';
+    throw new TypeError("fail");
+};
+dbg.uncaughtExceptionHook = function (exc) {
+    print(this, dbg);
+    print(exc instanceof TypeError, true);
+    log += '!';
+};
+
+log = '';
+g.eval("debugger");
+print(log, 'x!');

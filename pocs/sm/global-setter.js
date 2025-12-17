@@ -1,0 +1,37 @@
+function test(useWindowProxy) {
+    var g = newGlobal({useWindowProxy});
+    g.useWindowProxy = useWindowProxy;
+    g.evaluate(`
+        var x = 123;
+        Object.defineProperty(this, "checkX",
+                              {set: function(v) { print(this.x, v); }});
+        Object.defineProperty(Object.prototype, "protoCheckX",
+                              {set: function(v) { print(this.x * 2, v); }});
+        Object.defineProperty(this, "checkThisIsProxy",
+                              {set: function(v) { print(isProxy(this), v); }});
+
+        function f() {
+            for (var i = 0; i < 100; i++) {
+                
+                checkX = 123;
+                protoCheckX = 246;
+                checkThisIsProxy = useWindowProxy;
+                
+                globalThis.checkX = 123;
+                globalThis.protoCheckX = 246;
+                globalThis.checkThisIsProxy = useWindowProxy;
+            }
+        }
+        f();
+    `);
+}
+
+for (let useWindowProxy of [true, false]) {
+    test(useWindowProxy);
+}
+
+setJitCompilerOption("ic.force-megamorphic", 1);
+
+for (let useWindowProxy of [true, false]) {
+    test(useWindowProxy);
+}

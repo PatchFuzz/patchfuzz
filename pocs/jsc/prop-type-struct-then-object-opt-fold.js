@@ -1,0 +1,31 @@
+function foo(o) {
+    return o.f.g;
+}
+
+function bar(o, p, v) {
+    if (isFinalTier() || o == p) {
+        var tmp = p.f;
+        o = p;
+    }
+    o.f = v;
+}
+
+noInline(foo);
+noInline(bar);
+
+var o = {f:{g:42}};
+for (var i = 0; i < testLoopCount; ++i) {
+    bar(o, o, {g:42});
+    bar({a:1, b:2}, o, {g:42});
+}
+
+for (var i = 0; i < testLoopCount; ++i) {
+    var result = foo(o);
+    if (result !== 42)
+        throw "Error: bad result: " + result;
+}
+
+bar(o, o, Object.create({g:43}));
+var result = foo(o);
+if (result !== 43)
+    throw "Error: bad result at end: " + result;

@@ -1,0 +1,1 @@
+[].with(Symbol.hasInstance);

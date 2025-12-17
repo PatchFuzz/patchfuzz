@@ -1,0 +1,11 @@
+var date = new Date();
+var year = date.getYear();
+date.setMilliseconds(Number.NaN);
+date.setYear(1900 + year);
+print(year, date.getYear());
+print(0, date.getMonth());
+print(1, date.getDate());
+print(0, date.getHours());
+print(0, date.getMinutes());
+print(0, date.getSeconds());
+print(0, date.getMilliseconds());

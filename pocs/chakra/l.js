@@ -1,0 +1,5 @@
+(function asd() {
+    print(asd);
+})();
+
+

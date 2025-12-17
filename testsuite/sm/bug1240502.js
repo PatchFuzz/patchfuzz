@@ -1,2 +1,0 @@
-
-oomTest(() => eval(`Array(..."ABC")`));

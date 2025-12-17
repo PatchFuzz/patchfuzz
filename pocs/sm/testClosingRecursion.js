@@ -1,0 +1,12 @@
+function shortRecursiveLoop(b, c) {
+    for (var i = 0; i < c; i++) {
+        if (b)
+            shortRecursiveLoop(c - 1);
+    }
+}
+function testClosingRecursion() {
+    shortRecursiveLoop(false, 1);
+    shortRecursiveLoop(true, 3);
+    return true;
+}
+print(testClosingRecursion(), true);

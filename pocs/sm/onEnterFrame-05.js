@@ -1,0 +1,13 @@
+var g = newGlobal({newCompartment: true});
+g.eval("function f() { return 1; }\n");
+var N = g.N = 11;
+g.eval("function h() {\n" +
+       "    for (var i = 0; i < N; i += f()) {}\n" +
+       "}");
+g.h(); 
+
+var dbg = Debugger(g);
+var log = '';
+dbg.onEnterFrame = function (frame) { log += frame.callee.name; };
+g.h();
+print(log, 'h' + Array(N + 1).join('f'));

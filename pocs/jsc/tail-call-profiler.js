@@ -1,0 +1,26 @@
+"use strict";
+
+function tail(a) { return 1; }
+noInline(tail);
+
+function inlineTail(a) {
+    return tail(a);
+}
+
+function inlineTailVarArgs(a) {
+    return tail(...[a])
+}
+
+function inlineTailTernary(a) {
+    return true ? tail(a) : null;
+}
+
+function body() {
+    for (var i = 0; i < testLoopCount; i++) {
+        inlineTail(1);
+        inlineTailVarArgs(1);
+        inlineTailTernary(1)
+    }
+}
+
+body();

@@ -1,0 +1,1 @@
+print(() => Proxy.revocable(), TypeError);

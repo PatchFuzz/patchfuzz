@@ -1,0 +1,9 @@
+var map = new Set(['a', 'b']);
+var log = '';
+for (let x of map) {
+    log += x + ':'
+    for (let y of map)
+        log += y;
+    log += ';'
+};
+print(log, 'a:ab;b:ab;');

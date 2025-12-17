@@ -1,0 +1,9 @@
+setJitCompilerOption("ion.forceinlineCaches", 1);
+function f(y, z) {
+    return Math.fround(z) < ~y;
+};
+var x = [2 ** 53 - 2, 0];
+for (var i = 0; i < 3; ++i) {
+    print(f(x[0], x[1]),true);
+}
+

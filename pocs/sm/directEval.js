@@ -1,0 +1,8 @@
+function testEvalThrow(x, y) {
+  x = 5;
+  for (var i in [1,2,3])
+    eval("x += 5; if (i == 2) throw 0");
+  print(x, 10);
+}
+for (var i = 0; i < 5; i++)
+  try { testEvalThrow.call({}, 3); } catch (e) { print(e, 0); }

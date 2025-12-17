@@ -1,0 +1,6 @@
+print("b-b".match(/([\w\-\*]+)\b/));
+
+
+print("one two".match(/.*\b/));
+
+
