@@ -1,3 +1,0 @@
-
-
-oomTest(() => serialize(0, [{}]));

@@ -1,0 +1,17 @@
+var heap_number_producer = {y:1.5};
+heap_number_producer.y = 0;
+var heap_number_zero = heap_number_producer.y;
+var non_constant_eight = {};
+non_constant_eight = 8;
+
+function BreakIt() {
+  return heap_number_zero | (1 | non_constant_eight);
+}
+
+function expose(a, b, c) {
+  return b;
+}
+
+print(9, expose(8, 9, 10));
+print(9, expose(8, BreakIt(), 10));
+print(9, BreakIt());

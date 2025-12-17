@@ -1,0 +1,1 @@
+assert (this.hasOwnProperty !== undefined);

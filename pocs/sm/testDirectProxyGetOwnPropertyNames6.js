@@ -1,0 +1,11 @@
+;
+
+
+var target = {};
+Object.defineProperty(target, 'foo', {
+    configurable: false
+});
+
+var handler = { ownKeys: () => [] };
+for (let p of [new Proxy(target, handler), Proxy.revocable(target, handler).proxy])
+    print(() => Object.getOwnPropertyNames(p), TypeError);

@@ -1,0 +1,7 @@
+function* foo(str) {
+  var x = eval(str); yield x[0];
+}
+for (var i = 0; i < 5; i++)
+  print(foo("[4,5,6]").next().value, 4);
+for (var i = 0; i < 5; i++)
+  print(foo("arguments").next().value, "arguments");

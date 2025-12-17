@@ -1,0 +1,13 @@
+function print(x, y) {
+    if (x != y)
+        throw "FAILED: expect " + y + ", actual " + x;
+}
+noInline(print);
+
+function test() {
+    print(1.0 / parseInt("-0.0"), "-Infinity");
+}
+noInline(test);
+
+for (let i = 0; i < testLoopCount; ++i)
+    test();

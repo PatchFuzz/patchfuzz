@@ -1,0 +1,9 @@
+let g = newGlobal({newCompartment: true});
+let dbg = new Debugger(g);
+dbg.onNewScript = function (script) {
+  var text = script.source.text;
+}
+g.eval("function f() { function g() {} }");
+gczeal(9, 1)
+var a = {}
+var b = {}

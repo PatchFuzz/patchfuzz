@@ -1,0 +1,17 @@
+var g = newGlobal({newCompartment: true});
+var actual = 0;
+var expected = 0;
+
+function f() {
+    for (var i = 0; i < 20; i++) {
+        var dbg = new Debugger(g);
+        dbg.num = i;
+        dbg.onDebuggerStatement = function (stack) { actual += this.num; };
+        expected += i;
+    }
+}
+
+f();
+gc(); gc(); gc();
+g.eval("debugger;");
+print(actual, expected);

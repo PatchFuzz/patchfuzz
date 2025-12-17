@@ -1,0 +1,44 @@
+;
+
+{
+  const g1 = newGlobal({ newCompartment: true });
+  const d = g1.eval(`
+    globalThis.disposed = [];
+    const d = { [Symbol.dispose]: () => globalThis.disposed.push(1) };
+    d;
+  `);
+  const g2 = newGlobal({ newCompartment: true });
+  const d2 = g2.eval(`
+    globalThis.disposed = [];
+    const d2 = { [Symbol.dispose]: () => globalThis.disposed.push(2) };
+    d2;
+  `);
+  {
+    using disp = d;
+    using disp2 = d2;
+  }
+  print(g1.eval("globalThis.disposed"), [1]);
+  print(g2.eval("globalThis.disposed"), [2]);
+}
+
+{
+  const g1 = newGlobal({ newCompartment: true });
+  const d = g1.eval(`
+    globalThis.disposed = [];
+    const d = { [Symbol.dispose]: () => globalThis.disposed.push(1) };
+    d;
+  `);
+  const g2 = newGlobal({ newCompartment: true });
+  const d2 = g2.eval(`
+    globalThis.disposed = [];
+    const d2 = { [Symbol.dispose]: () => globalThis.disposed.push(2) };
+    d2;
+  `);
+  print(() => {
+    {
+      using disp = d;
+      using disp2 = d2;
+      nukeAllCCWs();
+    }
+  }, SuppressedError);
+}

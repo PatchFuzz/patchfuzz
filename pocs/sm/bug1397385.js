@@ -1,0 +1,16 @@
+var g = newGlobal({newCompartment: true});
+
+g.evaluate(`
+    function testInnerFun(defaultArg = 1) {
+        function innerFun(expectedThis) { return this; }
+        h();
+        return innerFun; 
+    }
+`);
+
+g.h = function () {
+    var res = (new Debugger(g)).getNewestFrame().eval('print(innerFun(), this)');
+    print("return" in res, true);
+}
+
+g.testInnerFun();

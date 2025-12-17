@@ -1,0 +1,15 @@
+gczeal(14)
+
+function test() {
+  var set = new Set();
+  var c = 0;
+  var N = 1000;
+  for (var i = 0; i < N; ++i) {
+    var k = String.fromCodePoint(i);
+    set.add(k);
+    if (set.has(k)) c++;
+  }
+  print(c, N);
+}
+
+test();

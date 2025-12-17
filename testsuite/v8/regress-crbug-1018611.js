@@ -1,5 +1,0 @@
-
-
-
-
-assertThrows("(l-(c))=>", SyntaxError);

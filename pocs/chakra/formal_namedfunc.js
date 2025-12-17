@@ -1,0 +1,12 @@
+function test(param, func)
+{
+    function func()
+    {
+        return param;
+    }
+    return func();
+}
+
+print(test("test1"));
+print(test("test2"));
+

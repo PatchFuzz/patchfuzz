@@ -1,3 +1,0 @@
-
-
-oomTest(() => evalInWorker("1"));

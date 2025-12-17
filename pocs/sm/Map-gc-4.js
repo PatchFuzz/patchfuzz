@@ -1,0 +1,13 @@
+gczeal(4);
+var s = new Set;
+s.add(-0);
+s.add(0);
+print(s.delete(-0), true);
+print(s.has(0), (false  ));
+print(s.has(-0), false);
+var m = new Map;
+m.set(-0, 'x');
+print(m.has(0), true);
+print(m.get(0), 'x');
+print(m.has(-0), true);
+print(m.delete(-0), true);

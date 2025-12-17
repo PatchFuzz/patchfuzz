@@ -1,0 +1,5 @@
+var a = new Date(Date.now());
+a.setMilliseconds(491);
+var b = new Date(a);
+print("Date A: ",a.getMilliseconds());
+print("Date B: ",b.getMilliseconds());

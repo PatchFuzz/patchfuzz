@@ -1,0 +1,25 @@
+function print(b) {
+    if (!b)
+        throw new Error;
+}
+
+function main() {
+    let result;
+
+    const v13 = [0, 0]; 
+    Array.prototype[-1] = v13;
+
+    const func = function func(i, ...args) {
+        result = args[i];
+    };  
+    noInline(func);
+
+    for (let v30 = 0; v30 < testLoopCount; v30++) {
+        func(1000, 10);
+    }   
+
+    func(-1, 10);
+    print(result === v13);
+}
+noDFG(main);
+main();

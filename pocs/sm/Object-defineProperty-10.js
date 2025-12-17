@@ -1,0 +1,8 @@
+;
+var g = newGlobal({newCompartment: true});
+var dbg = new Debugger;
+var gw = dbg.addDebuggee(g);
+gw.defineProperty("p", {writable: true, value: 1});
+gw.defineProperty("p", {writable: false});
+g.p = 4;
+print(g.p, 1);

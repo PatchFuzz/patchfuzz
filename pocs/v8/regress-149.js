@@ -1,0 +1,1 @@
+print(String.fromCharCode(0x26B), String.fromCharCode(0x2C62).toLowerCase());

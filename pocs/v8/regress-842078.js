@@ -1,0 +1,1 @@
+print(() => {externalizeString('1')});

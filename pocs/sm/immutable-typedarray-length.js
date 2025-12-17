@@ -1,0 +1,21 @@
+function testImmutableArrayBuffer() {
+  for (let i = 0; i < 4; ++i) {
+    let ab = new ArrayBuffer(i).transferToImmutable();
+    let ta = new Int8Array(ab, 0, i);
+    for (let j = 0; j < 100; ++j) {
+      print(ta.length, i);
+    }
+  }
+}
+for (let i = 0; i < 2; ++i) testImmutableArrayBuffer();
+
+function testImmutableArrayBufferDefaultLength() {
+  for (let i = 0; i < 4; ++i) {
+    let ab = new ArrayBuffer(i).transferToImmutable();
+    let ta = new Int8Array(ab);
+    for (let j = 0; j < 100; ++j) {
+      print(ta.length, i);
+    }
+  }
+}
+for (let i = 0; i < 2; ++i) testImmutableArrayBufferDefaultLength();

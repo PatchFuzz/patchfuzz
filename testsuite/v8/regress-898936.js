@@ -1,5 +1,0 @@
-
-
-
-
-assertThrows("async(...x=e)()=>");

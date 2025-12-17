@@ -1,0 +1,21 @@
+const root = newGlobal({newCompartment: true});
+const dbg = new Debugger();
+dbg.addDebuggee(root)
+dbg.memory.trackingAllocationSites = true;
+
+root.eval("(" + function immediate() {
+  this.tests = [
+    ({}),
+    [],
+    /(two|2)\s*problems/,
+    new function Ctor(){},
+    new Object(),
+    new Array(),
+    new Date(),
+  ];
+} + "());");
+
+gc();
+
+const allocs = dbg.memory.drainAllocationsLog();
+print(allocs.length >= root.tests.length, true);

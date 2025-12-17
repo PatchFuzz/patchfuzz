@@ -1,6 +1,0 @@
-
-
-/x/;
-oomTest(function(){
-    offThreadCompileToStencil('');
-})

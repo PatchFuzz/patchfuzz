@@ -1,0 +1,351 @@
+print("..\\UnitTestFramework\\UnitTestFramework.js");
+
+var tests = [
+    {
+        name: "Array.prototype.concat",
+        body: function () {
+            var arr = ['a','b','c'];
+            arr['constructor'] = Number;
+
+            var out = Array.prototype.concat.call(arr, [1,2,3]);
+
+            print(Array.isArray(out), "Return from Array.prototype.concat should be an Array object");
+            print(out instanceof Number, "Return from Array.prototype.concat should not have been constructed from Number");
+            print(['a','b','c',1,2,3], out, "Array.prototype.concat output should show correct Array behavior");
+            print(6, out.length, "Array.prototype.concat sets the length property of returned object");
+        }
+    },
+    {
+        name: "Array.prototype.filter",
+        body: function () {
+            var arr = ['a','b','c'];
+            arr['constructor'] = Number;
+
+            var out = Array.prototype.filter.call(arr, function() { return true; });
+
+            print(Array.isArray(out), "Return from Array.prototype.filter should be an Array object");
+            print(out instanceof Number, "Return from Array.prototype.filter should not have been constructed from Number");
+            print(['a','b','c'], out, "Array.prototype.filter output should show correct Array behavior");
+            print(3, out.length, "Array.prototype.filter does not set the length property of returned object");
+        }
+    },
+    {
+        name: "Array.prototype.map",
+        body: function () {
+            var arr = ['a','b','c'];
+            arr['constructor'] = Number;
+
+            var out = Array.prototype.map.call(arr, function(val) { return val; });
+
+            print(Array.isArray(out), "Return from Array.prototype.map should be an Array object");
+            print(out instanceof Number, "Return from Array.prototype.map should not have been constructed from Number");
+            print(['a','b','c'], out, "Array.prototype.map output should show correct Array behavior");
+            print(3, out.length, "Array.prototype.map does not set the length property of returned object");
+        }
+    },
+    {
+        name: "Array.prototype.slice",
+        body: function () {
+            var arr = ['a','b','c'];
+            arr['constructor'] = Number;
+
+            var out = Array.prototype.slice.call(arr);
+
+            print(Array.isArray(out), "Return from Array.prototype.slice should be an Array object");
+            print(out instanceof Number, "Return from Array.prototype.slice should not have been constructed from Number");
+            print(['a','b','c'], out, "Array.prototype.slice output should show correct Array behavior");
+            print(3, out.length, "Array.prototype.slice sets the length property of returned object");
+        }
+    },
+    {
+        name: "Array.prototype.splice - array source with constructor property set to Number",
+        body: function () {
+            var arr = ['a','b','c','d','e','f'];
+            arr['constructor'] = Number;
+
+            var out = Array.prototype.splice.call(arr, 0, 3);
+
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object");
+            print(out instanceof Number, "Return from Array.prototype.splice should not have been constructed from Number");
+            print(['a','b','c'], out, "Array.prototype.splice output should show correct Array behavior");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object");
+        }
+    },
+    {
+        name: "Array.prototype.splice - array source with constructor property set to Array",
+        body: function () {
+            var arr = [1,2,3,4,5,6];
+            arr['constructor'] = Array;
+
+            var out = Array.prototype.splice.call(arr, 0, 3);
+
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object");
+            print(out instanceof Array, "Return from Array.prototype.splice should have been constructed from Array");
+            print([1,2,3], out, "Array.prototype.splice output is correct");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object");
+        }
+    },
+    {
+        name: "Array.prototype.splice - array source with no constructor property",
+        body: function () {
+            var arr = [1,2,3,4,5,6];
+
+            var out = Array.prototype.splice.call(arr, 0, 3);
+
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object");
+            print(out instanceof Array, "Return from Array.prototype.splice should have been constructed from Array");
+            print([1,2,3], out, "Array.prototype.splice output is correct");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object");
+        }
+    },
+    {
+        name: "Array.prototype.splice - object source with no constructor property",
+        body: function () {
+            var arr = {0:1,1:2,2:3,3:4,4:5,5:6,'length':6};
+
+            var out = Array.prototype.splice.call(arr, 0, 3);
+
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object");
+            print(out instanceof Array, "Return from Array.prototype.splice should have been constructed from Array");
+            print([1,2,3], out, "Array.prototype.splice output is correct");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object");
+        }
+    },
+    {
+        name: "Array.prototype.splice - object source with constructor property set to Number",
+        body: function () {
+            var arr = {0:1,1:2,2:3,3:4,4:5,5:6,'length':6};
+            arr['constructor'] = Number;
+
+            var out = Array.prototype.splice.call(arr, 0, 3);
+
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object");
+            print(out instanceof Array, "Return from Array.prototype.splice should have been constructed from Array");
+            print([1,2,3], out, "Array.prototype.splice output is correct");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object");
+        }
+    },
+    {
+        name: "ArraySpeciesCreate test through Array.prototype.splice",
+        body: function () {
+            var arr = ['a','b','c','d','e','f'];
+            arr['constructor'] = null;
+            print(function() { Array.prototype.splice.call(arr, 0, 3); }, TypeError, "TypeError when constructor[Symbol.species] is not constructor", "Function 'constructor[Symbol.species]' is not a constructor");
+
+            var arr = ['a','b','c','d','e','f'];
+            Object.defineProperty(arr, 'constructor', {enumerable: false, configurable: true, writable: true, value: null});
+            print(function() { Array.prototype.splice.call(arr, 0, 3); }, TypeError, "TypeError when constructor[Symbol.species] is not constructor", "Function 'constructor[Symbol.species]' is not a constructor");
+
+            var arr = ['a','b','c','d','e','f'];
+            arr['constructor'] = undefined;
+            var out = Array.prototype.splice.call(arr, 0, 3);
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object when constructor == undefined");
+            print(['a','b','c'], out, "Array.prototype.splice output should show correct Array behavior when constructor == undefined");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object when constructor == undefined");
+
+            var arr = ['a','b','c','d','e','f'];
+            arr['constructor'] = function() {};
+            var out = Array.prototype.splice.call(arr, 0, 3);
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object when constructor has no [@@species] property");
+            print(['a','b','c'], out, "Array.prototype.splice output should show correct Array behavior when constructor has no [@@species] property");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object when constructor has no [@@species] property");
+
+            var builtinArraySpeciesDesc = Object.getOwnPropertyDescriptor(Array, Symbol.species);
+
+            var arr = ['a','b','c','d','e','f'];
+            Object.defineProperty(Array, Symbol.species, {enumerable: false, configurable: true, writable: true, value: Object});
+            var out = Array.prototype.splice.call(arr, 0, 3);
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an object when constructor has [@@species] == Object");
+            print({'0':'a','1':'b','2':'c',"length":3}, out, "Array.prototype.splice output should show correct Array behavior when constructor has [@@species] == Object");
+
+            var arr = ['a','b','c','d','e','f'];
+            Object.defineProperty(Array, Symbol.species, {enumerable: false, configurable: true, writable: true, value: null});
+            var out = Array.prototype.splice.call(arr, 0, 3);
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object when constructor has [@@species] == null");
+            print(['a','b','c'], out, "Array.prototype.splice output should show correct Array behavior when constructor has [@@species] == null");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object when constructor has [@@species] == null");
+
+            Object.defineProperty(Array, Symbol.species, builtinArraySpeciesDesc);
+
+            var external = print("ES6ArrayUseConstructor_helper.js","samethread");
+            var arr = ['a','b','c','d','e','f'];
+            arr['constructor'] = external.CrossContextArrayConstructor;
+            var out = Array.prototype.splice.call(arr, 0, 3);
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object when constructor is %Array% of a different script context");
+            print(['a','b','c'], out, "Array.prototype.splice output should show correct Array behavior when constructor is %Array% of a different script context");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object when constructor is %Array% of a different script context");
+        }
+    },
+    {
+        name: "ArraySpeciesCreate test through Array.prototype.splice - native arrays",
+        body: function () {
+            var arr = [1,2,3,4,5,6];
+            arr['constructor'] = null;
+            print(function() { Array.prototype.splice.call(arr, 0, 3); }, TypeError, "TypeError when constructor[Symbol.species] is not constructor", "Function 'constructor[Symbol.species]' is not a constructor");
+
+            var arr = [1,2,3,4,5,6];
+            Object.defineProperty(arr, 'constructor', {enumerable: false, configurable: true, writable: true, value: null});
+            print(function() { Array.prototype.splice.call(arr, 0, 3); }, TypeError, "TypeError when constructor[Symbol.species] is not constructor", "Function 'constructor[Symbol.species]' is not a constructor");
+
+            var arr = [1,2,3,4,5,6];
+            arr['constructor'] = undefined;
+            var out = Array.prototype.splice.call(arr, 0, 3);
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object when constructor == undefined");
+            print([1,2,3], out, "Array.prototype.splice output should show correct Array behavior when constructor == undefined");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object when constructor == undefined");
+
+            var arr = [1,2,3,4,5,6];
+            arr['constructor'] = function() {};
+            var out = Array.prototype.splice.call(arr, 0, 3);
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object when constructor has no [@@species] property");
+            print([1,2,3], out, "Array.prototype.splice output should show correct Array behavior when constructor has no [@@species] property");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object when constructor has no [@@species] property");
+
+            var builtinArraySpeciesDesc = Object.getOwnPropertyDescriptor(Array, Symbol.species);
+
+            var arr = [1,2,3,4,5,6];
+            Object.defineProperty(Array, Symbol.species, {enumerable: false, configurable: true, writable: true, value: Object});
+            var out = Array.prototype.splice.call(arr, 0, 3);
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an object when constructor has [@@species] == Object");
+            print({'0':1,'1':2,'2':3,"length":3}, out, "Array.prototype.splice output should show correct Array behavior when constructor has [@@species] == Object");
+
+            var arr = [1,2,3,4,5,6];
+            Object.defineProperty(Array, Symbol.species, {enumerable: false, configurable: true, writable: true, value: null});
+            var out = Array.prototype.splice.call(arr, 0, 3);
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object when constructor has [@@species] == null");
+            print([1,2,3], out, "Array.prototype.splice output should show correct Array behavior when constructor has [@@species] == null");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object when constructor has [@@species] == null");
+
+            Object.defineProperty(Array, Symbol.species, builtinArraySpeciesDesc);
+
+            var external = print("ES6ArrayUseConstructor_helper.js","samethread");
+            var arr = [1,2,3,4,5,6];
+            arr['constructor'] = external.CrossContextArrayConstructor;
+            var out = Array.prototype.splice.call(arr, 0, 3);
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object when constructor is %Array% of a different script context");
+            print([1,2,3], out, "Array.prototype.splice output should show correct Array behavior when constructor is %Array% of a different script context");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object when constructor is %Array% of a different script context");
+        }
+    },
+    {
+        name: "ArraySpeciesCreate test through Array.prototype.map",
+        body: function () {
+            var f = function(val) { return val; }
+            var arr = ['a','b','c'];
+            arr['constructor'] = null;
+            print(function() { Array.prototype.map.call(arr, f); }, TypeError, "TypeError when constructor[Symbol.species] is not constructor", "Function 'constructor[Symbol.species]' is not a constructor");
+
+            var arr = ['a','b','c'];
+            Object.defineProperty(arr, 'constructor', {enumerable: false, configurable: true, writable: true, value: null});
+            print(function() { Array.prototype.map.call(arr, f); }, TypeError, "TypeError when constructor[Symbol.species] is not constructor", "Function 'constructor[Symbol.species]' is not a constructor");
+
+            var arr = ['a','b','c'];
+            arr['constructor'] = undefined;
+            var out = Array.prototype.map.call(arr, f);
+            print(Array.isArray(out), "Return from Array.prototype.map should be an Array object when constructor == undefined");
+            print(['a','b','c'], out, "Array.prototype.map output should show correct Array behavior when constructor == undefined");
+            print(3, out.length, "Array.prototype.map sets the length property of returned object when constructor == undefined");
+
+            var arr = ['a','b','c'];
+            arr['constructor'] = function() {};
+            var out = Array.prototype.map.call(arr, f);
+            print(Array.isArray(out), "Return from Array.prototype.map should be an Array object when constructor has no [@@species] property");
+            print(['a','b','c'], out, "Array.prototype.map output should show correct Array behavior when constructor has no [@@species] property");
+            print(3, out.length, "Array.prototype.map sets the length property of returned object when constructor has no [@@species] property");
+
+            var builtinArraySpeciesDesc = Object.getOwnPropertyDescriptor(Array, Symbol.species);
+
+            var arr = ['a','b','c'];
+            Object.defineProperty(Array, Symbol.species, {enumerable: false, configurable: true, writable: true, value: Object});
+            var out = Array.prototype.map.call(arr, f);
+            print(Array.isArray(out), "Return from Array.prototype.map should be an object when constructor has [@@species] == Object");
+            print({'0':'a','1':'b','2':'c'}, out, "Array.prototype.map output should show correct Array behavior when constructor has [@@species] == Object");
+
+            var arr = ['a','b','c'];
+            Object.defineProperty(Array, Symbol.species, {enumerable: false, configurable: true, writable: true, value: null});
+            var out = Array.prototype.map.call(arr, f);
+            print(Array.isArray(out), "Return from Array.prototype.map should be an Array object when constructor has [@@species] == null");
+            print(['a','b','c'], out, "Array.prototype.map output should show correct Array behavior when constructor has [@@species] == null");
+            print(3, out.length, "Array.prototype.map sets the length property of returned object when constructor has [@@species] == null");
+
+            Object.defineProperty(Array, Symbol.species, builtinArraySpeciesDesc);
+
+            var external = print("ES6ArrayUseConstructor_helper.js","samethread");
+            var arr = ['a','b','c'];
+            arr['constructor'] = external.CrossContextArrayConstructor;
+            var out = Array.prototype.map.call(arr, f);
+            print(Array.isArray(out), "Return from Array.prototype.map should be an Array object when constructor is %Array% of a different script context");
+            print(['a','b','c'], out, "Array.prototype.map output should show correct Array behavior when constructor is %Array% of a different script context");
+            print(3, out.length, "Array.prototype.map sets the length property of returned object when constructor is %Array% of a different script context");
+        }
+    },
+    {
+        name: "ArraySpeciesCreate test through Array.prototype.map - native arrays",
+        body: function () {
+            var f = function(val) { return val; }
+            var arr = [1,2,3];
+            arr['constructor'] = null;
+            print(function() { Array.prototype.map.call(arr, f); }, TypeError, "TypeError when constructor[Symbol.species] is not constructor", "Function 'constructor[Symbol.species]' is not a constructor");
+
+            var arr = [1,2,3];
+            Object.defineProperty(arr, 'constructor', {enumerable: false, configurable: true, writable: true, value: null});
+            print(function() { Array.prototype.map.call(arr, f); }, TypeError, "TypeError when constructor[Symbol.species] is not constructor", "Function 'constructor[Symbol.species]' is not a constructor");
+
+            var arr = [1,2,3];
+            arr['constructor'] = undefined;
+            var out = Array.prototype.map.call(arr, f);
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object when constructor == undefined");
+            print([1,2,3], out, "Array.prototype.splice output should show correct Array behavior when constructor == undefined");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object when constructor == undefined");
+
+            var arr = [1,2,3];
+            arr['constructor'] = function() {};
+            var out = Array.prototype.map.call(arr, f);
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object when constructor has no [@@species] property");
+            print([1,2,3], out, "Array.prototype.splice output should show correct Array behavior when constructor has no [@@species] property");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object when constructor has no [@@species] property");
+
+            var builtinArraySpeciesDesc = Object.getOwnPropertyDescriptor(Array, Symbol.species);
+
+            var arr = [1,2,3];
+            Object.defineProperty(Array, Symbol.species, {enumerable: false, configurable: true, writable: true, value: Object});
+            var out = Array.prototype.map.call(arr, f);
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an object when constructor has [@@species] == Object");
+            print({'0':1,'1':2,'2':3}, out, "Array.prototype.splice output should show correct Array behavior when constructor has [@@species] == Object");
+
+            var arr = [1,2,3];
+            Object.defineProperty(Array, Symbol.species, {enumerable: false, configurable: true, writable: true, value: null});
+            var out = Array.prototype.map.call(arr, f);
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object when constructor has [@@species] == null");
+            print([1,2,3], out, "Array.prototype.splice output should show correct Array behavior when constructor has [@@species] == null");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object when constructor has [@@species] == null");
+
+            Object.defineProperty(Array, Symbol.species, builtinArraySpeciesDesc);
+
+            var external = print("ES6ArrayUseConstructor_helper.js","samethread");
+            var arr = [1,2,3];
+            arr['constructor'] = external.CrossContextArrayConstructor;
+            var out = Array.prototype.map.call(arr, f);
+            print(Array.isArray(out), "Return from Array.prototype.splice should be an Array object when constructor is %Array% of a different script context");
+            print([1,2,3], out, "Array.prototype.splice output should show correct Array behavior when constructor is %Array% of a different script context");
+            print(3, out.length, "Array.prototype.splice sets the length property of returned object when constructor is %Array% of a different script context");
+        }
+    },
+    {
+        name: "ArraySpeciesCreate test through Array.prototype.filter - ES5 arrays",
+        body: function () {
+           
+
+            var arr = ['a','b','c'];
+            Object.defineProperty(arr, "3", { get : function () { return 0xff;}, set: function() { }}); 
+            Object.defineProperty(Array, Symbol.species, {enumerable: false, configurable: true, writable: true, value: Object});
+            
+            var out  = Array.prototype.filter.call(arr, function() { return true; });
+            print(Array.isArray(out), "Return from Array.prototype.filter should be an object when constructor has [@@species] == Object on an ES5 array");
+            print('a', out[0], "Array.prototype.filter output Object should have correct first index value when constructor has [@@species] == Object on an ES5 array");
+            print(255, out[3], "Array.prototype.fitler output Object should have correct last index value when constructor has [@@species] == Object on an ES5 array");            
+        }
+    },
+];
+
+for (var i = 0; i < tests.length; i ++) {tests[i].body()}

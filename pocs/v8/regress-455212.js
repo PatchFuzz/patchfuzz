@@ -1,0 +1,1 @@
+print("\u0060\u005c", SyntaxError);

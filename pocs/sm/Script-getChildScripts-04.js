@@ -1,0 +1,12 @@
+var g = newGlobal({newCompartment: true});
+g.eval("function h(a) { eval(a); }");
+
+var dbg = Debugger(g);
+var arr, kscript;
+dbg.onNewScript = function (script) { arr = script.getChildScripts(); };
+dbg.onDebuggerStatement = function (frame) { kscript = frame.callee.script; };
+
+g.h("function k(a) { debugger; return a + 1; } k(-1);");
+print(kscript instanceof Debugger.Script, true);
+print(arr.length, 1);
+print(arr[0], kscript);

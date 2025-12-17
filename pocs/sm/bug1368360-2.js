@@ -1,0 +1,8 @@
+var t = {};
+function r(y) { return t.y = y; }
+function g() {
+    for (let [x = r(x)] in x) {}
+}
+r(0);
+r(0);
+g();

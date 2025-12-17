@@ -1,4 +1,0 @@
-
-
-getLcovInfo();
-getLcovInfo();

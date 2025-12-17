@@ -1,0 +1,28 @@
+var g = newGlobal({newCompartment: true});
+g.parent = this;
+g.parentExc = new Error("pants");
+g.eval(`
+  var dbg = new Debugger;
+  var pw = dbg.addDebuggee(parent);
+  var hits = 0;
+  dbg.onExceptionUnwind = function (frame) {
+    dbg.onExceptionUnwind = undefined;
+    return {return: undefined};
+  };
+  dbg.uncaughtExceptionHook = exc => {
+    hits++;
+    print(exc instanceof TypeError, true);
+    print(/force return.*before the initial yield/.test(exc.message), true);
+    return {throw: pw.makeDebuggeeValue(parentExc)};
+  };
+`);
+
+async function* method({ x: callbackfn = unresolvableReference }) {}
+try {
+  method();
+} catch (exc) {
+  g.dbg.enabled = false;
+  print(exc, g.parentExc);
+}
+
+print(g.hits, 1);

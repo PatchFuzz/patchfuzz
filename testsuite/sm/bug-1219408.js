@@ -1,2 +1,0 @@
-
-moduleEvaluate(parseModule(""));

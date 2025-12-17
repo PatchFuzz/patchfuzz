@@ -1,0 +1,4 @@
+const THREAD_TYPE_WORKER = 12;
+
+
+oomAtAllocation(11, THREAD_TYPE_WORKER);

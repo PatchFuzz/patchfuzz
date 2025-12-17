@@ -1,0 +1,14 @@
+;
+
+function getLaterAssign(a)
+{
+  var o = arguments;
+  a = 17;
+  return o;
+}
+
+var a1, a2;
+for (var i = 0; i < 5; i++)
+  a1 = getLaterAssign(1);
+
+print(arraysEqual(a1, [17]), true);

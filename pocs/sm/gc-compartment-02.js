@@ -1,0 +1,11 @@
+var g = newGlobal({newCompartment: true});
+var dbg = Debugger(g);
+var arr = [];
+dbg.onDebuggerStatement = function (frame) { arr.push(frame.eval("[]").return); };
+g.eval("for (var i = 0; i < 10; i++) debugger;");
+print(arr.length, 10);
+
+gc(g);
+
+for (var i = 0; i < arr.length; i++)
+    print(arr[i].class, "Array");

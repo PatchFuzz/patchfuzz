@@ -1,0 +1,19 @@
+let g = newGlobal();
+
+let rab = new g.ArrayBuffer(10, {maxByteLength: 10});
+
+let newTarget = Object.defineProperty(function(){}.bind(), "prototype", {
+  get() {
+    rab.resize(0);
+    return DataView.prototype;
+  }
+});
+
+let err;
+try {
+  Reflect.construct(DataView, [rab, 10], newTarget);
+} catch (e) {
+  err = e;
+}
+
+print(err instanceof RangeError, true);

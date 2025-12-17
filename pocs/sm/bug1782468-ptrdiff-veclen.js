@@ -1,0 +1,11 @@
+try {
+  a = {};
+  for (b = 0; b < 24; b++)
+    a += a;
+  Function(a, a, a);
+  print(true, false, "allocation overflow expected");
+} catch (e) {
+  if (getBuildConfiguration("pointer-byte-size") == 4) {
+    print((e + "").includes("InternalError: allocation size overflow"), true);
+  } 
+}

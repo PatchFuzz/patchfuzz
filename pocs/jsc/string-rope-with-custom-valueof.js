@@ -1,0 +1,58 @@
+function catNumber(obj) {
+    return "test" + "things" + obj;
+}
+noInline(catNumber);
+
+number = { valueOf: function() { return 1; } };
+
+function catBool(obj) {
+    return "test" + "things" + obj;
+}
+noInline(catBool);
+
+bool = { valueOf: function() { return true; } };
+
+function catUndefined(obj) {
+    return "test" + "things" + obj;
+}
+noInline(catUndefined);
+
+undef = { valueOf: function() { return undefined; } };
+
+function catRandom(obj) {
+    return "test" + "things" + obj;
+}
+noInline(catRandom);
+
+i = 0;
+random = { valueOf: function() {
+    switch (i % 3) {
+    case 0:
+        return number.valueOf();
+    case 1:
+        return bool.valueOf();
+    case 2:
+        return undef.valueOf();
+    }
+} };
+
+for (i = 0; i < testLoopCount; i++) {
+    if (catNumber(number) !== "testthings1")
+        throw "bad number";
+    if (catBool(bool) !== "testthingstrue")
+        throw "bad bool";
+    if (catUndefined(undef) !== "testthingsundefined")
+        throw "bad undefined";
+    if (catRandom(random) !== "testthings" + random.valueOf())
+        throw "bad random";
+}
+
+
+for (i = 0; i < testLoopCount; i++) {
+    if (catUndefined(number) !== "testthings1")
+        throw "bad number";
+    if (catNumber(bool) !== "testthingstrue")
+        throw "bad bool";
+    if (catBool(undef) !== "testthingsundefined")
+        throw "bad undefined";
+}

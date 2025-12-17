@@ -1,0 +1,25 @@
+print(isValidJSON(`0`), true);
+print(isValidJSON(`1.2`), true);
+print(isValidJSON(`-2.3`), true);
+print(isValidJSON(`true`), true);
+print(isValidJSON(`false`), true);
+print(isValidJSON(`null`), true);
+print(isValidJSON(`"foo"`), true);
+print(isValidJSON(`[]`), true);
+print(isValidJSON(`[0, true, false, null]`), true);
+print(isValidJSON(`{}`), true);
+print(isValidJSON(`{"foo": 10}`), true);
+
+print(isValidJSON(``), false);
+print(isValidJSON(`.2`), false);
+print(isValidJSON(`2.`), false);
+print(isValidJSON(`undefined`), false);
+print(isValidJSON(`'foo'`), false);
+print(isValidJSON(`'foo`), false);
+print(isValidJSON(`"foo`), false);
+print(isValidJSON(`[`), false);
+print(isValidJSON(`[,]`), false);
+print(isValidJSON(`[1,]`), false);
+print(isValidJSON(`{foo: 10}`), false);
+print(isValidJSON(`{"foo": 10,}`), false);
+print(isValidJSON(`{`), false);

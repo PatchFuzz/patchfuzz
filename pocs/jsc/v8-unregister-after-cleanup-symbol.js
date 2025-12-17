@@ -1,0 +1,39 @@
+print("./resources/v8-mjsunit.js", "caller relative");
+
+let cleanup_call_count = 0;
+let cleanup = function(holdings) {
+  print("holdings", holdings);
+  ++cleanup_call_count;
+}
+
+let fg = new FinalizationRegistry(cleanup);
+let key = Symbol();
+
+
+
+(function() {
+    for (let i = 0; i < 1000; ++i) {
+        let symbol = Symbol();
+        fg.register(symbol, "holdings", key);
+    }
+})();
+
+
+gc();
+print(0, cleanup_call_count);
+
+
+let timeout_func = function() {
+    print(0, cleanup_call_count);
+    let old_cleanup_call_count = cleanup_call_count;
+
+    
+    let success = fg.unregister(key);
+    
+    
+
+    
+    setTimeout(() => { print(old_cleanup_call_count, cleanup_call_count); }, 0);
+}
+
+setTimeout(timeout_func, 0);

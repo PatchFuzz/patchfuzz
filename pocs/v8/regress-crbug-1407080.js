@@ -1,0 +1,1 @@
+try { Function("") } catch (e) {}

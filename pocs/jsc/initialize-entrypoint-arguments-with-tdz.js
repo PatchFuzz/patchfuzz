@@ -1,0 +1,26 @@
+class A extends Object {
+    constructor(beforeSuper) {
+        let touchThis = () => {
+            try {
+                this.x = this.x;
+            } catch (e) {
+            }
+            try {
+                this.x = +this.x
+            } catch (e) {
+            }
+        };
+        if (beforeSuper) {
+            touchThis();
+            super();
+        } else {
+            super();
+            touchThis();
+        }
+    }
+}
+
+for (var i = 0; i < testLoopCount; i++) {
+    new A(false);
+    new A(true);
+}

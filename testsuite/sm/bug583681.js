@@ -1,4 +1,0 @@
-
-
-
-Function[typeof h]

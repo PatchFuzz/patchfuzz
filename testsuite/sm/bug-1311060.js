@@ -1,2 +1,0 @@
-
-evalInWorker(`schedulezone("s1");`);

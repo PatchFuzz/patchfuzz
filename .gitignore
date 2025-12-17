@@ -1,8 +1,6 @@
 __pycache__
 **/out*/
 webkit/
-zxw/
-04*/
 whitelist/*/*
 scripts/sk.txt
 .VSCodeCounter/*
@@ -11,4 +9,3 @@ scripts/sk.txt
 bug/
 crossover/
 core
-rebuttal

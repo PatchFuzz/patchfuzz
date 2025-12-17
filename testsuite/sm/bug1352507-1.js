@@ -1,3 +1,0 @@
-
-
-evalInWorker("enableGeckoProfiling()");

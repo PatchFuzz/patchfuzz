@@ -1,4 +1,0 @@
-
-
-function eval() {};
-eval();

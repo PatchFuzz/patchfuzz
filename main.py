@@ -1,130 +1,86 @@
+#!/usr/bin/env python3
+"""
+PatchFuzz - JavaScript 引擎补丁模糊测试工具
+
+从 JS 引擎的 git 历史中提取 bug fix 相关的 POC 文件，
+并进行预处理以用于模糊测试。
+
+用法:
+    git log --date=short -m --name-status | python main.py <out_path> <engine> <source_root>
+
+示例:
+    cd /path/to/WebKit
+    git log --date=short -m --name-status | python /path/to/patchfuzz/main.py ./output jsc .
+"""
+
 import argparse
-import pandas as pd
-import sys,os,datetime,time
+import sys
+import os
 
-from ProcessJSCCommit import parseJSCCommit
-from ProcessV8Commit import parseV8Commit
-from ProcessChakraCommit import parseChakraCommit
-from ProcessSMCommit import parseSMCommit
-from ProcessJerryCommit import parseJerryCommit
-from utils import mkDir
-from ExtractSample import extractJSCSample,extractV8Sample,extractChakraSample,extractSMSample,extractJerrySample
-from jsc.SaveJSC import saveJsc
-from v8.SaveV8 import saveV8
-from chakra.SaveChakra import saveCh
-from sm.SaveSM import saveSp
-from jerry.SaveJerry import saveJe
-
-
-
-def exportCSV(export,target,dir_path):
-    date = datetime.date.today().strftime('%Y_%m_%d')
-    pf = pd.DataFrame(list(export))
-    order = ['date','hash','ctype','poc','changedfiles','urlofbug']
-    pf = pf[order]
-    file_path = os.path.join(dir_path,target + "_" + date + ".csv")
-    pf.fillna(' ',inplace = True)
-    pf.to_csv(file_path)
-    return file_path
-
+from config import get_engine_config, ENGINE_CONFIGS
+from parsers import CommitParser
+from extractors import SampleExtractor
+from processors import JSProcessor
+from utils import ensure_dir, export_csv
 
 
 def main():
-    # Parse Input
-    parser = argparse.ArgumentParser()
-    parser.description='PatchFuzz'
-    parser.add_argument("out_path", help="Set where to store data.", type=str)
-    parser.add_argument("target", help="Choose a JS engine.", choices=["jsc","v8","chakra","sm","jerry"], type=str)
-    parser.add_argument("target_root", help="The root directory of the JS engine source code. e.g. /home/WebKit/ (Be careful ! The right path is essential.)", type=str)
-    args = parser.parse_args()
+    parser = argparse.ArgumentParser(
+        description='PatchFuzz - Extract and process POC files from JS engine git history'
+    )
+    parser.add_argument(
+        'out_path',
+        type=str,
+        help='Output directory for extracted data'
+    )
+    parser.add_argument(
+        'engine',
+        type=str,
+        choices=list(ENGINE_CONFIGS.keys()),
+        help='Target JS engine'
+    )
+    parser.add_argument(
+        'source_root',
+        type=str,
+        help='Root directory of the JS engine source code'
+    )
     
+    args = parser.parse_args()
 
-    # Varibles
-    out_path = args.out_path
-    target = args.target
-    target_root = args.target_root
-    file_type_list = ["js"]
-    if not os.path.exists(target_root) : sys.exit("Bad target_root !")
+    # 验证源码目录
+    if not os.path.exists(args.source_root):
+        sys.exit(f"Error: Source root not found: {args.source_root}")
 
-    # Start 
-    match target:
-        case "jsc":
-            dir_path = os.path.join(out_path, "jsc")
-            poc_path = os.path.join(dir_path,"poc")
-            mkDir(dir_path)
-            mkDir(poc_path)
-            #start_time=time.time()
-            commits = parseJSCCommit(sys.stdin.readlines(),dir_path)
-            #end_time=time.time()
-            #print(f"the running time is :{end_time - start_time} s")
-            csv_path = exportCSV(commits,"jsc",dir_path)
-            test_path = extractJSCSample(csv_path,target_root,dir_path)
-            saveJsc(test_path,poc_path,file_type_list)
+    # 获取引擎配置
+    config = get_engine_config(args.engine)
 
-            sys.exit("Finished!")
+    # 创建输出目录
+    engine_dir = os.path.join(args.out_path, config.name)
+    poc_dir = os.path.join(engine_dir, 'poc')
+    ensure_dir(engine_dir)
+    ensure_dir(poc_dir)
 
-        case "v8":
-            dir_path = os.path.join(out_path, "v8")
-            poc_path = os.path.join(dir_path,"poc")
-            mkDir(dir_path)
-            mkDir(poc_path)
-            #start_time=time.time()
-            commits = parseV8Commit(sys.stdin.readlines(),dir_path)
-            #end_time=time.time()
-            #print(f"the running time is :{end_time - start_time} s")
-            csv_path = exportCSV(commits,"v8",dir_path)
-            test_path = extractV8Sample(csv_path,target_root,dir_path)
-            saveV8(test_path,poc_path,file_type_list)
+    # 1. 解析 git log
+    print(f"[1/4] Parsing git log for {config.name}...")
+    commit_parser = CommitParser(config)
+    commits = commit_parser.parse(sys.stdin.readlines(), engine_dir)
 
-            sys.exit("Finished!")
+    # 2. 导出 CSV
+    print(f"[2/4] Exporting CSV...")
+    csv_path = export_csv(commits, config.name, engine_dir)
 
-        case "chakra":
-            dir_path = os.path.join(out_path, "chakra")
-            poc_path = os.path.join(dir_path,"poc")
-            mkDir(dir_path)
-            mkDir(poc_path)
-            #start_time=time.time()
-            commits = parseChakraCommit(sys.stdin.readlines(),dir_path)
-            #end_time=time.time()
-            #print(f"the running time is :{end_time - start_time} s")
-            csv_path = exportCSV(commits,"chakra",dir_path)
-            test_path = extractChakraSample(csv_path,target_root,dir_path)
-            saveCh(test_path,poc_path,file_type_list)
+    # 3. 提取样本
+    print(f"[3/4] Extracting samples...")
+    extractor = SampleExtractor(config)
+    test_path = extractor.extract(csv_path, args.source_root, engine_dir)
 
-            sys.exit("Finished!")
+    # 4. 预处理 JS 文件
+    print(f"[4/4] Processing JS files...")
+    processor = JSProcessor(config)
+    processor.process(test_path, poc_dir)
 
-        case "sm":
-            dir_path = os.path.join(out_path, "sm")
-            poc_path = os.path.join(dir_path,"poc")
-            mkDir(dir_path)
-            mkDir(poc_path)
-            #start_time=time.time()
-            commits = parseSMCommit(sys.stdin.readlines(),dir_path)
-            #end_time=time.time()
-            #print(f"the running time is :{end_time - start_time} s")
-            csv_path = exportCSV(commits,"sm",dir_path)
-            test_path = extractSMSample(csv_path,target_root,dir_path)
-            saveSp(test_path,poc_path,file_type_list)
+    print("Finished!")
 
-            sys.exit("Finished!")
-
-        case "jerry":
-            dir_path = os.path.join(out_path, "jerry")
-            poc_path = os.path.join(dir_path,"poc")
-            mkDir(dir_path)
-            mkDir(poc_path)
-            #start_time=time.time()
-            commits = parseJerryCommit(sys.stdin.readlines(),dir_path)
-            #end_time=time.time()
-            #print(f"the running time is :{end_time - start_time} s")
-            csv_path = exportCSV(commits,"jerry",dir_path)
-            test_path = extractJerrySample(csv_path,target_root,dir_path)
-            saveJe(test_path,poc_path,file_type_list)
-
-            sys.exit("Finished!")
-
-        case _:
-            return sys.exit("bad target")
 
 if __name__ == '__main__':
     main()

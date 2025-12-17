@@ -1,0 +1,18 @@
+function test(x){
+    switch(x){
+        case "a":
+            print("a");
+            break;
+        case "b":
+            print("b");
+            break;
+        case "a":
+            break;
+        case "b":
+            print("bb");
+            break;
+    }
+}
+
+test("a");
+test("b");

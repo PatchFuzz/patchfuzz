@@ -1,0 +1,18 @@
+var dbg = new Debugger();
+
+var g1 = newGlobal({newCompartment: true});
+var dg1 = dbg.addDebuggee(g1);
+print(dg1.unwrap(), dg1);
+
+var g2 = newGlobal({newCompartment: true});
+var dg2 = dbg.addDebuggee(g2);
+
+var dg1g2 = dg1.makeDebuggeeValue(g2);
+print(dg1g2.unwrap(), dg2.makeDebuggeeValue(g2));
+
+
+var g2o = g2.Object();
+var dg2o = dg2.makeDebuggeeValue(g2o);
+var dg1g2o = dg1.makeDebuggeeValue(g2o);
+print(dg1g2o.unwrap(), dg2o);
+print(dg1g2o.unwrap().unwrap(), dg2o);

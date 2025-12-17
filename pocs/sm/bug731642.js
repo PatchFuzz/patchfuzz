@@ -1,0 +1,2 @@
+Object.defineProperty(Object.prototype, 1, {get: function() { this.foo++; return 23 }});
+print([1,,].pop(), 23);

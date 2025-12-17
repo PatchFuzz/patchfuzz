@@ -1,5 +1,0 @@
-
-
-
-
-assertEq(typeof WebAssembly, "undefined");

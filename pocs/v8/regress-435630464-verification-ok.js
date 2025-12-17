@@ -1,0 +1,1 @@
+%VerifyGetJSBuiltinState(false);

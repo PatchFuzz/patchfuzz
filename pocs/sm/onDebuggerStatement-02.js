@@ -1,0 +1,20 @@
+var g = newGlobal({newCompartment: true});
+var hit = false;
+
+var dbg = Debugger(g);
+dbg.onDebuggerStatement = function (stack) { hit = true; };
+
+debugger;
+print(hit, false, "raw debugger statement in debugger compartment should not hit");
+
+g.f = function () { debugger; };
+g.eval("f();");
+print(hit, false, "debugger statement in debugger compartment function should not hit");
+
+g.outerEval = eval;
+g.eval("outerEval('debugger;');");
+print(hit, false, "debugger statement in debugger compartment eval code should not hit");
+
+var g2 = newGlobal({newCompartment: true});
+g2.eval("debugger;");
+print(hit, false, "debugger statement in unrelated non-debuggee compartment should not hit");

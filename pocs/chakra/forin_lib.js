@@ -1,0 +1,53 @@
+var global = this;
+function Dump(s)
+{
+    var o = global[s];
+    if (!o) { return; }
+    print("for..in " + s);
+    for (var i in o)
+    {
+        print("  " + i + " = " + o[i]);
+    }
+    print("for..in " + s + " (with blah)");
+    o.blah = "b";
+    for (var i in o)
+    {
+        print("  " + i + " = " + o[i]);
+    
+    }
+    try
+    {
+        var newobj = new o();
+        print("for..in new " + s);
+        for (var i in newobj)
+        {
+            print("  " + i + " = " + newobj[i]);
+    
+        }
+
+        print("for..in " + s + " (with prototype.blah2)");
+        o.prototype.blah2 = s;
+        for (var i in newobj)
+        {
+            print("  " + i + " = " + newobj[i]);
+    
+        }
+    } 
+    catch (e)
+    {
+    }
+    print();
+}
+
+
+
+Dump("Object");
+Dump("Array");
+Dump("String");
+Dump("Function");
+Dump("Math");
+Dump("JSON");
+Dump("Number");
+Dump("Boolean");
+Dump("Date");
+Dump("RegExp");

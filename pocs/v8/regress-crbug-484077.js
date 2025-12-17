@@ -1,0 +1,1 @@
+print("", %FunctionGetInferredName((function(){}).bind({})));

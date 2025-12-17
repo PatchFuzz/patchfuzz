@@ -1,0 +1,15 @@
+print(Number.isFinite(Infinity), false);
+print(Number.isFinite(-Infinity), false);
+print(Number.isFinite(NaN), false);
+print(Number.isFinite(4), true);
+print(Number.isFinite(4.5), true);
+print(Number.isFinite("hi"), false);
+print(Number.isFinite("1.3"), false);
+print(Number.isFinite("51"), false);
+print(Number.isFinite(0), true);
+print(Number.isFinite(-0), true);
+print(Number.isFinite({valueOf: function () { return 3; }}), false);
+print(Number.isFinite({valueOf: function () { return 0/0; }}), false);
+print(Number.isFinite({ valueOf: function() { throw 17; } }), false);
+print(Number.isFinite({ toString: function() { throw 17; } }), false);
+print(Number.isFinite({ valueOf: function() { throw 17; }, toString: function() { throw 42; } }), false);
